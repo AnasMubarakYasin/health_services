@@ -28,12 +28,12 @@ class UserController extends Controller
         $resource->route_edit = function ($item) {
             return route('web.administrator.users.administrator.update', ['administrator' => $item]);
         };
-        // $resource->route_delete = function ($item) {
-        //     return route('web.resource.administrator.delete', ['administrator' => $item]);
-        // };
-        // $resource->route_delete_any = function ($item) {
-        //     return route('web.resource.administrator.delete_any');
-        // };
+        $resource->route_delete = function ($item) {
+            return route('web.resource.administrator.delete', ['administrator' => $item]);
+        };
+        $resource->route_delete_any = function ($item) {
+            return route('web.resource.administrator.delete_any');
+        };
         return view('pages.administrator.administrator.list', ['resource' => $resource]);
     }
     public function administrator_create()
@@ -49,9 +49,9 @@ class UserController extends Controller
                 'password',
             ],
         );
-        // $resource->route_create = function () {
-        //     return route('web.resource.administrator.create');
-        // };
+        $resource->route_create = function () {
+            return route('web.resource.administrator.create');
+        };
         $resource->route_view_any = function ($item) {
             return route('web.administrator.users.administrator.list');
         };
@@ -71,9 +71,9 @@ class UserController extends Controller
                 'password',
             ],
         );
-        // $resource->route_update = function ($item) {
-        //     return route('web.resource.administrator.update', ['administrator' => $item]);
-        // };
+        $resource->route_update = function ($item) {
+            return route('web.resource.administrator.update', ['administrator' => $item]);
+        };
         $resource->route_view_any = function ($item) {
             return route('web.administrator.users.administrator.list');
         };

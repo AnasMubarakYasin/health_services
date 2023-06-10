@@ -3,22 +3,21 @@
 namespace App\Http\Controllers\Resource;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateAdministratorRequest;
-use App\Http\Requests\UpdateAdministratorRequest;
+use App\Http\Requests\Resource\Administrator\CreateRequest;
+use App\Http\Requests\Resource\Administrator\UpdateRequest;
 use App\Models\Administrator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Vite;
 
 class AdministratorController extends Controller
 {
-    public function create(CreateAdministratorRequest $request)
+    public function create(CreateRequest $request)
     {
         $this->authorize('create', Administrator::class);
         $data = $request->validated();
         Administrator::create($data);
         return redirect()->intended($request->input('_view_any'));
     }
-    public function update(UpdateAdministratorRequest $request, Administrator $administrator)
+    public function update(UpdateRequest $request, Administrator $administrator)
     {
         $this->authorize('update', $administrator);
         $data = $request->validated();

@@ -53,3 +53,10 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');
     Route::patch('/administrator/change_profile', 'User\Administrator\DashboardController@change_profile')->name('web.administrator.change_profile');
 });
+
+Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
+    Route::post('/resource/administrator', 'Resource\AdministratorController@create')->name('web.resource.administrator.create');
+    Route::patch('/resource/administrator/{administrator}', 'Resource\AdministratorController@update')->name('web.resource.administrator.update');
+    Route::delete('/resource/administrator', 'Resource\AdministratorController@delete_any')->name('web.resource.administrator.delete_any');
+    Route::delete('/resource/administrator/{administrator}', 'Resource\AdministratorController@delete')->name('web.resource.administrator.delete');
+});
