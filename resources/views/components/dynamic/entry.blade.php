@@ -113,7 +113,11 @@
                             App Deployment
                         </div>
                         <div class="text-base font-normal text-black">
-
+                            <a href="https://github.com/AnasMubarakYasin/health_services/actions/workflows/cd.yml"
+                                class="inline">
+                                <img src="https://github.com/AnasMubarakYasin/health_services/actions/workflows/cd.yml/badge.svg"
+                                    alt="">
+                            </a>
                         </div>
                     </div>
                     <hr>
