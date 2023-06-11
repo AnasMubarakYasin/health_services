@@ -39,9 +39,9 @@ jobs:
       - name: clear storage
         run: ssh remote "cd $wd; php artisan storage:clear"
       - name: install npm deps
-        run: ssh remote "cd $wd; source $nvm; npm install"
+        run: ssh remote "cd $wd; source $nvm; nvm use 18; npm install"
       - name: build resources
-        run: ssh remote "cd $wd; source $nvm; npm run build"
+        run: ssh remote "cd $wd; source $nvm; nvm use 18; npm run build"
       # - name: remove pwa
       #   run: ssh remote "cd $wd; source $nvm; node script pwa:remove"
       # - name: build pwa
