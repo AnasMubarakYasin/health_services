@@ -1,18 +1,20 @@
-<x-panel.layout :title="'notification'">
-    <x-slot:top_bar>
-        <x-panel.top-bar>
+<x-simple.panel.layout :title="'dashboard'">
+    <x-slot:topbar>
+        <x-simple.panel.top-bar>
 
-        </x-panel.top-bar>
-    </x-slot>
-    <x-slot:side_bar>
-        <x-panel.side-bar>
+        </x-simple.panel.top-bar>
+    </x-slot:topbar>
+    <x-slot:sidebar>
+        <x-simple.panel.side-bar>
 
-        </x-panel.side-bar>
-    </x-slot>
-    <x-slot:bottom_bar>
-        <x-panel.bottom-bar>
+        </x-simple.panel.side-bar>
+    </x-slot:sidebar>
+    <x-slot:main>
+        <x-simple.panel.notification></x-simple.panel.notification>
+    </x-slot:main>
+    <x-slot:bottombar>
+        <x-simple.panel.bottom-bar>
 
-        </x-panel.bottom-bar>
-    </x-slot>
-    <x-panel.notification></x-panel.notification>
-</x-panel.layout>
+        </x-simple.panel.bottom-bar>
+    </x-slot:bottombar>
+</x-simple.panel.layout>

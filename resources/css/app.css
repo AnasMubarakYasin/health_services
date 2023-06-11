@@ -38,3 +38,49 @@
 .dark ::-webkit-scrollbar-thumb:hover {
     background-color: theme(colors.gray.500);
 }
+
+@layer utilities {
+    .shadow-top {
+        box-shadow: 0 -4px 4px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-top-lg {
+        box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-bottom {
+        box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-bottom-lg {
+        box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-right {
+        box-shadow: 4px 0 4px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-right-lg {
+        box-shadow: 8px 0 8px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-left {
+        box-shadow: -4px 0 4px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-left-lg {
+        box-shadow: -8px 0 8px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-left-xl {
+        box-shadow: -12px 0 12px -12px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-all {
+        box-shadow: 0 -4px 4px -4px rgba(0, 0, 0, 0.1), 0 4px 4px -4px rgba(0, 0, 0, 0.1), 4px 0 4px -4px rgba(0, 0, 0, 0.1), -4px 0 4px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-all-lg {
+        box-shadow: 0 -8px 8px -8px rgba(0, 0, 0, 0.1), 0 8px 8px -8px rgba(0, 0, 0, 0.1), 8px 0 8px -8px rgba(0, 0, 0, 0.1), -8px 0 8px -8px rgba(0, 0, 0, 0.1);
+    }
+}

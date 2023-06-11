@@ -72,6 +72,30 @@ export function table_checkbox(
         });
     });
 }
+export function toggle_button_group(group: string, onChange?: (value: string) => void) {
+    const group_elm = document.querySelector(group)
+    const init = (value: string) => {
+        for (const child of group_elm.children as unknown as HTMLInputElement[]) {
+            if (child.value == value) {
+                child.classList.add("bg-primary");
+                child.classList.remove("bg-base-200");
+                child.classList.add("text-primary-content");
+                child.classList.remove("text-base-content");
+                child.classList.toggle("hover:bg-base-300");
+            } else {
+                child.classList.remove("bg-primary");
+                child.classList.add("bg-base-200");
+                child.classList.remove("text-primary-content");
+                child.classList.add("text-base-content");
+                child.addEventListener('click', () => {
+                    onChange?.(child.value);
+                    init(child.value);
+                }, { once: true });
+            }
+        }
+    }
+    return init;
+}
 const dom_parser = new DOMParser();
 export function create_element(element: string): HTMLElement {
     const doc = dom_parser.parseFromString(element, "text/html");

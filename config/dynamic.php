@@ -1,13 +1,7 @@
 <?php
 
 use App\Dynamic\Panel\Administrator as PanelAdministrator;
-use App\Dynamic\Panel\Employee as PanelEmployee;
-use App\Dynamic\Panel\Student as PanelStudent;
-use App\Dynamic\Panel\StudentParent as PanelStudentParent;
 use App\Models\Administrator;
-use App\Models\Employee;
-use App\Models\Student;
-use App\Models\StudentParent;
 
 return [
     'application' => [
@@ -19,58 +13,35 @@ return [
         'vendor_version' => '0.5.12',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
+        'template' => 'simple',
+        'enable_demo' => true,
+        'enable_error_track' => false,
     ],
+    'locales' => ['en' => 'english', 'id' => 'indonesia'],
     'stakeholder' => [
         'dev' => ['wm337708@gmail.com'],
         'client' => ['bladerlaiga.97@gmail.com'],
     ],
+    'templates' => [
+        'simple' => [
+            'name' => 'Simple',
+            'version' => '0.6.0',
+            'deps' => ['flowbite'],
+            'thumb' => '/templates/simple.png',
+        ],
+        'modern' => [
+            'name' => 'Modern',
+            'version' => '0.2.0',
+            'deps' => ['tailwind element', 'daisyui'],
+            'thumb' => '/templates/modern.png',
+        ],
+    ],
     'panel' => [
         Administrator::class => PanelAdministrator::class,
-        // Employee::class => PanelEmployee::class,
-        // Student::class => PanelStudent::class,
-        // StudentParent::class => PanelStudentParent::class,
     ],
-    'entry' => [
-        'enable_demo' => true,
-    ],
-    'account' => [
-        'list' => [
-            // Administrator::class => [
-            //     'name' => 'administrator',
-            //     'index' =>  '',
-            //     'dashboard' =>  '',
-            //     'webmanifest' => '',
-            //     'logo' => '',
-            //     'favicon' => '',
-            //     'route' => [],
-            // ],
-            // Employee::class => [
-            //     'name' => 'employee',
-            //     'index' =>  '',
-            //     'dashboard' =>  '',
-            //     'webmanifest' => '',
-            //     'logo' => '',
-            //     'favicon' => '',
-            //     'route' => [],
-            // ],
-            // Student::class => [
-            //     'name' => 'student',
-            //     'index' =>  '',
-            //     'dashboard' =>  '',
-            //     'webmanifest' => '',
-            //     'logo' => '',
-            //     'favicon' => '',
-            //     'route' => [],
-            // ],
-            // StudentParent::class => [
-            //     'name' => 'student_parent',
-            //     'index' =>  '',
-            //     'dashboard' =>  '',
-            //     'webmanifest' => '',
-            //     'logo' => '',
-            //     'favicon' => '',
-            //     'route' => [],
-            // ],
-        ]
+    'user' => [],
+    'aggrement' => [
+        'finish_at' => '2023-06-20 00:00:00',
+        'finished' => false,
     ],
 ];

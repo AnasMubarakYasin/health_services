@@ -1,3 +1,3 @@
-<x-panel.welcome>
+<x-dynamic.entry>
 
-</x-panel.welcome>
+</x-dynamic.entry>

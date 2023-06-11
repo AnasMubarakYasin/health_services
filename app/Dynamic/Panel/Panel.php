@@ -3,44 +3,53 @@
 namespace App\Dynamic\Panel;
 
 use App\Dynamic\Menu;
-use stdClass;
 
 class Panel
 {
-    /** @return Panel|null */
-    public static function create(?string $user = null)
+    static array $locales;
+    /** @return Panel */
+    public static function create($user = null)
     {
-        if (!$user) return null;
+        if (!$user) {
+            throw new \Error("user not set", 403);
+        };
+        self::$locales = config('dynamic.locales');
         $class = config('dynamic.panel')[$user];
+        /** @var Panel */
         $panel = new $class();
-        $panel->app_name = config('dynamic.application.name');
-        $panel->app_logo = config('dynamic.application.logo');
-        $panel->vendor_name = config('dynamic.application.vendor_name');
-        $panel->vendor_year = config('dynamic.application.vendor_year');
+        $panel->name = config('dynamic.application.name');
+        $panel->logo = config('dynamic.application.logo');
         return $panel;
     }
-    public ?stdClass $user = null;
     public ?Menu $menu = null;
+    public mixed $user;
+
     public string $title = 'Panel';
     public string $locale = '';
-    public string $app_panel = '';
-    public string $app_logo = '';
-    public string $vendor_name = '';
-    public string $vendor_year = '';
+    public string $template = '';
+
+    public string $name = '';
+    public string $logo = '';
+
     public string $token = '';
+    public mixed $preference = [];
+
     public bool $webmanifest = false;
     public bool $service_worker = false;
+    public function __construct()
+    {
+    }
     public function get_user_photo(): string
     {
         return "";
     }
     public function get_user_name(): string
     {
-        return "";
+        return $this->user->name;
     }
     public function get_user_identifier(): string
     {
-        return "";
+        return $this->user->email;
     }
     public function get_menus(): array
     {

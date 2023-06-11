@@ -25,13 +25,13 @@ Route::delete('/notification/delete_all', 'Common\Notification@delete_all')->nam
 
 Route::redirect('/administrator', '/administrator/dashboard');
 Route::middleware('authc.guest:web.administrator.dashboard,administrator')->group(function () {
-    Route::middleware('common.locale:en')->group(function () {
+    Route::middleware('common.locale')->group(function () {
         Route::get('/administrator/login', 'Auth\AdministratorController@login_show')->name('web.administrator.login_show');
     });
     Route::post('/administrator/login', 'Auth\AdministratorController@login_perfom')->name('web.administrator.login_perform');
 });
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
-    Route::middleware(['common.locale:en', 'common.visitor'])->group(function () {
+    Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/administrator/dashboard', 'User\Administrator\DashboardController@dashboard')->name('web.administrator.dashboard');
         Route::get('/administrator/profile', 'User\Administrator\DashboardController@profile')->name('web.administrator.profile');
         Route::get('/administrator/notification', 'User\Administrator\DashboardController@notification')->name('web.administrator.notification');

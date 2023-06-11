@@ -19,6 +19,7 @@ class Administrator extends Panel
     {
         return Vite::asset('resources/js/components/administrator/regis-sw.js');
     }
+
     public function get_menus(): array
     {
         return [
@@ -48,6 +49,7 @@ class Administrator extends Panel
             ),
         ];
     }
+
     public function profile()
     {
         return route('web.administrator.profile');

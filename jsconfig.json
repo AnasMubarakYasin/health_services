@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"checkJs": false,
+		"module": "ESNext",
+		"target": "ESNext",
+		"typeRoots": [],
+		"baseUrl": ".",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"paths": {
+			"@/*": [
+				"resources/js/*"
+			],
+			"@components/*": [
+				"resources/js/components/*"
+			]
+		}
+	}
+}
