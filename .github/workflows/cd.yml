@@ -1,0 +1,58 @@
+run-name: Continues Deployment
+
+on:
+  push:
+    branches:
+    - master
+    - release/*
+
+jobs:
+  deploy:
+    name: Deploy Changes
+    runs-on: ubuntu-latest
+    env:
+      wd: ${{ secrets.WD }}
+      nvm: ~/.nvm/nvm.sh
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/remote.key
+          chmod 600 ~/.ssh/remote.key
+          cat >> ~/.ssh/config <<END
+          Host remote
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/remote.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+      - name: down application
+        run: ssh remote "cd $wd; php artisan down"
+      - name: restore change
+        run: ssh remote "cd $wd; git restore ."
+      - name: pull update
+        run: ssh remote "cd $wd; git pull"
+      # - name: clear storage
+      #   run: ssh remote "cd $wd; php artisan storage:clear"
+      - name: install npm deps
+        run: ssh remote "cd $wd; source $nvm; npm install"
+      - name: build resources
+        run: ssh remote "cd $wd; source $nvm; npm run build"
+      # - name: remove pwa
+      #   run: ssh remote "cd $wd; source $nvm; node script pwa:remove"
+      # - name: build pwa
+      #   run: ssh remote "cd $wd; source $nvm; node script pwa:build"
+      - name: install composer deps
+        run: ssh remote "cd $wd; composer i"
+      - name: fresh migration
+        run: ssh remote "cd $wd; php artisan migrate:fresh"
+      - name: seed database
+        run: ssh remote "cd $wd; php artisan db:seed"
+      - name: up application
+        run: ssh remote "cd $wd; php artisan up"
+      - name: notify update
+        run: ssh remote "cd $wd; php artisan app:notify-updates"
