@@ -12,7 +12,7 @@
     'bottombar' => '',
 ])
 <!DOCTYPE html>
-<html dir="ltr" lang="{{ str_replace('_', '-', $panel->locale) }}" data-theme="light">
+<html dir="ltr" lang="{{ str_replace('_', '-', $panel->locale) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -28,6 +28,7 @@
         var panel = @json($panel);
     </script>
 
+    @vite('resources/js/components/simple/panel/progress.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/js/components/simple/app.js')
     @vite('resources/js/components/simple/panel/index.js')
@@ -49,11 +50,11 @@
         <div id="content" class="flex-grow grid h-screen grid-rows-[56px,auto,56px]">
             {{ $topbar }}
             <main class="overflow-auto">
-                {{-- <div id="progress-bar"
-                    class="sticky top-0 max-w-full h-0 bg-gray-200 rounded-full transition-all dark:bg-gray-700">
-                    <div class="bg-blue-600 max-w-full h-full rounded-full dark:bg-blue-500" style="width: 100%">
+                <div id="progress-bar"
+                    class="sticky top-0 w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full transition-all">
+                    <div class="max-w-full w-0 h-full bg-blue-600 dark:bg-blue-500 rounded-full ">
                     </div>
-                </div> --}}
+                </div>
                 <div id="main" class="flex-grow overflow-auto">
                     {{ $main }}
                 </div>

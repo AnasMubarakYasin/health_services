@@ -198,10 +198,10 @@
                 <div class="text-xl font-semibold text-gray-800">
                     Templates
                 </div>
-                <div class="flex flex-wrap gap-4">
+                <div class="flex flex-col sm:flex-row flex-wrap gap-4">
                     @foreach ($entry->config['templates'] as $template)
                         <div
-                            class="grid content-start w-[400px] gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors">
+                            class="grid content-start w-full sm:w-[400px] gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors">
                             <div class="grid place-content-center bg-gray-200 p-2 rounded-lg">
                                 <img src="{{ $template['thumb'] }}" alt="">
                             </div>

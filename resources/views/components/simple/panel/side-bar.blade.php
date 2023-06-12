@@ -1,5 +1,13 @@
 @aware(['panel'])
-<aside id="drawer-main" class="bg-white dark:bg-gray-800 shadow transition-colors" tabindex="-1">
+@php
+    $width = '300px';
+@endphp
+@mobile
+    @php
+        $width = '0px';
+    @endphp
+@endmobile
+<aside id="drawer-main" class="bg-white dark:bg-gray-800 shadow transition-colors" tabindex="-1" style="flex: 0 0 {{ $width }};">
     <header
         class="flex gap-4 items-center justify-center sticky top-0 bg-white dark:bg-gray-800 text-xl font-semibold h-[56px] transition-colors">
         <div>

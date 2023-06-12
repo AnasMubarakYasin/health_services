@@ -187,7 +187,7 @@ export class Sequence {
     startValue = 0;
     max = 100;
 
-    private interval = 16;
+    private interval = 8;
     private delay = 100;
     private percent = 0;
     private id: any = 0;

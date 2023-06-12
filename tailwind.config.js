@@ -3,7 +3,8 @@ module.exports = {
 	darkMode: "class",
 	content: [
 		"./resources/**/*.blade.php",
-		"./resources/**/*.{js,ts,jsx,tsx}",
+		"./resources/**/*.{js}",
+		"./resources/**/*.{ts}",
 		"./node_modules/flowbite/**/*.js",
 		"./node_modules/tw-elements/dist/js/**/*.js",
 		"./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",

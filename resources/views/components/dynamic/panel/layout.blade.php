@@ -1,6 +1,6 @@
 @switch($panel->template)
     @case('simple')
-        <x-simple.panel.layout :panel="$panel" :title="$title"></x-simple.panel.layout>
+        <x-simple.panel.layout {{ $attributes }}></x-simple.panel.layout>
     @break
 
     @default
