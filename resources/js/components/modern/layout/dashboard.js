@@ -31,6 +31,9 @@ const ctx = Context.create(APP_CTX_KEY);
 
 ctx.init();
 
+console.log("dashboard init");
+console.log(panel);
+
 const dropdownElementList = [].slice.call(
     document.querySelectorAll("[data-te-dropdown-toggle-ref]")
 );

@@ -3,6 +3,7 @@
 namespace App\Dynamic\Panel;
 
 use App\Dynamic\Menu;
+use Illuminate\Support\Facades\Blade;
 
 class Panel
 {
@@ -17,10 +18,13 @@ class Panel
         $class = config('dynamic.panel')[$user];
         /** @var Panel */
         $panel = new $class();
+        $panel->pwd = base_path();
         $panel->name = config('dynamic.application.name');
         $panel->logo = config('dynamic.application.logo');
         return $panel;
     }
+    public string $pwd;
+
     public ?Menu $menu = null;
     public mixed $user;
 
@@ -32,7 +36,7 @@ class Panel
     public string $logo = '';
 
     public string $token = '';
-    public mixed $preference = [];
+    public mixed $preference;
 
     public bool $webmanifest = false;
     public bool $service_worker = false;
@@ -41,7 +45,7 @@ class Panel
     }
     public function get_user_photo(): string
     {
-        return "";
+        return "/logo.png";
     }
     public function get_user_name(): string
     {
@@ -51,9 +55,30 @@ class Panel
     {
         return $this->user->email;
     }
+    public function get_user_menus(): array
+    {
+        return [
+            new Menu(
+                name: "profile",
+                link: "/profile",
+                icon: Blade::render('<x-icons.profile />'),
+            ),
+            new Menu(
+                name: "settings",
+                link: "/settings",
+                icon: Blade::render('<x-icons.settings />'),
+            ),
+        ];
+    }
     public function get_menus(): array
     {
-        return [];
+        return [
+            new Menu(
+                name: "dashboard",
+                link: "/dashboard",
+                icon: Blade::render('<x-icons.home />'),
+            ),
+        ];
     }
     public function get_name(): string
     {

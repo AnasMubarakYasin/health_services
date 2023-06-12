@@ -45,24 +45,24 @@
         @if (!$done)
             <div class="">
                 @if ($deadline == 7)
-                    <div class="p-4 m-auto bg-yellow-300 text-slate-950 text-xl w-[480px] rounded-lg">
+                    <div class="p-4 m-auto bg-yellow-300 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Hanya Mengingatkan <span class="font-bold">Deadline</span> tinggal <span
                             class="font-bold">{{ $deadline }}</span> hari. <br>
                         <span class="text-base">Santuy Dulu.</span>
                     </div>
                 @elseif ($deadline == 3)
-                    <div class="p-4 m-auto bg-red-500 text-slate-950 text-xl w-[480px] rounded-lg">
+                    <div class="p-4 m-auto bg-red-500 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Hei <span class="font-bold">Deadline</span> tinggal <span
                             class="font-bold">{{ $deadline }}</span> hari. <br>
                         <span class="text-base">Kerjami Cepat.</span>
                     </div>
                 @elseif ($deadline == 1)
-                    <div class="p-4 m-auto bg-purple-500 text-slate-950 text-xl w-[480px] rounded-lg">
+                    <div class="p-4 m-auto bg-purple-500 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Kodong Besokmi. <br>
                         <span class="text-base">Jangan lupa tidur.</span>
                     </div>
                 @elseif ($deadline == 0)
-                    <div class="p-4 m-auto bg-purple-950 text-slate-50 text-xl w-[480px] rounded-lg">
+                    <div class="p-4 m-auto bg-purple-950 text-slate-50 text-xl w-full sm:w-[480px] rounded-lg">
                         Oi Deadline mi... <br>
                         <span class="text-base">Kasi Selesaimi.</span>
                     </div>

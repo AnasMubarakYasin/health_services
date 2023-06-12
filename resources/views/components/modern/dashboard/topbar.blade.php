@@ -1,8 +1,6 @@
-@props([
-    'title' => '',
-])
+@aware(['panel', 'title'])
 <header id="topbar"
-    class="group flex items-center h-14 sm:h-16 px-4 gap-4 max-xs:hidden sticky top-0 bg-base-100 z-10 transition-all 
+    class="group flex items-center h-14 sm:h-16 px-4 gap-4 max-xs:hidden sticky top-0 bg-base-100 z-10 transition-all
         data-[card-type='elevated']:shadow-bottom
         sm:data-[card-type='elevated']:shadow-bottom-lg
         data-[card-type='elevated']:data-[position='floated']:shadow-all
@@ -24,14 +22,17 @@
                 group-[#topbar&[data-button-shape='circled']]:rounded-full"
             data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom"
             title="Toggle Theme">
-            <input id="sidebar_toggle" type="checkbox" />
+            <input id="sidebar_toggle" type="checkbox" class="hidden" />
             <x-icons.menu class="swap-on fill-current w-5 h-5 sm:w-6 sm:h-6"></x-icons.menu>
             <x-icons.menu_slim class="swap-off fill-current w-5 h-5 sm:w-6 sm:h-6"></x-icons.menu_slim>
         </label>
     </div>
     <div class="flex-grow flex gap-2 items-center overflow-hidden">
-        <h1 class="hidden text-lg text-base-content font-medium transition-all
-                group-[#topbar&[data-title='visible']]:block">{{ $title }}</h1>
+        <h1
+            class="hidden text-lg text-base-content font-medium transition-all
+                group-[#topbar&[data-title='visible']]:block">
+            {{ $title }}
+        </h1>
     </div>
     <div class="flex gap-2 items-center justify-end">
         <div class="contents" data-te-dropdown-ref>
@@ -46,7 +47,7 @@
                 data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom" title="Translate">
                 <x-icons.translate class="w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.translate>
             </button>
-            <nav class="hidden flex-col min-w-[120px] absolute z-50 list-none overflow-hidden rounded-lg bg-base-100 
+            <nav class="hidden flex-col min-w-[120px] absolute z-50 list-none overflow-hidden rounded-lg bg-base-100
                 [&[data-te-dropdown-show]]:flex
                 group-[#topbar&[data-card-type='elevated']]:shadow-all-lg
                 group-[#topbar&[data-card-type='elevated']]:group-[#topbar&[data-position='floated']]:shadow-all-lg
@@ -85,7 +86,7 @@
                 <x-icons.notification class="w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.notification>
             </button>
             <section
-                class="hidden flex-col absolute z-50 min-w-[400px] list-none overflow-hidden rounded-lg bg-base-100 
+                class="hidden flex-col absolute z-50 min-w-[400px] list-none overflow-hidden rounded-lg bg-base-100
                 [&[data-te-dropdown-show]]:flex
                 group-[#topbar&[data-card-type='elevated']]:shadow-all-lg
                 group-[#topbar&[data-card-type='elevated']]:group-[#topbar&[data-position='floated']]:shadow-all-lg
@@ -141,19 +142,19 @@
                 group-[#topbar&[data-button-shape='circled']]:rounded-full"
             data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom"
             title="Toggle Sidebar">
-            <input id="sidebar_toggle" type="checkbox" />
+            <input id="sidebar_toggle" type="checkbox" class="hidden" />
             <x-icons.light class="swap-on w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.light>
             <x-icons.dark class="swap-off w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.dark>
         </label>
         <div class="contents" data-te-dropdown-ref>
             <button id="topbar_avatar" type="button" data-te-dropdown-toggle-ref aria-expanded="false"
-                data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                data-te-placement="bottom" title="Avatar" class="flex items-center w-10 h-10">
-                <img src="https://tecdn.b-cdn.net/img/new/avatars/2.webp" alt="Avatar"
+                data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom"
+                title="Avatar" class="flex items-center w-10 h-10 group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full">
+                <img src="{{ $panel->get_user_photo() }}" alt="{{ $panel->get_user_name() }}"
                     class="group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full" />
             </button>
             <ul aria-labelledby="topbar_avatar" data-te-dropdown-menu-ref
-                class="hidden flex-col absolute z-50 min-w-[240px] list-none overflow-hidden rounded-lg bg-base-100 
+                class="hidden flex-col absolute z-50 min-w-[240px] list-none overflow-hidden rounded-lg bg-base-100
                     [&[data-te-dropdown-show]]:flex
                     group-[#topbar&[data-card-type='elevated']]:shadow-all-lg
                     group-[#topbar&[data-card-type='elevated']]:group-[#topbar&[data-position='floated']]:shadow-all-lg
@@ -163,14 +164,17 @@
                 <li class="p-2">
                     <div
                         class="groupitem flex justify-start items-center gap-4 px-4 py-1 text-base-content hover:bg-primary hover:bg-opacity-10 hover:text-primary rounded-lg transition-colors">
-                        <img src="https://tecdn.b-cdn.net/img/new/avatars/2.webp" alt="Avatar"
-                            class="w-10
-                    group-[#topbar&[data-button-shape='rounded']]:rounded-lg
-                    group-[#topbar&[data-button-shape='circled']]:rounded-full" />
+                        <img src="{{ $panel->get_user_photo() }}" alt="{{ $panel->get_user_name() }}"
+                            class="w-10 h-10
+                                group-[#topbar&[data-button-shape='rounded']]:rounded-lg
+                                group-[#topbar&[data-button-shape='circled']]:rounded-full" />
                         <div class="flex flex-col justify-start content-between py-1">
-                            <div class="w-full font-semibold">Username
+                            <div class="w-full font-semibold">
+                                {{ $panel->get_user_name() }}
                             </div>
-                            <div class="w-full text-base-content text-opacity-70">Role</div>
+                            <div class="w-full text-base-content text-opacity-70">
+                                {{ $panel->get_user_identifier() }}
+                            </div>
                         </div>
                     </div>
                 </li>

@@ -13,7 +13,7 @@ return [
         'vendor_version' => '0.5.12',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
-        'template' => 'simple',
+        'template' => 'modern',
         'enable_demo' => true,
         'enable_error_track' => false,
     ],

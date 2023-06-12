@@ -160,6 +160,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\DynamicServiceProvider::class,
 
         /*
          * Application Service Providers...

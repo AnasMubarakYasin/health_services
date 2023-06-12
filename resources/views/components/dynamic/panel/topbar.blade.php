@@ -1,8 +1,11 @@
 @aware(['panel'])
-@dd($panel)
 @switch($panel->template)
     @case('simple')
-        <x-simple.panel.layout :panel="$panel"></x-simple.panel.layout>
+        <x-simple.panel.top-bar {{ $attributes }}></x-simple.panel.top-bar>
+    @break
+
+    @case('modern')
+        <x-modern.dashboard.topbar {{ $attributes }}></x-modern.dashboard.topbar>
     @break
 
     @default

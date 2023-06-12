@@ -55,7 +55,6 @@ ctx.media_query.sm.addEventListener("change", (event) => {
     // }
 });
 sidebar_toggle_elm.addEventListener("click", () => {
-    console.log(ctx);
     ctx.action.sidebar.toggle_state();
 });
 

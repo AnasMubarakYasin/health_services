@@ -13,31 +13,11 @@ use Illuminate\View\Component;
 
 class Layout extends Component
 {
-    /**
-     * Create a new component instance.
-     */
     public function __construct()
     {
     }
-
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
-        /** @var User */
-        $user = Auth::user();
-
-        $template = Session::get('template', config('dynamic.application.template'));
-
-        $panel = Panel::create($user::class);
-        $panel->locale = Session::get("locale_$user->id", App::getLocale());
-        $panel->template = $template;
-        $panel->preference = Session::get("preference_$user->id", []);
-        $panel->token = $user->createToken('generic')->plainTextToken;
-
-        return view('components.dynamic.panel.layout', [
-            'panel' => $panel,
-        ]);
+        return view('components.dynamic.panel.layout', []);
     }
 }

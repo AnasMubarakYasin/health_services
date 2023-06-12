@@ -1,18 +1,33 @@
-@props(['title', 'head' => '', 'sidebar', 'topbar', 'main', 'bottom'])
+@aware(['panel'])
+@props(['title' => 'Panel', 'logo' => '/logo.png', 'favicon' => '/favicon.ico', 'head' => '', 'sidebar' => '', 'topbar' => '', 'main' => '', 'bottom' => ''])
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="shortcut icon" href="{{ $favicon }}" type="image/x-icon">
 
     <title>{{ $title }}</title>
 
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
+    <script>
+        var panel = @json($panel);
+    </script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/js/components/modern/app.js')
     @vite('resources/js/components/modern/layout/dashboard.js')
+
+    @if ($panel->webmanifest)
+        <link rel="manifest" href="{{ $panel->get_webmanifest() }}">
+    @endif
+    @if ($panel->service_worker)
+        <script type="module" src="{{ $panel->get_service_worker() }}"></script>
+    @endif
 
     {{ $head }}
     @yield('head')
