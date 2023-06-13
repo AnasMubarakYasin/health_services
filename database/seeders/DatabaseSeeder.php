@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'password' => 'admin',
         ]);
+        // $administrator = Administrator::factory()->count(100)->create();
     }
 }

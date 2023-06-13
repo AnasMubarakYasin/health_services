@@ -16,12 +16,12 @@ const ToastGroup = component((c) => {
       state.shift();
       set(state);
       invalidate(c);
-    }, 3000);
+    }, 5000);
   });
   addEventListener("rejectionhandled", (ev) => {});
   return () => {
     return htm/*html*/ `
-      <div id="ToastErrorBoundary" class="toast toast-end z-20">
+      <div id="ToastErrorBoundary" class="toast toast-end items-end z-20">
         ${get().map((error) => Alert(error))}
       </div>`;
   };

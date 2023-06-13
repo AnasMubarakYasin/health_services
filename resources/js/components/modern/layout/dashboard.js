@@ -50,3 +50,13 @@ const tooltipTriggerList = [].slice.call(
 tooltipTriggerList.map((el) =>
     Tooltip.getOrCreateInstance(el, { trigger: "hover", offset: [0, 8] })
 );
+
+// addEventListener('DOMContentLoaded', () => {
+//   document.body.classList.remove('opacity-0');
+//   document.body.classList.add('opacity-100');
+// })
+addEventListener('load', () => {
+  document.body.style.transitionDuration = "1s";
+  document.body.classList.remove('opacity-0');
+  document.body.classList.add('opacity-100');
+})

@@ -26,7 +26,7 @@
         </x-slot:main>
         <x-slot:bottombar>
             <x-dynamic.panel.bottombar>
-
+                footer
             </x-dynamic.panel.bottombar>
         </x-slot:bottombar>
         @template('modern')

@@ -1,11 +1,11 @@
 @aware(['panel'])
 @switch($panel->template)
     @case('simple')
-        <x-simple.panel.main {{ $attributes }}></x-simple.panel.main>
+        <x-simple.panel.main {{ $attributes }}>{{ $slot }}</x-simple.panel.main>
     @break
 
     @case('modern')
-        <x-modern.dashboard.main {{ $attributes }}></x-modern.dashboard.main>
+        <x-modern.dashboard.main {{ $attributes }}>{{ $slot }}</x-modern.dashboard.main>
     @break
 
     @default

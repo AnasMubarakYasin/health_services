@@ -48,23 +48,23 @@
                     <div class="p-4 m-auto bg-yellow-300 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Hanya Mengingatkan <span class="font-bold">Deadline</span> tinggal <span
                             class="font-bold">{{ $deadline }}</span> hari. <br>
-                        <span class="text-base">Santuy Dulu.</span>
+                        <span class="text-lg">Santuy Dulu.</span>
                     </div>
                 @elseif ($deadline == 3)
                     <div class="p-4 m-auto bg-red-500 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Hei <span class="font-bold">Deadline</span> tinggal <span
                             class="font-bold">{{ $deadline }}</span> hari. <br>
-                        <span class="text-base">Kerjami Cepat.</span>
+                        <span class="text-lg">Kerjami Cepat.</span>
                     </div>
                 @elseif ($deadline == 1)
                     <div class="p-4 m-auto bg-purple-500 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Kodong Besokmi. <br>
-                        <span class="text-base">Jangan lupa tidur.</span>
+                        <span class="text-lg">Jangan lupa tidur.</span>
                     </div>
                 @elseif ($deadline == 0)
                     <div class="p-4 m-auto bg-purple-950 text-slate-50 text-xl w-full sm:w-[480px] rounded-lg">
                         Oi Deadline mi... <br>
-                        <span class="text-base">Kasi Selesaimi.</span>
+                        <span class="text-lg">Kasi Selesaimi.</span>
                     </div>
                 @else
                 @endif
@@ -72,47 +72,47 @@
         @endif
         <section class="grid gap-8">
             <section class="flex flex-col gap-4">
-                <div class="text-xl font-semibold text-gray-800">
+                <div class="text-2xl font-semibold text-gray-800">
                     Information
                 </div>
                 <div class="p-4 flex flex-col gap-2 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors">
                     <div class="flex flex-col gap-1">
-                        <div class="text-base font-medium text-gray-600">
+                        <div class="text-lg font-semibold text-gray-800">
                             App Name
                         </div>
-                        <div class="text-base font-normal text-black">
+                        <div class="text-lg font-normal text-black">
                             {{ config('dynamic.application.name') }}
                         </div>
                     </div>
                     <hr>
                     <div class="flex flex-col gap-1">
-                        <div class="text-base font-medium text-gray-600">
+                        <div class="text-lg font-semibold text-gray-800">
                             App Version
                         </div>
-                        <div class="text-base font-normal text-black">
+                        <div class="text-lg font-normal text-black">
                             {{ config('dynamic.application.version') }}
                         </div>
                     </div>
                     <hr>
                     <div class="flex flex-col gap-2">
-                        <div class="text-base font-medium text-gray-600">
+                        <div class="text-lg font-semibold text-gray-800">
                             App Date
                         </div>
-                        <div class="w-max text-base font-normal text-black">
+                        <div class="w-max text-lg font-normal text-black">
                             <div class="grid grid-cols-[min-content_auto] grid-rows-2 gap-x-2">
                                 <div>Inited:</div>
-                                <div>{{ $entry->updates->date_inited }}</div>
+                                <div>{{ date('d M Y h:m:s', strtotime($entry->updates->date_inited)) }}</div>
                                 <div>Updated:</div>
-                                <div>{{ $entry->updates->date_updated }}</div>
+                                <div>{{ date('d M Y h:m:s', strtotime($entry->updates->date_updated)) }}</div>
                             </div>
                         </div>
                     </div>
                     <hr>
                     <div class="flex flex-col gap-2">
-                        <div class="text-base font-medium text-gray-600">
+                        <div class="text-lg font-semibold text-gray-800">
                             App Deployment
                         </div>
-                        <div class="text-base font-normal text-black">
+                        <div class="text-lg font-normal text-black">
                             <a href="https://github.com/AnasMubarakYasin/health_services/actions/workflows/cd.yml"
                                 class="inline">
                                 <img src="https://github.com/AnasMubarakYasin/health_services/actions/workflows/cd.yml/badge.svg"
@@ -122,12 +122,12 @@
                     </div>
                     <hr>
                     <div class="flex flex-col gap-2">
-                        <div class="text-base font-medium text-gray-600">
+                        <div class="text-lg font-semibold text-gray-800">
                             App Changelog
                         </div>
-                        <div class="text-base font-normal text-black">
+                        <div class="text-lg font-normal text-black">
                             <details>
-                                <summary>Show</summary>
+                                <summary class="cursor-pointer">Show</summary>
                                 <pre class="text-sm">
                                     {{ "\n" . $entry->updates->changes }}
                                 </pre>
@@ -137,7 +137,7 @@
                 </div>
             </section>
             <section class="flex flex-col gap-4">
-                <div class="text-xl font-semibold text-gray-800">
+                <div class="text-2xl font-semibold text-gray-800">
                     Users
                 </div>
                 <div class="flex flex-wrap gap-4">
@@ -177,7 +177,7 @@
                                     </svg>
                                 </div>
                                 <div class="grid gap-4">
-                                    <div class="text-base font-medium text-gray-900">
+                                    <div class="text-lg font-medium text-gray-900">
                                         {{ $user['name'] }}
                                     </div>
                                     <div class="grid gap-2">
@@ -195,18 +195,31 @@
                 </div>
             </section>
             <section class="flex flex-col gap-4">
-                <div class="text-xl font-semibold text-gray-800">
+                <div class="text-2xl font-semibold text-gray-800">
                     Templates
                 </div>
                 <div class="flex flex-col sm:flex-row flex-wrap gap-4">
-                    @foreach ($entry->config['templates'] as $template)
+                    @foreach ($entry->config['templates'] as $key => $template)
                         <div
                             class="grid content-start w-full sm:w-[400px] gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow transition-colors">
                             <div class="grid place-content-center bg-gray-200 p-2 rounded-lg">
                                 <img src="{{ $template['thumb'] }}" alt="">
                             </div>
-                            <div class="text-lg text-center font-bold text-gray-900">
-                                {{ $template['name'] }} v{{ $template['version'] }}
+                            <div class="flex justify-between items-center">
+                                <div class="text-lg font-bold text-gray-900">
+                                    {{ $template['name'] }} v{{ $template['version'] }}
+                                </div>
+                                @if (session()->get('template', config('dynamic.application.template')) == $key)
+                                    <div
+                                        class="p-1 text-sm font-bold bg-green-500 text-white rounded">
+                                        <x-icons.check class="w-5 h-5" stroke="2.5"></x-icons.check>
+                                    </div>
+                                @else
+                                    <a href="{{ route('web.template.set', ['template' => $key]) }}"
+                                        class="px-2 py-1 text-sm font-bold bg-blue-500 text-white rounded">
+                                        Use
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     @endforeach

@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'authc.guest' => \App\Http\Middleware\Auth\AuthcGuest::class,
         'common.locale' => \App\Http\Middleware\Common\Locale::class,
         'common.visitor' => \App\Http\Middleware\Common\Visitor::class,
+        'common.template' => \App\Http\Middleware\Common\Template::class,
     ];
 }

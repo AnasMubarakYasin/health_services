@@ -1,5 +1,5 @@
 @aware(['panel'])
-@props(['title' => 'Panel', 'logo' => '/logo.png', 'favicon' => '/favicon.ico', 'head' => '', 'sidebar' => '', 'topbar' => '', 'main' => '', 'bottom' => ''])
+@props(['title' => 'Panel', 'logo' => '/logo.png', 'favicon' => '/favicon.ico', 'head' => '', 'sidebar' => '', 'topbar' => '', 'main' => '', 'bottombar' => ''])
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr" data-theme="light">
@@ -33,13 +33,12 @@
     @yield('head')
 </head>
 
-<body>
+<body class="opacity-0 transition-opacity">
     {{ $sidebar }}
-    <section id="content" class="flex flex-col w-full h-screen max-xs:hidden relative bg-base-200 text-base-content"
-        data-simplebar>
+    <section id="content" class="flex flex-col w-full min-h-screen max-xs:hidden relative bg-base-200 text-base-content">
         {{ $topbar }}
         {{ $main }}
-        {{ $bottom }}
+        {{ $bottombar }}
     </section>
     {{ $slot }}
     <div class="max-xs:grid hidden place-content-center w-screen h-screen">

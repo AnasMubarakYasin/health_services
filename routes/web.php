@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::view("/", "welcome")->name('welcome');
 
 Route::get('/locale/{locale}', 'Common\Locale@set')->name('web.locale.set');
+Route::get('/template/{template}', 'Common\Template@set')->name('web.template.set');
 
 Route::patch('/notification/{notification}/mark', 'Common\Notification@mark')->name('web.notification.mark');
 Route::get('/notification/{notification}/read', 'Common\Notification@read')->name('web.notification.read');
