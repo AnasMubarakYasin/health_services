@@ -19,6 +19,13 @@ const ToastGroup = component((c) => {
     }, 5000);
   });
   addEventListener("rejectionhandled", (ev) => {});
+  let state = get();
+  for (const [key, error] of Object.entries(errors)) {
+    for (const [key_i, error_i] of Object.entries(error)) {
+      state.push({ message: `${key}: ${key_i}: ${error_i.join(" ")}` });
+    }
+  }
+  set(state);
   return () => {
     return htm/*html*/ `
       <div id="ToastErrorBoundary" class="toast toast-end items-end z-20">
@@ -39,17 +46,21 @@ const Alert = component((c) => {
                   <span class="flex flex-col">
                       <div class="font-medium">Error! ${message}.</div>
                   </span>
-                  <div class="self-center">
-                      <div class="tooltip" data-tip="open">
-                          <a href=${link} class="btn btn-square btn-sm btn-primary text-primary-content">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                  stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                                  <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                              </svg>
-                          </a>
-                        </div>
-                  </div>
+                  ${
+                    link &&
+                    htm/*html*/ `
+                      <div class="self-center">
+                          <div class="tooltip" data-tip="open">
+                              <a href=${link} class="btn btn-square btn-sm btn-primary text-primary-content">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                      stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                      <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                  </svg>
+                              </a>
+                            </div>
+                      </div>`
+                  }
               </div>
             </div>`;
   };

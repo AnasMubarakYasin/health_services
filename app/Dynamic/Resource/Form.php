@@ -7,6 +7,7 @@ use App\Dynamic\Resource\Resource;
 
 class Form extends Resource
 {
+    public array $definitions = [];
     public array|null $fields = [];
     public Closure $fetcher_relation;
     public string $mode = "create";
@@ -18,6 +19,7 @@ class Form extends Resource
     ): Form {
         $this->fields = $fields;
         $this->hidden = $hidden;
+        $this->definitions = $this->model::$definitions;
         return $this;
     }
     public function from_update(
@@ -29,7 +31,12 @@ class Form extends Resource
         $this->fields = $fields;
         $this->hidden = $hidden;
         $this->mode = "update";
+        $this->definitions = $this->model::$definitions;
         return $this;
+    }
+    public function definition(string $field): Definition
+    {
+        return $this->definitions[$field];
     }
     public function fetch_relation(Definition $definition)
     {

@@ -24,7 +24,8 @@
 @else
     <li class="flex flex-col gap-1">
         <a hhref="{{ $menu->link }}" data-te-ripple-init data-te-ripple-color="light" data-te-sidenav-link-ref
-            data-te-collapse-init data-te-collapse-collapsed
+            data-te-collapse-init
+            {{ str()->startsWith(url()->full(), $menu->link) ? 'data-te-sidenav-state-active' : 'data-te-collapse-collapsed' }}
             class="flex justify-center items-center gap-4 px-4 py-3 hover:bg-base-200 focus:bg-base-300 text-base-content/60 hover:text-base-content/100
     group-[#sidebar&[data-menu-type='rounded']]:data-[te-sidenav-state-active]:bg-base-200
     group-[#sidebar&[data-menu-type='rounded']]:data-[te-sidenav-state-active]:text-base-content/100
@@ -49,11 +50,12 @@
                 </svg>
             </div>
         </a>
-        <ul class="!visible hidden list-none data-[te-collapse-show]:flex flex-col gap-1" data-te-sidenav-collapse-ref>
+        <ul class="!visible hidden list-none data-[te-collapse-show]:flex flex-col gap-1" data-te-sidenav-collapse-ref {{ str()->startsWith(url()->full(), $menu->link) ? 'data-te-collapse-show' : '' }}>
             @foreach ($menu->submenu as $submenu)
                 <li class="">
                     <a href="{{ $submenu->link }}" data-te-ripple-init data-te-ripple-color="light"
                         data-te-sidenav-link-ref
+                        {{ str()->startsWith(url()->full(), $submenu->link) ? 'data-te-sidebar-state-active' : '' }}
                         class="flex justify-center items-center gap-4 px-4 py-3 hover:bg-base-200 active:bg-primary/30 text-base-content/60 hover:text-base-content/100
                 data-[te-sidebar-state-active]:text-opacity-100
                 group-[#sidebar&[data-menu-type='rounded']]:data-[te-sidebar-state-active]:bg-primary

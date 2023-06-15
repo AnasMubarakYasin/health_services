@@ -60,3 +60,8 @@ addEventListener('load', () => {
   document.body.classList.remove('opacity-0');
   document.body.classList.add('opacity-100');
 })
+addEventListener('beforeunload', () => {
+  document.body.style.transitionDuration = "300ms";
+  document.body.classList.add('opacity-0');
+  document.body.classList.remove('opacity-100');
+})

@@ -28,7 +28,7 @@ module.exports = {
 	},
 	plugins: [
 		require("flowbite/plugin"),
-		require("daisyui"),
+    require("daisyui"),
 		require("tw-elements/dist/plugin.cjs"),
 	],
 	daisyui: {

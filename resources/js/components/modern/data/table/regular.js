@@ -1,6 +1,6 @@
-import { Input, Select, initTE } from "tw-elements";
+import { Input, Select, Modal, initTE } from "tw-elements";
 
-initTE({ Input });
+initTE({ Input, Modal });
 
 const select_style = {
   selectLabelWhite: "text-base-300",
@@ -26,3 +26,137 @@ table_show_elm.addEventListener("valueChange.te.select", () => {
   query.set("perpage", table_show_elm.value);
   location.search = query.toString();
 });
+
+const check_mode_elm = document.getElementById("check_mode");
+const check_item_elms = document.querySelectorAll(".check_item");
+let check_mode = check_mode_elm.checked;
+if (check_mode_elm) {
+  check_mode_elm.addEventListener('change', (ev) => {
+    check_mode = check_mode_elm.checked;
+    show_delete_any(check_mode);
+    if (check_mode) {
+      const row_old = document.querySelector("[data-row_active=true]");
+      if (row_old) {
+        row_deselect(row_old);
+      }
+      const col_old = document.querySelector("[data-col_active=true]");
+      if (col_old) {
+        col_deselect(col_old, col_old.dataset.col_index);
+      }
+      check_all();
+    } else {
+      uncheck_all();
+    }
+  })
+  check_item_elms.forEach((elm) => {
+    elm.addEventListener('change', (ev) => {
+      if (elm.checked) {
+        row_select(elm.parentElement.parentElement);
+      } else {
+        row_deselect(elm.parentElement.parentElement);
+      }
+      let count = 0;
+      for (const elm of check_item_elms) {
+        if (elm.checked) continue;
+        count++;
+      }
+      if (!count) {
+        check_mode_elm.checked = true;
+        check_mode_elm.indeterminate = false;
+        check_mode = true;
+      } else if (count == check_item_elms.length) {
+        check_mode_elm.checked = false;
+        check_mode_elm.indeterminate = false;
+        check_mode = false;
+      } else {
+        check_mode_elm.indeterminate = true;
+        check_mode = true;
+      }
+      show_delete_any(check_mode);
+    })
+  })
+}
+
+document.querySelectorAll("[data-row=true]").forEach((elm) => {
+  elm.addEventListener("click", (ev) => {
+    if (check_mode) return
+    if (elm.dataset.row_active == "true") {
+      row_deselect(elm);
+    } else {
+      const elm_old = document.querySelector("[data-row_active=true]");
+      if (elm_old) {
+        row_deselect(elm_old);
+      }
+      row_select(elm);
+    }
+  });
+});
+document.querySelectorAll("[data-col=true]").forEach((elm) => {
+  const index = elm.dataset.col_index;
+  elm.addEventListener("click", (ev) => {
+    if (check_mode) return
+    if (elm.dataset.col_active == "true") {
+      col_deselect(elm, index);
+    } else {
+      const elm_old = document.querySelector("[data-col_active=true]");
+      if (elm_old) {
+        col_deselect(elm_old, elm_old.dataset.col_index);
+      }
+      col_select(elm, index);
+    }
+  });
+});
+
+function show_delete_any(state = true) {
+  document.getElementById('delete_any').dataset.show = state;
+}
+function check_all() {
+  for (const elm of check_item_elms) {
+    elm.checked = true;
+    row_select(elm.parentElement.parentElement);
+  }
+}
+function uncheck_all() {
+  for (const elm of check_item_elms) {
+    elm.checked = false;
+    row_deselect(elm.parentElement.parentElement);
+  }
+}
+function row_select(elm) {
+  elm.dataset.row_active = true;
+  for (const child of elm.parentElement.children) {
+    child.dataset.cell_active = child.dataset.cell_active
+      ? +child.dataset.cell_active + 1
+      : 1;
+    child.classList.add("bg-base-200");
+  }
+}
+function row_deselect(elm) {
+  elm.dataset.row_active = false;
+  for (const child of elm.parentElement.children ?? []) {
+    child.dataset.cell_active = +child.dataset.cell_active - 1;
+    if (child.dataset.cell_active == "1") continue;
+    child.classList.remove("bg-base-200");
+  }
+}
+function col_select(elm, index) {
+  elm.dataset.col_active = true;
+  for (const child of document.querySelectorAll(
+    `[data-col_index="${index}"]`
+  )) {
+    child.dataset.cell_active = child.dataset.cell_active
+      ? +child.dataset.cell_active + 1
+      : 1;
+    child.classList.add("bg-base-200");
+  }
+}
+function col_deselect(elm, index) {
+  elm.dataset.col_active = false;
+  for (const child of document.querySelectorAll(
+    `[data-col_index="${index}"]`
+  )) {
+    child.dataset.cell_active = +child.dataset.cell_active - 1;
+    if (child.dataset.cell_active == "1") continue;
+    child.classList.remove("bg-base-200");
+  }
+}

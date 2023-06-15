@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Resource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Resource\Administrator\CreateRequest;
 use App\Http\Requests\Resource\Administrator\UpdateRequest;
+use App\Http\Requests\Resource\DeleteAnyRequest;
 use App\Models\Administrator;
 use Illuminate\Http\Request;
 
@@ -30,13 +31,14 @@ class AdministratorController extends Controller
         $administrator->delete();
         return back();
     }
-    public function delete_any(Request $request)
+    public function delete_any(DeleteAnyRequest $request)
     {
         $this->authorize('delete_any', Administrator::class);
-        if ($request->input('all')) {
+        $data = $request->validated();
+        if (count($data['id']) == Administrator::count()) {
             Administrator::truncate();
         } else {
-            Administrator::destroy($request->input('id', []));
+            Administrator::destroy($data['id']);
         }
         return back();
     }

@@ -6,11 +6,11 @@ use App\Models\Administrator;
 return [
     'application' => [
         'name' => env('APP_NAME', 'Bladerlaiga'),
-        'version' => env('APP_VER', '0.1.0'),
+        'version' => env('APP_VER', '0.1.1'),
         'logo' => env('APP_LOGO', '/logo.png'),
         'favicon' => env('APP_FAV', '/favicon.ico'),
         'vendor_name' => 'Bladerlaiga',
-        'vendor_version' => '0.6.0',
+        'vendor_version' => '0.6.2',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
         'template' => 'simple',

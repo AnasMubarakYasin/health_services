@@ -8,10 +8,8 @@ class Definition
         public string $name,
         public string $type,
         public string|null $format = null,
+        public bool $nullable = false,
         public bool $array = false,
-        // public bool $hide_create = false,
-        // public bool $hide_view = false,
-        // public bool $hide_update = false,
 
         public mixed $default = null,
         public mixed $enums = null,
@@ -21,5 +19,20 @@ class Definition
         public string|null $alias = null,
         public array|null $children = null,
     ) {
+    }
+    public function string_type(): string {
+        return match ($this->format) {
+            null => "string",
+            default => $this->format,
+        };
+    }
+    public function file_type(): string {
+        return match ($this->format) {
+            null => "document/*",
+            default => $this->format,
+        };
+    }
+    public function in_type_string(): bool {
+        return in_array($this->type, ["email", "password", "tel", "url"]);
     }
 }

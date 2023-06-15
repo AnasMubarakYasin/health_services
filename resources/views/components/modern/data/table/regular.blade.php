@@ -7,23 +7,45 @@
     'actions' => null,
 ])
 <div class="flex flex-col gap-4">
-    <section class="flex gap-2">
-        <button
-            class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
-                hover:bg-primary-focus"
-            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
-            title="Create">
-            <x-icons.add class="w-6 h-6" stroke="2">
-            </x-icons.add>
-        </button>
-        <button
-            class="grid place-items-center w-10 h-10 bg-base-100 text-base-content/70 rounded-lg transition-colors
-                hover:bg-base-300 hover:text-base-content/100"
-            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
-            title="Column">
-            <x-icons.column class="w-6 h-6" stroke="2">
-            </x-icons.column>
-        </button>
+    <section class="flex gap-4">
+        <section class="flex gap-2">
+            <a href="{{ route('web.administrator.users.administrator.create') }}"
+                class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
+                    hover:bg-primary-focus"
+                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
+                title="Create">
+                <x-icons.add class="w-6 h-6" stroke="2">
+                </x-icons.add>
+            </a>
+            <button
+                class="grid place-items-center w-10 h-10 bg-base-100 text-base-content/70 rounded-lg transition-colors
+                    hover:bg-base-300 hover:text-base-content/100"
+                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
+                title="Column">
+                <x-icons.column class="w-6 h-6" stroke="2">
+                </x-icons.column>
+            </button>
+            <button
+                class="grid place-items-center w-10 h-10 bg-base-100 text-base-content/70 rounded-lg transition-colors
+                    hover:bg-base-300 hover:text-base-content/100"
+                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
+                title="Column">
+                <x-icons.column class="w-6 h-6" stroke="2">
+                </x-icons.column>
+            </button>
+        </section>
+        <section>
+            <div data-te-toggle="tooltip" data-te-placement="bottom" title="Delete">
+                <button id="delete_any"
+                    class="hidden data-[show=true]:grid place-items-center w-10 h-10 bg-danger/90 text-danger-content/90 rounded-lg transition-colors
+                        hover:bg-danger/100 hover:text-danger-content/100"
+                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="modal"
+                    data-te-target="#delete_modal">
+                    <x-icons.delete class="w-6 h-6" stroke="2">
+                    </x-icons.delete>
+                </button>
+            </div>
+        </section>
     </section>
     <section class="overflow-auto">
         <table class="w-full h-full">
@@ -35,8 +57,8 @@
                     <th
                         class="p-4 pl-0 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-base-300">
                         <div class="grid place-items-center place-content-center w-full h-full">
-                            <input type="checkbox" name="" id=""
-                                class="appearance-none relative w-5 h-5 border-2 border-base-300 rounded cursor-pointer ring-offset-base-100 !outline-none transition-all after:transition-all
+                            <input type="checkbox" name="all" id="check_mode" form="delete_any_form"
+                                class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer ring-offset-base-100 !outline-none transition-all after:transition-all
                                 hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2
                                 focus-visible:ring-2 focus-visible:ring-primary  focus-visible:ring-offset-2
                                 checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.75] checked:after:left-[5px] checked:after:bottom-0.5 checked:after:border-r-4 checked:after:border-b-4
@@ -46,101 +68,131 @@
                         </div>
                     </th>
                     <th
-                        class="p-4 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300">
+                        class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300">
                         #
                     </th>
                     @foreach ($resource->columns as $column)
-                        <th
-                            class="p-4 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                        <th class="p-4 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
+                            data-col="true" data-col_index="{{ $loop->index }}">
                             <div class="flex justify-between items-center">
                                 <div class="whitespace-nowrap">{{ trans($resource->model->definition($column)->name) }}
                                 </div>
-                                @if (request()->query('sort_dir', 'desc') == 'desc')
-                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'asc']) }}"
-                                        role="button"
-                                        class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                @if (request()->query('sort_name') == $column)
+                                    @if (request()->query('sort_dir', 'desc') == 'desc')
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'asc']) }}"
+                                            role="button"
+                                            class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                                             group-[#topbar&[data-button-interface='filled']]:bg-primary/30
                                             group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
                                             group-[#topbar&[data-button-interface='outlined']]:border-2
                                             group-[#topbar&[data-button-interface='outlined']]:border-primary
                                             group-[#topbar&[data-button-shape='circled']]:rounded-full"
-                                        data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                                        data-te-placement="bottom" title="Ascending">
-                                        <x-icons.chevron_up class=" w-5 h-5" stroke="2" />
-                                    </a>
-                                @else
-                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'desc']) }}"
-                                        role="button"
-                                        class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                            data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                                            data-te-placement="bottom" title="Ascending">
+                                            <x-icons.chevron_up class=" w-5 h-5" stroke="2" />
+                                        </a>
+                                    @else
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'desc']) }}"
+                                            role="button"
+                                            class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                                         group-[#topbar&[data-button-interface='filled']]:bg-primary/30
                                         group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
                                         group-[#topbar&[data-button-interface='outlined']]:border-2
                                         group-[#topbar&[data-button-interface='outlined']]:border-primary
                                         group-[#topbar&[data-button-shape='circled']]:rounded-full"
+                                            data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                                            data-te-placement="bottom" title="Descending">
+                                            <x-icons.chevron_down class=" w-5 h-5" stroke="2" />
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'desc']) }}"
+                                        role="button"
+                                        class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                    group-[#topbar&[data-button-interface='filled']]:bg-primary/30
+                                    group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
+                                    group-[#topbar&[data-button-interface='outlined']]:border-2
+                                    group-[#topbar&[data-button-interface='outlined']]:border-primary
+                                    group-[#topbar&[data-button-shape='circled']]:rounded-full"
                                         data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                                        data-te-placement="bottom" title="Descending">
-                                        <x-icons.chevron_down class=" w-5 h-5" stroke="2" />
+                                        data-te-placement="bottom" title="Sort">
+                                        <x-icons.chevron_up_down class=" w-5 h-5" stroke="2" />
                                     </a>
                                 @endif
+
                             </div>
                         </th>
                     @endforeach
                     <th
-                        class="p-4 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                        class="p-4 sticky right-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-l-2 border-base-300">
                         Action
                     </th>
                     <th class="block px-2 bg-base-100 w-2 h-full border-t-2 rounded-tr-xl border-r-2 border-base-300">
                     </th>
                 </tr>
-                <tr>
-                    <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></td>
-                    <th
-                        class="p-2 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-200">
-                    </th>
-                    <th
-                        class="p-2 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-200">
-                    </th>
-                    @foreach ($resource->columns as $column)
-                        <td
-                            class="p-2 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
-                            <div class="relative" data-te-input-wrapper-init>
-                                <input type="text"
-                                    class="peer block w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0" />
-                            </div>
-                        </td>
-                    @endforeach
-                    <td
-                        class="p-2 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
-                    </td>
-                    <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
-                    </td>
-                </tr>
             </thead>
             <tbody>
+                <tr>
+                    <th class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></th>
+                    <th
+                        class="p-2 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-300">
+                    </th>
+                    <th
+                        class="p-2 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300 z-[1]">
+                    </th>
+                    @foreach ($resource->columns as $column)
+                        <th
+                            class="p-2 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                            <form action="{{ request()->fullUrlWithQuery([]) }}" autocomplete="off"
+                                class="relative border-none">
+                                <input type="hidden" name="filter" value="on">
+                                <input type="text" name="filter_{{ $column }}"
+                                    value="{{ request()->query("filter_$column") }}"
+                                    class="w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                                <button
+                                    class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                    group-[#topbar&[data-button-interface='filled']]:bg-primary/30
+                                    group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
+                                    group-[#topbar&[data-button-interface='outlined']]:border-2
+                                    group-[#topbar&[data-button-interface='outlined']]:border-primary
+                                    group-[#topbar&[data-button-shape='circled']]:rounded-full"
+                                    data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                                    data-te-placement="bottom" title="Search">
+                                    <x-icons.search class=" w-5 h-5" stroke="2"></x-icons.search>
+                                </button>
+                            </form>
+                        </th>
+                    @endforeach
+                    <th
+                        class="p-2 sticky right-0 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                    </th>
+                    <th class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
+                    </th>
+                </tr>
                 @forelse($paginator ?? $all as $item)
                     <tr>
                         <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300">
                         </td>
                         <th
-                            class="p-4 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-200">
+                            class="p-4 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-300">
                             <div class="grid place-items-center place-content-center w-full h-full">
-                                <input type="checkbox" name="" id=""
-                                    class="appearance-none relative w-5 h-5 border-2 border-base-300 rounded cursor-pointer !outline-none transition-all after:transition-all
+                                <input type="checkbox" name="id[]" id="" form="delete_any_form" value="{{ $item->id }}"
+                                    class="check_item appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer ring-offset-base-100 outline-none transition-all after:transition-all
                                 hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2
                                 focus-visible:ring-2 focus-visible:ring-primary  focus-visible:ring-offset-2
                                 checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.75] checked:after:left-[5px] checked:after:bottom-0.5 checked:after:border-r-4 checked:after:border-b-4
                                 indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
-                                after:content-[''] after:absolute after:bg-transparent after:border-base-100
-                                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-base-100 indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
+                                after:content-[''] after:absolute after:bg-transparent after:border-primary-content
+                                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
                             </div>
                         </th>
-                        <th
-                            class="p-4 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-200">
+                        <th class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
+                            data-row="true">
                             {{ $loop->iteration }}
                         </th>
                         @foreach ($resource->columns as $column)
-                            <td
-                                class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border-l-2 border-t-2 border-base-300">
+                            <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border-l-2 border-t-2 border-base-300 transition-colors"
+                                data-col_index="{{ $loop->index }}">
                                 @if (is_array($item->{$column}))
                                     {{ implode(', ', $item->{$column}) }}
                                 @else
@@ -149,32 +201,36 @@
                             </td>
                         @endforeach
                         <td
-                            class="p-4 pr-0 bg-base-100 text-base text-left align-middle font-normal border-l-2 border-t-2 border-base-300">
+                            class="p-4 pr-0 sticky right-0 bg-base-100 text-base text-left align-middle font-normal border-l-2 border-t-2 border-base-300">
                             <div class="flex justify-center items-center gap-2 w-full">
-                                <button
-                                    class="grid place-items-center w-10 h-10 bg-success/90 text-success-content/90 rounded-lg transition-colors
+                                <div data-te-toggle="tooltip" data-te-placement="bottom" title="Show">
+                                    <button
+                                        class="grid place-items-center w-10 h-10 bg-success/90 text-success-content/90 rounded-lg transition-colors
                              hover:bg-success/100 hover:text-success-content/100"
-                                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Show">
-                                    <x-icons.eye_on class="w-6 h-6" stroke="2">
-                                    </x-icons.eye_on>
-                                </button>
-                                <button
+                                        data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="modal"
+                                        data-te-target="#view_modal_{{ $loop->index }}">
+                                        <x-icons.eye_on class="w-6 h-6" stroke="2">
+                                        </x-icons.eye_on>
+                                    </button>
+                                </div>
+                                <a href="{{ $resource->route_edit($item) }}"
                                     class="grid place-items-center w-10 h-10 bg-info/90 text-info-content/90 rounded-lg transition-colors
                                  hover:bg-info/100 hover:text-info-content/100"
                                     data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
                                     data-te-placement="bottom" title="Edit">
                                     <x-icons.edit class="w-6 h-6" stroke="2">
                                     </x-icons.edit>
-                                </button>
-                                <button
-                                    class="grid place-items-center w-10 h-10 bg-danger/90 text-danger-content/90 rounded-lg transition-colors
+                                </a>
+                                <div data-te-toggle="tooltip" data-te-placement="bottom" title="Delete">
+                                    <button
+                                        class="grid place-items-center w-10 h-10 bg-danger/90 text-danger-content/90 rounded-lg transition-colors
                                  hover:bg-danger/100 hover:text-danger-content/100"
-                                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Delete">
-                                    <x-icons.delete class="w-6 h-6" stroke="2">
-                                    </x-icons.delete>
-                                </button>
+                                        data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="modal"
+                                        data-te-target="#delete_modal_{{ $loop->index }}">
+                                        <x-icons.delete class="w-6 h-6" stroke="2">
+                                        </x-icons.delete>
+                                    </button>
+                                </div>
                             </div>
                         </td>
                         <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
@@ -188,19 +244,19 @@
                         class="block min-w-[4px] w-full h-4 px-2 bg-base-100 border-b-2 rounded-bl-xl border-l-2 border-base-300">
                     </th>
                     <th class="px-2 bg-base-100 h-4 border-b-2 border-base-300"></th>
-                    <th class="px-2 bg-base-100 h-4 border-b-2 border-base-300"></th>
+                    <th class="px-2 sticky left-0 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
                     @foreach ($resource->columns as $column)
                         <th class="px-2 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
                     @endforeach
-                    <th class="px-2 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
+                    <th class="px-2 sticky right-0 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
                     <th class="block w-2 h-4 px-2 bg-base-100 border-b-2 rounded-br-xl border-r-2 border-base-300">
                     </th>
                 </tr>
             </tfoot>
         </table>
     </section>
-    <section class="flex justify-between items-center">
-        <nav class="flex gap-8 items-center">
+    <section class="flex justify-between items-center max-md:flex-col gap-4">
+        <nav class="flex gap-4 items-center max-sm:flex-col">
             <ul class="flex gap-2 items-center">
                 <li>
                     @if ($paginator->previousPageUrl())
@@ -374,26 +430,164 @@
                 </select>
             </div>
         </nav>
-        <div class="flex gap-4 items-center">
+        <div class="flex gap-4 items-center max-sm:flex-col">
             <div>
                 <span class="capitalize">{{ trans('showing') }}</span>
                 @if ($paginator->onFirstPage())
-                    <span class="font-semibold text-gray-900 dark:text-white">
+                    <span class="font-semibold text-base-content">
                         {{ $paginator->firstItem() ?? 0 }}
                     </span>
                     <span> {{ trans('to') }} </span>
-                    <span class="font-semibold text-gray-900 dark:text-white">
+                    <span class="font-semibold text-base-content">
                         {{ $paginator->lastItem() ?? 0 }}
                     </span>
                 @else
-                    <span class="font-semibold text-gray-900 dark:text-white">
+                    <span class="font-semibold text-base-content">
                         {{ $paginator->count() }}
                     </span>
                 @endif
                 <span>{{ trans('of') }}</span>
-                <span class="font-semibold text-gray-900 dark:text-white">{{ $paginator->total() }}</span>
+                <span class="font-semibold text-base-content">{{ $paginator->total() }}</span>
                 <span>{{ trans('entries') }}</span>.
             </div>
         </div>
+    </section>
+    <section>
+        <div data-te-modal-init
+            class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+            id="delete_modal" tabindex="-1" aria-labelledby="delete_modal_label" aria-hidden="true">
+            <div data-te-modal-dialog-ref
+                class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
+                <div
+                    class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
+                    <div class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
+                        <div class="text-xl font-medium text-base-content" id="delete_modal_label">
+                            Delete Selected Data
+                        </div>
+                        <button
+                            class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
+                            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                            data-te-placement="bottom" title="Close" data-te-modal-dismiss>
+                            <x-icons.close class="w-5 h-5" stroke="2.5">
+                            </x-icons.close>
+                        </button>
+                    </div>
+                    <div class="flex-auto p-4" data-te-modal-body-ref>
+                        Are you sure you want to delete selected data?
+                    </div>
+                    <div
+                        class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
+                        <button
+                            class="grid place-items-center px-8 py-2 bg-base-200 text-base-content text-sm font-medium rounded-md transition-colors hover:bg-base-300"
+                            data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                            Cancel
+                        </button>
+                        <form id="delete_any_form" action="{{ $resource->route_delete_any() }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-sm font-medium rounded-md transition-colors hover:bg-primary-focus"
+                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                Yes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @forelse($paginator ?? $all as $item)
+            <div data-te-modal-init
+                class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                id="view_modal_{{ $loop->index }}" tabindex="-1"
+                aria-labelledby="view_modal_{{ $loop->index }}_label" aria-hidden="true">
+                <div data-te-modal-dialog-ref
+                    class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
+                    <div
+                        class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
+                        <div
+                            class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
+                            <div class="text-xl font-medium text-base-content"
+                                id="view_modal_{{ $loop->index }}_label">
+                                View Data #{{ $loop->iteration }}
+                            </div>
+                            <button
+                                class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
+                                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                data-te-placement="bottom" title="Close" data-te-modal-dismiss>
+                                <x-icons.close class="w-5 h-5" stroke="2.5">
+                                </x-icons.close>
+                            </button>
+                        </div>
+                        <div class="flex-auto flex flex-col gap-4 p-4 overflow-y-auto" data-te-modal-body-ref>
+                            @foreach ($resource->columns as $column)
+                                <div class="flex flex-col gap-1">
+                                    <div class="text-lg font-semibold">
+                                        {{ trans($resource->model->definition($column)->name) }}</div>
+                                    <div class="text-base font-medium">{{ $item->{$column} }}</div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div
+                            class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
+                            <a href="{{ $resource->route_edit($item) }}"
+                                class="grid place-items-center px-8 py-2 bg-info/70 text-info-content/90 text-sm font-medium rounded-md transition-colors hover:bg-info/100 hover:text-info-content/100"
+                                data-te-ripple-init data-te-ripple-color="ligth">
+                                Edit
+                            </a>
+                            <button
+                                class="grid place-items-center px-8 py-2 bg-danger/70 text-danger-content/90 text-sm font-medium rounded-md transition-colors hover:bg-danger/100 hover:text-danger-content/100"
+                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-te-modal-init
+                class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                id="delete_modal_{{ $loop->index }}" tabindex="-1"
+                aria-labelledby="delete_modal_{{ $loop->index }}_label" aria-hidden="true">
+                <div data-te-modal-dialog-ref
+                    class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
+                    <div
+                        class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
+                        <div
+                            class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
+                            <div class="text-xl font-medium text-base-content"
+                                id="delete_modal_{{ $loop->index }}_label">
+                                Delete Data
+                            </div>
+                            <button
+                                class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
+                                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                data-te-placement="bottom" title="Close" data-te-modal-dismiss>
+                                <x-icons.close class="w-5 h-5" stroke="2.5">
+                                </x-icons.close>
+                            </button>
+                        </div>
+                        <div class="flex-auto p-4" data-te-modal-body-ref>
+                            Are you sure you want to delete data?
+                        </div>
+                        <div
+                            class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
+                            <button
+                                class="grid place-items-center px-8 py-2 bg-base-200 text-base-content text-sm font-medium rounded-md transition-colors hover:bg-base-300"
+                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                Cancel
+                            </button>
+                            <form action="{{ $resource->route_delete($item) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button
+                                    class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-sm font-medium rounded-md transition-colors hover:bg-primary-focus"
+                                    data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                    Yes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 </div>

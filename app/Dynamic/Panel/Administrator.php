@@ -31,6 +31,7 @@ class Administrator extends Panel
             ),
             new Menu(
                 name: "users",
+                link: route('web.administrator.users.administrator.list'),
                 icon: Blade::render('<x-icons.users stroke="2" />'),
                 submenu: [
                     new Menu(

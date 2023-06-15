@@ -32,7 +32,9 @@ class Administrator extends Authenticatable
         self::$definitions = [
             'photo' => new Definition(
                 name: 'photo',
-                type: 'file:image',
+                type: 'file',
+                format: 'image/*',
+                nullable: true,
             ),
             'name' => new Definition(
                 name: 'name',
@@ -41,22 +43,29 @@ class Administrator extends Authenticatable
             'fullname' => new Definition(
                 name: 'fullname',
                 type: 'string',
+                nullable: true,
             ),
             'address' => new Definition(
                 name: 'address',
                 type: 'string',
+                nullable: true,
             ),
             'telp' => new Definition(
                 name: 'telp',
                 type: 'string',
+                format: 'tel',
+                nullable: true,
             ),
             'email' => new Definition(
                 name: 'email',
                 type: 'string',
+                format: 'email',
+                nullable: true,
             ),
             'password' => new Definition(
                 name: 'password',
                 type: 'string',
+                format: 'password',
             ),
         ];
         self::$fetcher_relation = function ($definition) {

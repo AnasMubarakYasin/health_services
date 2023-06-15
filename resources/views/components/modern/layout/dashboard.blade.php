@@ -16,6 +16,10 @@
 
     <script>
         var panel = @json($panel);
+        var errors = {};
+        @env('local')
+            errors = @json($errors->getBags());
+        @endenv
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,7 +39,8 @@
 
 <body class="opacity-0 transition-opacity">
     {{ $sidebar }}
-    <section id="content" class="flex flex-col w-full min-h-screen max-xs:hidden relative bg-base-200 text-base-content">
+    <section id="content"
+        class="flex flex-col w-full min-h-screen max-xs:hidden relative bg-base-200 text-base-content">
         {{ $topbar }}
         {{ $main }}
         {{ $bottombar }}

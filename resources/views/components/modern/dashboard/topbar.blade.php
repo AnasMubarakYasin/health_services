@@ -1,4 +1,5 @@
 @aware(['panel', 'title'])
+<div class="fixed top-0 right-0 w-full h-16 sm:h-20d max-xs:hidden backdrop-blur z-[1]"></div>
 <header id="topbar"
     class="group flex items-center h-14 sm:h-16 px-4 gap-4 max-xs:hidden sticky top-0 bg-base-100 z-10 transition-all
         data-[card-type='elevated']:shadow-bottom
@@ -12,6 +13,7 @@
         data-[position='floated']:top-4
         data-[position='floated']:rounded-xl"
     data-card-type="elevated" data-position="static" data-button-interface="ghosted" data-button-shape="rounded">
+    {{-- <div class="absolute -top-14 sm:-top-16 -left-2 w-[calc(100%+1rem)] h-[calc(100%+1px)] max-xs:hidden backdrop-blur z-10"></div> --}}
     <div class="flex gap-2 items-center justify-start">
         <label role="button"
             class="grid place-items-center w-10 h-10 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg swap swap-rotate transition-colors
