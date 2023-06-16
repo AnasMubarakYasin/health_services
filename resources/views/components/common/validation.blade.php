@@ -1,10 +1,9 @@
 @env('local')
-@empty($errors->all())
-@else
+@if($errors->any())
     <div>
         @foreach ($errors->all() as $error)
             <div>{{ $error }}</div>
         @endforeach
     </div>
-@endempty
+@endif
 @endenv

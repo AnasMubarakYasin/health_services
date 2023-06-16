@@ -30,6 +30,7 @@ class Entry
                 'account' => [
                     'name' => 'admin',
                     'password' => 'admin',
+                    'remember' => true,
                 ],
                 'demo' => true,
             ],

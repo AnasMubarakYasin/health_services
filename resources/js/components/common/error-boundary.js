@@ -1,6 +1,8 @@
 import { component, createRoot, update, invalidate, useState } from "ivi";
 import { htm } from "@ivi/htm";
 
+window.errors ??= {};
+
 const root = createRoot(document.body);
 const ToastGroup = component((c) => {
   const [get, set] = useState(c, []);
@@ -20,7 +22,7 @@ const ToastGroup = component((c) => {
   });
   addEventListener("rejectionhandled", (ev) => {});
   let state = get();
-  for (const [key, error] of Object.entries(errors)) {
+  for (const [key, error] of Object.entries(window.errors)) {
     for (const [key_i, error_i] of Object.entries(error)) {
       state.push({ message: `${key}: ${key_i}: ${error_i.join(" ")}` });
     }

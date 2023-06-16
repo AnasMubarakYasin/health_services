@@ -1,5 +1,5 @@
 <main id="main"
-    class="flex-col flex-grow relative
+    class="flex-col flex-grow relative z-[1]
         data-[position='static']:p-4
         data-[position='floated']:m-4"
     data-position="static">

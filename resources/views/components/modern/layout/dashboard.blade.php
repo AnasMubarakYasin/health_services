@@ -23,6 +23,7 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/js/components/common/bg-gen.js')
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/components/modern/layout/dashboard.js')
 
@@ -37,10 +38,10 @@
     @yield('head')
 </head>
 
-<body class="opacity-0 transition-opacity">
+<body class="opacity-0 transition-opacity bg-base-200 text-base-content">
     {{ $sidebar }}
     <section id="content"
-        class="flex flex-col w-full min-h-screen max-xs:hidden relative bg-base-200 text-base-content">
+        class="flex flex-col w-full min-h-screen max-xs:hidden relative">
         {{ $topbar }}
         {{ $main }}
         {{ $bottombar }}
