@@ -9,7 +9,7 @@
 <div class="flex flex-col gap-4">
     <section class="flex gap-4">
         <section class="flex gap-2">
-            <a href="{{ route('web.administrator.users.administrator.create') }}"
+            <a href="{{ $resource->web_create() }}"
                 class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
                     hover:bg-primary-focus"
                 data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
@@ -58,9 +58,9 @@
                         class="p-4 pl-0 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-base-300">
                         <div class="grid place-items-center place-content-center w-full h-full">
                             <input type="checkbox" name="all" id="check_mode" form="delete_any_form"
-                                class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer ring-offset-base-100 !outline-none transition-all after:transition-all
-                                hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2
-                                focus-visible:ring-2 focus-visible:ring-primary  focus-visible:ring-offset-2
+                                class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
+                                hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2 hover:ring-offset-base-100
+                                focus:outline-none focus:ring-offset-base-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
                                 checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.75] checked:after:left-[5px] checked:after:bottom-0.5 checked:after:border-r-4 checked:after:border-b-4
                                 indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
                                 after:content-[''] after:absolute after:bg-transparent after:border-primary-content
@@ -148,7 +148,7 @@
                                 <input type="hidden" name="filter" value="on">
                                 <input type="text" name="filter_{{ $column }}"
                                     value="{{ request()->query("filter_$column") }}"
-                                    class="w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                                    class="w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                                 <button
                                     class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                                     group-[#topbar&[data-button-interface='filled']]:bg-primary/30
@@ -176,7 +176,8 @@
                         <th
                             class="p-4 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-300">
                             <div class="grid place-items-center place-content-center w-full h-full">
-                                <input type="checkbox" name="id[]" id="" form="delete_any_form" value="{{ $item->id }}"
+                                <input type="checkbox" name="id[]" id="" form="delete_any_form"
+                                    value="{{ $item->id }}"
                                     class="check_item appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer ring-offset-base-100 outline-none transition-all after:transition-all
                                 hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2
                                 focus-visible:ring-2 focus-visible:ring-primary  focus-visible:ring-offset-2
@@ -213,7 +214,7 @@
                                         </x-icons.eye_on>
                                     </button>
                                 </div>
-                                <a href="{{ $resource->route_edit($item) }}"
+                                <a href="{{ $resource->web_update($item) }}"
                                     class="grid place-items-center w-10 h-10 bg-info/90 text-info-content/90 rounded-lg transition-colors
                                  hover:bg-info/100 hover:text-info-content/100"
                                     data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
@@ -482,7 +483,7 @@
                             data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
                             Cancel
                         </button>
-                        <form id="delete_any_form" action="{{ $resource->route_delete_any() }}" method="post">
+                        <form id="delete_any_form" action="{{ $resource->api_delete_any() }}" method="post">
                             @csrf
                             @method('DELETE')
                             <button
@@ -529,14 +530,15 @@
                         </div>
                         <div
                             class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
-                            <a href="{{ $resource->route_edit($item) }}"
+                            <a href="{{ $resource->web_update($item) }}"
                                 class="grid place-items-center px-8 py-2 bg-info/70 text-info-content/90 text-sm font-medium rounded-md transition-colors hover:bg-info/100 hover:text-info-content/100"
                                 data-te-ripple-init data-te-ripple-color="ligth">
                                 Edit
                             </a>
                             <button
                                 class="grid place-items-center px-8 py-2 bg-danger/70 text-danger-content/90 text-sm font-medium rounded-md transition-colors hover:bg-danger/100 hover:text-danger-content/100"
-                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                data-te-toggle="modal" data-te-target="#delete_modal_{{ $loop->index }}"
+                                data-te-ripple-init data-te-ripple-color="ligth">
                                 Hapus
                             </button>
                         </div>
@@ -544,7 +546,7 @@
                 </div>
             </div>
             <div data-te-modal-init
-                class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                class="fixed left-0 top-0 z-[1060] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
                 id="delete_modal_{{ $loop->index }}" tabindex="-1"
                 aria-labelledby="delete_modal_{{ $loop->index }}_label" aria-hidden="true">
                 <div data-te-modal-dialog-ref
@@ -575,7 +577,7 @@
                                 data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
                                 Cancel
                             </button>
-                            <form action="{{ $resource->route_delete($item) }}" method="post">
+                            <form action="{{ $resource->api_delete($item) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button

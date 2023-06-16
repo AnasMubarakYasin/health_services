@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Administrator;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AdministratorController extends Controller
 {
-    public function administrator_list()
+    public function index()
     {
         $resource = Administrator::tableable()->from_request(
             request: request(),
@@ -22,21 +22,21 @@ class UserController extends Controller
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
-        $resource->route_store = function () {
+        $resource->web_create = function () {
             return route('web.administrator.users.administrator.create');
         };
-        $resource->route_edit = function ($item) {
+        $resource->web_update = function ($item) {
             return route('web.administrator.users.administrator.update', ['administrator' => $item]);
         };
-        $resource->route_delete = function ($item) {
+        $resource->api_delete = function ($item) {
             return route('web.resource.administrator.delete', ['administrator' => $item]);
         };
-        $resource->route_delete_any = function ($item) {
+        $resource->api_delete_any = function () {
             return route('web.resource.administrator.delete_any');
         };
-        return view('pages.administrator.administrator.list', ['resource' => $resource]);
+        return view('pages.administrator.administrator.index', ['resource' => $resource]);
     }
-    public function administrator_create()
+    public function create()
     {
         $resource = Administrator::formable()->from_create(
             fields: [
@@ -49,15 +49,15 @@ class UserController extends Controller
                 'password',
             ],
         );
-        $resource->route_create = function () {
+        $resource->api_create = function () {
             return route('web.resource.administrator.create');
         };
-        $resource->route_view_any = function ($item) {
-            return route('web.administrator.users.administrator.list');
+        $resource->web_view_any = function () {
+            return route('web.administrator.users.administrator.index');
         };
         return view('pages.administrator.administrator.create', ['resource' => $resource]);
     }
-    public function administrator_update(Administrator $administrator)
+    public function update(Administrator $administrator)
     {
         $resource = Administrator::formable()->from_update(
             model: $administrator,
@@ -71,11 +71,11 @@ class UserController extends Controller
                 'password',
             ],
         );
-        $resource->route_update = function ($item) {
+        $resource->api_update = function ($item) {
             return route('web.resource.administrator.update', ['administrator' => $item]);
         };
-        $resource->route_view_any = function ($item) {
-            return route('web.administrator.users.administrator.list');
+        $resource->web_view_any = function () {
+            return route('web.administrator.users.administrator.index');
         };
         return view('pages.administrator.administrator.update', ['resource' => $resource]);
     }

@@ -45,9 +45,17 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         /** SECTION - User */
         Route::get('/administrator/users', 'User\Administrator\DashboardController@empty')->name('web.administrator.users');
 
-        Route::get('/administrator/users/administrator', 'User\Administrator\UserController@administrator_list')->name('web.administrator.users.administrator.list');
-        Route::get('/administrator/users/administrator/create', 'User\Administrator\UserController@administrator_create')->name('web.administrator.users.administrator.create');
-        Route::get('/administrator/users/administrator/{administrator}/update', 'User\Administrator\UserController@administrator_update')->name('web.administrator.users.administrator.update');
+        Route::get('/administrator/users/administrator', 'User\Administrator\AdministratorController@index')->name('web.administrator.users.administrator.index');
+        Route::get('/administrator/users/administrator/create', 'User\Administrator\AdministratorController@create')->name('web.administrator.users.administrator.create');
+        Route::get('/administrator/users/administrator/{administrator}/update', 'User\Administrator\AdministratorController@update')->name('web.administrator.users.administrator.update');
+
+        Route::get('/administrator/users/midwife', 'User\Administrator\MidwifeController@index')->name('web.administrator.users.midwife.index');
+        Route::get('/administrator/users/midwife/create', 'User\Administrator\MidwifeController@create')->name('web.administrator.users.midwife.create');
+        Route::get('/administrator/users/midwife/{midwife}/update', 'User\Administrator\MidwifeController@update')->name('web.administrator.users.midwife.update');
+
+        Route::get('/administrator/users/patient', 'User\Administrator\PatientController@index')->name('web.administrator.users.patient.index');
+        Route::get('/administrator/users/patient/create', 'User\Administrator\PatientController@create')->name('web.administrator.users.patient.create');
+        Route::get('/administrator/users/patient/{patient}/update', 'User\Administrator\PatientController@update')->name('web.administrator.users.patient.update');
         /** !SECTION - User */
     });
 
@@ -60,4 +68,14 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::patch('/resource/administrator/{administrator}', 'Resource\AdministratorController@update')->name('web.resource.administrator.update');
     Route::delete('/resource/administrator', 'Resource\AdministratorController@delete_any')->name('web.resource.administrator.delete_any');
     Route::delete('/resource/administrator/{administrator}', 'Resource\AdministratorController@delete')->name('web.resource.administrator.delete');
+
+    Route::post('/resource/midwife', 'Resource\MidwifeController@create')->name('web.resource.midwife.create');
+    Route::patch('/resource/midwife/{midwife}', 'Resource\MidwifeController@update')->name('web.resource.midwife.update');
+    Route::delete('/resource/midwife', 'Resource\MidwifeController@delete_any')->name('web.resource.midwife.delete_any');
+    Route::delete('/resource/midwife/{midwife}', 'Resource\MidwifeController@delete')->name('web.resource.midwife.delete');
+
+    Route::post('/resource/patient', 'Resource\PatientController@create')->name('web.resource.patient.create');
+    Route::patch('/resource/patient/{patient}', 'Resource\PatientController@update')->name('web.resource.patient.update');
+    Route::delete('/resource/patient', 'Resource\PatientController@delete_any')->name('web.resource.patient.delete_any');
+    Route::delete('/resource/patient/{patient}', 'Resource\PatientController@delete')->name('web.resource.patient.delete');
 });

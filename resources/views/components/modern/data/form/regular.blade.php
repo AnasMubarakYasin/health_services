@@ -1,7 +1,7 @@
 @aware(['resource'])
 <div class="flex flex-col gap-4 p-4 bg-base-100 rounded-lg">
     <form id="form" class="grid gap-x-4 gap-y-8 grid-cols-2"
-        action="{{ $resource->is_create() ? $resource->route_create() : $resource->route_update($model) }}" method="post"
+        action="{{ $resource->is_create() ? $resource->api_create() : $resource->api_update($model) }}" method="post"
         enctype="multipart/form-data">
         @csrf
         @if ($resource->is_update())
@@ -11,7 +11,7 @@
             @php
                 $definition = $resource->definition($field);
             @endphp
-            <input type="hidden" name="_view_any" value="{{ $resource->route_view_any() }}">
+            <input type="hidden" name="_view_any" value="{{ $resource->web_view_any() }}">
             @switch($definition->type)
                 @case('string')
                     <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">

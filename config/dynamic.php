@@ -41,7 +41,7 @@ return [
     ],
     'user' => [],
     'aggrement' => [
-        'finish_at' => '2023-06-20 00:00:00',
+        'finish_at' => '2023-06-25 00:00:00',
         'finished' => false,
     ],
 ];

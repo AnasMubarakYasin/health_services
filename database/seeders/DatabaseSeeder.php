@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Administrator;
+use App\Models\Midwife;
+use App\Models\Patient;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +20,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'password' => 'admin',
         ]);
-        // $administrator = Administrator::factory()->count(100)->create();
+        $midwife = Midwife::factory()->create([
+            'name' => 'midwife',
+            'password' => 'midwife',
+        ]);
+        $patient = Patient::factory()->create([
+            'name' => 'patient',
+            'password' => 'patient',
+        ]);
+        $administrator = Administrator::factory()->count(100)->create();
+        $midwives = Midwife::factory()->count(100)->create();
+        $patients = Patient::factory()->count(100)->create();
     }
 }

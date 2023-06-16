@@ -2,22 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use App\Dynamic\Resource\Definition;
 use App\Dynamic\Trait\Formable;
 use App\Dynamic\Trait\Statable;
 use App\Dynamic\Trait\Tableable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
-class Administrator extends Authenticatable
+class Patient extends Model
 {
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
@@ -28,44 +25,27 @@ class Administrator extends Authenticatable
     }
     public static function defining()
     {
-        self::$caption = "administrator";
+        self::$caption = "patient";
         self::$definitions = [
+            'name' => new Definition(
+                name: 'name',
+                type: 'string',
+            ),
+            'password' => new Definition(
+                name: 'password',
+                type: 'string',
+                format: 'password',
+            ),
             'photo' => new Definition(
                 name: 'photo',
                 type: 'file',
                 format: 'image/*',
                 nullable: true,
             ),
-            'name' => new Definition(
-                name: 'name',
-                type: 'string',
-            ),
             'fullname' => new Definition(
                 name: 'fullname',
                 type: 'string',
                 nullable: true,
-            ),
-            'address' => new Definition(
-                name: 'address',
-                type: 'string',
-                nullable: true,
-            ),
-            'telp' => new Definition(
-                name: 'telp',
-                type: 'string',
-                format: 'tel',
-                nullable: true,
-            ),
-            'email' => new Definition(
-                name: 'email',
-                type: 'string',
-                format: 'email',
-                nullable: true,
-            ),
-            'password' => new Definition(
-                name: 'password',
-                type: 'string',
-                format: 'password',
             ),
         ];
         self::$fetcher_relation = function ($definition) {
@@ -76,26 +56,18 @@ class Administrator extends Authenticatable
     }
 
     protected $fillable = [
-        'photo',
         'name',
-        'fullname',
-        'address',
-        'telp',
-        'email',
         'password',
+        'photo',
+        'fullname',
+        'remember_token',
     ];
     protected $hidden = [
         'password',
         'remember_token',
     ];
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $casts = [];
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
     public function setPhotoAttribute($value)
     {
         if (is_null($value)) {
@@ -107,7 +79,7 @@ class Administrator extends Authenticatable
                 Storage::delete($this->attributes['photo']);
             }
             $path = $this->id ? "$this->id" : 'temp';
-            $this->attributes['photo'] = Storage::put("administrator/$path", $value);
+            $this->attributes['photo'] = Storage::put("patient/$path", $value);
         }
     }
     public function getPhotoUrlAttribute()

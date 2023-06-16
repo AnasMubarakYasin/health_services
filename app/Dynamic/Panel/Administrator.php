@@ -31,14 +31,20 @@ class Administrator extends Panel
             ),
             new Menu(
                 name: "users",
-                link: route('web.administrator.users.administrator.list'),
+                link: route('web.administrator.users'),
                 icon: Blade::render('<x-icons.users stroke="2" />'),
                 submenu: [
                     new Menu(
                         name: "administrator",
-                        link: route('web.administrator.users.administrator.list'),
-                        pname: "view_any",
-                        pclass: ModelsAdministrator::class,
+                        link: route('web.administrator.users.administrator.index'),
+                    ),
+                    new Menu(
+                        name: "midwife",
+                        link: route('web.administrator.users.midwife.index'),
+                    ),
+                    new Menu(
+                        name: "patient",
+                        link: route('web.administrator.users.patient.index'),
                     ),
                 ]
             ),
