@@ -17,6 +17,7 @@ class CreateRequest extends FormRequest
             'password' => 'required|string',
             'photo' => 'nullable|image|size:2048',
             'fullname' => 'nullable|string',
+            'email' => 'nullable|email',
         ];
     }
 }

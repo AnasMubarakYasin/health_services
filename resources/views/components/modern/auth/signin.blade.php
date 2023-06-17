@@ -5,6 +5,7 @@
     'user' => '',
     'data' => [],
     'demo' => false,
+    'register' => '',
     'head' => '',
 ])
 <!DOCTYPE html>
@@ -37,22 +38,25 @@
 </head>
 
 <body class="grid place-content-center gap-8 min-h-screen bg-base-200">
-    <div class="absolute top-8 left-1/2 right-1/2 z-10 grid place-content-center">
-        <div class="px-3 py-1 text-sm font-semibold bg-primary text-primary-content rounded-full">Demo</div>
-    </div>
-    <form action="{{ $action }}" method="post" class="grid gap-8 p-8 w-96 z-10 bg-base-100 rounded-lg shadow-lg">
+    <form action="{{ $action }}" method="post"
+        class="relative grid gap-8 p-8 m-8 w-96 z-10 bg-base-100 rounded-lg shadow-lg">
         @csrf
+        @if ($demo)
+            <div class="absolute top-2 left-2 z-10 grid place-content-center">
+                <div class="px-3 py-1 text-sm font-semibold bg-primary text-primary-content rounded-full">Demo</div>
+            </div>
+        @endif
         <div class="grid text-center pb-6">
             <div class="text-2xl text-primary font-semibold capitalize">bladerlaiga</div>
-            <div class="text-base-content/70 font-medium">Sign In to continue to App.</div>
+            <div class="text-base-content/70 font-medium">Sign In to continue App.</div>
         </div>
         <div class="grid gap-4">
             <div class="flex flex-col gap-1">
                 <label for="name" class="text-base text-base-content font-medium">
                     Username
                 </label>
-                <input id="name" name="name" value="{{ old('name', $data['name']) }}" type="text" autocomplete="username" autofocus
-                    placeholder="Enter Username"
+                <input id="name" name="name" value="{{ old('name', $data['name']) }}" type="text"
+                    autocomplete="username" autofocus placeholder="Enter Username"
                     class="peer w-full px-4 py-2 bg-base-100 text-sm border-1 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                 @error('name')
                     <div class="text-sm text-danger">{{ $message }}</div>
@@ -63,10 +67,12 @@
                     <label for="password" class="text-base text-base-content font-medium">
                         Password
                     </label>
-                    <a href="" class="text-base text-primary font-medium hover:text-primary-focus transition-colors">Forgot Password?</a>
+                    <a href=""
+                        class="text-base text-primary font-medium hover:text-primary-focus transition-colors">Forgot
+                        Password?</a>
                 </div>
                 <input id="password" name="password" value="{{ old('password', $data['password']) }}" type="password"
-                    autocomplete="current-password" placeholder="Enter Username"
+                    autocomplete="current-password" placeholder="Enter Password"
                     class="peer w-full px-4 py-2 bg-base-100 text-sm border-1 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                 @error('password')
                     <div class="text-sm text-danger">{{ $message }}</div>
@@ -74,7 +80,7 @@
             </div>
             <div class="flex gap-2 items-center">
                 <input id="remember" name="remember" type="checkbox" @checked(old('remember', isset($data['remember'])))
-                class="appearance-none relative w-5 h-5 bg-base-100 border-1 border-base-300 rounded cursor-pointer !outline-none !ring-0 transition-all after:transition-all
+                    class="appearance-none relative w-5 h-5 bg-base-100 border-1 border-base-300 rounded cursor-pointer !outline-none !ring-0 transition-all after:transition-all
                 hover:bg-base-200
                 focus:outline-none
                 checked:!bg-primary
@@ -85,10 +91,13 @@
                     Remember Me
                 </label>
             </div>
-            <button type="submit" class="w-full py-2 bg-primary text-primary-content hover:bg-primary-focus rounded-md transition-colors">
+            <button type="submit"
+                class="w-full py-2 bg-primary text-primary-content hover:bg-primary-focus rounded-md transition-colors">
                 Sign In
             </button>
-            <div class="text-base">Don't have an account? <a href="" class="text-primary font-medium hover:text-primary-focus transition-colors">Sign Up</a></div>
+            <div class="text-base">Don't have an account? <a href="{{ $register }}"
+                    class="text-primary font-medium hover:text-primary-focus transition-colors">Sign Up</a>
+            </div>
         </div>
         <x-common.validation></x-common.validation>
     </form>

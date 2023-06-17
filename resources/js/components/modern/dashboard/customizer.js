@@ -36,6 +36,9 @@ console.log("customizer init");
 
 ctx.sync_state("customizer", data, (value) => Object.assign(data, value));
 
+if (ctx.media_query.sm.matches) {
+  opt.sidenavWidth = 350;
+}
 const customizer_toggle_elm = document.getElementById("customizer_toggle");
 const customizer_elm = document.getElementById("customizer");
 const rightbar_lib = new Sidenav(customizer_elm, opt);

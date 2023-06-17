@@ -2,6 +2,8 @@
 
 use App\Dynamic\Panel\Administrator as PanelAdministrator;
 use App\Models\Administrator;
+use App\Dynamic\Panel\Patient as PanelPatient;
+use App\Models\Patient;
 
 return [
     'application' => [
@@ -38,6 +40,7 @@ return [
     ],
     'panel' => [
         Administrator::class => PanelAdministrator::class,
+        Patient::class => PanelPatient::class,
     ],
     'user' => [],
     'aggrement' => [

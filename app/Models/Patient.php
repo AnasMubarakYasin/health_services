@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Dynamic\Resource\Definition;
 use App\Dynamic\Trait\Formable;
 use App\Dynamic\Trait\Statable;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
-class Patient extends Model
+class Patient extends Authenticatable
 {
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
@@ -47,6 +48,12 @@ class Patient extends Model
                 type: 'string',
                 nullable: true,
             ),
+            'email' => new Definition(
+                name: 'email',
+                type: 'string',
+                format: 'email',
+                nullable: true,
+            ),
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
@@ -60,13 +67,16 @@ class Patient extends Model
         'password',
         'photo',
         'fullname',
+        'email',
         'remember_token',
     ];
     protected $hidden = [
         'password',
         'remember_token',
     ];
-    protected $casts = [];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     public function setPhotoAttribute($value)
     {

@@ -68,15 +68,15 @@ class Table extends Resource
                 if (isset($this->filter[$column])) {
                     switch ($this->model->definition($column)->type) {
                         case 'string':
-                            $query->orWhereFullText($column, $this->filter[$column]);
+                            $query->whereFullText($column, $this->filter[$column]);
                             break;
                         case 'number':
-                            $query->orWhere($column, $this->filter[$column]);
+                            $query->where($column, $this->filter[$column]);
                             break;
                         case 'model':
                             $value = $this->filter[$column];
                             $relation = $this->model->definition($column)->relation;
-                            $query->with($relation)->orWhereHas($relation, function ($builder) use ($value) {
+                            $query->with($relation)->whereHas($relation, function ($builder) use ($value) {
                                 $builder->where('id', $value);
                             });
                             break;

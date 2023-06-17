@@ -160,7 +160,10 @@
                                 </div>
                                 <hr>
                                 {{-- <div class="px-4 py-2"></div> --}}
-                                <nav class="px-4 text-right">
+                                <nav class="flex justify-end gap-x-2 px-4 text-right">
+                                    <a href="{{ $user['register'] . (isset($user['demo']) ? '?demo=true' : '') }}"
+                                        class="text-blue-500 font-semibold hover:underline">Register</a>
+                                    <div>|</div>
                                     <a href="{{ $user['entry'] . (isset($user['demo']) ? '?demo=true' : '') }}"
                                         class="text-blue-500 font-semibold hover:underline">Visit</a>
                                 </nav>

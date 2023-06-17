@@ -16,6 +16,7 @@ class PatientController extends Controller
                 "name",
                 'password',
                 'photo',
+                'email',
                 "fullname",
             ],
             pagination: ['per' => 5, 'num' => 1],
@@ -41,6 +42,7 @@ class PatientController extends Controller
                 "name",
                 'password',
                 'photo',
+                'email',
                 "fullname",
             ],
         );
@@ -60,6 +62,7 @@ class PatientController extends Controller
                 "name",
                 'password',
                 'photo',
+                'email',
                 "fullname",
             ],
         );

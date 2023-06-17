@@ -28,17 +28,19 @@ Route::redirect('/administrator', '/administrator/dashboard');
 Route::middleware('authc.guest:web.administrator.dashboard,administrator')->group(function () {
     Route::middleware('common.locale')->group(function () {
         Route::get('/administrator/login', 'Auth\AdministratorController@login_show')->name('web.administrator.login_show');
+        Route::get('/administrator/register', 'Auth\AdministratorController@register_show')->name('web.administrator.register_show');
     });
     Route::post('/administrator/login', 'Auth\AdministratorController@login_perfom')->name('web.administrator.login_perform');
+    Route::post('/administrator/register', 'Auth\AdministratorController@register_perfom')->name('web.administrator.register_perform');
 });
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
+    Route::get('/administrator/logout', 'Auth\AdministratorController@logout_perfom')->name('web.administrator.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/administrator/dashboard', 'User\Administrator\DashboardController@dashboard')->name('web.administrator.dashboard');
         Route::get('/administrator/profile', 'User\Administrator\DashboardController@profile')->name('web.administrator.profile');
         Route::get('/administrator/notification', 'User\Administrator\DashboardController@notification')->name('web.administrator.notification');
         Route::get('/administrator/offline', 'User\Administrator\DashboardController@offline')->name('web.administrator.offline');
         Route::get('/administrator/empty', 'User\Administrator\DashboardController@empty')->name('web.administrator.empty');
-        Route::get('/administrator/logout', 'Auth\AdministratorController@logout_perfom')->name('web.administrator.logout_perfom');
         Route::get('/administrator/archive', 'User\Administrator\DashboardController@empty')->name('web.administrator.archive');
         Route::get('/administrator/about', 'User\Administrator\DashboardController@empty')->name('web.administrator.about');
 
@@ -61,6 +63,31 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
 
     Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');
     Route::patch('/administrator/change_profile', 'User\Administrator\DashboardController@change_profile')->name('web.administrator.change_profile');
+});
+
+Route::redirect('/patient', '/patient/dashboard');
+Route::middleware('authc.guest:web.patient.dashboard,patient')->group(function () {
+    Route::middleware('common.locale')->group(function () {
+        Route::get('/patient/login', 'Auth\PatientController@login_show')->name('web.patient.login_show');
+        Route::get('/patient/register', 'Auth\PatientController@register_show')->name('web.patient.register_show');
+    });
+    Route::post('/patient/login', 'Auth\PatientController@login_perfom')->name('web.patient.login_perform');
+    Route::post('/patient/register', 'Auth\PatientController@register_perfom')->name('web.patient.register_perform');
+});
+Route::middleware(['authc.basic:welcome,patient'])->group(function () {
+    Route::get('/patient/logout', 'Auth\PatientController@logout_perfom')->name('web.patient.logout_perfom');
+    Route::middleware(['common.locale', 'common.visitor'])->group(function () {
+        Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
+        Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
+        Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
+        Route::get('/patient/offline', 'User\Patient\DashboardController@offline')->name('web.patient.offline');
+        Route::get('/patient/empty', 'User\Patient\DashboardController@empty')->name('web.patient.empty');
+        Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
+        Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
+    });
+
+    Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
+    Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
 });
 
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {

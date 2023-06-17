@@ -140,7 +140,7 @@
                     <th
                         class="p-2 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300 z-[1]">
                     </th>
-                    @foreach ($resource->columns as $column)
+                    @forelse ($resource->columns as $column)
                         <th
                             class="p-2 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
                             <form action="{{ request()->fullUrlWithQuery([]) }}" autocomplete="off"
@@ -148,7 +148,7 @@
                                 <input type="hidden" name="filter" value="on">
                                 <input type="text" name="filter_{{ $column }}"
                                     value="{{ request()->query("filter_$column") }}"
-                                    class="w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                                    class="w-full px-4 pl-2 pr-9 truncate text-ellipsis bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                                 <button
                                     class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                                     group-[#topbar&[data-button-interface='filled']]:bg-primary/30
@@ -237,21 +237,49 @@
                         <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300">
+                        </td>
+                        <td class="bg-base-100 border-t-2 border-base-300"></td>
+                        <td class="bg-base-100 border-t-2 border-base-300"></td>
+                        <td colspan="{{ count($resource->columns) }}"
+                            class="px-4 pt-4 text-base-content/60 bg-base-100 text-base text-center whitespace-nowrap align-middle font-medium border-t-2 border-base-300 transition-colors">
+                            Empty
+                        </td>
+                        <td class="bg-base-100 border-t-2 border-base-300"></td>
+                        <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
             <tfoot>
                 <tr>
-                    <th
-                        class="block min-w-[4px] w-full h-4 px-2 bg-base-100 border-b-2 rounded-bl-xl border-l-2 border-base-300">
-                    </th>
-                    <th class="px-2 bg-base-100 h-4 border-b-2 border-base-300"></th>
-                    <th class="px-2 sticky left-0 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
-                    @foreach ($resource->columns as $column)
-                        <th class="px-2 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
-                    @endforeach
-                    <th class="px-2 sticky right-0 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
-                    <th class="block w-2 h-4 px-2 bg-base-100 border-b-2 rounded-br-xl border-r-2 border-base-300">
-                    </th>
+                    @if (empty($paginator ?? $all))
+                        <th
+                            class="block min-w-[4px] w-full h-4 px-2 bg-base-100 border-b-2 rounded-bl-xl border-l-2 border-base-300">
+                        </th>
+                        <th class="px-2 bg-base-100 h-4 border-b-2 border-base-300"></th>
+                        <th class="px-2 sticky left-0 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
+                        @foreach ($resource->columns as $column)
+                            <th class="px-2 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
+                        @endforeach
+                        <th class="px-2 sticky right-0 bg-base-100 h-4 border-b-2 border-l-2 border-base-300"></th>
+                        <th class="block w-2 h-4 px-2 bg-base-100 border-b-2 rounded-br-xl border-r-2 border-base-300">
+                        </th>
+                    @else
+                        <th
+                            class="block min-w-[4px] w-full h-4 px-2 bg-base-100 border-b-2 rounded-bl-xl border-l-2 border-base-300">
+                        </th>
+                        <th class="px-2 bg-base-100 h-4 border-b-2 border-base-300"></th>
+                        <th class="px-2 sticky left-0 bg-base-100 h-4 border-b-2 border-base-300"></th>
+                        @foreach ($resource->columns as $column)
+                            <th class="px-2 bg-base-100 h-4 border-b-2 border-base-300"></th>
+                        @endforeach
+                        <th class="px-2 sticky right-0 bg-base-100 h-4 border-b-2 border-base-300"></th>
+                        <th class="block w-2 h-4 px-2 bg-base-100 border-b-2 rounded-br-xl border-r-2 border-base-300">
+                        </th>
+                    @endif
                 </tr>
             </tfoot>
         </table>
