@@ -26,6 +26,14 @@ const toggle_elms = document
     });
   });
 
+const inputs = [];
+document
+  .querySelectorAll("[data-focus=true]")
+  .forEach((elm) => inputs.unshift(elm));
+for (const Input of inputs) {
+  Input.focus();
+}
+
 // new Input(document.querySelector("[data-te-input-wrapper-init]"), {
 //   inputFormWhite: true,
 // }, {

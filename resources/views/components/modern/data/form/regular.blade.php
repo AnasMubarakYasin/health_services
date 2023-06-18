@@ -15,11 +15,11 @@
             @switch($definition->type)
                 @case('string')
                     <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">
-                        <input id="input_{{ $field }}" name="{{ $field }}"
-                            value="{{ old($field, $model->{$field} ?? $definition->default) }}" type="{{ $definition->string_type() }}"
-                            placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
-                            {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
-                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent pl-3 pr-9 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0">
+                        <input id="input_{{ $field }}" name="{{ $field }}" data-focus="true"
+                            value="{{ old($field, $model->{$field} ?? $definition->default) }}"
+                            type="{{ $definition->string_type() }}" placeholder="{{ trans($definition->name) }}..."
+                            @required(false) @readonly(false) {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
+                            class="peer block min-h-[auto] w-full truncate text-ellipsis rounded-md border-0 bg-transparent pl-3 pr-10 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0 focus:ring-0">
                         <label for="input_{{ $field }}"
                             class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-base-content/70 transition-all duration-200 ease-out peer-focus:font-semibold peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
                             <span>{{ trans($definition->name) }}</span>
@@ -61,11 +61,11 @@
 
                 @case('file')
                     <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">
-                        <input id="preview_input_{{ $field }}" name="preview_{{ $field }}"
+                        <input id="preview_input_{{ $field }}" name="preview_{{ $field }}" data-focus="true"
                             value="{{ old("preview_input_$field", $model->{$field} ?? $definition->default) }}" type="text"
                             placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
                             {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
-                            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent pl-3 pr-9 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0">
+                            class="peer block min-h-[auto] w-full truncate text-ellipsis rounded-md border-0 bg-transparent pl-3 pr-10 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0 focus:ring-0">
                         <label for="preview_input_{{ $field }}"
                             class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-base-content/70 transition-all duration-200 ease-out peer-focus:font-semibold peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
                             <span>{{ trans($definition->name) }}</span>
