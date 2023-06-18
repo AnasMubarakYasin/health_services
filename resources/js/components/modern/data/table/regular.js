@@ -106,6 +106,11 @@ document.querySelectorAll("[data-col=true]").forEach((elm) => {
     }
   });
 });
+// const table_elm = document.querySelector('table')
+const iteration_elm = document.querySelector('[data-iteration=true]')
+document.querySelectorAll("table thead tr th.left-10").forEach((elm) => {
+  elm.style.left = `${iteration_elm.clientWidth}px`;
+})
 
 function show_delete_any(state = true) {
   document.getElementById('delete_any').dataset.show = state;

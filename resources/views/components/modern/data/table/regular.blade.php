@@ -67,12 +67,12 @@
                                 indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
                         </div>
                     </th>
-                    <th
+                    <th data-iteration="true"
                         class="p-4 sticky top-0 left-0 z-[2] bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
                         #
                     </th>
                     @foreach ($resource->columns as $column)
-                        <th class="p-4 sticky top-0 left-14 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
+                        <th class="p-4 sticky top-0 left-10 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
                             data-col="true" data-col_index="{{ $loop->index }}">
                             <div class="flex justify-between items-center">
                                 <div class="whitespace-nowrap">{{ trans($resource->model->definition($column)->name) }}
