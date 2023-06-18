@@ -47,15 +47,15 @@
             </div>
         </section>
     </section>
-    <section class="overflow-auto">
-        <table class="w-full h-full">
+    <section class="overflow-auto w-full max-h-[32rem] scroll-smooth">
+        <table class="relative w-full h-full border-separate border-spacing-0">
             <thead>
                 <tr>
+                    {{-- <th
+                        class="block px-2 sticky top-0 left-0 z-[1] bg-base-100 w-full h-full border-t-2 rounded-tl-xl border-l-2 border-base-300">
+                    </th> --}}
                     <th
-                        class="block px-2 bg-base-100 w-full h-full border-t-2 rounded-tl-xl border-l-2 border-base-300">
-                    </th>
-                    <th
-                        class="p-4 pl-0 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-base-300">
+                        class="p-4 sticky top-0 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
                         <div class="grid place-items-center place-content-center w-full h-full">
                             <input type="checkbox" name="all" id="check_mode" form="delete_any_form"
                                 class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
@@ -68,11 +68,11 @@
                         </div>
                     </th>
                     <th
-                        class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300">
+                        class="p-4 sticky top-0 left-0 z-[2] bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
                         #
                     </th>
                     @foreach ($resource->columns as $column)
-                        <th class="p-4 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
+                        <th class="p-4 sticky top-0 left-14 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
                             data-col="true" data-col_index="{{ $loop->index }}">
                             <div class="flex justify-between items-center">
                                 <div class="whitespace-nowrap">{{ trans($resource->model->definition($column)->name) }}
@@ -124,25 +124,25 @@
                         </th>
                     @endforeach
                     <th
-                        class="p-4 sticky right-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                        class="p-4 sticky top-0 right-0 z-[1] bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
                         Action
                     </th>
-                    <th class="block px-2 bg-base-100 w-2 h-full border-t-2 rounded-tr-xl border-r-2 border-base-300">
-                    </th>
+                    {{-- <th class="block px-2 sticky top-0 right-0 z-[1] bg-base-100 w-2 h-full border-t-2 rounded-tr-xl border-r-2 border-base-300">
+                    </th> --}}
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></th>
+                    {{-- <th class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></th> --}}
                     <th
-                        class="p-2 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-300">
+                        class="p-2 pl-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
                     </th>
                     <th
-                        class="p-2 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300 z-[1]">
+                        class="p-2 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 z-[1]">
                     </th>
                     @forelse ($resource->columns as $column)
                         <th
-                            class="p-2 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                            class="p-2 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
                             <form action="{{ request()->fullUrlWithQuery([]) }}" autocomplete="off"
                                 class="relative border-none">
                                 <input type="hidden" name="filter" value="on">
@@ -164,17 +164,15 @@
                         </th>
                     @endforeach
                     <th
-                        class="p-2 sticky right-0 bg-base-100 text-base text-left align-middle font-semibold border-t-2 border-l-2 border-base-300">
+                        class="p-2 sticky right-0 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
                     </th>
-                    <th class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
-                    </th>
+                    {{-- <th class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300"></th> --}}
                 </tr>
                 @forelse($paginator ?? $all as $item)
                     <tr>
-                        <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300">
-                        </td>
+                        {{-- <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></td> --}}
                         <th
-                            class="p-4 pl-0 bg-base-100 text-base text-center align-middle font-semibold border-t-2 border-base-300">
+                            class="p-4 bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
                             <div class="grid place-items-center place-content-center w-full h-full">
                                 <input type="checkbox" name="id[]" id="" form="delete_any_form"
                                     value="{{ $item->id }}"
@@ -187,12 +185,12 @@
                                 indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
                             </div>
                         </th>
-                        <th class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border-l-2 border-t-2 border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
+                        <th class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
                             data-row="true">
                             {{ $loop->iteration }}
                         </th>
                         @foreach ($resource->columns as $column)
-                            <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border-l-2 border-t-2 border-base-300 transition-colors"
+                            <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
                                 data-col_index="{{ $loop->index }}">
                                 @if (is_array($item->{$column}))
                                     {{ implode(', ', $item->{$column}) }}
@@ -202,7 +200,7 @@
                             </td>
                         @endforeach
                         <td
-                            class="p-4 pr-0 sticky right-0 bg-base-100 text-base text-left align-middle font-normal border-l-2 border-t-2 border-base-300">
+                            class="p-4 sticky right-0 bg-base-100 text-base text-left align-middle font-normal border border-base-300">
                             <div class="flex justify-center items-center gap-2 w-full">
                                 <div data-te-toggle="tooltip" data-te-placement="bottom" title="Show">
                                     <button
@@ -234,8 +232,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
-                        </td>
+                        {{-- <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300"></td> --}}
                     </tr>
                 @empty
                     <tr>
@@ -253,7 +250,7 @@
                     </tr>
                 @endforelse
             </tbody>
-            <tfoot>
+            {{-- <tfoot>
                 <tr>
                     @if (empty($paginator ?? $all))
                         <th
@@ -281,7 +278,7 @@
                         </th>
                     @endif
                 </tr>
-            </tfoot>
+            </tfoot> --}}
         </table>
     </section>
     <section class="flex justify-between items-center max-md:flex-col gap-4">
