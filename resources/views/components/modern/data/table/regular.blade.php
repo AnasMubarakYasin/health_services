@@ -123,8 +123,8 @@
                             </div>
                         </th>
                     @endforeach
-                    <th
-                        class="p-4 sticky top-0 right-0 z-[1] bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
+                    <th id="action" data-action="true"
+                        class="p-4 sticky top-0 right-0 z-[1] bg-base-100 text-base text-center align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer">
                         Action
                     </th>
                     {{-- <th class="block px-2 sticky top-0 right-0 z-[1] bg-base-100 w-2 h-full border-t-2 rounded-tr-xl border-r-2 border-base-300">
@@ -163,7 +163,7 @@
                             </form>
                         </th>
                     @endforeach
-                    <th
+                    <th data-action="true"
                         class="p-2 sticky right-0 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
                     </th>
                     {{-- <th class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300"></th> --}}
@@ -199,7 +199,7 @@
                                 @endif
                             </td>
                         @endforeach
-                        <td
+                        <td data-action="true"
                             class="p-4 sticky right-0 bg-base-100 text-base text-left align-middle font-normal border border-base-300">
                             <div class="flex justify-center items-center gap-2 w-full">
                                 <div data-te-toggle="tooltip" data-te-placement="bottom" title="Show">

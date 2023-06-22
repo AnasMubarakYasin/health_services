@@ -112,6 +112,13 @@ document.querySelectorAll("table thead tr th.left-10").forEach((elm) => {
   elm.style.left = `${iteration_elm.clientWidth}px`;
 })
 
+const action_elm = document.getElementById('action');
+action_elm.addEventListener('click', () => {
+  document.querySelectorAll('[data-action=true]').forEach((elm) => {
+    elm.classList.toggle('sticky');
+  })
+})
+
 function show_delete_any(state = true) {
   document.getElementById('delete_any').dataset.show = state;
 }
