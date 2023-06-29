@@ -4,6 +4,7 @@
     'user' => '',
     'data' => null,
     'demo' => false,
+    'register' => '',
 ])
 <!DOCTYPE html>
 <html dir="ltr" lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
@@ -35,7 +36,9 @@
     <form class="grid m-4 p-4 gap-4 bg-white rounded-lg sm:w-[400px]" action="{{ $action }}" method="post"
         enctype="multipart/form-data">
         @csrf
-        <h1 class="text-2xl text-center text-black font-extrabold">{{ $title }}</h1>
+        <h1 class="text-2xl text-center text-black font-extrabold">
+            Sign in to your account
+        </h1>
         <div>
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
             <input type="text" id="name" name="name" autofocus
@@ -60,7 +63,7 @@
                     class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember</label>
             </div>
-            <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
+            <div class="text-sm font-medium text-blue-600 dark:text-blue-500">
                 <a href="">Forgot password?</a>
             </div>
         </div>
@@ -68,6 +71,12 @@
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Signin
         </button>
+        <div class="text-sm">
+            Don’t have an account yet? <a href="{{ $register }}"
+                class="font-medium text-blue-600 dark:text-blue-500">
+                Signup
+            </a>
+        </div>
         <x-common.validation></x-common.validation>
     </form>
     <div class="mx-4 px-4 font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline">
