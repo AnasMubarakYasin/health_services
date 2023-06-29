@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'patients',
         ],
+        'midwife' => [
+            'driver' => 'session',
+            'provider' => 'midwifes',
+        ],
     ],
 
     /*
@@ -79,6 +83,10 @@ return [
         'patients' => [
             'driver' => 'eloquent',
             'model' => App\Models\Patient::class,
+        ],
+        'midwifes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Midwife::class,
         ],
 
         // 'users' => [

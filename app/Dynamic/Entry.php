@@ -55,6 +55,22 @@ class Entry
                 ],
                 'demo' => true,
             ],
+            'midwife' => [
+                'name' => 'Midwife',
+                'entry' => route('web.midwife.login_show'),
+                'register' => route('web.midwife.register_show'),
+                'forgot' => route('web.midwife.login_show'),
+                'tos' => route('web.midwife.login_show'),
+                'template' => session('template_midwife', $this->config['application']['template']),
+                'account' => [
+                    'name' => 'midwife',
+                    'email' => 'midwife@host.local',
+                    'password' => 'midwife',
+                    'remember' => true,
+                    'aggrement' => true,
+                ],
+                'demo' => true,
+            ],
         ];
     }
 }

@@ -3,22 +3,22 @@
 namespace App\Dynamic\Panel;
 
 use App\Dynamic\Menu;
-use App\Models\Patient as ModelsPatient;
+use App\Models\Midwife as ModelsMidwife;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Vite;
 
-class Patient extends Panel
+class Midwife extends Panel
 {
     public bool $webmanifest = false;
     public bool $service_worker = false;
 
     public function get_webmanifest(): string
     {
-        return asset('patient/site.webmanifest');
+        return asset('midwife/site.webmanifest');
     }
     public function get_service_worker(): string
     {
-        return Vite::asset('resources/js/components/patient/regis-sw.js');
+        return Vite::asset('resources/js/components/midwife/regis-sw.js');
     }
 
     public function get_menus(): array
@@ -26,7 +26,7 @@ class Patient extends Panel
         return [
             new Menu(
                 name: "dashboard",
-                link: route('web.patient.dashboard'),
+                link: route('web.midwife.dashboard'),
                 icon: Blade::render('<x-icons.home stroke="2" />'),
             ),
         ];
@@ -36,13 +36,13 @@ class Patient extends Panel
         return [
             new Menu(
                 name: "profile",
-                link: route('web.patient.profile'),
+                link: route('web.midwife.profile'),
                 icon: Blade::render('<x-icons.profile />'),
             ),
             new Menu(
                 label: "misc",
                 name: "sign out",
-                link: route('web.patient.logout_perfom'),
+                link: route('web.midwife.logout_perfom'),
                 icon: Blade::render('<x-icons.logout />'),
             ),
         ];
@@ -54,26 +54,26 @@ class Patient extends Panel
 
     public function profile()
     {
-        return route('web.patient.profile');
+        return route('web.midwife.profile');
     }
     public function change_profile()
     {
-        return route('web.resource.patient.update', ['patient' => $this->user]);
+        return route('web.resource.midwife.update', ['midwife' => $this->user]);
     }
     public function change_password()
     {
-        return route("web.patient.change_password");
+        return route("web.midwife.change_password");
     }
     public function notifications()
     {
-        return route('web.patient.notification');
+        return route('web.midwife.notification');
     }
     public function empty()
     {
-        return route('web.patient.empty');
+        return route('web.midwife.empty');
     }
     public function signout()
     {
-        return route('web.patient.logout_perfom');
+        return route('web.midwife.logout_perfom');
     }
 }

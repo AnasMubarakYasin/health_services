@@ -4,6 +4,8 @@ use App\Dynamic\Panel\Administrator as PanelAdministrator;
 use App\Models\Administrator;
 use App\Dynamic\Panel\Patient as PanelPatient;
 use App\Models\Patient;
+use App\Dynamic\Panel\Midwife as PanelMidwife;
+use App\Models\Midwife;
 
 return [
     'application' => [
@@ -41,6 +43,7 @@ return [
     'panel' => [
         Administrator::class => PanelAdministrator::class,
         Patient::class => PanelPatient::class,
+        Midwife::class => PanelMidwife::class,
     ],
     'user' => [],
     'aggrement' => [

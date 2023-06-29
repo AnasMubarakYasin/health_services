@@ -90,6 +90,31 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
 });
 
+Route::redirect('/midwife', '/midwife/dashboard');
+Route::middleware('authc.guest:web.midwife.dashboard,midwife')->group(function () {
+    Route::middleware('common.locale')->group(function () {
+        Route::get('/midwife/login', 'Auth\MidwifeController@login_show')->name('web.midwife.login_show');
+        Route::get('/midwife/register', 'Auth\MidwifeController@register_show')->name('web.midwife.register_show');
+    });
+    Route::post('/midwife/login', 'Auth\MidwifeController@login_perfom')->name('web.midwife.login_perform');
+    Route::post('/midwife/register', 'Auth\MidwifeController@register_perfom')->name('web.midwife.register_perform');
+});
+Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
+    Route::get('/midwife/logout', 'Auth\MidwifeController@logout_perfom')->name('web.midwife.logout_perfom');
+    Route::middleware(['common.locale', 'common.visitor'])->group(function () {
+        Route::get('/midwife/dashboard', 'User\Midwife\DashboardController@dashboard')->name('web.midwife.dashboard');
+        Route::get('/midwife/profile', 'User\Midwife\DashboardController@profile')->name('web.midwife.profile');
+        Route::get('/midwife/notification', 'User\Midwife\DashboardController@notification')->name('web.midwife.notification');
+        Route::get('/midwife/offline', 'User\Midwife\DashboardController@offline')->name('web.midwife.offline');
+        Route::get('/midwife/empty', 'User\Midwife\DashboardController@empty')->name('web.midwife.empty');
+        Route::get('/midwife/archive', 'User\Midwife\DashboardController@empty')->name('web.midwife.archive');
+        Route::get('/midwife/about', 'User\Midwife\DashboardController@empty')->name('web.midwife.about');
+    });
+
+    Route::patch('/midwife/change_password', 'User\Midwife\DashboardController@change_password')->name('web.midwife.change_password');
+    Route::patch('/midwife/change_profile', 'User\Midwife\DashboardController@change_profile')->name('web.midwife.change_profile');
+});
+
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::post('/resource/administrator', 'Resource\AdministratorController@create')->name('web.resource.administrator.create');
     Route::patch('/resource/administrator/{administrator}', 'Resource\AdministratorController@update')->name('web.resource.administrator.update');

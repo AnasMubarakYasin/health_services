@@ -16,11 +16,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
+use Spatie\DeletedModels\Models\DeletedModel;
 
 class Administrator extends Authenticatable
 {
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
+    use KeepsDeletedModels;
 
     public static function modelable(): Model
     {
