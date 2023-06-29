@@ -1,6 +1,6 @@
 @aware(['resource'])
 <div class="flex flex-col gap-4 p-4 bg-base-100 rounded-lg">
-    <form id="form" class="grid gap-x-4 gap-y-8 grid-cols-2"
+    <form id="form" class="flex flex-col sm:grid gap-x-4 gap-y-8"
         action="{{ $resource->is_create() ? $resource->api_create() : $resource->api_update($model) }}" method="post"
         enctype="multipart/form-data">
         @csrf
