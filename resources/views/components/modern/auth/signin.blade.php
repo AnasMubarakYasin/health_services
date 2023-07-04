@@ -40,14 +40,22 @@
 </head>
 
 <body class="grid place-content-center gap-8 min-h-screen bg-base-200">
-    <label role="button"
-        class="position fixed top-2 left-2 z-10 grid place-items-center w-10 h-10 text-base-content/70 hover:bg-base-300 hover:text-base-content/100 rounded-full swap swap-rotate transition-colors"
-        data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom"
-        title="Toggle Theme">
-        <input id="theme_toggle" type="checkbox" class="hidden" />
-        <x-icons.light class="swap-on w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.light>
-        <x-icons.dark class="swap-off w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.dark>
-    </label>
+    <div class="position fixed top-2 left-2 z-10 flex gap-4 items-center">
+        <label role="button"
+            class="grid place-items-center w-10 h-10 text-base-content/70 hover:bg-base-300 hover:text-base-content/100 rounded-full swap swap-rotate transition-colors"
+            data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom"
+            title="Toggle Theme">
+            <input id="theme_toggle" type="checkbox" class="hidden" />
+            <x-icons.light class="swap-on w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.light>
+            <x-icons.dark class="swap-off w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.dark>
+        </label>
+        @if ($demo)
+            <div class="text-base">
+                <a href="/"
+                    class="text-primary font-semibold hover:text-primary-focus transition-colors">Entry</a>
+            </div>
+        @endif
+    </div>
     <form action="{{ $action }}" method="post"
         class="relative grid gap-8 p-8 m-8 w-96 z-10 bg-base-100 rounded-lg shadow-lg">
         @csrf

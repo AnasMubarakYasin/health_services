@@ -31,9 +31,11 @@ class MidwifeController extends Controller
     }
     public function logout_perfom()
     {
+        $template = session()->get('template');
         auth()->logout();
         session()->invalidate();
         session()->regenerateToken();
+        session()->put('template', $template);
 
         return to_route('web.midwife.login_show');
     }

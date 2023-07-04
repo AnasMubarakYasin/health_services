@@ -17,8 +17,11 @@ class DashboardController extends Controller
     {
         $resource = Administrator::formable()->from_update(
             model: auth()->user(),
-            fields: ['photo', 'name', 'telp', 'email'],
+            fields: ['name', 'telp', 'email'],
         );
+        $resource->web_view_any = function () {
+            return route('web.administrator.users.administrator.index');
+        };
         return view('pages.administrator.profile', ['resource' => $resource]);
     }
     public function change_profile(ChangeProfileRequest $request)

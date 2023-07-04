@@ -58,19 +58,15 @@
                 group-[#topbar&[data-card-type='bordered']]:group-[#topbar&[data-position='floated']]:border-2"
                 aria-labelledby="btn_translate" data-te-dropdown-menu-ref>
                 <ul class="flex flex-col gap-2 p-2">
-                    <li>
-                        <a href="/locale/en" data-te-dropdown-item-ref
-                            class="block px-4 py-2 text-base-content/70 font-medium hover:bg-base-200 hover:text-base-content/100 aria-selected:bg-primary aria-selected:text-primary-content/100 rounded-lg transition-colors"
-                            aria-selected="true">
-                            English
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/locale/id" data-te-dropdown-item-ref
-                            class="block px-4 py-2 text-base-content/70 font-medium hover:bg-base-200 hover:text-base-content/100 rounded-lg transition-colors">
-                            Indonesia
-                        </a>
-                    </li>
+                    @foreach ($panel::$locales as $key => $value)
+                        <li>
+                            <a href="{{ route('web.locale.set', ['locale' => $key]) }}" data-te-dropdown-item-ref
+                                class="block px-4 py-2 text-base-content/70 font-medium hover:bg-base-200 hover:text-base-content/100 aria-selected:bg-primary aria-selected:text-primary-content/100 rounded-lg transition-colors"
+                                aria-selected="{{ $key == $panel->locale ? 'true' : 'false' }}">
+                                {{ $value }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </nav>
         </div>
@@ -143,8 +139,8 @@
                 group-[#topbar&[data-button-interface='outlined']]:border-base-300
                 group-[#topbar&[data-button-shape='circled']]:rounded-full"
             data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom"
-            title="Toggle Sidebar">
-            <input id="sidebar_toggle" type="checkbox" class="hidden" />
+            title="Toggle Theme">
+            <input id="theme_toggle" type="checkbox" class="hidden" />
             <x-icons.light class="swap-on w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.light>
             <x-icons.dark class="swap-off w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.dark>
         </label>

@@ -3,6 +3,7 @@
         @template('modern')
             <x-slot:head>
                 @vite('resources/js/components/common/error-boundary.js')
+                @vite('resources/js/components/modern/common/theme.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')

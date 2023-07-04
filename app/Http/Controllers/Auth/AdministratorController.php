@@ -27,9 +27,11 @@ class AdministratorController extends Controller
     }
     public function logout_perfom()
     {
+        $template = session()->get('template');
         auth()->logout();
         session()->invalidate();
         session()->regenerateToken();
+        session()->put('template', $template);
 
         return to_route('web.administrator.login_show');
     }
