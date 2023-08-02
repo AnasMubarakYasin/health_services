@@ -58,6 +58,18 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         Route::get('/administrator/users/patient', 'User\Administrator\PatientController@index')->name('web.administrator.users.patient.index');
         Route::get('/administrator/users/patient/create', 'User\Administrator\PatientController@create')->name('web.administrator.users.patient.create');
         Route::get('/administrator/users/patient/{patient}/update', 'User\Administrator\PatientController@update')->name('web.administrator.users.patient.update');
+
+        Route::get('/administrator/service', 'User\Administrator\AdministratorController@service_index')->name('web.administrator.service.index');
+        Route::get('/administrator/service/create', 'User\Administrator\AdministratorController@service_create')->name('web.administrator.service.create');
+        Route::get('/administrator/service/{service}/update', 'User\Administrator\AdministratorController@service_update')->name('web.administrator.service.update');
+
+        Route::get('/administrator/schedule', 'User\Administrator\AdministratorController@schedule_index')->name('web.administrator.schedule.index');
+        Route::get('/administrator/schedule/create', 'User\Administrator\AdministratorController@schedule_create')->name('web.administrator.schedule.create');
+        Route::get('/administrator/schedule/{schedule}/update', 'User\Administrator\AdministratorController@schedule_update')->name('web.administrator.schedule.update');
+
+        Route::get('/administrator/order', 'User\Administrator\AdministratorController@order_index')->name('web.administrator.order.index');
+        Route::get('/administrator/order/create', 'User\Administrator\AdministratorController@order_create')->name('web.administrator.order.create');
+        Route::get('/administrator/order/{order}/update', 'User\Administrator\AdministratorController@order_update')->name('web.administrator.order.update');
         /** !SECTION - User */
     });
 
@@ -130,4 +142,19 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::patch('/resource/patient/{patient}', 'Resource\PatientController@update')->name('web.resource.patient.update');
     Route::delete('/resource/patient', 'Resource\PatientController@delete_any')->name('web.resource.patient.delete_any');
     Route::delete('/resource/patient/{patient}', 'Resource\PatientController@delete')->name('web.resource.patient.delete');
+
+    Route::post('/resource/service', 'Resource\ServiceController@create')->name('web.resource.service.create');
+    Route::patch('/resource/service/{service}', 'Resource\ServiceController@update')->name('web.resource.service.update');
+    Route::delete('/resource/service', 'Resource\ServiceController@delete_any')->name('web.resource.service.delete_any');
+    Route::delete('/resource/service/{service}', 'Resource\ServiceController@delete')->name('web.resource.service.delete');
+
+    Route::post('/resource/schedule', 'Resource\ServiceController@create')->name('web.resource.schedule.create');
+    Route::patch('/resource/schedule/{schedule}', 'Resource\ServiceController@update')->name('web.resource.schedule.update');
+    Route::delete('/resource/schedule', 'Resource\ServiceController@delete_any')->name('web.resource.schedule.delete_any');
+    Route::delete('/resource/schedule/{schedule}', 'Resource\ServiceController@delete')->name('web.resource.schedule.delete');
+
+    Route::post('/resource/order', 'Resource\ServiceController@create')->name('web.resource.order.create');
+    Route::patch('/resource/order/{order}', 'Resource\ServiceController@update')->name('web.resource.order.update');
+    Route::delete('/resource/order', 'Resource\ServiceController@delete_any')->name('web.resource.order.delete_any');
+    Route::delete('/resource/order/{order}', 'Resource\ServiceController@delete')->name('web.resource.order.delete');
 });

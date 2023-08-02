@@ -48,6 +48,21 @@ class Administrator extends Panel
                     ),
                 ]
             ),
+            new Menu(
+                name: "Service",
+                link: route('web.administrator.service.index'),
+                icon: Blade::render('<x-icons.home stroke="2" />'),
+            ),
+            new Menu(
+                name: "Schedule",
+                link: route('web.administrator.schedule.index'),
+                icon: Blade::render('<x-icons.home stroke="2" />'),
+            ),
+            new Menu(
+                name: "Order",
+                link: route('web.administrator.order.index'),
+                icon: Blade::render('<x-icons.home stroke="2" />'),
+            ),
         ];
     }
     public function get_user_menus(): array
