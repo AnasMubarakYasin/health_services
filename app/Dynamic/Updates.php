@@ -15,6 +15,7 @@ class Updates
     public string $last_commit;
     public string $last_commit2;
     public string $changes;
+    public int $changes_count;
     public string $vendor;
     public string $link;
     public string $date_inited;
@@ -35,6 +36,7 @@ class Updates
         }
         $git_log->run();
         $this->changes = trim($git_log->getOutput());
+        $this->changes_count = count(explode("\n", $this->changes));
         return $this->changes;
     }
     public function load()

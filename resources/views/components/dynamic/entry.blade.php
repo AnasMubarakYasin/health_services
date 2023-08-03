@@ -123,7 +123,7 @@
                     <hr>
                     <div class="flex flex-col gap-2">
                         <div class="text-lg font-semibold text-gray-800">
-                            App Changelog
+                            App Changelog ({{ $entry->updates->changes_count }})
                         </div>
                         <div class="text-lg font-normal text-black">
                             <details>
