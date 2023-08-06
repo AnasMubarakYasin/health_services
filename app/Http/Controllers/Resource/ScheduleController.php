@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resource;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Schedule;
@@ -16,7 +17,7 @@ class ScheduleController extends Controller
         Schedule::create($data);
         return redirect()->intended($request->input('_view_any'));
     }
-    public function update(StoreScheduleRequest $request, Schedule $schedule)
+    public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
         $this->authorize('update', $schedule);
         $data = $request->validated();

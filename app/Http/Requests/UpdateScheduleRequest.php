@@ -11,7 +11,7 @@ class UpdateScheduleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+            'started_at' => 'required|date_format:H:i',
+            'ended_at' => 'required|date_format:H:i',
+            'midwife_id' => 'required|uuid'
         ];
     }
 }

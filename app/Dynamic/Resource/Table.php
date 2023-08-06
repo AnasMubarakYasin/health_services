@@ -77,7 +77,7 @@ class Table extends Resource
                             $value = $this->filter[$column];
                             $relation = $this->model->definition($column)->relation;
                             $query->with($relation)->whereHas($relation, function ($builder) use ($value) {
-                                $builder->where('id', $value);
+                                $builder->whereFullText('name', $value);
                             });
                             break;
 

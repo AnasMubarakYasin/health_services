@@ -30,6 +30,21 @@ class Administrator extends Panel
                 icon: Blade::render('<x-icons.home stroke="2" />'),
             ),
             new Menu(
+                name: "Service",
+                link: route('web.administrator.service.index'),
+                icon: Blade::render('<x-icons.square stroke="2" />'),
+            ),
+            new Menu(
+                name: "Schedule",
+                link: route('web.administrator.schedule.index'),
+                icon: Blade::render('<x-icons.calendar stroke="2" />'),
+            ),
+            new Menu(
+                name: "Order",
+                link: route('web.administrator.order.index'),
+                icon: Blade::render('<x-icons.shop_bag stroke="2" />'),
+            ),
+            new Menu(
                 name: "users",
                 link: route('web.administrator.users'),
                 icon: Blade::render('<x-icons.users stroke="2" />'),
@@ -47,21 +62,6 @@ class Administrator extends Panel
                         link: route('web.administrator.users.patient.index'),
                     ),
                 ]
-            ),
-            new Menu(
-                name: "Service",
-                link: route('web.administrator.service.index'),
-                icon: Blade::render('<x-icons.home stroke="2" />'),
-            ),
-            new Menu(
-                name: "Schedule",
-                link: route('web.administrator.schedule.index'),
-                icon: Blade::render('<x-icons.home stroke="2" />'),
-            ),
-            new Menu(
-                name: "Order",
-                link: route('web.administrator.order.index'),
-                icon: Blade::render('<x-icons.home stroke="2" />'),
             ),
         ];
     }

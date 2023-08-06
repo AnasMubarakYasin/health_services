@@ -29,22 +29,22 @@ class Order extends Model
                 name: 'status',
                 type: 'enum',
                 enums: [
-                    'ready', 'not ready'
+                    'finished' => 'finished',
+                    'on_progress' => 'on progress',
+                    'scheduled' => 'scheduled',
                 ]
             ),
             'schedule' => new Definition(
                 name: 'schedule',
-                type: 'string',
-            ),
-            'start_at' => new Definition(
-                name: 'start at',
                 type: 'date',
-                format: 'Y-m-d',
             ),
-            'end_at' => new Definition(
-                name: 'end at',
-                type: 'date',
-                format: 'Y-m-d',
+            'started_at' => new Definition(
+                name: 'started at',
+                type: 'time',
+            ),
+            'ended_at' => new Definition(
+                name: 'ended at',
+                type: 'time',
             ),
             'patient' => new Definition(
                 name: 'patient',
@@ -63,13 +63,15 @@ class Order extends Model
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
+                'patient' => Patient::all(),
+                'service' => Service::all(),
                 default => throw new \Error("unknown name of $definition->name")
             };
         };
     }
 
     protected $fillable = [
-        'status', 'schedule', 'start_at', 'end_at', 'patient_id', 'service_id'
+        'status', 'schedule', 'started_at', 'ended_at', 'patient_id', 'service_id'
     ];
 
     public function patient()
@@ -79,7 +81,7 @@ class Order extends Model
 
     public function service()
     {
-        return $this->belongsTo(Patient::class, 'service_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
     public function visits()

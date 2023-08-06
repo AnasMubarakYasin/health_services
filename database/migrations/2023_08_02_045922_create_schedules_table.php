@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
-            $table->enum('day', ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu']);
-            $table->foreignUuid('midwive_id')->constrained('midwives')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']);
+            $table->time('started_at');
+            $table->time('ended_at');
+            $table->foreignUuid('midwife_id')->constrained('midwives')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

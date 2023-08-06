@@ -11,7 +11,7 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'status' => 'required|in:finished,on_progress,scheduled',
+            'schedule' => 'required|date',
+            'started_at' => 'required|date_format:H:i',
+            'ended_at' => 'required|date_format:H:i',
+            'patient_id' => 'required|uuid',
+            'service_id' => 'required|uuid',
         ];
     }
 }

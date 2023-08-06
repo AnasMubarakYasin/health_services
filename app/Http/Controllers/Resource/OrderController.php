@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Resource;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
@@ -16,7 +17,7 @@ class OrderController extends Controller
         Order::create($data);
         return redirect()->intended($request->input('_view_any'));
     }
-    public function update(StoreOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
         $this->authorize('update', $order);
         $data = $request->validated();

@@ -187,17 +187,62 @@
                         </th>
                         <th class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
                             data-row="true">
-                            {{ $loop->iteration }}
+                            @if ($paginator)
+                                {{ $paginator->perPage() * $paginator->currentPage() + $loop->iteration - $paginator->perPage() }}
+                            @else
+                                {{ $loop->iteration }}
+                            @endif
                         </th>
                         @foreach ($resource->columns as $column)
-                            <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
-                                data-col_index="{{ $loop->index }}">
-                                @if (is_array($item->{$column}))
-                                    {{ implode(', ', $item->{$column}) }}
-                                @else
-                                    {{ $item->{$column} }}
-                                @endif
-                            </td>
+                            @switch($resource->model->definition($column)->type)
+                                @case('model')
+                                    @if ($resource->model->definition($column)->array)
+                                        <td
+                                            class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors">
+                                            @php
+                                                $query = $item->{$column}->reduce(function ($result, $item, $index) {
+                                                    $result .= '&id[]=' . $item->id;
+                                                    return $result;
+                                                }, '?ref=on');
+                                            @endphp
+                                            <a href="{{ $resource->route_relation($resource->model->definition($column), $item->{$column}) . $query }}"
+                                                class="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                                {{ count($item->{$column}) }}
+                                                {{ $resource->model->definition($column)->name }}
+                                            </a>
+                                        </td>
+                                    @else
+                                        @if ($resource->init['reference'] == 'on')
+                                            <td
+                                                class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors">
+                                                @php
+                                                    $query = '?ref=on&id[]=' . $item->{$column}->id;
+                                                @endphp
+                                                <a href="{{ $resource->route_relation($resource->model->definition($column), $item->{$column}) . $query }}"
+                                                    class="bg-base-300 text-base-content text-base font-medium px-3 py-1 rounded">
+                                                    {{-- {{ $resource->model->definition($column)->name }} --}}
+                                                    {{ $item->{$column}->name }}
+                                                </a>
+                                            </td>
+                                        @else
+                                            <td
+                                                class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors">
+                                                {{ $item->{$column}->name }}
+                                            </td>
+                                        @endif
+                                    @endif
+                                @break
+
+                                @default
+                                    <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
+                                        data-col_index="{{ $loop->index }}">
+                                        @if (is_array($item->{$column}))
+                                            {{ implode(', ', $item->{$column}) }}
+                                        @else
+                                            {{ $item->{$column} }}
+                                        @endif
+                                    </td>
+                            @endswitch
                         @endforeach
                         <td data-action="true"
                             class="p-4 sticky right-0 bg-base-100 text-base text-left align-middle font-normal border border-base-300">
@@ -234,23 +279,23 @@
                         </td>
                         {{-- <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300"></td> --}}
                     </tr>
-                @empty
-                    <tr>
-                        <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300">
-                        </td>
-                        <td class="bg-base-100 border-t-2 border-base-300"></td>
-                        <td class="bg-base-100 border-t-2 border-base-300"></td>
-                        <td colspan="{{ count($resource->columns) }}"
-                            class="px-4 pt-4 text-base-content/60 bg-base-100 text-base text-center whitespace-nowrap align-middle font-medium border-t-2 border-base-300 transition-colors">
-                            Empty
-                        </td>
-                        <td class="bg-base-100 border-t-2 border-base-300"></td>
-                        <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300">
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-            {{-- <tfoot>
+                    @empty
+                        <tr>
+                            {{-- <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-b-2 border-base-300">
+                        </td> --}}
+                            {{-- <td class="bg-base-100 border-b-2 border-base-300"></td> --}}
+                            {{-- <td class="bg-base-100 border-b-2 border-base-300"></td> --}}
+                            <td colspan="{{ count($resource->columns) + 4 }}"
+                                class="px-4 py-4 text-base-content/60 bg-base-100 text-base text-center whitespace-nowrap align-middle font-medium border-x-2 border-b-2 border-base-300 transition-colors">
+                                Empty
+                            </td>
+                            {{-- <td class="bg-base-100 border-b-2 border-base-300"></td> --}}
+                            {{-- <td class="block px-2 bg-base-100 w-2 h-full border-r-2 border-b-2 border-base-300"> --}}
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+                {{-- <tfoot>
                 <tr>
                     @if (empty($paginator ?? $all))
                         <th
@@ -279,310 +324,216 @@
                     @endif
                 </tr>
             </tfoot> --}}
-        </table>
-    </section>
-    <section class="flex justify-between items-center max-md:flex-col gap-4">
-        <nav class="flex gap-4 items-center max-sm:flex-col">
-            <ul class="flex gap-2 items-center">
-                <li>
-                    @if ($paginator->previousPageUrl())
-                        <a href="{{ $paginator->previousPageUrl() }}" aria-details="{{ trans('previous') }}"
-                            class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+            </table>
+        </section>
+        <section class="flex justify-between items-center max-md:flex-col gap-4">
+            <nav class="flex gap-4 items-center max-sm:flex-col">
+                <ul class="flex gap-2 items-center">
+                    <li>
+                        @if ($paginator->previousPageUrl())
+                            <a href="{{ $paginator->previousPageUrl() }}" aria-details="{{ trans('previous') }}"
+                                class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
                         hover:bg-primary/30 hover:text-base-content/100
                         aria-selected:bg-primary/100 aria-selected:text-primary-content
                         aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                            data-te-toggle="tooltip" data-te-placement="bottom" title="Previous">
-                            <x-icons.chevron_left class="w-4 h-4" stroke="3">
-                            </x-icons.chevron_left>
-                        </a>
-                    @else
-                        <div aria-disabled="true" aria-details="{{ trans('previous') }}"
-                            class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                                data-te-toggle="tooltip" data-te-placement="bottom" title="Previous">
+                                <x-icons.chevron_left class="w-4 h-4" stroke="3">
+                                </x-icons.chevron_left>
+                            </a>
+                        @else
+                            <div aria-disabled="true" aria-details="{{ trans('previous') }}"
+                                class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
                             hover:bg-primary/30 hover:text-base-content/100
                             aria-selected:bg-primary/100 aria-selected:text-primary-content
                             aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                            data-te-toggle="tooltip" data-te-placement="bottom" title="Previous">
-                            <x-icons.chevron_left class="w-4 h-4" stroke="3">
-                            </x-icons.chevron_left>
-                        </div>
-                    @endif
-                </li>
-                @php
-                    $count = (int) floor($paginator->total() / $paginator->perPage());
-                @endphp
-                @if ($count && $count > 1)
+                                data-te-toggle="tooltip" data-te-placement="bottom" title="Previous">
+                                <x-icons.chevron_left class="w-4 h-4" stroke="3">
+                                </x-icons.chevron_left>
+                            </div>
+                        @endif
+                    </li>
                     @php
-                        $index = 1;
-                        $limit = 5;
-                        if ($count > $limit) {
-                            $div = floor($limit / 2);
-                            $start = $paginator->currentPage() - $div;
-                            $percent = ($paginator->currentPage() / $count) * 100;
-                            if ($start < 1) {
-                                $start = 1;
-                            } else {
-                                if ($paginator->currentPage() + $div > $count) {
-                                    $start = $count - ($limit - 1);
-                                }
-                            }
-                            $pages = range($start, $limit + ($start - 1));
-                            if (in_array(1, $pages)) {
-                                $elements = [$pages, '', [$count]];
-                            } elseif (in_array($count, $pages)) {
-                                $elements = [[1], '', $pages];
-                            } else {
-                                $elements = [[1], '', $pages, '', [$count]];
-                            }
-                        } else {
-                            $elements = [range(1, $count)];
-                        }
+                        $count = (int) floor($paginator->total() / $paginator->perPage());
                     @endphp
-                    @foreach ($elements as $element)
-                        @if (is_string($element))
-                            <li>
-                                <div
-                                    class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100/30 border-2 border-base-300 rounded-lg transition-colors">
-                                    <div class="font-semibold">...</div>
-                                </div>
-                            </li>
-                        @else
-                            @foreach ($element as $page)
-                                @if ($paginator->currentPage() == $page)
-                                    <li>
-                                        <div aria-selected="true"
-                                            class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                    @if ($count && $count > 1)
+                        @php
+                            $index = 1;
+                            $limit = 5;
+                            if ($count > $limit) {
+                                $div = floor($limit / 2);
+                                $start = $paginator->currentPage() - $div;
+                                $percent = ($paginator->currentPage() / $count) * 100;
+                                if ($start < 1) {
+                                    $start = 1;
+                                } else {
+                                    if ($paginator->currentPage() + $div > $count) {
+                                        $start = $count - ($limit - 1);
+                                    }
+                                }
+                                $pages = range($start, $limit + ($start - 1));
+                                if (in_array(1, $pages)) {
+                                    $elements = [$pages, '', [$count]];
+                                } elseif (in_array($count, $pages)) {
+                                    $elements = [[1], '', $pages];
+                                } else {
+                                    $elements = [[1], '', $pages, '', [$count]];
+                                }
+                            } else {
+                                $elements = [range(1, $count)];
+                            }
+                        @endphp
+                        @foreach ($elements as $element)
+                            @if (is_string($element))
+                                <li>
+                                    <div
+                                        class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100/30 border-2 border-base-300 rounded-lg transition-colors">
+                                        <div class="font-semibold">...</div>
+                                    </div>
+                                </li>
+                            @else
+                                @foreach ($element as $page)
+                                    @if ($paginator->currentPage() == $page)
+                                        <li>
+                                            <div aria-selected="true"
+                                                class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
                                             hover:bg-primary/30 hover:text-base-content/100
                                             aria-selected:bg-primary/100 aria-selected:text-primary-content
                                             aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                                            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                            data-te-placement="bottom" title="Page">
-                                            <div class="font-semibold">
-                                                {{ $page }}
+                                                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                                data-te-placement="bottom" title="Page">
+                                                <div class="font-semibold">
+                                                    {{ $page }}
+                                                </div>
                                             </div>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ $paginator->url($page) }}"
+                                                class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                                hover:bg-primary/30 hover:text-base-content/100
+                                aria-selected:bg-primary/100 aria-selected:text-primary-content
+                                aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
+                                                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                                data-te-placement="bottom" title="Page">
+                                                <div class="font-semibold">
+                                                    {{ $page }}
+                                                </div>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @else
+                        @foreach (range(1, $count + 1) as $page)
+                            @if ($paginator->currentPage() == $page)
+                                <li>
+                                    <div aria-selected="true"
+                                        class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                                            hover:bg-primary/30 hover:text-base-content/100
+                                            aria-selected:bg-primary/100 aria-selected:text-primary-content
+                                            aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
+                                        data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                        data-te-placement="bottom" title="Page">
+                                        <div class="font-semibold">
+                                            {{ $page }}
                                         </div>
-                                    </li>
-                                @else
-                                    <li>
-                                        <a href="{{ $paginator->url($page) }}"
-                                            class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                                    </div>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ $paginator->url($page) }}"
+                                        class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
                                 hover:bg-primary/30 hover:text-base-content/100
                                 aria-selected:bg-primary/100 aria-selected:text-primary-content
                                 aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                                            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                            data-te-placement="bottom" title="Page">
-                                            <div class="font-semibold">
-                                                {{ $page }}
-                                            </div>
-                                        </a>
-                                    </li>
-                                @endif
-                            @endforeach
-                        @endif
-                    @endforeach
-                @else
-                    @foreach (range(1, $count + 1) as $page)
-                        @if ($paginator->currentPage() == $page)
-                            <li>
-                                <div aria-selected="true"
-                                    class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
-                                            hover:bg-primary/30 hover:text-base-content/100
-                                            aria-selected:bg-primary/100 aria-selected:text-primary-content
-                                            aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Page">
-                                    <div class="font-semibold">
-                                        {{ $page }}
-                                    </div>
-                                </div>
-                            </li>
-                        @else
-                            <li>
-                                <a href="{{ $paginator->url($page) }}"
-                                    class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
-                                hover:bg-primary/30 hover:text-base-content/100
-                                aria-selected:bg-primary/100 aria-selected:text-primary-content
-                                aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Page">
-                                    <div class="font-semibold">
-                                        {{ $page }}
-                                    </div>
-                                </a>
-                            </li>
-                        @endif
-                    @endforeach
-                @endif
-                <li>
-                    @if ($paginator->nextPageUrl())
-                        <a href="{{ $paginator->nextPageUrl() }}" aria-details="{{ trans('next') }}"
-                            class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                                        data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                        data-te-placement="bottom" title="Page">
+                                        <div class="font-semibold">
+                                            {{ $page }}
+                                        </div>
+                                    </a>
+                                </li>
+                            @endif
+                        @endforeach
+                    @endif
+                    <li>
+                        @if ($paginator->nextPageUrl())
+                            <a href="{{ $paginator->nextPageUrl() }}" aria-details="{{ trans('next') }}"
+                                class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
                         hover:bg-primary/30 hover:text-base-content/100
                         aria-selected:bg-primary/100 aria-selected:text-primary-content
                         aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                            data-te-toggle="tooltip" data-te-placement="bottom" title="Next">
-                            <x-icons.chevron_right class="w-4 h-4" stroke="3">
-                            </x-icons.chevron_right>
-                        </a>
-                    @else
-                        <div aria-disabled="true" aria-details="{{ trans('next') }}"
-                            class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
+                                data-te-toggle="tooltip" data-te-placement="bottom" title="Next">
+                                <x-icons.chevron_right class="w-4 h-4" stroke="3">
+                                </x-icons.chevron_right>
+                            </a>
+                        @else
+                            <div aria-disabled="true" aria-details="{{ trans('next') }}"
+                                class="grid place-items-center w-10 h-10 text-base-content/70 bg-base-100 border-2 border-base-300 rounded-lg transition-colors
                     hover:bg-primary/30 hover:text-base-content/100
                     aria-selected:bg-primary/100 aria-selected:text-primary-content
                     aria-disabled:bg-base-100/50 aria-disabled:text-base-content/50 aria-disabled:cursor-not-allowed aria-disabled:select-none"
-                            data-te-toggle="tooltip" data-te-placement="bottom" title="Next">
-                            <x-icons.chevron_right class="w-4 h-4" stroke="3">
-                            </x-icons.chevron_right>
-                        </div>
-                    @endif
-                </li>
-            </ul>
-            <div class="flex gap-2 items-center">
-                <label for="table_show" class="capitalize">
-                    {{ trans('Show') }}:
-                </label>
-                <select id="table_show" name="perpage"
-                    class="text-gray-700 bg-white border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
-                    @php
-                        $perpage = $resource->init['perpage'];
-                    @endphp
-                    @foreach (range(1, 4) as $per)
-                        <option @selected($paginator->perPage() == $per * $perpage) value="{{ $per * $perpage }}">
-                            {{ $per * $perpage }}
+                                data-te-toggle="tooltip" data-te-placement="bottom" title="Next">
+                                <x-icons.chevron_right class="w-4 h-4" stroke="3">
+                                </x-icons.chevron_right>
+                            </div>
+                        @endif
+                    </li>
+                </ul>
+                <div class="flex gap-2 items-center">
+                    <label for="table_show" class="capitalize">
+                        {{ trans('Show') }}:
+                    </label>
+                    <select id="table_show" name="perpage"
+                        class="text-gray-700 bg-white border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
+                        @php
+                            $perpage = $resource->init['perpage'];
+                        @endphp
+                        @foreach (range(1, 4) as $per)
+                            <option @selected($paginator->perPage() == $per * $perpage) value="{{ $per * $perpage }}">
+                                {{ $per * $perpage }}
+                            </option>
+                        @endforeach
+                        <option @selected($paginator->perPage() == $paginator->total()) value="{{ $paginator->total() }}">
+                            {{ trans('all') }}
                         </option>
-                    @endforeach
-                    <option @selected($paginator->perPage() == $paginator->total()) value="{{ $paginator->total() }}">
-                        {{ trans('all') }}
-                    </option>
-                </select>
-            </div>
-        </nav>
-        <div class="flex gap-4 items-center max-sm:flex-col">
-            <div>
-                <span class="capitalize">{{ trans('showing') }}</span>
-                @if ($paginator->onFirstPage())
-                    <span class="font-semibold text-base-content">
-                        {{ $paginator->firstItem() ?? 0 }}
-                    </span>
-                    <span> {{ trans('to') }} </span>
-                    <span class="font-semibold text-base-content">
-                        {{ $paginator->lastItem() ?? 0 }}
-                    </span>
-                @else
-                    <span class="font-semibold text-base-content">
-                        {{ $paginator->count() }}
-                    </span>
-                @endif
-                <span>{{ trans('of') }}</span>
-                <span class="font-semibold text-base-content">{{ $paginator->total() }}</span>
-                <span>{{ trans('entries') }}</span>.
-            </div>
-        </div>
-    </section>
-    <section>
-        <div data-te-modal-init
-            class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-            id="delete_modal" tabindex="-1" aria-labelledby="delete_modal_label" aria-hidden="true">
-            <div data-te-modal-dialog-ref
-                class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
-                <div
-                    class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
-                    <div class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
-                        <div class="text-xl font-medium text-base-content" id="delete_modal_label">
-                            Delete Selected Data
-                        </div>
-                        <button
-                            class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
-                            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                            data-te-placement="bottom" title="Close" data-te-modal-dismiss>
-                            <x-icons.close class="w-5 h-5" stroke="2.5">
-                            </x-icons.close>
-                        </button>
-                    </div>
-                    <div class="flex-auto p-4" data-te-modal-body-ref>
-                        Are you sure you want to delete selected data?
-                    </div>
-                    <div
-                        class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
-                        <button
-                            class="grid place-items-center px-8 py-2 bg-base-200 text-base-content text-sm font-medium rounded-md transition-colors hover:bg-base-300"
-                            data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
-                            Cancel
-                        </button>
-                        <form id="delete_any_form" action="{{ $resource->api_delete_any() }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-sm font-medium rounded-md transition-colors hover:bg-primary-focus"
-                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
-                                Yes
-                            </button>
-                        </form>
-                    </div>
+                    </select>
+                </div>
+            </nav>
+            <div class="flex gap-4 items-center max-sm:flex-col">
+                <div>
+                    <span class="capitalize">{{ trans('showing') }}</span>
+                    @if ($paginator->onFirstPage())
+                        <span class="font-semibold text-base-content">
+                            {{ $paginator->firstItem() ?? 0 }}
+                        </span>
+                        <span> {{ trans('to') }} </span>
+                        <span class="font-semibold text-base-content">
+                            {{ $paginator->lastItem() ?? 0 }}
+                        </span>
+                    @else
+                        <span class="font-semibold text-base-content">
+                            {{ $paginator->count() }}
+                        </span>
+                    @endif
+                    <span>{{ trans('of') }}</span>
+                    <span class="font-semibold text-base-content">{{ $paginator->total() }}</span>
+                    <span>{{ trans('entries') }}</span>.
                 </div>
             </div>
-        </div>
-        @forelse($paginator ?? $all as $item)
+        </section>
+        <section>
             <div data-te-modal-init
                 class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                id="view_modal_{{ $loop->index }}" tabindex="-1"
-                aria-labelledby="view_modal_{{ $loop->index }}_label" aria-hidden="true">
+                id="delete_modal" tabindex="-1" aria-labelledby="delete_modal_label" aria-hidden="true">
                 <div data-te-modal-dialog-ref
                     class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
                     <div
                         class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
-                        <div
-                            class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
-                            <div class="text-xl font-medium text-base-content"
-                                id="view_modal_{{ $loop->index }}_label">
-                                View Data #{{ $loop->iteration }}
-                            </div>
-                            <button
-                                class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
-                                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
-                                data-te-placement="bottom" title="Close" data-te-modal-dismiss>
-                                <x-icons.close class="w-5 h-5" stroke="2.5">
-                                </x-icons.close>
-                            </button>
-                        </div>
-                        <div class="flex-auto flex flex-col gap-4 p-4 overflow-y-auto" data-te-modal-body-ref>
-                            @foreach ($resource->columns as $column)
-                                <div class="flex flex-col gap-1">
-                                    <div class="text-lg font-semibold">
-                                        {{ trans($resource->model->definition($column)->name) }}</div>
-                                    <div class="text-base font-medium">{{ $item->{$column} }}</div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div
-                            class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
-                            <a href="{{ $resource->web_update($item) }}"
-                                class="grid place-items-center px-8 py-2 bg-info/70 text-info-content/90 text-sm font-medium rounded-md transition-colors hover:bg-info/100 hover:text-info-content/100"
-                                data-te-ripple-init data-te-ripple-color="ligth">
-                                Edit
-                            </a>
-                            <button
-                                class="grid place-items-center px-8 py-2 bg-danger/70 text-danger-content/90 text-sm font-medium rounded-md transition-colors hover:bg-danger/100 hover:text-danger-content/100"
-                                data-te-toggle="modal" data-te-target="#delete_modal_{{ $loop->index }}"
-                                data-te-ripple-init data-te-ripple-color="ligth">
-                                Hapus
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div data-te-modal-init
-                class="fixed left-0 top-0 z-[1060] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                id="delete_modal_{{ $loop->index }}" tabindex="-1"
-                aria-labelledby="delete_modal_{{ $loop->index }}_label" aria-hidden="true">
-                <div data-te-modal-dialog-ref
-                    class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
-                    <div
-                        class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
-                        <div
-                            class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
-                            <div class="text-xl font-medium text-base-content"
-                                id="delete_modal_{{ $loop->index }}_label">
-                                Delete Data
+                        <div class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
+                            <div class="text-xl font-medium text-base-content" id="delete_modal_label">
+                                Delete Selected Data
                             </div>
                             <button
                                 class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
@@ -593,7 +544,7 @@
                             </button>
                         </div>
                         <div class="flex-auto p-4" data-te-modal-body-ref>
-                            Are you sure you want to delete data?
+                            Are you sure you want to delete selected data?
                         </div>
                         <div
                             class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
@@ -602,7 +553,7 @@
                                 data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
                                 Cancel
                             </button>
-                            <form action="{{ $resource->api_delete($item) }}" method="post">
+                            <form id="delete_any_form" action="{{ $resource->api_delete_any() }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button
@@ -615,6 +566,100 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-    </section>
-</div>
+            @forelse($paginator ?? $all as $item)
+                <div data-te-modal-init
+                    class="fixed left-0 top-0 z-[1050] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                    id="view_modal_{{ $loop->index }}" tabindex="-1"
+                    aria-labelledby="view_modal_{{ $loop->index }}_label" aria-hidden="true">
+                    <div data-te-modal-dialog-ref
+                        class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
+                        <div
+                            class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
+                            <div
+                                class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
+                                <div class="text-xl font-medium text-base-content"
+                                    id="view_modal_{{ $loop->index }}_label">
+                                    View Data #{{ $loop->iteration }}
+                                </div>
+                                <button
+                                    class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
+                                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                    data-te-placement="bottom" title="Close" data-te-modal-dismiss>
+                                    <x-icons.close class="w-5 h-5" stroke="2.5">
+                                    </x-icons.close>
+                                </button>
+                            </div>
+                            <div class="flex-auto flex flex-col gap-4 p-4 overflow-y-auto" data-te-modal-body-ref>
+                                @foreach ($resource->columns as $column)
+                                    <div class="flex flex-col gap-1">
+                                        <div class="text-lg font-semibold">
+                                            {{ trans($resource->model->definition($column)->name) }}</div>
+                                        <div class="text-base font-medium">{{ $item->{$column} }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div
+                                class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
+                                <a href="{{ $resource->web_update($item) }}"
+                                    class="grid place-items-center px-8 py-2 bg-info/70 text-info-content/90 text-sm font-medium rounded-md transition-colors hover:bg-info/100 hover:text-info-content/100"
+                                    data-te-ripple-init data-te-ripple-color="ligth">
+                                    Edit
+                                </a>
+                                <button
+                                    class="grid place-items-center px-8 py-2 bg-danger/70 text-danger-content/90 text-sm font-medium rounded-md transition-colors hover:bg-danger/100 hover:text-danger-content/100"
+                                    data-te-toggle="modal" data-te-target="#delete_modal_{{ $loop->index }}"
+                                    data-te-ripple-init data-te-ripple-color="ligth">
+                                    Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-te-modal-init
+                    class="fixed left-0 top-0 z-[1060] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                    id="delete_modal_{{ $loop->index }}" tabindex="-1"
+                    aria-labelledby="delete_modal_{{ $loop->index }}_label" aria-hidden="true">
+                    <div data-te-modal-dialog-ref
+                        class="max-w-xl max-sm:w-auto mx-auto mt-8 max-sm:m-4  transition-all duration-300 ease-in-out">
+                        <div
+                            class="pointer-events-auto flex w-full flex-col bg-base-100 bg-clip-padding text-base-content rounded-md border-none shadow-lg outline-none">
+                            <div
+                                class="flex items-center justify-between px-4 py-2 rounded-t-md border-b-2 border-base-300">
+                                <div class="text-xl font-medium text-base-content"
+                                    id="delete_modal_{{ $loop->index }}_label">
+                                    Delete Data
+                                </div>
+                                <button
+                                    class="grid place-items-center p-2 bg-base-200 text-base-content rounded-md transition-colors hover:bg-base-300"
+                                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip"
+                                    data-te-placement="bottom" title="Close" data-te-modal-dismiss>
+                                    <x-icons.close class="w-5 h-5" stroke="2.5">
+                                    </x-icons.close>
+                                </button>
+                            </div>
+                            <div class="flex-auto p-4" data-te-modal-body-ref>
+                                Are you sure you want to delete data?
+                            </div>
+                            <div
+                                class="flex flex-wrap items-center justify-end gap-4 px-4 py-2 rounded-b-md border-t-2 border-base-300">
+                                <button
+                                    class="grid place-items-center px-8 py-2 bg-base-200 text-base-content text-sm font-medium rounded-md transition-colors hover:bg-base-300"
+                                    data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                    Cancel
+                                </button>
+                                <form action="{{ $resource->api_delete($item) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-sm font-medium rounded-md transition-colors hover:bg-primary-focus"
+                                        data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
+                                        Yes
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </section>
+    </div>

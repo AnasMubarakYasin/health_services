@@ -29,31 +29,46 @@ class Schedule extends Model
                 name: 'day',
                 type: 'enum',
                 enums: [
-                    'senin' => 'senin', 'selasa' => 'selasa', 'rabu' => 'rabu', 'kamis' => 'kamis', 'jumat' => 'jumat', 'sabtu' => 'sabtu', 'minggu' => 'minggu'
+                    'monday' => 'monday',
+                    'tuesday' => 'tuesday',
+                    'wednesday' => 'wednesday',
+                    'thursday' => 'thursday',
+                    'friday' => 'friday',
+                    'saturday' => 'saturday',
+                    'sunday' => 'sunday'
                 ]
             ),
-            'midwive' => new Definition(
-                name: 'midwive',
+            'started_at' => new Definition(
+                name: 'started at',
+                type: 'time',
+            ),
+            'ended_at' => new Definition(
+                name: 'ended at',
+                type: 'time',
+            ),
+            'midwife' => new Definition(
+                name: 'midwife',
                 type: 'model',
                 array: false,
-                relation: 'midwive',
-                alias: 'midwive_id',
+                relation: 'midwife',
+                alias: 'midwife_id',
             ),
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
+                'midwife' => Midwife::all(),
                 default => throw new \Error("unknown name of $definition->name")
             };
         };
     }
 
     protected $fillable = [
-        'day', 'midwive_id'
+        'day', 'started_at', 'ended_at', 'midwife_id'
     ];
 
-    public function midwive()
+    public function midwife()
     {
-        return $this->belongsTo(Midwife::class, 'midwive_id');
+        return $this->belongsTo(Midwife::class, 'midwife_id');
     }
 
     public function visits()

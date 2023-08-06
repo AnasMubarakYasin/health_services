@@ -26,6 +26,12 @@ class Definition
             default => $this->format,
         };
     }
+    public function number_type(): string {
+        return match ($this->format) {
+            null => "number",
+            default => $this->format,
+        };
+    }
     public function file_type(): string {
         return match ($this->format) {
             null => "document/*",

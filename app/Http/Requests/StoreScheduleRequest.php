@@ -22,8 +22,10 @@ class StoreScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'day' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
-            'midwive_id' => 'required'
+            'day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+            'started_at' => 'required|date_format:H:i',
+            'ended_at' => 'required|date_format:H:i',
+            'midwife_id' => 'required|uuid'
         ];
     }
 }

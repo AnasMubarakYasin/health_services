@@ -22,13 +22,12 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:ready,not ready',
+            'status' => 'required|in:finished,on_progress,scheduled',
             'schedule' => 'required|date',
-            'start_at' => 'required|date',
-            'end_at' => 'required|date',
-            'patient_id' => 'required',
-            'service_id' => 'required'
-
+            'started_at' => 'required|date_format:H:i',
+            'ended_at' => 'required|date_format:H:i',
+            'patient_id' => 'required|uuid',
+            'service_id' => 'required|uuid',
         ];
     }
 }

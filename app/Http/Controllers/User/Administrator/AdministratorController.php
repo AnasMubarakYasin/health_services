@@ -144,7 +144,9 @@ class AdministratorController extends Controller
             request: request(),
             columns: [
                 "day",
-                "midwive"
+                "started_at",
+                "ended_at",
+                "midwife"
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -167,7 +169,9 @@ class AdministratorController extends Controller
         $resource = Schedule::formable()->from_create(
             fields: [
                 "day",
-                "midwive"
+                "started_at",
+                "ended_at",
+                "midwife"
             ],
         );
         $resource->api_create = function () {
@@ -184,7 +188,9 @@ class AdministratorController extends Controller
             model: $schedule,
             fields: [
                 "day",
-                "midwive"
+                "started_at",
+                "ended_at",
+                "midwife"
             ],
         );
         $resource->api_update = function ($item) {
@@ -203,8 +209,7 @@ class AdministratorController extends Controller
             columns: [
                 "status",
                 "schedule",
-                "start_at",
-                "end_at",
+                'started_at', 'ended_at',
                 "patient",
                 "service"
             ],
@@ -222,6 +227,13 @@ class AdministratorController extends Controller
         $resource->api_delete_any = function () {
             return route('web.resource.order.delete_any');
         };
+        $resource->route_relation = function ($definition) {
+            return match ($definition->name) {
+                'patient' => route('web.administrator.users.patient.index'),
+                'service' => route('web.administrator.service.index'),
+                default => throw new \Error("unknown name of $definition->name")
+            };
+        };
         return view('pages.administrator.order.index', ['resource' => $resource]);
     }
     public function order_create()
@@ -230,8 +242,7 @@ class AdministratorController extends Controller
             fields: [
                 "status",
                 "schedule",
-                "start_at",
-                "end_at",
+                'started_at', 'ended_at',
                 "patient",
                 "service"
             ],
@@ -251,8 +262,7 @@ class AdministratorController extends Controller
             fields: [
                 "status",
                 "schedule",
-                "start_at",
-                "end_at",
+                'started_at', 'ended_at',
                 "patient",
                 "service"
             ],

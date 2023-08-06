@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
-            $table->enum('status', ['ready', 'not ready']);
-            $table->dateTime('schedule');
-            $table->dateTime('start_at');
-            $table->dateTime('end_at');
+            $table->enum('status', ['finished', 'on_progress', 'scheduled']);
+            $table->date('schedule');
+            $table->time('started_at');
+            $table->time('ended_at');
             $table->foreignUuid('patient_id')->constrained('patients')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('service_id')->constrained('services')->cascadeOnUpdate()->cascadeOnDelete();
         });

@@ -148,13 +148,13 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::delete('/resource/service', 'Resource\ServiceController@delete_any')->name('web.resource.service.delete_any');
     Route::delete('/resource/service/{service}', 'Resource\ServiceController@delete')->name('web.resource.service.delete');
 
-    Route::post('/resource/schedule', 'Resource\ServiceController@create')->name('web.resource.schedule.create');
-    Route::patch('/resource/schedule/{schedule}', 'Resource\ServiceController@update')->name('web.resource.schedule.update');
-    Route::delete('/resource/schedule', 'Resource\ServiceController@delete_any')->name('web.resource.schedule.delete_any');
-    Route::delete('/resource/schedule/{schedule}', 'Resource\ServiceController@delete')->name('web.resource.schedule.delete');
+    Route::post('/resource/schedule', 'Resource\ScheduleController@create')->name('web.resource.schedule.create');
+    Route::patch('/resource/schedule/{schedule}', 'Resource\ScheduleController@update')->name('web.resource.schedule.update');
+    Route::delete('/resource/schedule', 'Resource\ScheduleController@delete_any')->name('web.resource.schedule.delete_any');
+    Route::delete('/resource/schedule/{schedule}', 'Resource\ScheduleController@delete')->name('web.resource.schedule.delete');
 
-    Route::post('/resource/order', 'Resource\ServiceController@create')->name('web.resource.order.create');
-    Route::patch('/resource/order/{order}', 'Resource\ServiceController@update')->name('web.resource.order.update');
-    Route::delete('/resource/order', 'Resource\ServiceController@delete_any')->name('web.resource.order.delete_any');
-    Route::delete('/resource/order/{order}', 'Resource\ServiceController@delete')->name('web.resource.order.delete');
+    Route::post('/resource/order', 'Resource\OrderController@create')->name('web.resource.order.create');
+    Route::patch('/resource/order/{order}', 'Resource\OrderController@update')->name('web.resource.order.update');
+    Route::delete('/resource/order', 'Resource\OrderController@delete_any')->name('web.resource.order.delete_any');
+    Route::delete('/resource/order/{order}', 'Resource\OrderController@delete')->name('web.resource.order.delete');
 });
