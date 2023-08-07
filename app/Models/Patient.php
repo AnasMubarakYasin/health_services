@@ -93,9 +93,4 @@ class Patient extends Authenticatable
             return Storage::url($this->photo);
         }
     }
-
-    public function visits()
-    {
-        return visits($this);
-    }
 }

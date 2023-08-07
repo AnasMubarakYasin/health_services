@@ -7,7 +7,9 @@
     @break
 
     @case('modern')
-        <x-modern.data.table.regular {{ $attributes }}></x-modern.data.table.regular>
+        <x-modern.data.table.regular {{ $attributes }}>
+
+        </x-modern.data.table.regular>
     @break
 
     @default

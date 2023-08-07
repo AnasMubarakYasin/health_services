@@ -6,12 +6,60 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
 use App\Models\Administrator;
+use App\Models\Midwife;
+use App\Models\Order;
+use App\Models\Patient;
+use App\Models\Schedule;
+use App\Models\Service;
+use Illuminate\Support\Facades\Blade;
+use stdClass;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-        return view('pages.administrator.dashboard', []);
+        $visitors = new stdClass();
+        $visitors->name = "visitor today";
+        $visitors->icon = Blade::render('<x-icons.user_group stroke="2" />');
+        $visitors->count = 100;
+        $visitors->subcount = "200 yesterday";
+
+        $service = Service::statable()->init(
+            name: "service",
+            icon: Blade::render('<x-icons.square stroke="2" />'),
+        )->resourcing();
+        $schedule = Schedule::statable()->init(
+            name: "schedule",
+            icon: Blade::render('<x-icons.calendar stroke="2" />'),
+        )->resourcing();
+        $order = Order::statable()->init(
+            name: "order",
+            icon: Blade::render('<x-icons.shop_bag stroke="2" />'),
+        )->resourcing();
+
+        $patient = Patient::statable()->init(
+            name: "patient",
+            icon: Blade::render('<x-icons.users stroke="2" />'),
+        )->resourcing();
+        $midwife = Midwife::statable()->init(
+            name: "midwife",
+            icon: Blade::render('<x-icons.users stroke="2" />'),
+        )->resourcing();
+        $administrator = Administrator::statable()->init(
+            name: "administrator",
+            icon: Blade::render('<x-icons.users stroke="2" />'),
+        )->resourcing();
+        return view('pages.administrator.dashboard', [
+            'visitors' => $visitors,
+
+            'service' => $service,
+            'schedule' => $schedule,
+            'order' => $order,
+
+            'patient' => $patient,
+            'midwife' => $midwife,
+            'administrator' => $administrator,
+        ]);
     }
     public function profile()
     {

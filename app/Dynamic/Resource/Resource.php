@@ -58,16 +58,16 @@ class Resource
         $route_default = function () {
             return "";
         };
-        $this->route_view_any ??= $route_default;
-        $this->route_view ??= $route_default;
+        $this->web_view_any ??= $route_default;
+        $this->web_view ??= $route_default;
 
-        $this->route_store ??= $route_default;
-        $this->route_create ??= $route_default;
+        $this->api_create ??= $route_default;
+        $this->web_create ??= $route_default;
 
-        $this->route_edit ??= $route_default;
-        $this->route_update ??= $route_default;
-        $this->route_delete ??= $route_default;
-        $this->route_delete_any ??= $route_default;
+        $this->web_update ??= $route_default;
+        $this->api_update ??= $route_default;
+        $this->api_delete ??= $route_default;
+        $this->api_delete_any ??= $route_default;
         $this->route_restore ??= $route_default;
 
         $this->route_relation ??= $route_default;

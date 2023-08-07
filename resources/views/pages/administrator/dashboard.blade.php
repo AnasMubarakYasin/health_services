@@ -1,15 +1,15 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
-        @template('modern')
-            <x-slot:head>
+        <x-slot:head>
+            @template('modern')
                 @vite('resources/js/components/common/error-boundary.js')
                 @vite('resources/js/components/modern/common/theme.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
                 @vite('resources/js/components/modern/dashboard/customizer.js')
-            </x-slot:head>
-        @endtemplate
+            @endtemplate
+        </x-slot:head>
         <x-slot:topbar>
             <x-dynamic.panel.topbar>
 
@@ -21,7 +21,51 @@
             </x-dynamic.panel.sidebar>
         </x-slot:sidebar>
         <x-slot:main>
-            <x-dynamic.panel.main>
+            <x-dynamic.panel.main class="p-4">
+
+                <div class="flex flex-col gap-4">
+                    {{-- <div class="grid grid-cols-3 gap-4">
+                        <x-dynamic.resource.stat :resource="$visitors" :name="$visitors->name" :count="$visitors->count"
+                            :subcount="$visitors->subcount">
+                            <x-slot:icon>
+                                {!! $visitors->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                    </div> --}}
+                    <div class="grid grid-cols-3 gap-4">
+                        <x-dynamic.resource.stat :resource="$service" :name="$service->name" :count="$service->count_all">
+                            <x-slot:icon>
+                                {!! $service->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                        <x-dynamic.resource.stat :resource="$schedule" :name="$schedule->name" :count="$schedule->count_all">
+                            <x-slot:icon>
+                                {!! $schedule->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                        <x-dynamic.resource.stat :resource="$order" :name="$order->name" :count="$order->count_all">
+                            <x-slot:icon>
+                                {!! $order->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+
+                        <x-dynamic.resource.stat :resource="$patient" :name="$patient->name" :count="$patient->count_all">
+                            <x-slot:icon>
+                                {!! $patient->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                        <x-dynamic.resource.stat :resource="$midwife" :name="$midwife->name" :count="$midwife->count_all">
+                            <x-slot:icon>
+                                {!! $midwife->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                        <x-dynamic.resource.stat :resource="$administrator" :name="$administrator->name" :count="$administrator->count_all">
+                            <x-slot:icon>
+                                {!! $administrator->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                    </div>
+                </div>
 
             </x-dynamic.panel.main>
         </x-slot:main>

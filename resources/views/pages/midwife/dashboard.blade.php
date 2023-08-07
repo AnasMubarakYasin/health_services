@@ -1,14 +1,14 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
-        @template('modern')
-            <x-slot:head>
+        <x-slot:head>
+            @template('modern')
                 @vite('resources/js/components/common/error-boundary.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
                 @vite('resources/js/components/modern/dashboard/customizer.js')
-            </x-slot:head>
-        @endtemplate
+            @endtemplate
+        </x-slot:head>
         <x-slot:topbar>
             <x-dynamic.panel.topbar>
 
