@@ -24,14 +24,16 @@
             <x-dynamic.panel.main class="p-4">
 
                 <div class="flex flex-col gap-4">
-                    {{-- <div class="grid grid-cols-3 gap-4">
-                        <x-dynamic.resource.stat :resource="$visitors" :name="$visitors->name" :count="$visitors->count"
-                            :subcount="$visitors->subcount">
-                            <x-slot:icon>
-                                {!! $visitors->icon !!}
-                            </x-slot:icon>
-                        </x-dynamic.resource.stat>
-                    </div> --}}
+                    @template('modern')
+                        <div class="grid grid-cols-3 gap-4">
+                            <x-dynamic.resource.stat :resource="$visitors" :name="$visitors->name" :count="$visitors->count"
+                                :subcount="$visitors->subcount">
+                                <x-slot:icon>
+                                    {!! $visitors->icon !!}
+                                </x-slot:icon>
+                            </x-dynamic.resource.stat>
+                        </div>
+                    @endtemplate
                     <div class="grid grid-cols-3 gap-4">
                         <x-dynamic.resource.stat :resource="$service" :name="$service->name" :count="$service->count_all">
                             <x-slot:icon>
