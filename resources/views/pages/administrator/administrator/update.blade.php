@@ -1,5 +1,15 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
+        @template('simple')
+            <x-slot:head>
+                <script>
+                    var models = [];
+                    var resource = @json($resource);
+                    var definitions = @json($resource->model::$definitions);
+                </script>
+                @vite('resources/js/components/simple/resource/form.js')
+            </x-slot:head>
+        @endtemplate
         @template('modern')
             <x-slot:head>
                 @vite('resources/js/components/common/error-boundary.js')

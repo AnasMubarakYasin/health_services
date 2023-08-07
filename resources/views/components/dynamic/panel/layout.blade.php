@@ -2,6 +2,9 @@
 @switch($panel->template)
     @case('simple')
         <x-simple.panel.layout {{ $attributes }}>
+            <x-slot:head>
+                {{ $head }}
+            </x-slot:head>
             <x-slot:topbar>
                 {{ $topbar }}
             </x-slot:topbar>

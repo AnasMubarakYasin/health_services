@@ -3,7 +3,6 @@
     @php
         $definition = $resource->definition($field);
     @endphp
-    <input type="hidden" name="_view_any" value="{{ $resource->web_view_any() }}">
     @switch($definition->type)
         @case('string')
             <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">

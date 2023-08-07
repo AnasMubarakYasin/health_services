@@ -7,6 +7,7 @@
         @if ($resource->is_update())
             @method('PATCH')
         @endif
+        <input type="hidden" name="_view_any" value="{{ $resource->web_view_any() }}">
         <x-modern.data.form.fields :resource="$resource" :model="$model" />
         <div class="col-span-2 flex justify-center">
             <button

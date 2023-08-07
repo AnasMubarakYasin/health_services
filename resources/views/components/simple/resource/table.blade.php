@@ -5,14 +5,11 @@
     'top' => null,
     'actions' => null,
 ])
-<x-slot:head>
-    @vite('resources/js/components/simple/resource/table.js')
-</x-slot:head>
 <div class="grid gap-4 p-4">
     @if ($menu)
         <div class="flex gap-2 items-center">
             @can('create', $resource->model)
-                <a href="{{ $resource->route_store() }}"
+                <a href="{{ $resource->web_create() }}"
                     class="text-sm p-1.5 text-gray-700 bg-white border dark:bg-gray-800 border-gray-300 hover:bg-gray-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-800 dark:border-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +46,7 @@
                 </a>
             @endcan
             @can('delete_any', $resource->model)
-                <form class="contents" id="delete_any" action="{{ $resource->route_delete_any() }}" method="post"
+                <form class="contents" id="delete_any" action="{{ $resource->api_delete_any() }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('DELETE')
@@ -323,7 +320,7 @@
                             @endforeach
                         @endif
                         @can('update', $item)
-                            <a id="edt_btn" href="{{ $resource->route_edit($item) }}"
+                            <a id="edt_btn" href="{{ $resource->web_update($item) }}"
                                 class="p-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -335,7 +332,7 @@
                             </a>
                         @endcan
                         @can('delete', $item)
-                            <form class="contents" action="{{ $resource->route_delete($item) }}" method="post">
+                            <form class="contents" action="{{ $resource->api_delete($item) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button id="del_btn"

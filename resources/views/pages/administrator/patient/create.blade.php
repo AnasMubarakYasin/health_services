@@ -1,5 +1,15 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
+        @template('simple')
+            <x-slot:head>
+                <script>
+                    var models = [];
+                    var resource = @json($resource);
+                    var definitions = @json($resource->model::$definitions);
+                </script>
+                @vite('resources/js/components/simple/resource/form.js')
+            </x-slot:head>
+        @endtemplate
         @template('modern')
             <x-slot:head>
                 @vite('resources/js/components/common/error-boundary.js')
@@ -24,7 +34,6 @@
         </x-slot:sidebar>
         <x-slot:main>
             <x-dynamic.panel.main>
-                {{-- @dd(url()->full(), route('web.administrator.users.administrator.create'), route('web.administrator.users.administrator.list'), str()->startsWith(url()->full(), route('web.administrator.users.administrator.list'))) --}}
                 <x-dynamic.resource.form :resource="$resource">
 
                 </x-dynamic.resource.form>

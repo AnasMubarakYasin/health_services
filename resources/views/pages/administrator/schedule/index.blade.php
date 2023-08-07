@@ -1,5 +1,10 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
+        @template('simple')
+            <x-slot:head>
+                @vite('resources/js/components/simple/resource/table.js')
+            </x-slot:head>
+        @endtemplate
         @template('modern')
             <x-slot:head>
                 @vite('resources/js/components/common/error-boundary.js')

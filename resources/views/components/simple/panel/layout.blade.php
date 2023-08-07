@@ -41,6 +41,7 @@
     @endif
 
     {{ $head }}
+    @yield('head')
 </head>
 
 <body
