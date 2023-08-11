@@ -14,7 +14,7 @@ return [
         'logo' => env('APP_LOGO', '/logo.png'),
         'favicon' => env('APP_FAV', '/favicon.ico'),
         'vendor_name' => 'Bladerlaiga',
-        'vendor_version' => '0.6.6',
+        'vendor_version' => '0.7.0',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
         'template' => 'simple',
@@ -35,7 +35,7 @@ return [
         ],
         'modern' => [
             'name' => 'Modern',
-            'version' => '0.2.4',
+            'version' => '0.2.5',
             'deps' => ['tailwind element', 'daisyui'],
             'thumb' => '/templates/modern.png',
         ],
