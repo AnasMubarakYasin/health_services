@@ -25,6 +25,7 @@ class UpdateScheduleRequest extends FormRequest
             'day' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
             'started_at' => 'required|date_format:H:i',
             'ended_at' => 'required|date_format:H:i',
+            'active' => 'in:on,off',
             'midwife_id' => 'required|uuid'
         ];
     }

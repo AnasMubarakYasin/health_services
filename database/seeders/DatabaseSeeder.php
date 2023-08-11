@@ -7,6 +7,9 @@ namespace Database\Seeders;
 use App\Models\Administrator;
 use App\Models\Midwife;
 use App\Models\Patient;
+use App\Models\Schedule;
+use App\Models\Service;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,8 +31,41 @@ class DatabaseSeeder extends Seeder
             'name' => 'patient',
             'password' => 'patient',
         ]);
-        $administrator = Administrator::factory()->count(100)->create();
-        $midwives = Midwife::factory()->count(100)->create();
-        $patients = Patient::factory()->count(100)->create();
+        $administrator = Administrator::factory()->count(25)->create();
+        $midwives = Midwife::factory()->count(25)->create();
+        $patients = Patient::factory()->count(25)->create();
+
+        Service::create(['name' => 'pemeriksaan kehamilan']);
+        Service::create(['name' => 'perawatan bayi baru lahir']);
+        Service::create(['name' => 'pelayanan kesehatan masa nifas']);
+        Service::create(['name' => 'pelayanan KB']);
+        Service::create(['name' => 'tindik telinga']);
+
+        Schedule::factory()->count(25)->state(new Sequence(
+            ...$midwives->map(function ($midwife) {
+                return ['midwife_id' => $midwife->id];
+            })->toArray()
+        ))->state(new Sequence(
+            [
+                'started_at' => '08:00:00',
+                'ended_at' => '12:00:00',
+            ],
+            [
+                'started_at' => '13:00:00',
+                'ended_at' => '16:00:00',
+            ],
+            [
+                'started_at' => '18:00:00',
+                'ended_at' => '20:00:00',
+            ],
+            [
+                'started_at' => '08:00:00',
+                'ended_at' => '16:00:00',
+            ],
+            [
+                'started_at' => '13:00:00',
+                'ended_at' => '20:00:00',
+            ],
+        ))->create();
     }
 }

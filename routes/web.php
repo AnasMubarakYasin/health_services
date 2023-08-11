@@ -90,6 +90,7 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
     Route::get('/patient/logout', 'Auth\PatientController@logout_perfom')->name('web.patient.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
+        Route::get('/patient/order/{service}', 'User\Patient\DashboardController@show_order')->name('web.patient.show_order');
         Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
         Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
         Route::get('/patient/offline', 'User\Patient\DashboardController@offline')->name('web.patient.offline');
@@ -97,6 +98,8 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
     });
+
+    Route::post('/patient/order/{service}', 'User\Patient\DashboardController@perform_order')->name('web.patient.perform_order');
 
     Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');

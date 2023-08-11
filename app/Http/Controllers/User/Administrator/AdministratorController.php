@@ -146,6 +146,7 @@ class AdministratorController extends Controller
                 "day",
                 "started_at",
                 "ended_at",
+                "active",
                 "midwife"
             ],
             pagination: ['per' => 5, 'num' => 1],
@@ -162,12 +163,19 @@ class AdministratorController extends Controller
         $resource->api_delete_any = function () {
             return route('web.resource.schedule.delete_any');
         };
+        $resource->route_relation = function ($definition) {
+            return match ($definition->name) {
+                'midwife' => route('web.administrator.users.midwife.index'),
+                default => throw new \Error("unknown name of $definition->name")
+            };
+        };
         return view('pages.administrator.schedule.index', ['resource' => $resource]);
     }
     public function schedule_create()
     {
         $resource = Schedule::formable()->from_create(
             fields: [
+                "active",
                 "day",
                 "started_at",
                 "ended_at",
@@ -187,6 +195,7 @@ class AdministratorController extends Controller
         $resource = Schedule::formable()->from_update(
             model: $schedule,
             fields: [
+                "active",
                 "day",
                 "started_at",
                 "ended_at",
@@ -207,11 +216,15 @@ class AdministratorController extends Controller
         $resource = Order::tableable()->from_request(
             request: request(),
             columns: [
-                "status",
-                "schedule",
-                'started_at', 'ended_at',
-                "patient",
-                "service"
+                'status',
+                'schedule',
+                'schedule_start',
+                'schedule_end',
+                'location_name',
+                'location_coordinates',
+                'patient',
+                'midwife',
+                'service',
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -230,6 +243,7 @@ class AdministratorController extends Controller
         $resource->route_relation = function ($definition) {
             return match ($definition->name) {
                 'patient' => route('web.administrator.users.patient.index'),
+                'midwife' => route('web.administrator.users.midwife.index'),
                 'service' => route('web.administrator.service.index'),
                 default => throw new \Error("unknown name of $definition->name")
             };
@@ -240,11 +254,15 @@ class AdministratorController extends Controller
     {
         $resource = Order::formable()->from_create(
             fields: [
-                "status",
-                "schedule",
-                'started_at', 'ended_at',
-                "patient",
-                "service"
+                'status',
+                'schedule',
+                'schedule_start',
+                'schedule_end',
+                'location_name',
+                'location_coordinates',
+                'patient',
+                'midwife',
+                'service',
             ],
         );
         $resource->api_create = function () {
@@ -260,11 +278,15 @@ class AdministratorController extends Controller
         $resource = Order::formable()->from_update(
             model: $order,
             fields: [
-                "status",
-                "schedule",
-                'started_at', 'ended_at',
-                "patient",
-                "service"
+                'status',
+                'schedule',
+                'schedule_start',
+                'schedule_end',
+                'location_name',
+                'location_coordinates',
+                'patient',
+                'midwife',
+                'service',
             ],
         );
         $resource->api_update = function ($item) {

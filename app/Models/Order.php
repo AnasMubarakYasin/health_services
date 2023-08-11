@@ -38,13 +38,21 @@ class Order extends Model
                 name: 'schedule',
                 type: 'date',
             ),
-            'started_at' => new Definition(
-                name: 'started at',
+            'schedule_start' => new Definition(
+                name: 'schedule start',
                 type: 'time',
             ),
-            'ended_at' => new Definition(
-                name: 'ended at',
+            'schedule_end' => new Definition(
+                name: 'schedule end',
                 type: 'time',
+            ),
+            'location_name' => new Definition(
+                name: 'location name',
+                type: 'string',
+            ),
+            'location_coordinates' => new Definition(
+                name: 'location coordinates',
+                type: 'string',
             ),
             'patient' => new Definition(
                 name: 'patient',
@@ -52,6 +60,13 @@ class Order extends Model
                 array: false,
                 relation: 'patient',
                 alias: 'patient_id',
+            ),
+            'midwife' => new Definition(
+                name: 'midwife',
+                type: 'model',
+                array: false,
+                relation: 'midwife',
+                alias: 'midwife_id',
             ),
             'service' => new Definition(
                 name: 'service',
@@ -64,28 +79,46 @@ class Order extends Model
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
                 'patient' => Patient::all(),
+                'midwife' => Midwife::all(),
                 'service' => Service::all(),
                 default => throw new \Error("unknown name of $definition->name")
             };
         };
     }
+    public static function first_finished()
+    {
+        return self::where('status', 'finished')->first();
+    }
+    public static function first_unfinish()
+    {
+        return self::whereBetween('status', ['scheduled', 'on_progress'])->first();
+    }
 
     protected $fillable = [
-        'status', 'schedule', 'started_at', 'ended_at', 'patient_id', 'service_id'
+        'status',
+        'schedule',
+        'schedule_start',
+        'schedule_end',
+        'location_name',
+        'location_coordinates',
+        'patient_id',
+        'midwife_id',
+        'service_id',
+    ];
+    protected $casts = [
+        'location_coordinates' => 'array',
     ];
 
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');
     }
-
+    public function midwife()
+    {
+        return $this->belongsTo(Midwife::class, 'midwife_id');
+    }
     public function service()
     {
         return $this->belongsTo(Service::class, 'service_id');
-    }
-
-    public function visits()
-    {
-        return visits($this);
     }
 }

@@ -46,6 +46,11 @@ class Schedule extends Model
                 name: 'ended at',
                 type: 'time',
             ),
+            'active' => new Definition(
+                name: 'active',
+                type: 'boolean',
+                default: true,
+            ),
             'midwife' => new Definition(
                 name: 'midwife',
                 type: 'model',
@@ -63,16 +68,15 @@ class Schedule extends Model
     }
 
     protected $fillable = [
-        'day', 'started_at', 'ended_at', 'midwife_id'
+        'day',
+        'started_at',
+        'ended_at',
+        'active',
+        'midwife_id',
     ];
 
     public function midwife()
     {
         return $this->belongsTo(Midwife::class, 'midwife_id');
-    }
-
-    public function visits()
-    {
-        return visits($this);
     }
 }

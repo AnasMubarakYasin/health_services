@@ -49,12 +49,11 @@
             <x-icons.light class="swap-on w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.light>
             <x-icons.dark class="swap-off w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.dark>
         </label>
-        @if ($demo)
-            <div class="text-base">
-                <a href="/"
-                    class="text-primary font-semibold hover:text-primary-focus transition-colors">Entry</a>
-            </div>
-        @endif
+        @env('local')
+        <div class="text-base">
+            <a href="/" class="text-primary font-semibold hover:text-primary-focus transition-colors">Entry</a>
+        </div>
+        @endenv
     </div>
     <form action="{{ $action }}" method="post"
         class="relative grid gap-8 p-8 m-8 w-96 z-10 bg-base-100 rounded-lg shadow-lg">

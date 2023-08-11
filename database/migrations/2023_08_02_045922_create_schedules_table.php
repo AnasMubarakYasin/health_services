@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']);
             $table->time('started_at');
             $table->time('ended_at');
+            $table->boolean('active')->default(true);
             $table->foreignUuid('midwife_id')->constrained('midwives')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }

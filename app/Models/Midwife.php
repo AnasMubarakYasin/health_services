@@ -91,4 +91,9 @@ class Midwife extends Authenticatable
             return Storage::url($this->photo);
         }
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

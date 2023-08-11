@@ -199,7 +199,8 @@
         @break
 
         @case('date')
-            <div class="relative" data-field="{{ $field }}" data-te-datepicker-init="" data-te-input-wrapper-init="">
+            <div class="relative" data-field="{{ $field }}" data-te-datepicker-init=""
+                data-te-input-wrapper-init="">
                 <input id="input_{{ $field }}" name="{{ $field }}" type="text" data-focus="true"
                     value="{{ old($field, $model->{$field} ?? $definition->default) }}"
                     placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
@@ -227,24 +228,26 @@
                     </div>
                 @enderror
             </div>
+        @break
 
-            {{-- <div class="relative mb-3 xl:w-96" data-te-datepicker-init="" data-te-input-wrapper-init="">
-                <input type="text"
-                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                    placeholder="Select a date">
-                <label for="floatingInput"
-                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                    style="margin-left: 0px;">Select a date</label>
-                <button id="datepicker-toggle-796505" type="button"
-                    class="flex items-center justify-content-center [&amp;>svg]:w-5 [&amp;>svg]:h-5 absolute outline-none border-none bg-transparent right-0.5 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:text-primary focus:text-primary dark:hover:text-primary-400 dark:focus:text-primary-400 dark:text-neutral-200"
-                    data-te-datepicker-toggle-button-ref="" data-te-datepicker-toggle-ref="">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-4 h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                    </svg>
-                </button>
-            </div> --}}
+        @case('boolean')
+            <div class="relative flex items-center">
+                <input id="input_{{ $field }}" name="{{ $field }}" data-focus="true" type="checkbox"
+                    role="switch" @checked(old($field, $model->{$field} ?? $definition->default)) @required(false)
+                    @readonly(false) {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
+                    class="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-base-200 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-base-300 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary/70 checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.125] focus:before:shadow-[3px_-1px_0px_13px_hsl(var(--bc))] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary/50 checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_hsl(var(--bc))] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]" />
+                <label class="inline-block pl-[0.15rem] hover:cursor-pointer" for="input_{{ $field }}">
+                    <span>{{ trans($definition->name) }}</span>
+                    @if (!$definition->nullable)
+                        <span class="text-danger font-semibold">*</span>
+                    @endif
+                </label>
+                @error($field)
+                    <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
         @break
 
         @case('model')

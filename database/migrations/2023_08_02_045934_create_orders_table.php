@@ -16,9 +16,12 @@ return new class extends Migration
             $table->timestamps();
             $table->enum('status', ['finished', 'on_progress', 'scheduled']);
             $table->date('schedule');
-            $table->time('started_at');
-            $table->time('ended_at');
+            $table->time('schedule_start');
+            $table->time('schedule_end');
+            $table->string('location_name');
+            $table->json('location_coordinates');
             $table->foreignUuid('patient_id')->constrained('patients')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('midwife_id')->constrained('midwives')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('service_id')->constrained('services')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
