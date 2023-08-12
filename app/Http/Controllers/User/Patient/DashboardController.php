@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\CreateOrderRequest;
+use App\Http\Requests\Resource\Patient\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
 use App\Models\Midwife;
@@ -19,7 +20,7 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $services = Service::all();
-        $order = Order::first_unfinish();
+        $order = Order::first_unfinish_patient(auth()->user());
 
         return view('pages.patient.dashboard', [
             'services' => $services,
@@ -45,6 +46,10 @@ class DashboardController extends Controller
     }
     public function perform_order(CreateOrderRequest $request, Service $service)
     {
+        $unfinish_order = Order::first_unfinish_patient(auth()->user());
+        if ($unfinish_order) {
+            return back()->withErrors(['api' => 'user have unfinish order']);
+        }
         $data = $request->validated();
         $order = Order::create([
             'status' => 'scheduled',
@@ -59,19 +64,37 @@ class DashboardController extends Controller
         ]);
         return to_route('web.patient.dashboard');
     }
+    public function history()
+    {
+        $orders = Order::get_patient(auth()->user());
+        return view('pages.patient.history', [
+            'orders' => $orders,
+        ]);
+    }
+
     public function profile()
     {
         $resource = Patient::formable()->from_update(
             model: auth()->user(),
-            fields: ['photo', 'name', 'telp', 'email'],
+            fields: [
+                "name",
+                'password',
+                'photo',
+                "fullname",
+                "telp",
+                "age",
+                "weight",
+                "height",
+            ],
         );
         return view('pages.patient.profile', ['resource' => $resource]);
     }
-    public function change_profile(ChangeProfileRequest $request)
+    public function change_profile(UpdateRequest $request)
     {
-        /** @var User */
+        /** @var Patient */
         $user = auth()->user();
-        return back();
+        $user->update($request->validated());
+        return to_route('web.patient.dashboard');
     }
     public function change_password(ChangePasswordRequest $request)
     {

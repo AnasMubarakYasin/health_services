@@ -24,9 +24,12 @@ class UpdateOrderRequest extends FormRequest
         return [
             'status' => 'required|in:finished,on_progress,scheduled',
             'schedule' => 'required|date',
-            'started_at' => 'required|date_format:H:i',
-            'ended_at' => 'required|date_format:H:i',
+            'schedule_start' => 'required|date_format:H:i',
+            'schedule_end' => 'required|date_format:H:i',
+            'location_name' => 'required|string',
+            'location_coordinates' => 'required|json',
             'patient_id' => 'required|uuid',
+            'midwife_id' => 'required|uuid',
             'service_id' => 'required|uuid',
         ];
     }

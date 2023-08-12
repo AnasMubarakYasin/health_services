@@ -17,6 +17,7 @@ class MidwifeController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "telp",
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -42,6 +43,7 @@ class MidwifeController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "telp",
             ],
         );
         $resource->api_create = function () {
@@ -61,6 +63,7 @@ class MidwifeController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "telp",
             ],
         );
         $resource->api_update = function ($item) {

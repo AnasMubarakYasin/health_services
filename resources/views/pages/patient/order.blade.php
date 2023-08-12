@@ -30,7 +30,11 @@
         </x-slot:sidebar>
         <x-slot:main>
             <x-dynamic.panel.main class="grid gap-4">
-
+                @error('api')
+                    <div class="flex flex-col gap-4 max-w-sm p-4 bg-error text-error-content rounded-lg shadow-all-lg">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <form action="{{ route('web.patient.perform_order', ['service' => $service]) }}" method="POST"
                     class="flex flex-col gap-4 max-w-sm p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                     @csrf

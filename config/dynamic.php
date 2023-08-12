@@ -10,11 +10,11 @@ use App\Models\Midwife;
 return [
     'application' => [
         'name' => env('APP_NAME', 'Bladerlaiga'),
-        'version' => env('APP_VER', '0.1.4'),
+        'version' => env('APP_VER', '0.2.4'),
         'logo' => env('APP_LOGO', '/logo.png'),
         'favicon' => env('APP_FAV', '/favicon.ico'),
         'vendor_name' => 'Bladerlaiga',
-        'vendor_version' => '0.7.0',
+        'vendor_version' => '0.7.1',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
         'template' => 'simple',
@@ -29,13 +29,13 @@ return [
     'templates' => [
         'simple' => [
             'name' => 'Simple',
-            'version' => '0.6.3',
+            'version' => '0.6.4',
             'deps' => ['flowbite'],
             'thumb' => '/templates/simple.png',
         ],
         'modern' => [
             'name' => 'Modern',
-            'version' => '0.2.5',
+            'version' => '0.2.6',
             'deps' => ['tailwind element', 'daisyui'],
             'thumb' => '/templates/modern.png',
         ],

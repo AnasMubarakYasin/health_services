@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         Service::create(['name' => 'pelayanan KB']);
         Service::create(['name' => 'tindik telinga']);
 
-        Schedule::factory()->count(25)->state(new Sequence(
+        Schedule::factory()->count(50)->state(new Sequence(
             ...$midwives->map(function ($midwife) {
                 return ['midwife_id' => $midwife->id];
             })->toArray()

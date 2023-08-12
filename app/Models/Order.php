@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class Order extends Model
@@ -92,6 +93,17 @@ class Order extends Model
     public static function first_unfinish()
     {
         return self::whereBetween('status', ['scheduled', 'on_progress'])->first();
+    }
+    public static function first_unfinish_patient(Patient $patient)
+    {
+        return self::query()
+            ->where('patient_id', $patient->id)
+            ->whereNot('status', 'finished')
+            ->first();
+    }
+    public static function get_patient(Patient $patient)
+    {
+        return self::query()->where('patient_id', $patient->id)->get();
     }
 
     protected $fillable = [

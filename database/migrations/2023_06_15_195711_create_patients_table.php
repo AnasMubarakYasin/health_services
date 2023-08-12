@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('photo')->nullable();
             $table->string('fullname')->nullable();
+            $table->string('telp')->nullable();
+            $table->integer('age')->nullable();
+            $table->integer('weight')->nullable();
+            $table->integer('height')->nullable();
             $table->rememberToken();
         });
     }

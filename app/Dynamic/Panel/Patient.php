@@ -29,6 +29,11 @@ class Patient extends Panel
                 link: route('web.patient.dashboard'),
                 icon: Blade::render('<x-icons.home stroke="2" />'),
             ),
+            new Menu(
+                name: "history",
+                link: route('web.patient.history'),
+                icon: Blade::render('<x-icons.clock stroke="2" />'),
+            ),
         ];
     }
     public function get_user_menus(): array
@@ -58,7 +63,7 @@ class Patient extends Panel
     }
     public function change_profile()
     {
-        return route('web.resource.patient.update', ['patient' => $this->user]);
+        return route('web.patient.change_profile');
     }
     public function change_password()
     {

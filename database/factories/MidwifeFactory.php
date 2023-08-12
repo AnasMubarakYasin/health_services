@@ -22,6 +22,7 @@ class MidwifeFactory extends Factory
             'password' => '1234',
             'photo' => fake()->imageUrl(),
             'fullname' => fake()->name(),
+            'telp' => fake()->phoneNumber(),
             'remember_token' => Str::random(10),
         ];
     }

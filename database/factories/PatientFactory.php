@@ -22,6 +22,10 @@ class PatientFactory extends Factory
             'password' => '1234',
             'photo' => fake()->imageUrl(),
             'fullname' => fake()->name(),
+            'telp' => fake()->phoneNumber(),
+            'age' => fake()->randomNumber(2),
+            'weight' => fake()->randomNumber(2),
+            'height' => fake()->randomNumber(2),
             'remember_token' => Str::random(10),
         ];
     }

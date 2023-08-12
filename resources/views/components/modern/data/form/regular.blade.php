@@ -11,7 +11,7 @@
         <x-modern.data.form.fields :resource="$resource" :model="$model" />
         <div class="col-span-2 flex justify-center">
             <button
-                class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-base font-medium rounded-md transition-colors hover:bg-primary-focus"
+                class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-base font-medium rounded-md transition-colors hover:bg-primary-focus capitalize"
                 data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
                 {{ trans($resource->mode) }}
             </button>

@@ -84,11 +84,11 @@ for (const themeItem of themeList.children) {
 }
 function themeSelect(theme) {
   if (theme == "light") {
-    document.documentElement.dataset.theme = "dark";
+    document.documentElement.dataset.theme = "light";
     document.documentElement.classList.remove("dark");
     themeBtn.innerHTML = icon_dark;
   } else if (theme == "dark") {
-    document.documentElement.dataset.theme = "light";
+    document.documentElement.dataset.theme = "dark";
     document.documentElement.classList.add("dark");
     themeBtn.innerHTML = icon_light;
   } else {

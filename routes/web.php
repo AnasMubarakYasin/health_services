@@ -91,6 +91,7 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
         Route::get('/patient/order/{service}', 'User\Patient\DashboardController@show_order')->name('web.patient.show_order');
+        Route::get('/patient/history', 'User\Patient\DashboardController@history')->name('web.patient.history');
         Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
         Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
         Route::get('/patient/offline', 'User\Patient\DashboardController@offline')->name('web.patient.offline');

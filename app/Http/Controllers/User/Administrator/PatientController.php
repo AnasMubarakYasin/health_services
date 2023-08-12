@@ -17,6 +17,10 @@ class PatientController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "telp",
+                "age",
+                "weight",
+                "height",
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -42,6 +46,10 @@ class PatientController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "telp",
+                "age",
+                "weight",
+                "height",
             ],
         );
         $resource->api_create = function () {
@@ -61,6 +69,10 @@ class PatientController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "telp",
+                "age",
+                "weight",
+                "height",
             ],
         );
         $resource->api_update = function ($item) {

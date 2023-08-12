@@ -3,6 +3,7 @@
         <x-slot:head>
             @template('modern')
                 @vite('resources/js/components/common/error-boundary.js')
+                @vite('resources/js/components/modern/common/theme.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
@@ -23,14 +24,14 @@
             <x-dynamic.panel.main class="grid gap-4">
 
                 <div class="grid gap-2">
-                    <div class="font-medium capitalize">{{ trans('services') }}</div>
-                    <div class="flex gap-4">
+                    <div class="font-bold capitalize">{{ trans('services') }}</div>
+                    <div class="flex flex-wrap gap-4">
                         @foreach ($services as $service)
                             <a href="{{ route('web.patient.show_order', ['service' => $service]) }}"
-                                class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg hover:bg-primary/10 hover:text-primary-content">
+                                class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg hover:bg-primary/10">
                                 <div class="w-full flex items-center justify-between">
                                     <div class="flex flex-col">
-                                        <div class="text-lg text-base-content/70 font-medium capitalize">
+                                        <div class="text-lg font-medium capitalize">
                                             {{ $service->name }}
                                         </div>
                                         {{-- <div class="text-xl text-base-content font-medium">
@@ -44,10 +45,43 @@
                 </div>
 
                 <div class="grid gap-2">
-                    <div class="font-medium capitalize">{{ trans('order') }}</div>
+                    <div class="font-bold capitalize">{{ trans('order') }}</div>
 
                     @if ($order)
-                        <div>{{ $order }}</div>
+                        <div class="flex">
+                            <div
+                                class="flex flex-col gap-2 py-4 min-w-sm bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                <div class="px-6">
+                                    <div class="font-medium text-lg capitalize">{{ $order->service->name }}</div>
+                                    <div class="flex gap-1">
+                                        {{-- <div class="font-medium text-sm opacity-70">
+                                            {{ $order->location_name }}
+                                        </div> --}}
+                                        <div class="font-medium text-sm opacity-70">
+                                            {{ date('d/m/Y', strtotime($order->schedule)) }}
+                                            {{ date('H:i', strtotime($order->schedule_start)) }}-{{ date('H:i', strtotime($order->schedule_end)) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full h-0.5 bg-base-300"></div>
+                                <div class="flex flex-col gap-1 px-6">
+                                    <div class="font-normal text-base">
+                                        <div class="text-base-content/70">{{ trans('midwife') }}</div>
+                                        <div>{{ $order->midwife->fullname }}</div>
+                                    </div>
+                                    <div class="font-normal text-base">
+                                        <div class="text-base-content/70">{{ trans('location') }}</div>
+                                        <div>{{ $order->location_name }}</div>
+                                    </div>
+                                    {{-- <div class="font-medium text-base">
+                                        {{ trans('midwife') }}: {{ $order->midwife->fullname }}
+                                    </div>
+                                    <div class="font-medium text-base">
+                                        {{ trans('location') }}: {{ $order->location_name }}
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
 
