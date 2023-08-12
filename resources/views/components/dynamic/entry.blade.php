@@ -44,7 +44,7 @@
     <main class="grid g-4 p-4 sm:py-8 sm:px-20">
         @if (!$done)
             <div class="">
-                @if ($deadline == 7)
+                {{-- @if ($deadline == 7)
                     <div class="p-4 m-auto bg-yellow-300 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
                         Hanya Mengingatkan <span class="font-bold">Deadline</span> tinggal <span
                             class="font-bold">{{ $deadline }}</span> hari. <br>
@@ -67,7 +67,7 @@
                         <span class="text-lg">Kasi Selesaimi.</span>
                     </div>
                 @else
-                @endif
+                @endif --}}
             </div>
         @endif
         <section class="grid gap-8">
