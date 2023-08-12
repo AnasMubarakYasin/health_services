@@ -27,7 +27,7 @@ class AdministratorController extends Controller
     }
     public function logout_perfom()
     {
-        $template = session()->get('template');
+        $template = session()->get('template', config('dynamic.application.template'));
         auth()->logout();
         session()->invalidate();
         session()->regenerateToken();

@@ -99,7 +99,8 @@
                                 class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-base-content/80 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
                                 {{ trans('location') }}
                             </label>
-                            <input id="position" type="hidden" name="position" value="{{ old('position') }}">
+                            <input id="position" type="hidden" name="position"
+                                value="{{ old('position', '[-0,0]') }}">
                             <label id="toggle_location" role="button" for="position"
                                 class="grid place-items-center swap swap-rotate w-8 h-8 !absolute top-0.5 right-0.5 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg
                             focus:bg-base-200 focus:text-primary transition-colors"
