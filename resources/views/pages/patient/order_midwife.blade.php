@@ -29,14 +29,16 @@
         <x-slot:main>
             <x-dynamic.panel.main class="grid gap-4 justify-items-center">
                 @error('api')
-                    <div class="flex flex-col gap-4 max-w-sm p-4 bg-error font-medium text-error-content rounded-lg shadow-all-lg">
+                    <div
+                        class="flex flex-col gap-4 max-w-sm p-4 bg-error font-medium text-error-content rounded-lg shadow-all-lg">
                         {{ $message }}
                     </div>
                 @enderror
                 <form action="{{ route('web.patient.perform_order_midwife', ['midwife' => $midwife]) }}" method="POST"
                     class="flex flex-col gap-4 max-w-sm  p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                     @csrf
-                    <div class="font-semibold text-lg text-center capitalize">{{ trans('midwife') }} {{ $midwife->fullname }}</div>
+                    <div class="font-semibold text-lg text-center capitalize">{{ trans('midwife') }}
+                        {{ $midwife->fullname }}</div>
                     <ul class="relative m-0 w-full list-none overflow-hidden p-0 transition-[height] duration-200 ease-in-out"
                         data-te-stepper-init data-te-stepper-type="vertical">
                         <li data-te-stepper-step-ref
@@ -218,17 +220,22 @@
                                 <div class="relative" data-te-input-wrapper-init>
                                     <textarea
                                         class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                                        id="complaint" rows="3" placeholder="Your message"></textarea>
+                                        id="complaint" name="complaint" rows="3" placeholder="Your message"></textarea>
                                     <label for="complaint"
                                         class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
                                         {{ trans('complaint') }}
                                     </label>
                                 </div>
+                                @error('complaint')
+                                    <div class="w-full text-sm text-error" data-te-input-helper-ref>
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </li>
                     </ul>
 
-                    <div class="h-4"></div>
+                    <div></div>
                     <div class="grid place-content-center">
                         <button
                             class=" px-3 py-1 bg-primary text-primary-content hover:bg-primary-focus rounded font-medium capitalize">

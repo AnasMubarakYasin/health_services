@@ -76,7 +76,8 @@ class DashboardController extends Controller
             'midwife' => $midwife,
             'services' => $services,
         ]);
-    } public function perform_order_midwife(CreateOrderMidwifeRequest $request, Midwife $midwife)
+    }
+    public function perform_order_midwife(CreateOrderMidwifeRequest $request, Midwife $midwife)
     {
         $unfinish_order = Order::first_unfinish_patient(auth()->user());
         if ($unfinish_order) {
@@ -85,12 +86,12 @@ class DashboardController extends Controller
         $data = $request->validated();
         $order = Order::create([
             'status' => 'scheduled',
-            'schedule' => $data['date'],
+            'schedule' => date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
             'schedule_start' => "{$data['time']}:00:00",
             'schedule_end' => "{$data['time']}:55:00",
             'location_name' => $data['location'],
             'location_coordinates' => $data['position'],
-            'complaint' => $data['complaint'] ?? '',
+            'complaint' => isset($data['complaint']) ? $data['complaint'] : '',
             'patient_id' => auth()->user()->id,
             'midwife_id' =>  $midwife->id,
             'service_id' =>  $data['service'],
