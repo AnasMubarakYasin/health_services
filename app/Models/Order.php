@@ -55,6 +55,12 @@ class Order extends Model
                 name: 'location coordinates',
                 type: 'string',
             ),
+            'complaint' => new Definition(
+                name: 'complaint',
+                type: 'string',
+                format: 'area',
+                nullable: true,
+            ),
             'patient' => new Definition(
                 name: 'patient',
                 type: 'model',
@@ -113,6 +119,7 @@ class Order extends Model
         'schedule_end',
         'location_name',
         'location_coordinates',
+        'complaint',
         'patient_id',
         'midwife_id',
         'service_id',

@@ -21,7 +21,7 @@
                 <label for="color_scheme"
                     class="text-sm font-medium text-base-content/70 hover:text-primary/100">Color Scheme</label>
                 <select id="color_scheme">
-                    @foreach (['light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate', 'synthwave', 'retro', 'cyberpunk', 'valentine', 'halloween', 'garden', 'forest', 'aqua', 'lofi', 'pastel', 'fantasy', 'wireframe', 'black', 'luxury', 'dracula', 'cmyk', 'autumn', 'business', 'acid', 'lemonade', 'night', 'coffee', 'winter'] as $scheme)
+                    @foreach (['light', 'dark', 'custom', 'cupcake', 'bumblebee', 'emerald', 'corporate', 'synthwave', 'retro', 'cyberpunk', 'valentine', 'halloween', 'garden', 'forest', 'aqua', 'lofi', 'pastel', 'fantasy', 'wireframe', 'black', 'luxury', 'dracula', 'cmyk', 'autumn', 'business', 'acid', 'lemonade', 'night', 'coffee', 'winter'] as $scheme)
                         <option value="{{ $scheme }}">{{ $scheme }}</option>
                     @endforeach
                 </select>

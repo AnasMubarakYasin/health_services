@@ -90,7 +90,8 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
     Route::get('/patient/logout', 'Auth\PatientController@logout_perfom')->name('web.patient.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
-        Route::get('/patient/order/{service}', 'User\Patient\DashboardController@show_order')->name('web.patient.show_order');
+        Route::get('/patient/order/{service}/service', 'User\Patient\DashboardController@show_order')->name('web.patient.show_order');
+        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\DashboardController@show_order_midwife')->name('web.patient.show_order_midwife');
         Route::get('/patient/history', 'User\Patient\DashboardController@history')->name('web.patient.history');
         Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
         Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
@@ -100,7 +101,8 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
     });
 
-    Route::post('/patient/order/{service}', 'User\Patient\DashboardController@perform_order')->name('web.patient.perform_order');
+    Route::post('/patient/order/{service}/service', 'User\Patient\DashboardController@perform_order')->name('web.patient.perform_order');
+    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\DashboardController@perform_order_midwife')->name('web.patient.perform_order_midwife');
 
     Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');

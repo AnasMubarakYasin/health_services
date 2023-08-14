@@ -45,6 +45,24 @@
                 </div>
 
                 <div class="grid gap-2">
+                    <div class="font-bold capitalize">{{ trans('midwifes') }}</div>
+                    <div class="flex flex-wrap gap-4">
+                        @foreach ($midwifes as $midwife)
+                            <a href="{{ route('web.patient.show_order_midwife', ['midwife' => $midwife]) }}"
+                                class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg hover:bg-primary/10">
+                                <div class="w-full flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <div class="text-lg font-medium capitalize">
+                                            {{ $midwife->name }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="grid gap-2">
                     <div class="font-bold capitalize">{{ trans('order') }}</div>
 
                     @if ($order)

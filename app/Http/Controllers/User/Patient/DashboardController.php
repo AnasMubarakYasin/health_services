@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Patient\CreateOrderMidwifeRequest;
 use App\Http\Requests\Patient\CreateOrderRequest;
 use App\Http\Requests\Resource\Patient\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
@@ -20,15 +21,18 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $services = Service::all();
+        $midwifes = Midwife::all();
         $order = Order::first_unfinish_patient(auth()->user());
 
         return view('pages.patient.dashboard', [
             'services' => $services,
+            'midwifes' => $midwifes,
             'order' => $order,
         ]);
     }
     public function show_order(Service $service)
     {
+        $services = Service::all();
         $midwives = Midwife::with('schedules')->get();
 
         $times = Arr::mapWithKeys(range(0, 12), function ($key, $val) {
@@ -40,6 +44,7 @@ class DashboardController extends Controller
         $work_times = Arr::except($times, $rest_times);
         return view('pages.patient.order', [
             'service' => $service,
+            'services' => $services,
             'midwives' => $midwives,
             'work_times' => $work_times,
         ]);
@@ -61,6 +66,34 @@ class DashboardController extends Controller
             'patient_id' => auth()->user()->id,
             'midwife_id' =>  $data['midwife'],
             'service_id' => $service->id,
+        ]);
+        return to_route('web.patient.dashboard');
+    }
+    public function show_order_midwife(Midwife $midwife)
+    {
+        $services = Service::all();
+        return view('pages.patient.order_midwife', [
+            'midwife' => $midwife,
+            'services' => $services,
+        ]);
+    } public function perform_order_midwife(CreateOrderMidwifeRequest $request, Midwife $midwife)
+    {
+        $unfinish_order = Order::first_unfinish_patient(auth()->user());
+        if ($unfinish_order) {
+            return back()->withErrors(['api' => 'user have unfinish order']);
+        }
+        $data = $request->validated();
+        $order = Order::create([
+            'status' => 'scheduled',
+            'schedule' => $data['date'],
+            'schedule_start' => "{$data['time']}:00:00",
+            'schedule_end' => "{$data['time']}:55:00",
+            'location_name' => $data['location'],
+            'location_coordinates' => $data['position'],
+            'complaint' => $data['complaint'] ?? '',
+            'patient_id' => auth()->user()->id,
+            'midwife_id' =>  $midwife->id,
+            'service_id' =>  $data['service'],
         ]);
         return to_route('web.patient.dashboard');
     }
