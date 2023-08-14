@@ -33,7 +33,9 @@ class DashboardController extends Controller
     public function show_order(Service $service)
     {
         $services = Service::all();
-        $midwives = Midwife::with('schedules')->get();
+        $midwives = Midwife::with('schedules')->whereHas('schedules', function($query) {
+            $query->where('active', true);
+        })->get();
 
         $times = Arr::mapWithKeys(range(0, 12), function ($key, $val) {
             $time = $val + 8;

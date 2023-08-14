@@ -1,9 +1,18 @@
 import { create_element } from "@/lib/helper";
-import { Stepper, Datepicker, Timepicker, Input, Select, initTE } from "tw-elements";
+import {
+  Stepper,
+  Datepicker,
+  Timepicker,
+  Input,
+  Select,
+  initTE,
+} from "tw-elements";
 
 initTE({ /* Stepper, */ Datepicker, Timepicker, Input, Select });
 
 console.debug(midwife, schedules);
+
+schedules = schedules.filter((item) => item.active);
 
 const date_elm = document.getElementById("date");
 const day_in_ms = 1e3 * 60 * 60 * 24;

@@ -46,18 +46,26 @@
 
                 <div class="grid gap-2">
                     <div class="font-bold capitalize">{{ trans('midwifes') }}</div>
-                    <div class="flex flex-wrap gap-4">
+                    <div class="grid grid-cols-3 gap-4">
                         @foreach ($midwifes as $midwife)
-                            <a href="{{ route('web.patient.show_order_midwife', ['midwife' => $midwife]) }}"
-                                class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg hover:bg-primary/10">
-                                <div class="w-full flex items-center justify-between">
-                                    <div class="flex flex-col">
-                                        <div class="text-lg font-medium capitalize">
-                                            {{ $midwife->name }}
+                            <div class="flex gap-4 p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                <img src="{{ $midwife->photo_url }}" alt="photo"
+                                    class="w-20 h-20 p-1 aspect-square object-cover border border-base-300 rounded">
+                                <div class="flex flex-grow flex-col gap-4">
+                                    <div>
+                                        <div class="text-base font-medium capitalize">
+                                            {{ $midwife->fullname }}
+                                        </div>
+                                        <div class="text-sm font-normal opacity-70 capitalize">
+                                            {{ trans('midwife') }}
                                         </div>
                                     </div>
+                                    <a href="{{ route('web.patient.show_order_midwife', ['midwife' => $midwife]) }}"
+                                        class="w-fit px-3 py-1 bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary/30">
+                                        {{ trans('order') }}
+                                    </a>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                 </div>
