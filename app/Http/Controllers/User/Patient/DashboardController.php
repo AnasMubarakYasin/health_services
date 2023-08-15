@@ -22,7 +22,7 @@ class DashboardController extends Controller
     {
         $services = Service::all();
         $midwifes = Midwife::all();
-        $order = Order::first_unfinish_patient(auth()->user());
+        $order = Order::first_unfinish_by_patient(auth()->user());
 
         return view('pages.patient.dashboard', [
             'services' => $services,
@@ -33,7 +33,7 @@ class DashboardController extends Controller
     public function show_order(Service $service)
     {
         $services = Service::all();
-        $midwives = Midwife::with('schedules')->whereHas('schedules', function($query) {
+        $midwives = Midwife::with('schedules')->whereHas('schedules', function ($query) {
             $query->where('active', true);
         })->get();
 
@@ -53,7 +53,7 @@ class DashboardController extends Controller
     }
     public function perform_order(CreateOrderRequest $request, Service $service)
     {
-        $unfinish_order = Order::first_unfinish_patient(auth()->user());
+        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
         if ($unfinish_order) {
             return back()->withErrors(['api' => 'user have unfinish order']);
         }
@@ -74,14 +74,17 @@ class DashboardController extends Controller
     public function show_order_midwife(Midwife $midwife)
     {
         $services = Service::all();
+        $orders = Order::get_unfinish_by_midwife($midwife);
         return view('pages.patient.order_midwife', [
             'midwife' => $midwife,
+            'schedules' => $midwife->active_schedules(),
             'services' => $services,
+            'orders' => $orders,
         ]);
     }
     public function perform_order_midwife(CreateOrderMidwifeRequest $request, Midwife $midwife)
     {
-        $unfinish_order = Order::first_unfinish_patient(auth()->user());
+        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
         if ($unfinish_order) {
             return back()->withErrors(['api' => 'user have unfinish order']);
         }
@@ -102,7 +105,7 @@ class DashboardController extends Controller
     }
     public function history()
     {
-        $orders = Order::get_patient(auth()->user());
+        $orders = Order::get_by_patient(auth()->user());
         return view('pages.patient.history', [
             'orders' => $orders,
         ]);

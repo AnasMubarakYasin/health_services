@@ -92,24 +92,27 @@ class Order extends Model
             };
         };
     }
-    public static function first_finished()
-    {
-        return self::where('status', 'finished')->first();
-    }
-    public static function first_unfinish()
-    {
-        return self::whereBetween('status', ['scheduled', 'on_progress'])->first();
-    }
-    public static function first_unfinish_patient(Patient $patient)
+    public static function first_unfinish_by_patient(Patient $patient)
     {
         return self::query()
             ->where('patient_id', $patient->id)
             ->whereNot('status', 'finished')
             ->first();
     }
-    public static function get_patient(Patient $patient)
+    public static function get_by_patient(Patient $patient)
     {
         return self::query()->where('patient_id', $patient->id)->get();
+    }
+    public static function get_by_midwife(Midwife $midwife)
+    {
+        return self::query()->where('midwife_id', $midwife->id)->get();
+    }
+    public static function get_unfinish_by_midwife(Midwife $midwife)
+    {
+        return self::query()
+            ->where('midwife_id', $midwife->id)
+            ->whereNot('status', 'finished')
+            ->get();
     }
 
     protected $fillable = [

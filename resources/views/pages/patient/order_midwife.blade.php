@@ -3,7 +3,8 @@
         <x-slot:head>
             <script>
                 var midwife = @json($midwife);
-                var schedules = @json($midwife->schedules);
+                var schedules = @json($schedules);
+                var orders = @json($orders);
             </script>
             @template('modern')
                 @vite('resources/js/components/common/error-boundary.js')

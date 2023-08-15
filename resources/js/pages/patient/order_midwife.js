@@ -10,7 +10,7 @@ import {
 
 initTE({ /* Stepper, */ Datepicker, Timepicker, Input, Select });
 
-console.debug(midwife, schedules);
+console.debug(midwife, schedules, orders);
 
 schedules = schedules.filter((item) => item.active);
 
@@ -27,6 +27,9 @@ new Datepicker(date_elm, {
     const has_midwife_schedule = schedules.find(
       (schedule) => date.getDay() == day_to_index(schedule.day)
     );
+    // const has_order_schedule = orders.find(
+    //   (order) => date.getDate() == new Date(order.schedule).getDate()
+    // );
     const is_greater_than_next_seven_day =
       date.getDate() > next_seven_day.getDate();
     const is_saturday = date.getDay() == 6;
@@ -37,6 +40,7 @@ new Datepicker(date_elm, {
       is_this_year &&
       !is_less_than_tomorrow &&
       !!has_midwife_schedule &&
+      // !has_order_schedule &&
       !is_greater_than_next_seven_day &&
       !is_saturday &&
       !is_sunday
@@ -45,7 +49,10 @@ new Datepicker(date_elm, {
 });
 date_elm.addEventListener("dateChange.te.datepicker", (event) => {
   const selected_schedule = schedules.filter(
-    (schedule) => day_to_index(schedule.day) == event.date.getDay()
+    (schedule) => event.date.getDay() == day_to_index(schedule.day)
+  );
+  const selected_order = orders.filter(
+    (order) => event.date.getDate() == new Date(order.schedule).getDate()
   );
   const option_elm = document.createElement("option");
   option_elm.value = "";
@@ -53,16 +60,17 @@ date_elm.addEventListener("dateChange.te.datepicker", (event) => {
   option_elm.selected = true;
   time_elm.replaceChildren(option_elm);
   work_times.forEach((time) => {
+    const hour = time.value * 36e5;
     const option_elm = document.createElement("option");
     option_elm.value = time.value;
     option_elm.textContent = time.label;
     option_elm.disabled = !selected_schedule.some((schedule) =>
-      between_timerange(
-        time.value * 36e5,
-        schedule.started_at,
-        schedule.ended_at
-      )
+      between_timerange(hour, schedule.started_at, schedule.ended_at)
     );
+    !option_elm.disabled &&
+      (option_elm.disabled = selected_order.some((order) =>
+        between_timerange(hour, order.schedule_start, order.schedule_end)
+      ));
     time_elm.append(option_elm);
   });
 });

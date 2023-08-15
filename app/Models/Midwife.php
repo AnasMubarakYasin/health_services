@@ -102,4 +102,8 @@ class Midwife extends Authenticatable
     {
         return $this->hasMany(Schedule::class);
     }
+    public function active_schedules()
+    {
+        return $this->schedules()->getQuery()->where('active', true)->get();
+    }
 }
