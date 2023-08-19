@@ -74,7 +74,7 @@
                 </label>
                 <input id="name" name="name" value="{{ old('name', $data['name']) }}" type="text"
                     autocomplete="username" autofocus placeholder="Enter Username"
-                    class="peer w-full px-4 py-2 bg-base-100 text-sm border-1 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                    class="peer appearance-none w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                 @error('name')
                     <div class="text-sm text-danger">{{ $message }}</div>
                 @enderror
@@ -100,7 +100,7 @@
                     </label>
                     <input id="password" name="password" value="{{ old('password', $data['password']) }}"
                         type="password" autocomplete="current-password" placeholder="Enter Password"
-                        class="peer w-full px-4 py-2 bg-base-100 text-sm border-1 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                        class="peer appearance-none w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                 </div>
                 @error('password')
                     <div class="text-sm text-danger">{{ $message }}</div>
@@ -108,13 +108,12 @@
             </div>
             <div class="flex gap-2 items-center">
                 <input id="remember" name="remember" type="checkbox" @checked(old('remember', isset($data['remember'])))
-                    class="appearance-none relative w-5 h-5 bg-base-100 border-1 border-base-300 rounded cursor-pointer !outline-none !ring-0 transition-all after:transition-all
-                hover:bg-base-200
-                focus:outline-none
-                checked:!bg-primary
-                indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
-                after:content-[''] after:absolute after:bg-transparent after:border-primary-content
-                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
+                    class="appearance-none relative w-5 h-5 text-primary bg-base-100 border-2 border-base-300 rounded cursor-pointer outline-none ring-0 ring-transparent shadow-none transition-all after:transition-all
+                    hover:bg-base-200
+                    focus:outline-none focus:ring-0 focus:ring-transparent focus:shadow-none
+                    checked:!bg-primary checked:!border-primary checked:after:w-7/12 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.65] checked:after:left-[3.5px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
+                    after:content-[''] after:absolute after:bottom-0 after:bg-transparent after:border-primary-content"
+                    style="box-shadow: none">
                 <label for="remember" class="text-base text-base-content font-medium">
                     Remember Me
                 </label>

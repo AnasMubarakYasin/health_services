@@ -6,3 +6,5 @@ import '@fontsource-variable/nunito';
 
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
+
+import '../../../css/modern.css'

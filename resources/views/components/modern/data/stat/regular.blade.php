@@ -15,7 +15,7 @@
                 {{ $count }}
             </div>
         </div>
-        <div class="p-2 bg-base-200 text-base-content rounded-md">
+        <div class="p-2 bg-primary/10 text-primary rounded-md">
             {{ $icon }}
         </div>
     </div>

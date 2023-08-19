@@ -61,10 +61,10 @@
                                 class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
                                 hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2 hover:ring-offset-base-100
                                 focus:outline-none focus:ring-offset-base-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
-                                checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.75] checked:after:left-[5px] checked:after:bottom-0.5 checked:after:border-r-4 checked:after:border-b-4
+                                checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.7] checked:after:left-[4px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
                                 indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
                                 after:content-[''] after:absolute after:bg-transparent after:border-primary-content
-                                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
+                                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[6px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
                         </div>
                     </th>
                     <th data-iteration="true"
@@ -148,7 +148,7 @@
                                 <input type="hidden" name="filter" value="on">
                                 <input type="text" name="filter_{{ $column }}"
                                     value="{{ request()->query("filter_$column") }}"
-                                    class="w-full px-4 pl-2 pr-9 truncate text-ellipsis bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                                    class="w-full pr-9 pl-2 py-2 truncate text-ellipsis bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
                                 <button
                                     class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                                     group-[#topbar&[data-button-interface='filled']]:bg-primary/30
@@ -176,13 +176,13 @@
                             <div class="grid place-items-center place-content-center w-full h-full">
                                 <input type="checkbox" name="id[]" id="" form="delete_any_form"
                                     value="{{ $item->id }}"
-                                    class="check_item appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer ring-offset-base-100 outline-none transition-all after:transition-all
-                                hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2
-                                focus-visible:ring-2 focus-visible:ring-primary  focus-visible:ring-offset-2
-                                checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.75] checked:after:left-[5px] checked:after:bottom-0.5 checked:after:border-r-4 checked:after:border-b-4
-                                indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
-                                after:content-[''] after:absolute after:bg-transparent after:border-primary-content
-                                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[7px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
+                                    class="check_item appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
+                                    hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2 hover:ring-offset-base-100
+                                    focus:outline-none focus:ring-offset-base-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+                                    checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.7] checked:after:left-[4px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
+                                    indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
+                                    after:content-[''] after:absolute after:bg-transparent after:border-primary-content
+                                    indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[6px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
                             </div>
                         </th>
                         <th class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
