@@ -26,7 +26,7 @@ class CreateOrderMidwifeRequest extends FormRequest
             'time' => 'required|date_format:H',
             'location' => 'required|string',
             'position' => 'required|string',
-            'complaint' => 'string',
+            'complaint' => 'nullable|string',
             'service' => 'required|uuid',
         ];
     }

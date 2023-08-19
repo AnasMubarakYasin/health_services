@@ -28,7 +28,7 @@ class StoreOrderRequest extends FormRequest
             'schedule_end' => 'required|date_format:H:i',
             'location_name' => 'required|string',
             'location_coordinates' => 'required|json',
-            'complaint' => 'string',
+            'complaint' => 'nullable|string',
             'patient_id' => 'required|uuid',
             'midwife_id' => 'required|uuid',
             'service_id' => 'required|uuid',

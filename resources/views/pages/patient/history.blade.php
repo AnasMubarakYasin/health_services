@@ -61,17 +61,17 @@
                             @switch($order->status)
                                 @case('scheduled')
                                     <div class="w-fit px-2 py-1 bg-base-200 font-medium text-sm capitalize rounded">
-                                        {{ $order->status }}
+                                        {{ trans($order->status) }}
                                     </div>
                                 @break
                                 @case('on_progress')
                                     <div class="w-fit px-2 py-1 bg-info font-medium text-sm rounded">
-                                        Progress
+                                        {{ trans($order->status) }}
                                     </div>
                                 @break
                                 @case('finished')
                                     <div class="w-fit px-2 py-1 bg-success font-medium text-sm capitalize rounded">
-                                        {{ $order->status }}
+                                        {{ trans($order->status) }}
                                     </div>
                                 @break
 

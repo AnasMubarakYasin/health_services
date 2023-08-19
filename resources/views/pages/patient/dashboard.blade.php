@@ -44,9 +44,9 @@
                     </div>
                 </div>
 
-                <div class="grid gap-2">
+                <div class="@container grid gap-2">
                     <div class="font-bold capitalize">{{ trans('midwifes') }}</div>
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
                         @foreach ($midwifes as $midwife)
                             <div class="flex gap-4 p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                 <img src="{{ $midwife->photo_url }}" alt="photo"
@@ -61,8 +61,8 @@
                                         </div>
                                     </div>
                                     <a href="{{ route('web.patient.show_order_midwife', ['midwife' => $midwife]) }}"
-                                        class="w-fit px-3 py-1 bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary/30">
-                                        {{ trans('order') }}
+                                        class="w-fit px-3 py-1 self-end bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary/30">
+                                        {{ trans('service message') }}
                                     </a>
                                 </div>
                             </div>
@@ -71,12 +71,12 @@
                 </div>
 
                 <div class="grid gap-2">
-                    <div class="font-bold capitalize">{{ trans('order') }}</div>
+                    <div class="font-bold capitalize">{{ trans('orders') }}</div>
 
                     @if ($order)
-                        <div class="flex">
+                        <div class="@container flex w-full">
                             <div
-                                class="flex flex-col gap-2 py-4 min-w-sm bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                class="flex flex-col gap-2 py-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                 <div class="px-6">
                                     <div class="font-medium text-lg capitalize">{{ $order->service->name }}</div>
                                     <div class="flex gap-1">

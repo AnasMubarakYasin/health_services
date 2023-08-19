@@ -61,7 +61,7 @@
                     @foreach ($panel::$locales as $key => $value)
                         <li>
                             <a href="{{ route('web.locale.set', ['locale' => $key]) }}" data-te-dropdown-item-ref
-                                class="block px-4 py-2 text-base-content/70 font-medium hover:bg-base-200 hover:text-base-content/100 aria-selected:bg-primary aria-selected:text-primary-content/100 rounded-lg transition-colors"
+                                class="block px-4 py-2 text-base-content/70 font-medium hover:bg-base-200 hover:text-base-content/100 aria-selected:bg-primary aria-selected:text-primary-content/100 rounded-lg transition-colors capitalize"
                                 aria-selected="{{ $key == $panel->locale ? 'true' : 'false' }}">
                                 {{ $value }}
                             </a>

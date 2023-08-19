@@ -29,17 +29,17 @@
         </x-slot:sidebar>
         <x-slot:main>
             <x-dynamic.panel.main class="grid gap-4">
-                @error('api')
-                    <div
-                        class="flex flex-col gap-4 max-w-md p-4 bg-error font-medium text-error-content rounded-lg shadow-all-lg">
-                        {{ $message }}
-                    </div>
-                @enderror
 
-                <div class="w-full">
+                <div class="@container w-full">
+                    @error('api')
+                        <div
+                            class="flex flex-col gap-4 max-w-md m-auto p-4 bg-error font-medium text-error-content rounded-lg shadow-all-lg">
+                            {{ trans($message) }}
+                        </div>
+                    @enderror
                     <form action="{{ route('web.patient.perform_order_midwife', ['midwife' => $midwife]) }}"
                         method="POST"
-                        class="flex flex-col gap-4  max-w-md m-auto p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                        class="flex flex-col gap-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 m-auto p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                         @csrf
                         <div class="font-semibold text-lg text-center capitalize">{{ trans('midwife') }}
                             {{ $midwife->fullname }}</div>
@@ -242,7 +242,7 @@
                         <div></div>
                         <div class="grid place-content-center">
                             <button
-                                class=" px-3 py-1 bg-primary text-primary-content hover:bg-primary-focus rounded font-medium capitalize">
+                                class=" px-5 py-1.5 bg-primary text-primary-content hover:bg-primary-focus rounded font-medium capitalize">
                                 {{ trans('order') }}
                             </button>
                         </div>

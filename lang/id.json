@@ -1,0 +1,20 @@
+{
+  "patient": "pasien",
+  "midwife": "bidan",
+  "service": "layanan",
+  "order": "memesan",
+  "orders": "pesanan",
+  "ordered": "dipesan",
+  "time": "waktu",
+  "date": "tanggal",
+  "location": "lokasi",
+  "complaint": "keluhan",
+  "description": "deskripsi",
+  "create": "buat",
+  "update": "perbarui",
+  "finished": "selesai",
+  "scheduled": "dijadwalkan",
+  "on progress": "diprogres",
+  "service message": "pesan layanan",
+  "user have unfinish order": "pengguna memiliki pesanan yang belum selesai"
+}
