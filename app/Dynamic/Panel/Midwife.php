@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Vite;
 
 class Midwife extends Panel
 {
-    public bool $webmanifest = false;
-    public bool $service_worker = false;
+    public bool $webmanifest = true;
+    public bool $service_worker = true;
 
     public function get_webmanifest(): string
     {
@@ -18,7 +18,7 @@ class Midwife extends Panel
     }
     public function get_service_worker(): string
     {
-        return Vite::asset('resources/js/components/midwife/regis-sw.js');
+        return Vite::asset('resources/js/pages/midwife/regis-sw.js');
     }
 
     public function get_menus(): array

@@ -31,13 +31,13 @@ return [
             'name' => 'Simple',
             'version' => '0.6.4',
             'deps' => ['flowbite'],
-            'thumb' => '/templates/simple.png',
+            'thumb' => '/images/screenshots/simple.png',
         ],
         'modern' => [
             'name' => 'Modern',
             'version' => '0.2.6',
             'deps' => ['tailwind element', 'daisyui'],
-            'thumb' => '/templates/modern.png',
+            'thumb' => '/images/screenshots/modern.png',
         ],
     ],
     'panel' => [

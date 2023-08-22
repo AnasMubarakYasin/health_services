@@ -1,0 +1,490 @@
+{
+  "_StaleWhileRevalidate-00b99f6a.js": {
+    "file": "assets/StaleWhileRevalidate-00b99f6a.js"
+  },
+  "_tw-elements.es.min-3618d1f1.js": {
+    "file": "assets/tw-elements.es.min-3618d1f1.js"
+  },
+  "index.css": {
+    "file": "assets/index-7aff6e0d.css",
+    "src": "index.css"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-ext-wght-normal.woff2": {
+    "file": "assets/montserrat-cyrillic-ext-wght-normal-3fef5946.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-wght-normal.woff2": {
+    "file": "assets/montserrat-cyrillic-wght-normal-a8447cde.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-cyrillic-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-ext-wght-normal.woff2": {
+    "file": "assets/montserrat-latin-ext-wght-normal-cffe1393.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2": {
+    "file": "assets/montserrat-latin-wght-normal-ae919a7c.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/montserrat/files/montserrat-vietnamese-wght-normal.woff2": {
+    "file": "assets/montserrat-vietnamese-wght-normal-56544b89.woff2",
+    "src": "node_modules/@fontsource-variable/montserrat/files/montserrat-vietnamese-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/nunito/files/nunito-cyrillic-ext-wght-normal.woff2": {
+    "file": "assets/nunito-cyrillic-ext-wght-normal-b2611fa3.woff2",
+    "src": "node_modules/@fontsource-variable/nunito/files/nunito-cyrillic-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/nunito/files/nunito-cyrillic-wght-normal.woff2": {
+    "file": "assets/nunito-cyrillic-wght-normal-7ca4b4bb.woff2",
+    "src": "node_modules/@fontsource-variable/nunito/files/nunito-cyrillic-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2": {
+    "file": "assets/nunito-latin-ext-wght-normal-89def742.woff2",
+    "src": "node_modules/@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2": {
+    "file": "assets/nunito-latin-wght-normal-96217f1d.woff2",
+    "src": "node_modules/@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/nunito/files/nunito-vietnamese-wght-normal.woff2": {
+    "file": "assets/nunito-vietnamese-wght-normal-0ef9726d.woff2",
+    "src": "node_modules/@fontsource-variable/nunito/files/nunito-vietnamese-wght-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-400-normal.woff": {
+    "file": "assets/noto-sans-cyrillic-400-normal-4423d126.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-400-normal.woff2": {
+    "file": "assets/noto-sans-cyrillic-400-normal-fddfa9f3.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-ext-400-normal.woff": {
+    "file": "assets/noto-sans-cyrillic-ext-400-normal-37d4037b.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-ext-400-normal.woff2": {
+    "file": "assets/noto-sans-cyrillic-ext-400-normal-3bd98eec.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-cyrillic-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-devanagari-400-normal.woff": {
+    "file": "assets/noto-sans-devanagari-400-normal-7e7020f7.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-devanagari-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-devanagari-400-normal.woff2": {
+    "file": "assets/noto-sans-devanagari-400-normal-511c957f.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-devanagari-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-greek-400-normal.woff": {
+    "file": "assets/noto-sans-greek-400-normal-9ffe7341.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-greek-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-greek-400-normal.woff2": {
+    "file": "assets/noto-sans-greek-400-normal-6e9afc1d.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-greek-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-greek-ext-400-normal.woff": {
+    "file": "assets/noto-sans-greek-ext-400-normal-7bb693e8.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-greek-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-greek-ext-400-normal.woff2": {
+    "file": "assets/noto-sans-greek-ext-400-normal-5c788a5a.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-greek-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff": {
+    "file": "assets/noto-sans-latin-400-normal-f7f64a47.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff2": {
+    "file": "assets/noto-sans-latin-400-normal-5fc4c959.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-latin-ext-400-normal.woff": {
+    "file": "assets/noto-sans-latin-ext-400-normal-51b44bbb.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-latin-ext-400-normal.woff2": {
+    "file": "assets/noto-sans-latin-ext-400-normal-b22de962.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-vietnamese-400-normal.woff": {
+    "file": "assets/noto-sans-vietnamese-400-normal-cb50e87b.woff",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-vietnamese-400-normal.woff"
+  },
+  "node_modules/@fontsource/noto-sans/files/noto-sans-vietnamese-400-normal.woff2": {
+    "file": "assets/noto-sans-vietnamese-400-normal-a08816c8.woff2",
+    "src": "node_modules/@fontsource/noto-sans/files/noto-sans-vietnamese-400-normal.woff2"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff": {
+    "file": "assets/poppins-devanagari-400-normal-aa135e25.woff",
+    "src": "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff2": {
+    "file": "assets/poppins-devanagari-400-normal-478b3ab7.woff2",
+    "src": "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff2"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff": {
+    "file": "assets/poppins-latin-400-normal-2db0a254.woff",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff2": {
+    "file": "assets/poppins-latin-400-normal-7d93459d.woff2",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff": {
+    "file": "assets/poppins-latin-ext-400-normal-8090b590.woff",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff2": {
+    "file": "assets/poppins-latin-ext-400-normal-cb8bdeab.woff2",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff": {
+    "file": "assets/roboto-cyrillic-400-normal-adba67d2.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2": {
+    "file": "assets/roboto-cyrillic-400-normal-495d38d4.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff": {
+    "file": "assets/roboto-cyrillic-ext-400-normal-0a32035a.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2": {
+    "file": "assets/roboto-cyrillic-ext-400-normal-b7ef2cd1.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff": {
+    "file": "assets/roboto-greek-400-normal-076b9dc1.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2": {
+    "file": "assets/roboto-greek-400-normal-daf51ab5.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff": {
+    "file": "assets/roboto-greek-ext-400-normal-f1a34c89.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff2": {
+    "file": "assets/roboto-greek-ext-400-normal-d368cf5b.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff": {
+    "file": "assets/roboto-latin-400-normal-a9fdbefa.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2": {
+    "file": "assets/roboto-latin-400-normal-f6734f81.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff": {
+    "file": "assets/roboto-latin-ext-400-normal-c2b94086.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2": {
+    "file": "assets/roboto-latin-ext-400-normal-3c23eb02.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff": {
+    "file": "assets/roboto-vietnamese-400-normal-d2390f1a.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2": {
+    "file": "assets/roboto-vietnamese-400-normal-77b24796.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-e41172fd.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/css/modern.css": {
+    "file": "assets/modern-4087941d.css",
+    "isEntry": true,
+    "src": "resources/css/modern.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-da886670.js",
+    "imports": [
+      "resources/js/bootstrap.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-0d91dc04.js",
+    "isEntry": true,
+    "src": "resources/js/bootstrap.js"
+  },
+  "resources/js/components/common/bg-gen.js": {
+    "file": "assets/bg-gen-6544a60a.js",
+    "isEntry": true,
+    "src": "resources/js/components/common/bg-gen.js"
+  },
+  "resources/js/components/common/error-boundary.js": {
+    "file": "assets/error-boundary-1110d6ff.js",
+    "isEntry": true,
+    "src": "resources/js/components/common/error-boundary.js"
+  },
+  "resources/js/components/icons/Dark.js": {
+    "file": "assets/Dark-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/components/icons/Dark.js"
+  },
+  "resources/js/components/icons/Light.js": {
+    "file": "assets/Light-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/components/icons/Light.js"
+  },
+  "resources/js/components/icons/Menu.js": {
+    "file": "assets/Menu-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/components/icons/Menu.js"
+  },
+  "resources/js/components/icons/MenuSlim.js": {
+    "file": "assets/MenuSlim-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/components/icons/MenuSlim.js"
+  },
+  "resources/js/components/icons/Notification.js": {
+    "file": "assets/Notification-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/components/icons/Notification.js"
+  },
+  "resources/js/components/modern/app.css": {
+    "file": "assets/app-ede09291.css",
+    "src": "resources/js/components/modern/app.css"
+  },
+  "resources/js/components/modern/app.js": {
+    "assets": [
+      "assets/noto-sans-cyrillic-ext-400-normal-3bd98eec.woff2",
+      "assets/noto-sans-cyrillic-ext-400-normal-37d4037b.woff",
+      "assets/noto-sans-cyrillic-400-normal-fddfa9f3.woff2",
+      "assets/noto-sans-cyrillic-400-normal-4423d126.woff",
+      "assets/noto-sans-devanagari-400-normal-511c957f.woff2",
+      "assets/noto-sans-devanagari-400-normal-7e7020f7.woff",
+      "assets/noto-sans-greek-ext-400-normal-5c788a5a.woff2",
+      "assets/noto-sans-greek-ext-400-normal-7bb693e8.woff",
+      "assets/noto-sans-greek-400-normal-6e9afc1d.woff2",
+      "assets/noto-sans-greek-400-normal-9ffe7341.woff",
+      "assets/noto-sans-vietnamese-400-normal-a08816c8.woff2",
+      "assets/noto-sans-vietnamese-400-normal-cb50e87b.woff",
+      "assets/noto-sans-latin-ext-400-normal-b22de962.woff2",
+      "assets/noto-sans-latin-ext-400-normal-51b44bbb.woff",
+      "assets/noto-sans-latin-400-normal-5fc4c959.woff2",
+      "assets/noto-sans-latin-400-normal-f7f64a47.woff",
+      "assets/montserrat-cyrillic-ext-wght-normal-3fef5946.woff2",
+      "assets/montserrat-cyrillic-wght-normal-a8447cde.woff2",
+      "assets/montserrat-vietnamese-wght-normal-56544b89.woff2",
+      "assets/montserrat-latin-ext-wght-normal-cffe1393.woff2",
+      "assets/montserrat-latin-wght-normal-ae919a7c.woff2",
+      "assets/poppins-devanagari-400-normal-478b3ab7.woff2",
+      "assets/poppins-devanagari-400-normal-aa135e25.woff",
+      "assets/poppins-latin-ext-400-normal-cb8bdeab.woff2",
+      "assets/poppins-latin-ext-400-normal-8090b590.woff",
+      "assets/poppins-latin-400-normal-7d93459d.woff2",
+      "assets/poppins-latin-400-normal-2db0a254.woff",
+      "assets/nunito-cyrillic-ext-wght-normal-b2611fa3.woff2",
+      "assets/nunito-cyrillic-wght-normal-7ca4b4bb.woff2",
+      "assets/nunito-vietnamese-wght-normal-0ef9726d.woff2",
+      "assets/nunito-latin-ext-wght-normal-89def742.woff2",
+      "assets/nunito-latin-wght-normal-96217f1d.woff2"
+    ],
+    "css": [
+      "assets/app-ede09291.css",
+      "assets/index-7aff6e0d.css",
+      "assets/modern-4087941d.css"
+    ],
+    "file": "assets/app-1fe6b95d.js",
+    "isEntry": true,
+    "src": "resources/js/components/modern/app.js"
+  },
+  "resources/js/components/modern/common/password.js": {
+    "file": "assets/password-568a79c2.js",
+    "isEntry": true,
+    "src": "resources/js/components/modern/common/password.js"
+  },
+  "resources/js/components/modern/common/theme.js": {
+    "file": "assets/theme-674c18fc.js",
+    "isEntry": true,
+    "src": "resources/js/components/modern/common/theme.js"
+  },
+  "resources/js/components/modern/dashboard/customizer.js": {
+    "file": "assets/customizer-6afa96a4.js",
+    "imports": [
+      "_tw-elements.es.min-3618d1f1.js",
+      "resources/js/lib/context.ts",
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/modern/dashboard/customizer.js"
+  },
+  "resources/js/components/modern/dashboard/sidebar.js": {
+    "file": "assets/sidebar-f98c28f0.js",
+    "imports": [
+      "_tw-elements.es.min-3618d1f1.js",
+      "resources/js/lib/context.ts",
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/modern/dashboard/sidebar.js"
+  },
+  "resources/js/components/modern/dashboard/topbar.js": {
+    "file": "assets/topbar-294a7f91.js",
+    "imports": [
+      "_tw-elements.es.min-3618d1f1.js",
+      "resources/js/lib/context.ts",
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/modern/dashboard/topbar.js"
+  },
+  "resources/js/components/modern/data/form/regular.js": {
+    "file": "assets/regular-2403ff85.js",
+    "imports": [
+      "_tw-elements.es.min-3618d1f1.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/modern/data/form/regular.js"
+  },
+  "resources/js/components/modern/data/table/regular.js": {
+    "file": "assets/regular-40ce7206.js",
+    "imports": [
+      "_tw-elements.es.min-3618d1f1.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/modern/data/table/regular.js"
+  },
+  "resources/js/components/modern/layout/dashboard.js": {
+    "file": "assets/dashboard-b19a3466.js",
+    "imports": [
+      "resources/js/lib/context.ts",
+      "_tw-elements.es.min-3618d1f1.js",
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/modern/layout/dashboard.js"
+  },
+  "resources/js/components/simple/app.js": {
+    "css": [
+      "assets/index-7aff6e0d.css"
+    ],
+    "file": "assets/app-ce3ae962.js",
+    "isEntry": true,
+    "src": "resources/js/components/simple/app.js"
+  },
+  "resources/js/components/simple/panel/index.js": {
+    "file": "assets/index-59b5842e.js",
+    "isEntry": true,
+    "src": "resources/js/components/simple/panel/index.js"
+  },
+  "resources/js/components/simple/panel/progress.js": {
+    "file": "assets/progress-3da551eb.js",
+    "imports": [
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/simple/panel/progress.js"
+  },
+  "resources/js/components/simple/resource/form.js": {
+    "file": "assets/form-7a55877d.js",
+    "imports": [
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/simple/resource/form.js"
+  },
+  "resources/js/components/simple/resource/table.js": {
+    "file": "assets/table-137eea44.js",
+    "imports": [
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/components/simple/resource/table.js"
+  },
+  "resources/js/lib/app_ctx.ts": {
+    "file": "assets/app_ctx-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/lib/app_ctx.ts"
+  },
+  "resources/js/lib/context.ts": {
+    "file": "assets/context-88ed5276.js",
+    "imports": [
+      "resources/js/lib/helper.ts"
+    ],
+    "isEntry": true,
+    "src": "resources/js/lib/context.ts"
+  },
+  "resources/js/lib/dynamic_component.js": {
+    "file": "assets/dynamic_component-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/lib/dynamic_component.js"
+  },
+  "resources/js/lib/helper.ts": {
+    "file": "assets/helper-b8faab3a.js",
+    "isEntry": true,
+    "src": "resources/js/lib/helper.ts"
+  },
+  "resources/js/pages/administrator/regis-sw.js": {
+    "file": "assets/regis-sw-c42ce534.js",
+    "isEntry": true,
+    "src": "resources/js/pages/administrator/regis-sw.js"
+  },
+  "resources/js/pages/administrator/sw.js": {
+    "file": "assets/sw-467220ca.js",
+    "imports": [
+      "_StaleWhileRevalidate-00b99f6a.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/pages/administrator/sw.js"
+  },
+  "resources/js/pages/midwife/regis-sw.js": {
+    "file": "assets/regis-sw-3f7a7dc7.js",
+    "isEntry": true,
+    "src": "resources/js/pages/midwife/regis-sw.js"
+  },
+  "resources/js/pages/midwife/sw.js": {
+    "file": "assets/sw-aa2bac80.js",
+    "imports": [
+      "_StaleWhileRevalidate-00b99f6a.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/pages/midwife/sw.js"
+  },
+  "resources/js/pages/patient/order.js": {
+    "file": "assets/order-55cd6d53.js",
+    "imports": [
+      "resources/js/lib/helper.ts",
+      "_tw-elements.es.min-3618d1f1.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/pages/patient/order.js"
+  },
+  "resources/js/pages/patient/order_midwife.js": {
+    "file": "assets/order_midwife-6c1496f7.js",
+    "imports": [
+      "resources/js/lib/helper.ts",
+      "_tw-elements.es.min-3618d1f1.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/pages/patient/order_midwife.js"
+  },
+  "resources/js/pages/patient/regis-sw.js": {
+    "file": "assets/regis-sw-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/pages/patient/regis-sw.js"
+  },
+  "resources/js/pages/patient/sw.js": {
+    "file": "assets/sw-7b9cad17.js",
+    "imports": [
+      "_StaleWhileRevalidate-00b99f6a.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/pages/patient/sw.js"
+  },
+  "resources/js/sw.js": {
+    "file": "assets/sw-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/sw.js"
+  }
+}

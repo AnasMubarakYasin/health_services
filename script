@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+
+const path = require("path");
+const fs = require("fs");
+const vite = require("vite");
+const pwa_plugin = require("vite-plugin-pwa");
+
+const { Command } = require("commander");
+
+const manifests = require('./app/Dynamic/PWA/manifest.js');
+
+const program = new Command();
+
+program.name("node").description("CLI to node utilities").version("0.1.1");
+program
+    .command("pwa")
+    .description("PWA utils")
+    .action(() => {
+        console.log("pwa utils");
+    });
+program
+    .command("pwa:build")
+    .description("PWA build")
+    .option("-n, --name [string]", "name of manifest")
+    .action(async (options) => {
+        let keys = Object.keys(manifests);
+        if (options.name && keys.includes(options.name)) {
+            keys = [options.name];
+            console.log("build only", options.name);
+        } else {
+            console.log("build all", keys.join(', '));
+        }
+        for (const key of keys) {
+            console.log("build", key);
+            await vite.build({
+                build: {
+                    outDir: `public/${key}`,
+                },
+                plugins: [
+                    pwa_plugin.VitePWA({
+                        registerType: "prompt",
+                        injectRegister: "auto",
+                        strategies: "injectManifest",
+                        base: `/${key}/`,
+                        srcDir: `resources/js/pages/${key}`,
+                        filename: "sw.js",
+                        injectManifest: {
+                            additionalManifestEntries: [
+                                // { revision: "2", url: `/${key}/dashboard` },
+                                {
+                                    revision: "1",
+                                    url: `/${key}/offline`,
+                                },
+                            ],
+                        },
+                        includeAssets: [
+                            "favicon.ico",
+                            // "apple-touch-icon.png",
+                            // "masked-icon.svg",
+                        ],
+                        manifestFilename: "site.webmanifest",
+                        manifest: manifests[key],
+                    }),
+                ],
+            });
+        }
+    });
+program
+    .command("pwa:remove")
+    .description("PWA remove compiled file")
+    .option("-n, --name [string]", "name of manifest")
+    .action(async (options) => {
+        let dirs = Object.keys(manifests);
+        if (options.name && dirs.includes(options.name)) {
+            dirs = [options.name];
+        }
+        const src = "public";
+        for (const dir of dirs) {
+            fs.rm(path.join(src, dir), { recursive: true }, (err) => {
+                console.log(path.join(src, dir), err ? "fail" : "success");
+                err && console.error(err);
+            });
+        }
+    });
+
+program.parse();
+
