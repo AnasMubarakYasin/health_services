@@ -3,6 +3,9 @@
 /public/build
 /public/hot
 /public/storage
+/public/administrator
+/public/midwife
+/public/patient
 /storage/*.key
 /vendor
 .env

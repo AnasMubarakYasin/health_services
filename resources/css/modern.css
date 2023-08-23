@@ -4,7 +4,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  --tw-bg-opacity: .7;
+  background-color: hsl(var(--pf) / var(--tw-bg-opacity));
 }
 
 input {

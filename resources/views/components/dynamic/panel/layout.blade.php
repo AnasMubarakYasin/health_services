@@ -3,6 +3,9 @@
     @case('simple')
         <x-simple.panel.layout {{ $attributes }}>
             <x-slot:head>
+                <script>
+                    localStorage.setItem('template', @json($panel->template));
+                </script>
                 {{ $head }}
             </x-slot:head>
             <x-slot:topbar>
@@ -23,6 +26,9 @@
     @case('modern')
         <x-modern.layout.dashboard {{ $attributes }}>
             <x-slot:head>
+                <script>
+                    localStorage.setItem('template', @json($panel->template));
+                </script>
                 {{ $head }}
             </x-slot:head>
             <x-slot:topbar>

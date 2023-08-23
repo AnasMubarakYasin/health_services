@@ -4,6 +4,7 @@ module.exports = {
 	content: [
 		"./resources/views/**/*.blade.php",
 		"./resources/js/components/**/*.{js,ts}",
+		"./resources/js/pages/**/*.{js,ts}",
 		"./node_modules/flowbite/**/*.js",
 		"./node_modules/tw-elements/dist/js/**/*.js",
 		"./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",

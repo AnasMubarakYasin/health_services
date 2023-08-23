@@ -1,1 +1,0 @@
-const m=localStorage.getItem("theme")??"light",e=document.getElementById("theme_toggle");e.checked=m!="light";document.documentElement.dataset.theme=m;e.addEventListener("change",c=>{const t=e.checked?"dark":"light";document.documentElement.dataset.theme=t,localStorage.setItem("theme",t)});

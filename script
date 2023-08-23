@@ -4,14 +4,13 @@ const path = require("path");
 const fs = require("fs");
 const vite = require("vite");
 const pwa_plugin = require("vite-plugin-pwa");
-
 const { Command } = require("commander");
 
-const manifests = require('./app/Dynamic/PWA/manifest.js');
+const manifests = require("./app/Dynamic/PWA/manifest.js");
 
 const program = new Command();
 
-program.name("node").description("CLI to node utilities").version("0.1.1");
+program.name("node").description("CLI to node utilities").version("0.1.2");
 program
     .command("pwa")
     .description("PWA utils")
@@ -28,11 +27,11 @@ program
             keys = [options.name];
             console.log("build only", options.name);
         } else {
-            console.log("build all", keys.join(', '));
+            console.log("build all", keys.join(", "));
         }
         for (const key of keys) {
-            console.log("build", key);
-            await vite.build({
+            console.log("building", key);
+            const config = vite.defineConfig({
                 build: {
                     outDir: `public/${key}`,
                 },
@@ -63,6 +62,7 @@ program
                     }),
                 ],
             });
+            await vite.build(config);
         }
     });
 program
@@ -84,4 +84,3 @@ program
     });
 
 program.parse();
-

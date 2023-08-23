@@ -14,6 +14,7 @@
     "axios": "^1.1.2",
     "commander": "^11.0.0",
     "daisyui": "^3.0.3",
+    "esm": "^3.2.25",
     "fdir": "^6.0.1",
     "laravel-vite-plugin": "^0.7.5",
     "postcss": "^8.4.24",
