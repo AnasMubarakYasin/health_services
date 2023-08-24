@@ -123,18 +123,23 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/midwife/dashboard', 'User\Midwife\DashboardController@dashboard')->name('web.midwife.dashboard');
         Route::get('/midwife/history', 'User\Midwife\DashboardController@history')->name('web.midwife.history');
-        Route::get('/midwife/schedule/create', 'User\Midwife\DashboardController@schedule_create')->name('web.midwife.schedule_create');
-        Route::get('/midwife/schedule/{schedule}', 'User\Midwife\DashboardController@schedule_update')->name('web.midwife.schedule_update');
         Route::get('/midwife/profile', 'User\Midwife\DashboardController@profile')->name('web.midwife.profile');
         Route::get('/midwife/notification', 'User\Midwife\DashboardController@notification')->name('web.midwife.notification');
         Route::get('/midwife/offline', 'User\Midwife\DashboardController@offline')->name('web.midwife.offline');
         Route::get('/midwife/empty', 'User\Midwife\DashboardController@empty')->name('web.midwife.empty');
         Route::get('/midwife/archive', 'User\Midwife\DashboardController@empty')->name('web.midwife.archive');
         Route::get('/midwife/about', 'User\Midwife\DashboardController@empty')->name('web.midwife.about');
+
+        Route::get('/midwife/schedule', 'User\Midwife\ScheduleController@web_create')->name('web.midwife.schedule.create');
+        Route::get('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@web_update')->name('web.midwife.schedule.update');
     });
 
     Route::patch('/midwife/change_password', 'User\Midwife\DashboardController@change_password')->name('web.midwife.change_password');
     Route::patch('/midwife/change_profile', 'User\Midwife\DashboardController@change_profile')->name('web.midwife.change_profile');
+
+    Route::post('/midwife/schedule', 'User\Midwife\ScheduleController@api_create')->name('web.midwife.schedule.handle.create');
+    Route::patch('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@api_update')->name('web.midwife.schedule.handle.update');
+    Route::delete('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@api_delete')->name('web.midwife.schedule.handle.delete');
 });
 
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {

@@ -10,6 +10,10 @@
                 @vite('resources/js/components/modern/dashboard/customizer.js')
 
                 @vite('resources/js/components/modern/dashboard/settings.js')
+
+                <script>
+                    var subscriptions = @json($subscriptions);
+                </script>
             </x-slot:head>
         @endtemplate
         <x-slot:topbar>

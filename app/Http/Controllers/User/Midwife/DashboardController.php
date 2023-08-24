@@ -43,56 +43,6 @@ class DashboardController extends Controller
             'orders' => $orders,
         ]);
     }
-    public function schedule_create()
-    {
-        $resource = Schedule::formable()->from_create(
-            fields: [
-                "active",
-                "day",
-                "started_at",
-                "ended_at",
-                'midwife',
-            ],
-            hidden: [
-                'midwife',
-            ],
-        );
-        $resource->api_create = function () {
-            return route('web.resource.schedule.create');
-        };
-        $resource->web_view_any = function () {
-            return route('web.midwife.dashboard');
-        };
-        $resource->model->midwife_id = auth()->user()->id;
-        return view('pages.midwife.schedule', [
-            'resource' => $resource,
-        ]);
-    }
-    public function schedule_update(Schedule $schedule)
-    {
-        $resource = Schedule::formable()->from_update(
-            model: $schedule,
-            fields: [
-                "active",
-                "day",
-                "started_at",
-                "ended_at",
-                'midwife',
-            ],
-            hidden: [
-                'midwife',
-            ],
-        );
-        $resource->api_update = function ($item) {
-            return route('web.resource.schedule.update', ['schedule' => $item]);
-        };
-        $resource->web_view_any = function () {
-            return route('web.midwife.dashboard');
-        };
-        return view('pages.midwife.schedule', [
-            'resource' => $resource,
-        ]);
-    }
     public function history()
     {
         $orders = Order::get_by_midwife(auth()->user());

@@ -15,7 +15,7 @@ class CreateRequest extends FormRequest
         return [
             'name' => 'required|string',
             'password' => 'required|string',
-            'photo' => 'nullable|image|size:2048',
+            'photo' => 'nullable|image|max:2048',
             'fullname' => 'nullable|string',
         ];
     }

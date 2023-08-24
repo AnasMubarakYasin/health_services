@@ -3,6 +3,7 @@
         <x-slot:head>
             @template('modern')
                 @vite('resources/js/components/common/error-boundary.js')
+                @vite('resources/js/components/modern/common/theme.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
@@ -25,7 +26,7 @@
                 <div class="@container grid gap-2">
                     <div class="flex items-center gap-2 font-bold capitalize">
                         {{ trans('schedules') }}
-                        <a href="{{ route('web.midwife.schedule_create') }}"
+                        <a href="{{ route('web.midwife.schedule.create') }}"
                             class="bg-primary text-primary-content p-1 hover:bg-primary-focus rounded-lg">
                             <x-icons.add class="w-5 h-5" stroke="2"></x-icons.add>
                         </a>
@@ -37,15 +38,37 @@
                                     <div>{{ trans($schedule['day']) }}</div>
                                 </div>
                                 @foreach ($schedule['times'] as $key => $time)
-                                    <div @class([
-                                        'flex justify-between items-center gap-4 text-base text-base-content/70 font-medium leading-[normal] capitalize',
-                                        'text-red-500' => !$schedule['active'][$key],
-                                    ])>
-                                        <div>{{ $time }}</div>
-                                        <a href="{{ route('web.midwife.schedule_update', ['schedule' => $schedule['ids'][$key]]) }}"
-                                            class="text-blue-500">
-                                            <x-icons.edit></x-icons.edit>
-                                        </a>
+                                    <div
+                                        class="flex justify-between items-center gap-4 text-base text-base-content/70 font-medium leading-[normal] capitalize">
+                                        <div @class(['', 'text-red-500' => !$schedule['active'][$key]])>{{ $time }}</div>
+                                        <div class="relative" data-te-dropdown-position="dropend">
+                                            <button
+                                                href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
+                                                class="" data-te-dropdown-toggle-ref>
+                                                <x-icons.ellipsis_vertical></x-icons.ellipsis_vertical>
+                                            </button>
+                                            <ul class="absolute z-10 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-base-100 bg-clip-padding text-left text-base text-left shadow-all-lg [&[data-te-dropdown-show]]:block"
+                                                data-te-dropdown-menu-ref>
+                                                <li>
+                                                    <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
+                                                        href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
+                                                        data-te-dropdown-item-ref>{{ trans('update') }}</a>
+                                                </li>
+                                                <li>
+                                                    <form
+                                                        action="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
+                                                        method="post" class="contents">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button
+                                                            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
+                                                            data-te-dropdown-item-ref>
+                                                            {{ trans('delete') }}
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>

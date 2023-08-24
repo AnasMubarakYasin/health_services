@@ -165,7 +165,11 @@ class DashboardController extends Controller
     }
     public function settings()
     {
-        return view('pages.patient.settings');
+        /** @var Patient */
+        $user = auth()->user();
+        return view('pages.patient.settings', [
+            'subscriptions' => $user->pushSubscriptions()->get(),
+        ]);
     }
     public function empty()
     {

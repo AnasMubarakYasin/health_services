@@ -38,7 +38,6 @@
                         @if ($resource->is_update())
                             @method('PATCH')
                         @endif
-                        <input type="hidden" name="_view_any" value="{{ $resource->web_view_any() }}">
                         <div class="font-semibold text-xl text-base-content/70 text-center capitalize">
                             {{ trans('schedule') }}
                         </div>

@@ -52,6 +52,10 @@ class Midwife extends Panel
             ),
         ];
     }
+    public function get_user_photo(): string
+    {
+        return $this->user->photo_url;
+    }
     public function get_user_identifier(): string
     {
         return $this->user->fullname;

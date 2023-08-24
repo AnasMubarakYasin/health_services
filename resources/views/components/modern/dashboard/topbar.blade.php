@@ -161,7 +161,7 @@
                 title="Avatar"
                 class="flex items-center w-10 h-10 group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full">
                 <img src="{{ $panel->get_user_photo() }}" alt="{{ $panel->get_user_name() }}"
-                    class="group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full" />
+                    class="w-full h-full aspect-square object-cover group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full" />
             </button>
             <ul aria-labelledby="topbar_avatar" data-te-dropdown-menu-ref
                 class="hidden flex-col absolute z-50 min-w-[240px] list-none overflow-hidden rounded-lg bg-base-100
@@ -175,7 +175,7 @@
                     <div
                         class="groupitem flex justify-start items-center gap-4 px-4 py-1 text-base-content hover:bg-primary hover:bg-opacity-10 hover:text-primary rounded-lg transition-colors">
                         <img src="{{ $panel->get_user_photo() }}" alt="{{ $panel->get_user_name() }}"
-                            class="w-10 h-10
+                            class="w-10 h-10 aspect-square object-cover
                                 group-[#topbar&[data-button-shape='rounded']]:rounded-lg
                                 group-[#topbar&[data-button-shape='circled']]:rounded-full" />
                         <div class="flex flex-col justify-start content-between py-1">

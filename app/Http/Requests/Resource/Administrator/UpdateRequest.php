@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'photo' => 'nullable|image|2048',
+            'photo' => 'nullable|image|max:2048',
             'name' => 'required|string|unique:administrators,name,'.request()->route('administrator.id'),
             'fullname' => 'required|string',
             'address' => 'required|string',

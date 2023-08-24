@@ -15,14 +15,15 @@ class ScheduleController extends Controller
         $this->authorize('create', Schedule::class);
         $data = $request->validated();
         Schedule::create($data);
-        return redirect()->intended($request->input('_view_any'));
+        return redirect($request->input('_view_any'));
     }
     public function update(UpdateRequest $request, Schedule $schedule)
     {
         $this->authorize('update', $schedule);
         $data = $request->validated();
         $schedule->update($data);
-        return redirect()->intended($request->input('_view_any'));
+        dd($request->input('_view_any'));
+        return redirect($request->input('_view_any'));
     }
     public function delete(Schedule $schedule)
     {

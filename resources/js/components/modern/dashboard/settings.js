@@ -13,3 +13,18 @@ await ctx.inited();
 console.log("settings init");
 
 ctx.sync_state("settings", data, (value) => Object.assign(data, value));
+
+// console.log(subscriptions);
+console.log(await navigator.getInstalledRelatedApps?.());
+
+const service_worker = await navigator.serviceWorker.getRegistration();
+const subscribtion = await service_worker.pushManager.getSubscription();
+const subscribe_elm = document.getElementById("subscribe");
+
+// console.log(subscribtion);
+
+if (subscribtion) {
+  subscribe_elm.checked = subscriptions.some(
+    (item) => item.endpoint == subscribtion.endpoint
+  );
+}
