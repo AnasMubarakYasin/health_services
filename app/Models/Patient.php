@@ -14,11 +14,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class Patient extends Authenticatable
 {
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
+    use HasPushSubscriptions;
 
     public static function modelable(): Model
     {

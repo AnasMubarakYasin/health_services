@@ -11,8 +11,6 @@ const fallback_document = "/patient/offline";
 cleanupOutdatedCaches();
 precacheAndRoute(manifest);
 
-// console.log(manifest);
-
 import { clientsClaim } from "workbox-core";
 
 // clientsClaim();
@@ -96,4 +94,18 @@ setCatchHandler(async ({ request }) => {
           // If we don't have a fallback, return an error response.
           return Response.error();
   }
+});
+
+self.addEventListener("push", (event) => {
+  const data = event.data.json();
+  if (!data) return;
+  event.waitUntil(self.registration.showNotification(data.title, data));
+  if ("setAppBadge" in navigator) {
+      navigator.setAppBadge(1);
+      navigator.setClientBadge?.();
+  }
+});
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  clients.openWindow(event.action);
 });

@@ -45,6 +45,11 @@ class Patient extends Panel
                 icon: Blade::render('<x-icons.profile />'),
             ),
             new Menu(
+                name: "settings",
+                link: route('web.patient.settings'),
+                icon: Blade::render('<x-icons.settings />'),
+            ),
+            new Menu(
                 label: "misc",
                 name: "sign out",
                 link: route('web.patient.logout_perfom'),

@@ -3,29 +3,124 @@
 namespace App\Http\Controllers\User\Midwife;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Resource\Midwife\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
 use App\Models\Midwife;
+use App\Models\Order;
+use App\Models\Schedule;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-        return view('pages.midwife.dashboard', []);
+        $user = auth()->user();
+        $schedules = Schedule::get_by_midwife($user);
+        $orders = Order::get_unfinish_by_midwife($user);
+
+        $schedules_coll = collect();
+        foreach ($schedules as $key => $schedule) {
+            if ($schedules_coll->some('day', '==', $schedule->day)) {
+                $item = $schedules_coll->sole('day', '==', $schedule->day);
+                $key = $schedules_coll->search($item);
+                array_push($item['times'], $schedule->started_at . ' - ' . $schedule->ended_at);
+                array_push($item['ids'], $schedule->id);
+                array_push($item['active'], $schedule->active);
+                $schedules_coll->put($key, $item);
+            } else {
+                $schedules_coll->push([
+                    'day' => $schedule->day,
+                    'times' => [$schedule->started_at . ' - ' . $schedule->ended_at],
+                    'ids' => [$schedule->id],
+                    'active' => [$schedule->active],
+                ]);
+            }
+        }
+
+        return view('pages.midwife.dashboard', [
+            'schedules' => $schedules,
+            'schedules_coll' => $schedules_coll,
+            'orders' => $orders,
+        ]);
     }
+    public function schedule_create()
+    {
+        $resource = Schedule::formable()->from_create(
+            fields: [
+                "active",
+                "day",
+                "started_at",
+                "ended_at",
+                'midwife',
+            ],
+            hidden: [
+                'midwife',
+            ],
+        );
+        $resource->api_create = function () {
+            return route('web.resource.schedule.create');
+        };
+        $resource->web_view_any = function () {
+            return route('web.midwife.dashboard');
+        };
+        $resource->model->midwife_id = auth()->user()->id;
+        return view('pages.midwife.schedule', [
+            'resource' => $resource,
+        ]);
+    }
+    public function schedule_update(Schedule $schedule)
+    {
+        $resource = Schedule::formable()->from_update(
+            model: $schedule,
+            fields: [
+                "active",
+                "day",
+                "started_at",
+                "ended_at",
+                'midwife',
+            ],
+            hidden: [
+                'midwife',
+            ],
+        );
+        $resource->api_update = function ($item) {
+            return route('web.resource.schedule.update', ['schedule' => $item]);
+        };
+        $resource->web_view_any = function () {
+            return route('web.midwife.dashboard');
+        };
+        return view('pages.midwife.schedule', [
+            'resource' => $resource,
+        ]);
+    }
+    public function history()
+    {
+        $orders = Order::get_by_midwife(auth()->user());
+        return view('pages.midwife.history', [
+            'orders' => $orders,
+        ]);
+    }
+
     public function profile()
     {
         $resource = Midwife::formable()->from_update(
             model: auth()->user(),
-            fields: ['photo', 'name', 'telp', 'email'],
+            fields: [
+                'name',
+                'password',
+                'photo',
+                'fullname',
+                'telp',
+            ],
         );
         return view('pages.midwife.profile', ['resource' => $resource]);
     }
-    public function change_profile(ChangeProfileRequest $request)
+    public function change_profile(UpdateRequest $request)
     {
-        /** @var User */
+        /** @var Midwife */
         $user = auth()->user();
-        return back();
+        $user->update($request->validated());
+        return to_route('web.midwife.dashboard');
     }
     public function change_password(ChangePasswordRequest $request)
     {

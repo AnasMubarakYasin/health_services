@@ -231,19 +231,28 @@
         @break
 
         @case('boolean')
-            <div class="relative flex items-center">
-                <input id="input_{{ $field }}" name="{{ $field }}" data-focus="true" type="checkbox"
-                    role="switch" @checked(old($field, $model->{$field} ?? $definition->default)) @required(false)
-                    @readonly(false) {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
-                    class="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-base-200 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-base-300 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-primary/70 checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.125] focus:before:shadow-[3px_-1px_0px_13px_hsl(var(--bc))] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary/50 checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_hsl(var(--bc))] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]" />
-                <label class="inline-block pl-[0.15rem] hover:cursor-pointer" for="input_{{ $field }}">
-                    <span>{{ trans($definition->name) }}</span>
-                    @if (!$definition->nullable)
-                        <span class="text-danger font-semibold">*</span>
-                    @endif
-                </label>
+            <div class="flex flex-col gap-2">
+                <div class="relative flex items-center gap-2">
+                    <input type="hidden" name="{{ $field }}"
+                        value="{{ old($field, $model->{$field} ?? $definition->default) }}">
+                    <input id="input_{{ $field }}" data-focus="true" type="checkbox" role="switch"
+                        @checked(old($field, $model->{$field} ?? $definition->default)) @required(false) @readonly(false)
+                        {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
+                        class="appearance-none h-3.5 w-8 rounded-full bg-base-200 border-none
+                        before:pointer-events-none before:after:-mt-[3.5px] before:after:ml-[-6px] before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-['']
+                        after:absolute after:z-[2] after:-mt-[3.5px] after:ml-[-6px] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-base-300 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-['']
+                        checked:bg-primary/70 checked:after:absolute checked:after:z-[2] checked:after:-mt-[3.5px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-primary checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-['']
+                        hover:cursor-pointer
+                        focus:outline-none focus:ring-0 focus:before:ml-[-6px] focus:before:scale-100 focus:before:opacity-[0.125] focus:before:shadow-[3px_-1px_0px_13px_hsl(var(--bc))] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-primary checked:focus:bg-primary/50 checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_hsl(var(--bc))] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]" />
+                    <label class="inline-block pl-[0.15rem] hover:cursor-pointer" for="input_{{ $field }}">
+                        <span>{{ trans($definition->name) }}</span>
+                        @if (!$definition->nullable)
+                            <span class="text-danger font-semibold">*</span>
+                        @endif
+                    </label>
+                </div>
                 @error($field)
-                    <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                    <div class="w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                         {{ $message }}
                     </div>
                 @enderror
@@ -320,7 +329,7 @@
                     </ul>
                 </div>
             @else
-                <div class="relative" data-field="{{ $definition->alias }}">
+                <div class="relative {{ $resource->hidden($field) }}" data-field="{{ $definition->alias }}">
                     <select data-te-select-init data-te-select-clear-button="{{ !$definition->default ? 'true' : 'false' }}"
                         {{ $definition->multiple ? 'multiple' : '' }} id="input_{{ $definition->alias }}"
                         name="{{ $definition->alias }}" data-focus="true" placeholder="{{ trans($definition->name) }}..."

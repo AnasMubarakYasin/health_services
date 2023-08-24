@@ -1,75 +1,341 @@
 import { Workbox } from "workbox-window";
 import { Dismiss } from "flowbite";
 import { Toast, initTE } from "tw-elements";
-import { create_element } from "@/lib/helper";
+import {
+  Promiseify,
+  create_element,
+  urlBase64ToUint8Array,
+} from "@/lib/helper";
 
-window.Toast = Toast;
+// if ("serviceWorker" in navigator) {
+//   let prompted_install = false;
+//   let prompted_update = false;
+//   const wb = new Workbox("/patient/sw.js", {
+//     type: "module",
+//     scope: "/patient/",
+//   });
+//   const propmt = render_prompt();
+//   window.addEventListener("beforeinstallprompt", (event) => {
+//     event.preventDefault();
+//     console.log(event);
+//     event.userChoice.then(console.log);
+//     if (localStorage.getItem("template") == "simple") {
+//       const toast = create_element(gen_simple_prompt_install());
+//       const dismiss = new Dismiss(toast, toast.querySelector("#close-btn"));
+
+//       prompted_install = true;
+//       document.getElementById("main").prepend(toast);
+//       toast.querySelector("#install-btn").addEventListener("click", () => {
+//         event.prompt();
+//         dismiss.hide();
+//       });
+//     } else {
+//       const toast = create_element(gen_modern_prompt_install());
+//       document.getElementById("main").prepend(toast);
+//       initTE({ Toast });
+//       toast.querySelector("#install-btn").addEventListener("click", () => {
+//         event.prompt();
+//         Toast.getInstance(toast).hide();
+//       });
+//     }
+//   });
+//   wb.addEventListener("waiting", (event) => {
+//     wb.addEventListener("controlling", (event) => {
+//       window.location.reload();
+//     });
+//     if (localStorage.getItem("template") == "simple") {
+//       const toast = create_element(gen_simple_prompt_update());
+//       const dismiss = new Dismiss(toast, toast.querySelector("#close-btn"), {
+//         onHide() {
+//           if (prompted_install) {
+//             document.getElementById("prompt-install").style.display = "block";
+//           }
+//         },
+//       });
+
+//       if (prompted_install) {
+//         document.getElementById("prompt-install").style.display = "none";
+//       }
+
+//       prompted_update = true;
+//       document.getElementById("main").prepend(toast);
+//       toast.querySelector("#update-btn").addEventListener("click", () => {
+//         wb.messageSkipWaiting();
+//         dismiss.hide();
+//       });
+//     } else {
+//       const toast = create_element(gen_modern_prompt_update());
+//       document.getElementById("main").prepend(toast);
+//       initTE({ Toast });
+
+//       toast.querySelector("#update-btn").addEventListener("click", () => {
+//         wb.messageSkipWaiting();
+//         Toast.getInstance(toast).hide();
+//       });
+//     }
+//   });
+//   const service_worker = await wb.register({ immediate: true });
+//   const subscribtion = await service_worker.pushManager.getSubscription();
+
+//   if (!subscribtion) {
+//     const resp_public_key = await axios.get("/api/webpush/public_key");
+//     const public_key = urlBase64ToUint8Array(resp_public_key.data);
+//     let subscribe = null;
+//     try {
+//       subscribe = await service_worker.pushManager.subscribe({
+//         userVisibleOnly: false,
+//         applicationServerKey: public_key,
+//       });
+//     } catch (error) {
+//       if (error.message == "Registration failed - permission denied") {
+//         subscribe = await service_worker.pushManager.subscribe({
+//           userVisibleOnly: true,
+//           applicationServerKey: public_key,
+//         });
+//       }
+//     }
+//     if (subscribe) {
+//       console.log(subscribe);
+//       await axios.post("/api/webpush/subscribe", subscribe);
+//     }
+//   }
+
+//   if ("Notification" in window) {
+//     if (Notification.permission != "granted") {
+//       const toast = create_element(gen_simple_prompt_notification());
+//       const dismiss = new Dismiss(toast, toast.querySelector("#notification-btn"));
+
+//       document.getElementById("main").prepend(toast);
+//       toast.querySelector("#notification-btn").addEventListener("click", () => {
+//         Notification.requestPermission();
+//         dismiss.hide();
+//       });
+//     }
+//   }
+// }
 
 if ("serviceWorker" in navigator) {
   let prompted_install = false;
   let prompted_update = false;
+  let prompted_notification = false;
   const wb = new Workbox("/patient/sw.js", {
     type: "module",
     scope: "/patient/",
   });
+  const prompt = render_prompt();
+  // wb.addEventListener("activated", (event) => {
+  //   console.log('activated');
+  // });
+  // wb.addEventListener("activating", (event) => {
+  //   console.log('activating');
+  // });
+  // wb.addEventListener("controlling", (event) => {
+  //   console.log('controlling');
+  // });
+  // wb.addEventListener("installed", (event) => {
+  //   console.log('installed');
+  // });
+  // wb.addEventListener("installing", (event) => {
+  //   console.log('installing');
+  // });
+  // wb.addEventListener("message", (event) => {
+  //   console.log('message');
+  // });
+  // wb.addEventListener("redundant", (event) => {
+  //   console.log('redundant');
+  // });
+  // wb.addEventListener("waiting", (event) => {
+  //   console.log('waiting');
+  // });
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
-    if (localStorage.getItem("template") == "simple") {
-      const toast = create_element(gen_simple_prompt_install());
-      const dismiss = new Dismiss(toast, toast.querySelector("#close-btn"));
+    // console.log(event);
+    // event.userChoice.then(console.log);
 
-      prompted_install = true;
-      document.getElementById("main").prepend(toast);
-      toast.querySelector("#install-btn").addEventListener("click", () => {
-        event.prompt();
-        dismiss.hide();
-      });
-    } else {
-      const toast = create_element(gen_modern_prompt_install());
-      document.getElementById("main").prepend(toast);
-      initTE({ Toast });
-      toast.querySelector("#install-btn").addEventListener("click", () => {
-        event.prompt();
-        Toast.getInstance(toast).hide();
-      });
-    }
+    prompted_install = true;
+    prompt.install.show();
+    prompt.install.onAccept = function () {
+      event.prompt();
+    };
   });
   wb.addEventListener("waiting", (event) => {
     wb.addEventListener("controlling", (event) => {
       window.location.reload();
     });
-    if (localStorage.getItem("template") == "simple") {
-      const toast = create_element(gen_simple_prompt_update());
-      const dismiss = new Dismiss(toast, toast.querySelector("#close-btn"), {
-        onHide() {
-          if (prompted_install) {
-            document.getElementById("prompt-install").style.display = "block";
-          }
-        },
-      });
-
-      if (prompted_install) {
-        document.getElementById("prompt-install").style.display = "none";
-      }
-
-      prompted_update = true;
-      document.getElementById("main").prepend(toast);
-      toast.querySelector("#update-btn").addEventListener("click", () => {
-        wb.messageSkipWaiting();
-        dismiss.hide();
-      });
-    } else {
-      const toast = create_element(gen_modern_prompt_update());
-      document.getElementById("main").prepend(toast);
-      initTE({ Toast });
-
-      toast.querySelector("#update-btn").addEventListener("click", () => {
-        wb.messageSkipWaiting();
-        Toast.getInstance(toast).hide();
-      });
+    prompted_update = true;
+    prompt.update.show();
+    prompt.update.onAccept = function () {
+      wb.messageSkipWaiting();
+    };
+    if (prompted_install) {
+      prompt.install.hide();
     }
   });
-  wb.register({ immediate: true }).then((swr) => {});
+  const service_worker = await wb.register({ immediate: true });
+  const subscribtion = await service_worker.pushManager.getSubscription();
+  if (!service_worker.active) {
+    const activated = new Promiseify();
+    wb.addEventListener("activated", (event) => {
+      activated.resolver();
+    });
+    await activated;
+  }
+  if ("Notification" in window) {
+    const permissions = await navigator.permissions.query({
+      name: "notifications",
+    });
+    const granted = new Promiseify();
+    if (Notification.permission == "default") {
+      prompted_notification = true;
+      prompt.notification.show();
+      prompt.notification.onAccept = function () {
+        Notification.requestPermission();
+      };
+      permissions.addEventListener("change", (event) => {
+        if (Notification.permission == "granted") {
+          granted.resolver();
+        }
+      });
+      await granted;
+    }
+    if (!subscribtion) {
+      const resp_public_key = await axios.get("/api/webpush/public_key");
+      const public_key = urlBase64ToUint8Array(resp_public_key.data);
+      let subscribe = null;
+      try {
+        subscribe = await service_worker.pushManager.subscribe({
+          userVisibleOnly: false,
+          applicationServerKey: public_key,
+        });
+      } catch (error) {
+        if (error.message == "Registration failed - permission denied") {
+          subscribe = await service_worker.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: public_key,
+          });
+        }
+      }
+      if (subscribe) {
+        // console.log(subscribe);
+        await axios.post("/api/webpush/subscribe", subscribe);
+      }
+    }
+  }
+}
+
+function render_prompt() {
+  const install = { show() {}, hide() {}, onAccept() {} };
+  const update = { show() {}, hide() {}, onAccept() {} };
+  const notification = { show() {}, hide() {}, onAccept() {} };
+  const toast_install = create_element(gen_prompt_install());
+  const toast_update = create_element(gen_prompt_update());
+  const toast_notification = create_element(gen_prompt_notification());
+  document
+    .getElementById("main")
+    .prepend(toast_install, toast_update, toast_notification);
+  toast_install.querySelector("#install-btn").addEventListener("click", () => {
+    install.hide();
+    install.onAccept();
+  });
+  toast_update.querySelector("#update-btn").addEventListener("click", () => {
+    update.hide();
+    update.onAccept();
+  });
+  toast_notification
+    .querySelector("#notification-btn")
+    .addEventListener("click", () => {
+      notification.hide();
+      notification.onAccept();
+    });
+  if (localStorage.getItem("template") == "simple") {
+    const dismiss_install = new Dismiss(
+      toast_install,
+      toast_install.querySelector("#close-btn")
+    );
+    install.show = function () {
+      toast_install.style.display = "block";
+      requestAnimationFrame(() => {
+        toast_install.style.opacity = "1";
+      });
+    };
+    install.hide = function () {
+      dismiss_install.hide();
+    };
+    const dismiss_update = new Dismiss(
+      toast_update,
+      toast_update.querySelector("#close-btn")
+    );
+    update.show = function () {
+      toast_update.style.display = "block";
+      requestAnimationFrame(() => {
+        toast_update.style.opacity = "1";
+      });
+    };
+    update.hide = function () {
+      dismiss_update.hide();
+    };
+    const dismiss_notification = new Dismiss(
+      toast_notification,
+      toast_notification.querySelector("#close-btn")
+    );
+    notification.show = function () {
+      toast_notification.style.display = "block";
+      requestAnimationFrame(() => {
+        toast_notification.style.opacity = "1";
+      });
+    };
+    notification.hide = function () {
+      dismiss_notification.hide();
+    };
+  } else {
+    initTE({ Toast });
+    install.show = function () {
+      Toast.getInstance(toast_install).show();
+    };
+    install.hide = function () {
+      Toast.getInstance(toast_install).hide();
+    };
+    update.show = function () {
+      Toast.getInstance(toast_update).show();
+    };
+    update.hide = function () {
+      Toast.getInstance(toast_update).hide();
+    };
+    notification.show = function () {
+      console.log("notification.show");
+      Toast.getInstance(toast_notification).show();
+    };
+    notification.hide = function () {
+      Toast.getInstance(toast_notification).hide();
+    };
+  }
+
+  return {
+    install,
+    update,
+    notification,
+  };
+}
+function gen_prompt_install() {
+  if (localStorage.getItem("template") == "simple") {
+    return gen_simple_prompt_install();
+  } else {
+    return gen_modern_prompt_install();
+  }
+}
+function gen_prompt_update() {
+  if (localStorage.getItem("template") == "simple") {
+    return gen_simple_prompt_update();
+  } else {
+    return gen_modern_prompt_update();
+  }
+}
+function gen_prompt_notification() {
+  if (localStorage.getItem("template") == "simple") {
+    return gen_simple_prompt_notification();
+  } else {
+    return gen_modern_prompt_notification();
+  }
 }
 function gen_modern_prompt_install() {
   return `
@@ -81,7 +347,6 @@ function gen_modern_prompt_install() {
     aria-atomic="true"
     data-te-autohide="false"
     data-te-toast-init
-    data-te-toast-show
   >
     <div
       class="flex items-center justify-between rounded-t-lg border-b-2 border-base-200 bg-clip-padding px-4 pb-2 pt-2.5"
@@ -141,19 +406,18 @@ function gen_modern_prompt_update() {
   return `
   <div
     class="fixed top-20 right-4 z-10 pointer-events-auto hidden w-full max-w-xs rounded-lg bg-clip-padding text-sm shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden bg-base-100 text-base-content"
-    id="propmt-install"
+    id="propmt-update"
     role="alert"
     aria-live="assertive"
     aria-atomic="true"
     data-te-autohide="false"
     data-te-toast-init
-    data-te-toast-show
   >
     <div
       class="flex items-center justify-between rounded-t-lg border-b-2 border-base-200 bg-clip-padding px-4 pb-2 pt-2.5"
     >
       <p class="font-bold">
-        Update Application
+        Update Application Content
       </p>
       <div class="flex items-center">
         <button
@@ -181,7 +445,7 @@ function gen_modern_prompt_update() {
     </div>
     <div
       class="flex flex-col gap-4 break-words rounded-b-lg px-4 py-4">
-      <div>A new updates is available to application.</div>
+      <div>A new content is available to application.</div>
       <div class="self-end flex gap-4">
         <button
           id="update-btn"
@@ -203,11 +467,76 @@ function gen_modern_prompt_update() {
   </div>
   `;
 }
+function gen_modern_prompt_notification() {
+  return `
+  <div
+    class="fixed top-20 right-4 z-10 pointer-events-auto hidden w-full max-w-xs rounded-lg bg-clip-padding text-sm shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden bg-base-100 text-base-content"
+    id="propmt-notification"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    data-te-autohide="false"
+    data-te-toast-init
+  >
+    <div
+      class="flex items-center justify-between rounded-t-lg border-b-2 border-base-200 bg-clip-padding px-4 pb-2 pt-2.5"
+    >
+      <p class="font-bold">
+        Allow Receive Notification
+      </p>
+      <div class="flex items-center">
+        <button
+          type="button"
+          class="ml-2 box-content rounded-none border-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+          data-te-toast-dismiss
+          aria-label="Close">
+          <span
+            class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-6 w-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="flex flex-col gap-4 break-words rounded-b-lg px-4 py-4">
+      <div>This site can show important message from notification.</div>
+      <div class="self-end flex gap-4">
+        <button
+          id="notification-btn"
+          type="button"
+          class="inline-block rounded bg-primary text-primary-content px-5 py-1 text-sm font-medium leading-normal transition duration-150 ease-in-out hover:bg-primary-focus"
+        >
+          Allow
+        </button>
+        <button
+          data-te-toast-dismiss
+          id="close-btn"
+          type="button"
+          class="inline-block rounded bg-base-300/70 text-base-content px-5 py-1 text-sm font-medium leading-normal transition duration-150 ease-in-out hover:bg-base-300"
+        >
+          Later
+        </button>
+      </div>
+    </div>
+  </div>
+  `;
+}
 function gen_simple_prompt_install() {
   return `
         <div
             id="prompt-install"
-            class="fixed bottom-5 right-5 z-20 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow-all-lg dark:bg-gray-800 dark:text-gray-400"
+            class="hidden opacity-0 fixed bottom-5 right-5 z-20 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow-all-lg dark:bg-gray-800 dark:text-gray-400 transition-opacity"
             role="alert"
         >
             <div class="flex">
@@ -262,7 +591,7 @@ function gen_simple_prompt_update() {
   return `
         <div
             id="prompt-update"
-            class="fixed bottom-5 right-5 z-20 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow-xl dark:bg-gray-800 dark:text-gray-400"
+            class="hidden opacity-0 fixed bottom-5 right-5 z-20 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow-all-lg dark:bg-gray-800 dark:text-gray-400 transition-opacity"
             role="alert"
         >
             <div class="flex">
@@ -311,4 +640,48 @@ function gen_simple_prompt_update() {
             </div>
         </div>
     `;
+}
+function gen_simple_prompt_notification() {
+  return `
+      <div
+          id="prompt-notification"
+          class="hidden opacity-0 fixed bottom-5 right-5 z-20 w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow-all-lg dark:bg-gray-800 dark:text-gray-400 transition-opacity"
+          role="alert"
+      >
+          <div class="flex">
+              <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:text-blue-300 dark:bg-blue-900">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
+              </svg>
+                  <span class="sr-only">RefresA new updates is available to application.h icon</span>
+              </div>
+              <div class="ml-3 text-sm font-normal">
+                  <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">
+                      Allow Receive Notification
+                  </span>
+                  <div class="mb-2 text-sm font-normal">
+                      This site can show important message from notification.
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                      <div>
+                          <button
+                              id="notification-btn"
+                              class="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                          >
+                              Allow
+                          </button>
+                      </div>
+                      <div>
+                          <button
+                              id="close-btn"
+                              class="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+                          >
+                              Not now
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  `;
 }

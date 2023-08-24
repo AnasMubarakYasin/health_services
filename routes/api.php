@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/webpush/public_key', 'Common\WebPushController@public_key')->name('api.webpush.public_key');
+    Route::post('/webpush/subscribe', 'Common\WebPushController@subscribe')->name('api.webpush.subscribe');
+    Route::delete('/webpush/unsubscribe', 'Common\WebPushController@unsubscribe')->name('api.webpush.unsubscribe');
+});

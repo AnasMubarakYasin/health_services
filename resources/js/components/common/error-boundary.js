@@ -6,11 +6,11 @@ window.errors ??= {};
 const root = createRoot(document.body);
 const ToastGroup = component((c) => {
   const [get, set] = useState(c, []);
-  addEventListener("error", (ev) => {
+  addEventListener("error", (event) => {
     let state = get();
-    const url = new URL(`${ev.filename}:${ev.lineno}:${ev.colno}`);
+    const url = new URL(`${event.filename}:${event.lineno}:${event.colno}`);
     const link = url.href.replace(url.origin, `vscode://file` + panel.pwd);
-    state.push({ message: ev.message, link });
+    state.push({ message: event.message, link });
     set(state);
     invalidate(c);
     setTimeout(() => {

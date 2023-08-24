@@ -1,5 +1,5 @@
-const colors = require('tailwindcss/colors');
-const assets = require('./assets.js');
+const colors = require("tailwindcss/colors");
+const assets = require("./assets.js");
 
 module.exports = {
   id: "/",
@@ -14,8 +14,13 @@ module.exports = {
   description: "Web application for ordering healthcare services",
   orientation: "any",
   background_color: colors.blue[500],
-  related_applications: [],
-  prefer_related_applications: false,
+  related_applications: [
+    {
+      platform: "webapp",
+      url: `${process.env.APP_URL}/patient/site.webmanifest`,
+    },
+  ],
+  prefer_related_applications: true,
   display_override: ["window-controls-overlay", "standalone", "minimal-ui"],
   screenshots: [
     {

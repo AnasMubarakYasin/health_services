@@ -38,7 +38,8 @@
     @yield('head')
 </head>
 
-<body class="opacity-0 transition-opacity bg-base-200 text-base-content">
+{{-- <body class="opacity-0 transition-opacity bg-base-200 text-base-content"> --}}
+<body class="bg-base-200 text-base-content">
     {{ $sidebar }}
     <section id="content"
         class="flex flex-col w-full min-h-screen max-xs:hidden relative">

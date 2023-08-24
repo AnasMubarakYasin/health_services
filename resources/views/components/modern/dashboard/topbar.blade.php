@@ -73,7 +73,7 @@
         <div id="btn_theme_toggler" class="contents"></div>
         <div class="contents" data-te-dropdown-ref>
             <button id="btn_notification"
-                class="grid place-items-center w-10 h-10 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                class="relative grid place-items-center w-10 h-10 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                     group-[#topbar&[data-button-interface='filled']]:bg-base-200
                     group-[#topbar&[data-button-interface='filled']]:hover:bg-base-300
                     group-[#topbar&[data-button-interface='outlined']]:border-2
@@ -82,9 +82,15 @@
                 type="button" aria-expanded="false" data-te-dropdown-toggle-ref data-te-ripple-init
                 data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom" title="Notification">
                 <x-icons.notification class="w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.notification>
+                @if (filled($panel->user->notifications))
+                    <div
+                        class="absolute top-0 right-0 w-5 h-5 grid place-content-center bg-primary text-primary-content text-xs font-extrabold rounded-full">
+                        {{ count($panel->user->notifications) }}
+                    </div>
+                @endif
             </button>
             <section
-                class="hidden flex-col absolute z-50 min-w-[400px] list-none overflow-hidden rounded-lg bg-base-100
+                class="hidden flex-col absolute z-50 min-w-[320px] list-none overflow-hidden rounded-lg bg-base-100
                 [&[data-te-dropdown-show]]:flex
                 group-[#topbar&[data-card-type='elevated']]:shadow-all-lg
                 group-[#topbar&[data-card-type='elevated']]:group-[#topbar&[data-position='floated']]:shadow-all-lg
@@ -96,30 +102,35 @@
                     Notification
                 </header>
                 <main class="max-h-[40vh] overflow-auto border-y-2 border-base-300">
-                    {{-- <div class="p-8 text-center text-base-content/50 text-base font-medium">
-                    Empty
-                </div> --}}
                     <ul class="">
-                        @foreach (range(0, 10) as $_)
+                        @forelse ($panel->user->notifications as $notification)
                             <li class="border-b-2 border-base-300">
-                                <a href="" class="flex gap-4 items-start p-4 hover:bg-base-200"
-                                    data-te-dropdown-item-ref>
-                                    <img src="https://tecdn.b-cdn.net/img/new/avatars/2.webp" alt="Avatar"
+                                <a href="{{ $notification->data['action'] }}"
+                                    class="flex gap-4 items-start p-4 hover:bg-base-200" data-te-dropdown-item-ref>
+                                    <img src="{{ $notification->data['icon'] }}" alt="Avatar"
                                         class="w-10
                                     group-[#topbar&[data-button-shape='rounded']]:rounded-lg
                                     group-[#topbar&[data-button-shape='circled']]:rounded-full" />
-                                    <div class="flex flex-col gap-2">
-                                        <div class="text-base-content font-medium">Congratulation Lettie</div>
+                                    <div class="flex flex-col">
+                                        <div class="text-base-content font-medium">
+                                            {{ $notification->data['title'] }}
+                                        </div>
                                         <div>
                                             <div class="text-base-content/70">
-                                                Won the monthly best seller gold badge
+                                                {{ $notification->data['body'] }}
                                             </div>
-                                            <div class="text-base-content/50 text-sm">1h ago</div>
+                                            <div class="text-base-content/50 text-sm">
+                                                {{ $notification->created_at->timespan() }}
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
                             </li>
-                        @endforeach
+                        @empty
+                            <div class="py-4 text-center text-base-content/50 text-base font-medium capitalize">
+                                {{ trans('empty') }}
+                            </div>
+                        @endforelse
                     </ul>
                 </main>
                 <footer class="p-2">

@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 use Spatie\DeletedModels\Models\Concerns\KeepsDeletedModels;
 use Spatie\DeletedModels\Models\DeletedModel;
 
@@ -24,6 +25,7 @@ class Administrator extends Authenticatable
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
     use KeepsDeletedModels;
+    use HasPushSubscriptions;
 
     public static function modelable(): Model
     {

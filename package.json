@@ -34,6 +34,7 @@
     "@fontsource/poppins": "^5.0.3",
     "@fontsource/roboto": "^5.0.3",
     "@ivi/htm": "^3.0.1",
+    "dotenv": "^16.3.1",
     "flowbite": "^1.6.5",
     "ivi": "^3.0.2",
     "pusher-js": "^8.3.0",

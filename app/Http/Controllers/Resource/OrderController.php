@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Resource;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\Resource\Order\StoreRequest;
+use App\Http\Requests\Resource\Order\UpdateRequest;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function create(StoreOrderRequest $request)
+    public function create(StoreRequest $request)
     {
         $this->authorize('create', Order::class);
         $data = $request->validated();
         Order::create($data);
         return redirect()->intended($request->input('_view_any'));
     }
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateRequest $request, Order $order)
     {
         $this->authorize('update', $order);
         $data = $request->validated();

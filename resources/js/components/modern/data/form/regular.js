@@ -25,6 +25,17 @@ const toggle_elms = document
       }
     });
   });
+const checkbox_elms = document
+  .querySelectorAll("input[type=checkbox]")
+  .forEach((elm) => {
+    elm.addEventListener("change", (event) => {
+      if (elm.checked) {
+        elm.previousElementSibling.value = "1";
+      } else {
+        elm.previousElementSibling.value = "0";
+      }
+    });
+  });
 
 const inputs = [];
 document

@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Resource;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreServiceRequest;
-use App\Http\Requests\UpdateServiceRequest;
+use App\Http\Requests\Resource\Service\StoreRequest;
+use App\Http\Requests\Resource\Service\UpdateRequest;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function create(StoreServiceRequest $request)
+    public function create(StoreRequest $request)
     {
         $this->authorize('create', Service::class);
         $data = $request->validated();
         Service::create($data);
         return redirect()->intended($request->input('_view_any'));
     }
-    public function update(StoreServiceRequest $request, Service $service)
+    public function update(UpdateRequest $request, Service $service)
     {
         $this->authorize('update', $service);
         $data = $request->validated();

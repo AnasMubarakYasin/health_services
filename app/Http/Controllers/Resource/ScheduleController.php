@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Resource;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreScheduleRequest;
-use App\Http\Requests\UpdateScheduleRequest;
+use App\Http\Requests\Resource\Schedule\StoreRequest;
+use App\Http\Requests\Resource\Schedule\UpdateRequest;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    public function create(StoreScheduleRequest $request)
+    public function create(StoreRequest $request)
     {
         $this->authorize('create', Schedule::class);
         $data = $request->validated();
         Schedule::create($data);
         return redirect()->intended($request->input('_view_any'));
     }
-    public function update(UpdateScheduleRequest $request, Schedule $schedule)
+    public function update(UpdateRequest $request, Schedule $schedule)
     {
         $this->authorize('update', $schedule);
         $data = $request->validated();

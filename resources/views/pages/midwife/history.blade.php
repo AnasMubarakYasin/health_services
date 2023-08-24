@@ -30,7 +30,7 @@
                         {{ trans('service') }}
                     </div>
                     <div class="font-bold capitalize">
-                        {{ trans('midwife') }}
+                        {{ trans('patient') }}
                     </div>
                     <div class="font-bold capitalize">
                         {{ trans('description') }}
@@ -46,7 +46,7 @@
                             {{ $order->service->name }}
                         </div>
                         <div>
-                            {{ $order->midwife->fullname }}
+                            {{ $order->patient->fullname }}
                         </div>
                         <div class="flex flex-col">
                             <div class="">

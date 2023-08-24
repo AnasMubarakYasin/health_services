@@ -97,7 +97,13 @@
                                     </div>
                                     <div class="font-normal text-base">
                                         <div class="text-base-content/70">{{ trans('location') }}</div>
-                                        <div>{{ $order->location_name }}</div>
+                                        @php
+                                            $coordinates = json_decode($order->location_coordinates);
+                                        @endphp
+                                        <a href="https://www.google.com/maps/@ {{ $coordinates[1] }},{{ $coordinates[0] }},15z?entry=ttu"
+                                            class="text-blue-500 dark:text-blue-600 hover:underline">
+                                            {{ $order->location_name }}
+                                        </a>
                                     </div>
                                     {{-- <div class="font-medium text-base">
                                         {{ trans('midwife') }}: {{ $order->midwife->fullname }}

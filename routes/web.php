@@ -59,17 +59,17 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         Route::get('/administrator/users/patient/create', 'User\Administrator\PatientController@create')->name('web.administrator.users.patient.create');
         Route::get('/administrator/users/patient/{patient}/update', 'User\Administrator\PatientController@update')->name('web.administrator.users.patient.update');
 
-        Route::get('/administrator/service', 'User\Administrator\AdministratorController@service_index')->name('web.administrator.service.index');
-        Route::get('/administrator/service/create', 'User\Administrator\AdministratorController@service_create')->name('web.administrator.service.create');
-        Route::get('/administrator/service/{service}/update', 'User\Administrator\AdministratorController@service_update')->name('web.administrator.service.update');
+        Route::get('/administrator/service', 'User\Administrator\ServiceController@index')->name('web.administrator.service.index');
+        Route::get('/administrator/service/create', 'User\Administrator\ServiceController@create')->name('web.administrator.service.create');
+        Route::get('/administrator/service/{service}/update', 'User\Administrator\ServiceController@update')->name('web.administrator.service.update');
 
-        Route::get('/administrator/schedule', 'User\Administrator\AdministratorController@schedule_index')->name('web.administrator.schedule.index');
-        Route::get('/administrator/schedule/create', 'User\Administrator\AdministratorController@schedule_create')->name('web.administrator.schedule.create');
-        Route::get('/administrator/schedule/{schedule}/update', 'User\Administrator\AdministratorController@schedule_update')->name('web.administrator.schedule.update');
+        Route::get('/administrator/schedule', 'User\Administrator\ScheduleController@index')->name('web.administrator.schedule.index');
+        Route::get('/administrator/schedule/create', 'User\Administrator\ScheduleController@create')->name('web.administrator.schedule.create');
+        Route::get('/administrator/schedule/{schedule}/update', 'User\Administrator\ScheduleController@update')->name('web.administrator.schedule.update');
 
-        Route::get('/administrator/order', 'User\Administrator\AdministratorController@order_index')->name('web.administrator.order.index');
-        Route::get('/administrator/order/create', 'User\Administrator\AdministratorController@order_create')->name('web.administrator.order.create');
-        Route::get('/administrator/order/{order}/update', 'User\Administrator\AdministratorController@order_update')->name('web.administrator.order.update');
+        Route::get('/administrator/order', 'User\Administrator\OrderController@index')->name('web.administrator.order.index');
+        Route::get('/administrator/order/create', 'User\Administrator\OrderController@create')->name('web.administrator.order.create');
+        Route::get('/administrator/order/{order}/update', 'User\Administrator\OrderController@update')->name('web.administrator.order.update');
         /** !SECTION - User */
     });
 
@@ -95,6 +95,7 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/history', 'User\Patient\DashboardController@history')->name('web.patient.history');
         Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
         Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
+        Route::get('/patient/settings', 'User\Patient\DashboardController@settings')->name('web.patient.settings');
         Route::get('/patient/offline', 'User\Patient\DashboardController@offline')->name('web.patient.offline');
         Route::get('/patient/empty', 'User\Patient\DashboardController@empty')->name('web.patient.empty');
         Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
@@ -121,6 +122,9 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
     Route::get('/midwife/logout', 'Auth\MidwifeController@logout_perfom')->name('web.midwife.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/midwife/dashboard', 'User\Midwife\DashboardController@dashboard')->name('web.midwife.dashboard');
+        Route::get('/midwife/history', 'User\Midwife\DashboardController@history')->name('web.midwife.history');
+        Route::get('/midwife/schedule/create', 'User\Midwife\DashboardController@schedule_create')->name('web.midwife.schedule_create');
+        Route::get('/midwife/schedule/{schedule}', 'User\Midwife\DashboardController@schedule_update')->name('web.midwife.schedule_update');
         Route::get('/midwife/profile', 'User\Midwife\DashboardController@profile')->name('web.midwife.profile');
         Route::get('/midwife/notification', 'User\Midwife\DashboardController@notification')->name('web.midwife.notification');
         Route::get('/midwife/offline', 'User\Midwife\DashboardController@offline')->name('web.midwife.offline');

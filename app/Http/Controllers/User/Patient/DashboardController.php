@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\Patient;
 use App\Models\Schedule;
 use App\Models\Service;
+use App\Notifications\OrderComingsoon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -101,6 +102,9 @@ class DashboardController extends Controller
             'midwife_id' =>  $midwife->id,
             'service_id' =>  $data['service'],
         ]);
+        /** @var Patient */
+        $user = auth()->user();
+        $user->notifyNow(new OrderComingsoon($order));
         return to_route('web.patient.dashboard');
     }
     public function history()
@@ -158,6 +162,10 @@ class DashboardController extends Controller
     public function offline()
     {
         return view('pages.patient.offline');
+    }
+    public function settings()
+    {
+        return view('pages.patient.settings');
     }
     public function empty()
     {

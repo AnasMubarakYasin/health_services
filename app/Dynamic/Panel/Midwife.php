@@ -29,6 +29,11 @@ class Midwife extends Panel
                 link: route('web.midwife.dashboard'),
                 icon: Blade::render('<x-icons.home stroke="2" />'),
             ),
+            new Menu(
+                name: "history",
+                link: route('web.midwife.history'),
+                icon: Blade::render('<x-icons.clock stroke="2" />'),
+            ),
         ];
     }
     public function get_user_menus(): array
@@ -58,7 +63,7 @@ class Midwife extends Panel
     }
     public function change_profile()
     {
-        return route('web.resource.midwife.update', ['midwife' => $this->user]);
+        return route('web.midwife.change_profile');
     }
     public function change_password()
     {
