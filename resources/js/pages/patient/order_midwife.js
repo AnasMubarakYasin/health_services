@@ -10,7 +10,9 @@ import {
 
 initTE({ /* Stepper, */ Datepicker, Timepicker, Input, Select });
 
-console.debug(midwife, schedules, orders);
+console.debug(midwife);
+console.debug(schedules);
+console.debug(orders);
 
 schedules = schedules.filter((item) => item.active);
 
@@ -18,30 +20,22 @@ const date_elm = document.getElementById("date");
 const day_in_ms = 1e3 * 60 * 60 * 24;
 const now = new Date();
 const tomorrow = new Date(now.getTime() + day_in_ms * 1);
-const next_seven_day = new Date(now.getTime() + day_in_ms * 7);
+const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 7);
 new Datepicker(date_elm, {
   filter: (date) => {
-    const is_this_month = date.getMonth() == now.getMonth();
-    const is_this_year = date.getFullYear() == now.getFullYear();
-    const is_less_than_tomorrow = date.getDate() < tomorrow.getDate();
+    const is_less_than_tomorrow = date.getTime() < tomorrow.getTime();
+    const is_greater_than_next_seven_day =
+      date.getTime() > next_seven_day.getTime();
     const has_midwife_schedule = schedules.find(
       (schedule) => date.getDay() == day_to_index(schedule.day)
     );
-    // const has_order_schedule = orders.find(
-    //   (order) => date.getDate() == new Date(order.schedule).getDate()
-    // );
-    const is_greater_than_next_seven_day =
-      date.getDate() > next_seven_day.getDate();
     const is_saturday = date.getDay() == 6;
     const is_sunday = date.getDay() == 0;
 
     return (
-      is_this_month &&
-      is_this_year &&
       !is_less_than_tomorrow &&
-      !!has_midwife_schedule &&
-      // !has_order_schedule &&
       !is_greater_than_next_seven_day &&
+      !!has_midwife_schedule &&
       !is_saturday &&
       !is_sunday
     );
