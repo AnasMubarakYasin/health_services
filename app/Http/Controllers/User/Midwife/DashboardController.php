@@ -96,6 +96,14 @@ class DashboardController extends Controller
     {
         return view('pages.midwife.offline');
     }
+    public function settings()
+    {
+        /** @var Midwife */
+        $user = auth()->user();
+        return view('pages.midwife.settings', [
+            'subscriptions' => $user->pushSubscriptions()->get(),
+        ]);
+    }
     public function empty()
     {
         return view('pages.midwife.empty');

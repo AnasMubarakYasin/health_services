@@ -4,18 +4,10 @@ namespace App\Http\Controllers\User\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\CreateOrderMidwifeRequest;
-use App\Http\Requests\Patient\CreateOrderRequest;
-use App\Http\Requests\Resource\Patient\UpdateRequest;
-use App\Http\Requests\User\ChangePasswordRequest;
-use App\Http\Requests\User\ChangeProfileRequest;
 use App\Models\Midwife;
 use App\Models\Order;
-use App\Models\Patient;
-use App\Models\Schedule;
 use App\Models\Service;
 use App\Notifications\OrderComingsoon;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -49,9 +41,8 @@ class OrderController extends Controller
             'midwife_id' =>  $midwife->id,
             'service_id' =>  $data['service'],
         ]);
-        $notification = new OrderComingsoon($order);
-        $order->patient->notifyNow($notification);
-        $order->midwife->notifyNow($notification);
+        $order->patient->notifyNow(new OrderComingsoon($order));
+        $order->midwife->notifyNow(new OrderComingsoon($order));
         return to_route('web.patient.dashboard');
     }
 }

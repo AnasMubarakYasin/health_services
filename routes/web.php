@@ -90,8 +90,6 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
     Route::get('/patient/logout', 'Auth\PatientController@logout_perfom')->name('web.patient.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
-        Route::get('/patient/order/{service}/service', 'User\Patient\DashboardController@show_order')->name('web.patient.show_order');
-        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\DashboardController@show_order_midwife')->name('web.patient.show_order_midwife');
         Route::get('/patient/history', 'User\Patient\DashboardController@history')->name('web.patient.history');
         Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
         Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
@@ -100,10 +98,11 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/empty', 'User\Patient\DashboardController@empty')->name('web.patient.empty');
         Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
+
+        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order')->name('web.patient.show_order_midwife');
     });
 
-    Route::post('/patient/order/{service}/service', 'User\Patient\DashboardController@perform_order')->name('web.patient.perform_order');
-    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\DashboardController@perform_order_midwife')->name('web.patient.perform_order_midwife');
+    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order')->name('web.patient.perform_order_midwife');
 
     Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
@@ -125,6 +124,7 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
         Route::get('/midwife/history', 'User\Midwife\DashboardController@history')->name('web.midwife.history');
         Route::get('/midwife/profile', 'User\Midwife\DashboardController@profile')->name('web.midwife.profile');
         Route::get('/midwife/notification', 'User\Midwife\DashboardController@notification')->name('web.midwife.notification');
+        Route::get('/midwife/settings', 'User\Midwife\DashboardController@settings')->name('web.midwife.settings');
         Route::get('/midwife/offline', 'User\Midwife\DashboardController@offline')->name('web.midwife.offline');
         Route::get('/midwife/empty', 'User\Midwife\DashboardController@empty')->name('web.midwife.empty');
         Route::get('/midwife/archive', 'User\Midwife\DashboardController@empty')->name('web.midwife.archive');
