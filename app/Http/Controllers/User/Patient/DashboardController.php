@@ -91,9 +91,7 @@ class DashboardController extends Controller
     {
         /** @var Patient */
         $user = auth()->user();
-        return view('pages.patient.settings', [
-            'subscriptions' => $user->pushSubscriptions()->get(),
-        ]);
+        return view('pages.patient.settings', []);
     }
     public function empty()
     {

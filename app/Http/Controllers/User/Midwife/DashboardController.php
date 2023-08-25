@@ -100,9 +100,7 @@ class DashboardController extends Controller
     {
         /** @var Midwife */
         $user = auth()->user();
-        return view('pages.midwife.settings', [
-            'subscriptions' => $user->pushSubscriptions()->get(),
-        ]);
+        return view('pages.midwife.settings', []);
     }
     public function empty()
     {

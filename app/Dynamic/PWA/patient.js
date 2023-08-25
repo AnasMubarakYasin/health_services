@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors");
 const assets = require("./assets.js");
 
 module.exports = {
-  id: "/",
+  id: "/patient/",
   dir: "ltr",
   lang: "en",
   name: "Health Services",
@@ -20,7 +20,7 @@ module.exports = {
       url: `${process.env.APP_URL}/patient/site.webmanifest`,
     },
   ],
-  prefer_related_applications: true,
+  prefer_related_applications: false,
   display_override: ["window-controls-overlay", "standalone", "minimal-ui"],
   screenshots: [
     {

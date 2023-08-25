@@ -24,7 +24,8 @@ const subscribe_elm = document.getElementById("subscribe");
 // console.log(subscribtion);
 
 if (subscribtion) {
-  subscribe_elm.checked = subscriptions.some(
-    (item) => item.endpoint == subscribtion.endpoint
+  const res_subscribed = await axios.get(
+    "/api/webpush/subscribed?endpoint=" + subscribtion.endpoint
   );
+  subscribe_elm.checked = res_subscribed.data;
 }

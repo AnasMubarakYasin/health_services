@@ -10,6 +10,9 @@
 input {
   box-shadow: none !important;
 }
+textarea {
+  box-shadow: none !important;
+}
 
 input[type=checkbox] {
   background-image: none !important;

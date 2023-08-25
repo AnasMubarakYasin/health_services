@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/webpush/public_key', 'Common\WebPushController@public_key')->name('api.webpush.public_key');
     Route::post('/webpush/subscribe', 'Common\WebPushController@subscribe')->name('api.webpush.subscribe');
-    Route::delete('/webpush/unsubscribe', 'Common\WebPushController@unsubscribe')->name('api.webpush.unsubscribe');
+    Route::delete('/webpush/unsubscribe/{endpoint}', 'Common\WebPushController@unsubscribe')->name('api.webpush.unsubscribe');
+    Route::get('/webpush/subscribed', 'Common\WebPushController@subscribed')->name('api.webpush.subscribed');
 });

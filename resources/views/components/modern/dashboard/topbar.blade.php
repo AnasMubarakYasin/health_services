@@ -82,10 +82,10 @@
                 type="button" aria-expanded="false" data-te-dropdown-toggle-ref data-te-ripple-init
                 data-te-ripple-color="primary" data-te-toggle="tooltip" data-te-placement="bottom" title="Notification">
                 <x-icons.notification class="w-5 h-5 sm:w-6 sm:h-6" stroke="2"></x-icons.notification>
-                @if (filled($panel->user->notifications))
+                @if (filled($panel->user->unreadNotifications))
                     <div
                         class="absolute top-0 right-0 w-5 h-5 grid place-content-center bg-primary text-primary-content text-xs font-extrabold rounded-full">
-                        {{ count($panel->user->notifications) }}
+                        {{ count($panel->user->unreadNotifications) }}
                     </div>
                 @endif
             </button>
@@ -98,28 +98,28 @@
                 group-[#topbar&[data-card-type='bordered']]:border-base-300
                 group-[#topbar&[data-card-type='bordered']]:group-[#topbar&[data-position='floated']]:border-2"
                 aria-labelledby="btn_notification" data-te-dropdown-menu-ref>
-                <header class="p-4 text-center text-base-content/70 text-lg font-medium">
+                <header class="px-4 py-2 text-center text-base-content/70 text-lg font-medium">
                     Notification
                 </header>
-                <main class="max-h-[40vh] overflow-auto border-y-2 border-base-300">
+                <main class="max-h-[40vh] overflow-auto border-y border-base-300">
                     <ul class="">
                         @forelse ($panel->user->notifications as $notification)
-                            <li class="border-b-2 border-base-300">
-                                <a href="{{ $notification->data['action'] }}"
-                                    class="flex gap-4 items-start p-4 hover:bg-base-200" data-te-dropdown-item-ref>
+                            <li @class(['', 'border-b border-base-300' => !$loop->last, 'bg-base-200' => $notification->read_at])>
+                                <a href="{{ route('web.notification.read', ['notification' => $notification]) }}"
+                                    class="flex gap-4 items-start px-4 py-2 hover:bg-primary/10" data-te-dropdown-item-ref>
                                     <img src="{{ $notification->data['icon'] }}" alt="Avatar"
                                         class="w-10
                                     group-[#topbar&[data-button-shape='rounded']]:rounded-lg
                                     group-[#topbar&[data-button-shape='circled']]:rounded-full" />
                                     <div class="flex flex-col">
-                                        <div class="text-base-content font-medium">
+                                        <div class="text-base-content text-base font-medium">
                                             {{ $notification->data['title'] }}
                                         </div>
                                         <div>
-                                            <div class="text-base-content/70">
+                                            <div class="text-base-content/70 text-sm">
                                                 {{ $notification->data['body'] }}
                                             </div>
-                                            <div class="text-base-content/50 text-sm">
+                                            <div class="text-base-content/50 text-xs font-medium">
                                                 {{ $notification->created_at->timespan() }}
                                             </div>
                                         </div>
@@ -127,7 +127,7 @@
                                 </a>
                             </li>
                         @empty
-                            <div class="py-4 text-center text-base-content/50 text-base font-medium capitalize">
+                            <div class="py-2 text-center text-base-content/50 text-base font-medium capitalize">
                                 {{ trans('empty') }}
                             </div>
                         @endforelse
@@ -135,8 +135,8 @@
                 </main>
                 <footer class="p-2">
                     <a data-te-ripple-init data-te-ripple-color="primary" data-te-dropdown-item-ref
-                        href="/notification/all"
-                        class="flex justify-center items-center w-full h-full p-2 text-primary/70 font-medium hover:bg-primary hover:bg-opacity-10 hover:text-primary rounded-lg transition-colors">
+                        href="{{ $panel->notifications() }}"
+                        class="flex justify-center items-center w-full h-full px-4 py-2 text-primary/70 font-medium hover:bg-primary hover:bg-opacity-10 hover:text-primary rounded-lg transition-colors">
                         View All
                     </a>
                 </footer>

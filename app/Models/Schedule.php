@@ -67,6 +67,10 @@ class Schedule extends Model
         };
     }
 
+    public static function get_active()
+    {
+        return self::query()->where('active', true)->get();
+    }
     public static function get_by_midwife(Midwife $midwife)
     {
         return self::query()->where('midwife_id', $midwife->id)->get();

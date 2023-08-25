@@ -99,13 +99,15 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
 
-        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order')->name('web.patient.show_order_midwife');
+        Route::get('/patient/order', 'User\Patient\OrderController@web_order')->name('web.patient.order');
+        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order_midwife')->name('web.patient.order.midwife');
     });
-
-    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order')->name('web.patient.perform_order_midwife');
 
     Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
+
+    Route::post('/patient/order', 'User\Patient\OrderController@api_order')->name('web.patient.order.handle');
+    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order_midwife')->name('web.patient.order.midwife.handle');
 });
 
 Route::redirect('/midwife', '/midwife/dashboard');
@@ -130,7 +132,7 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
         Route::get('/midwife/archive', 'User\Midwife\DashboardController@empty')->name('web.midwife.archive');
         Route::get('/midwife/about', 'User\Midwife\DashboardController@empty')->name('web.midwife.about');
 
-        Route::get('/midwife/schedule', 'User\Midwife\ScheduleController@web_create')->name('web.midwife.schedule.create');
+        Route::get('/midwife/schedule/create', 'User\Midwife\ScheduleController@web_create')->name('web.midwife.schedule.create');
         Route::get('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@web_update')->name('web.midwife.schedule.update');
     });
 

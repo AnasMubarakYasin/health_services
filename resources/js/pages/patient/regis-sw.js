@@ -41,7 +41,7 @@ if ("serviceWorker" in navigator) {
     }
   });
   const service_worker = await wb.register({ immediate: true });
-  const subscribtion = await service_worker.pushManager.getSubscription();
+  let subscribtion = await service_worker.pushManager.getSubscription();
   if (!service_worker.active) {
     const activated = new Promiseify();
     wb.addEventListener("activated", (event) => {
@@ -68,25 +68,27 @@ if ("serviceWorker" in navigator) {
       await granted;
     }
     if (!subscribtion) {
-      const resp_public_key = await axios.get("/api/webpush/public_key");
-      const public_key = urlBase64ToUint8Array(resp_public_key.data);
-      let subscribe = null;
+      const res_public_key = await axios.get("/api/webpush/public_key");
+      const public_key = urlBase64ToUint8Array(res_public_key.data);
       try {
-        subscribe = await service_worker.pushManager.subscribe({
+        subscribtion = await service_worker.pushManager.subscribe({
           userVisibleOnly: false,
           applicationServerKey: public_key,
         });
       } catch (error) {
         if (error.message == "Registration failed - permission denied") {
-          subscribe = await service_worker.pushManager.subscribe({
+          subscribtion = await service_worker.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: public_key,
           });
         }
       }
-      if (subscribe) {
-        // console.log(subscribe);
-        await axios.post("/api/webpush/subscribe", subscribe);
+    }
+    if (subscribtion) {
+      // console.log(subscribtion);
+      const res_subscribed = await axios.get("/api/webpush/subscribed?endpoint=" + subscribtion.endpoint)
+      if (!res_subscribed.data) {
+        await axios.post("/api/webpush/subscribe", subscribtion);
       }
     }
   }
@@ -171,7 +173,6 @@ function render_prompt() {
       Toast.getInstance(toast_update).hide();
     };
     notification.show = function () {
-      console.log("notification.show");
       Toast.getInstance(toast_notification).show();
     };
     notification.hide = function () {

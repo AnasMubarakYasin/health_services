@@ -4,7 +4,7 @@ namespace App\Http\Requests\Patient;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateOrderRequest extends FormRequest
+class OrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,9 @@ class CreateOrderRequest extends FormRequest
             'time' => 'required|date_format:H',
             'location' => 'required|string',
             'position' => 'required|string',
+            'complaint' => 'nullable|string',
             'midwife' => 'required|uuid',
-            // 'service_id' => 'required|uuid',
+            'service' => 'required|uuid',
         ];
     }
 }

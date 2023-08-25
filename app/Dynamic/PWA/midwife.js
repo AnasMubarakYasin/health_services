@@ -1,8 +1,8 @@
-const colors = require('tailwindcss/colors');
-const assets = require('./assets.js');
+const colors = require("tailwindcss/colors");
+const assets = require("./assets.js");
 
 module.exports = {
-  id: "/",
+  id: "/midwife/",
   dir: "ltr",
   lang: "en",
   name: "Health Services for Midwife",
@@ -14,7 +14,12 @@ module.exports = {
   description: "Web application for ordering healthcare services",
   orientation: "any",
   background_color: colors.blue[500],
-  related_applications: [],
+  related_applications: [
+    {
+      platform: "webapp",
+      url: `${process.env.APP_URL}/midwife/site.webmanifest`,
+    },
+  ],
   prefer_related_applications: false,
   display_override: ["window-controls-overlay", "standalone", "minimal-ui"],
   screenshots: [
@@ -29,5 +34,18 @@ module.exports = {
     client_mode: "navigate-existing",
   },
   edge_side_panel: {},
-  shortcuts: [],
+  shortcuts: [
+    {
+      name: "Add Schedule",
+      short_name: "Schedule",
+      description: "Add Schedule",
+      url: "/midwife/schedule/create",
+      icons: [
+        {
+          src: "/icons/logo/proto-512.v2.png",
+          sizes: "512x512",
+        },
+      ],
+    },
+  ],
 };

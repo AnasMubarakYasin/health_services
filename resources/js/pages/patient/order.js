@@ -1,22 +1,23 @@
-import { create_element } from "@/lib/helper";
 import { Datepicker, Timepicker, Input, Select, initTE } from "tw-elements";
 
 initTE({ Datepicker, Timepicker, Input, Select });
 
-console.debug(midwives);
-
 const data = {
   midwife: null,
   schedules: [],
+  orders: [],
 };
 
 const midwife_elm = document.getElementById("midwife");
 new Select(midwife_elm, {});
 midwife_elm.addEventListener("valueChange.te.select", (event) => {
-  const midwife = midwives.find((midwife) => midwife.id == event.value);
+  const midwife = midwifes.find((midwife) => midwife.id == event.value);
   if (!midwife) return;
   data.midwife = midwife;
-  data.schedules = midwife.schedules ?? [];
+  data.schedules = schedules.filter(
+    (schedule) => schedule.midwife_id == midwife.id
+  );
+  data.orders = orders.filter((order) => order.midwife_id == midwife.id);
   const input = date_elm.querySelector("input");
   input.value = "";
   input.focus();
@@ -27,26 +28,22 @@ const date_elm = document.getElementById("date");
 const day_in_ms = 1e3 * 60 * 60 * 24;
 const now = new Date();
 const tomorrow = new Date(now.getTime() + day_in_ms * 1);
-const next_seven_day = new Date(now.getTime() + day_in_ms * 7);
+const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 7);
 new Datepicker(date_elm, {
   filter: (date) => {
-    const is_this_month = date.getMonth() == now.getMonth();
-    const is_this_year = date.getFullYear() == now.getFullYear();
-    const is_less_than_tomorrow = date.getDate() < tomorrow.getDate();
+    const is_less_than_tomorrow = date.getTime() < tomorrow.getTime();
+    const is_greater_than_next_seven_day =
+      date.getTime() > next_seven_day.getTime();
     const has_midwife_schedule = data.schedules.find(
       (schedule) => date.getDay() == day_to_index(schedule.day)
     );
-    const is_greater_than_next_seven_day =
-      date.getDate() > next_seven_day.getDate();
     const is_saturday = date.getDay() == 6;
     const is_sunday = date.getDay() == 0;
 
     return (
-      is_this_month &&
-      is_this_year &&
       !is_less_than_tomorrow &&
-      !!has_midwife_schedule &&
       !is_greater_than_next_seven_day &&
+      !!has_midwife_schedule &&
       !is_saturday &&
       !is_sunday
     );
@@ -62,16 +59,17 @@ date_elm.addEventListener("dateChange.te.datepicker", (event) => {
   option_elm.selected = true;
   time_elm.replaceChildren(option_elm);
   work_times.forEach((time) => {
+    const hour = time.value * 36e5;
     const option_elm = document.createElement("option");
     option_elm.value = time.value;
     option_elm.textContent = time.label;
     option_elm.disabled = !selected_schedule.some((schedule) =>
-      between_timerange(
-        time.value * 36e5,
-        schedule.started_at,
-        schedule.ended_at
-      )
+      between_timerange(hour, schedule.started_at, schedule.ended_at)
     );
+    !option_elm.disabled &&
+      (option_elm.disabled = data.orders.some((order) =>
+        between_timerange(hour, order.schedule_start, order.schedule_end)
+      ));
     time_elm.append(option_elm);
   });
 });

@@ -37,12 +37,13 @@
                             {{ trans($message) }}
                         </div>
                     @enderror
-                    <form action="{{ route('web.patient.perform_order_midwife', ['midwife' => $midwife]) }}"
+                    <form action="{{ route('web.patient.order.midwife.handle', ['midwife' => $midwife]) }}"
                         method="POST"
                         class="flex flex-col gap-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 m-auto p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                         @csrf
                         <div class="font-semibold text-lg text-center capitalize">{{ trans('midwife') }}
-                            {{ $midwife->fullname }}</div>
+                            {{ $midwife->fullname }}
+                        </div>
                         <ul class="relative m-0 w-full list-none overflow-hidden p-0 transition-[height] duration-200 ease-in-out"
                             data-te-stepper-init data-te-stepper-type="vertical">
                             <li data-te-stepper-step-ref

@@ -26,9 +26,18 @@ class WebPushController extends Controller
     }
     public function unsubscribe(Request $request)
     {
-        /** @var User */
+        /** @var Patient */
         $user = auth()->user();
-        $user->deletePushSubscription(request()->input('endpoint'));
+        $endpoint = $request->query('endpoint');
+        $user->deletePushSubscription($endpoint);
         return response()->json(status: 200);
+    }
+    public function subscribed(Request $request)
+    {
+        /** @var Patient */
+        $user = auth()->user();
+        $endpoint = $request->query('endpoint');
+        $subscribed = $user->pushSubscriptions()->get()->some('endpoint', '==', $endpoint);
+        return response()->json($subscribed);
     }
 }

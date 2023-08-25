@@ -27,8 +27,8 @@
                     <div class="font-bold capitalize">{{ trans('services') }}</div>
                     <div class="flex flex-wrap gap-4">
                         @foreach ($services as $service)
-                            <a href="{{ route('web.patient.show_order', ['service' => $service]) }}"
-                                class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg hover:bg-primary/10">
+                            <div
+                                class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                 <div class="w-full flex items-center justify-between">
                                     <div class="flex flex-col">
                                         <div class="text-lg font-medium capitalize">
@@ -39,7 +39,7 @@
                             </div> --}}
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -60,8 +60,8 @@
                                             {{ trans('midwife') }}
                                         </div>
                                     </div>
-                                    <a href="{{ route('web.patient.show_order_midwife', ['midwife' => $midwife]) }}"
-                                        class="w-fit px-3 py-1 self-end bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary/30">
+                                    <a href="{{ route('web.patient.order.midwife', ['midwife' => $midwife]) }}"
+                                        class="w-fit px-3 py-1 self-end bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary-focus">
                                         {{ trans('service message') }}
                                     </a>
                                 </div>

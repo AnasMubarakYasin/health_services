@@ -107,6 +107,12 @@ class Order extends Model
     {
         return self::query()->where('midwife_id', $midwife->id)->get();
     }
+    public static function get_unfinish()
+    {
+        return self::query()
+            ->whereNot('status', 'finished')
+            ->get();
+    }
     public static function get_unfinish_by_midwife(Midwife $midwife)
     {
         return self::query()
