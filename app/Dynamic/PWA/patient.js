@@ -39,7 +39,7 @@ module.exports = {
       name: "Order Services",
       short_name: "Order",
       description: "Order services",
-      url: "/patient/dashboard/order",
+      url: "/patient/order",
       icons: [
         {
           src: "/icons/logo/proto-512.v2.png",
