@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view("/", "welcome")->name('welcome');
+Route::view("/landing", "pages/patient/landing")->name('landing');
 
 Route::get('/locale/{locale}', 'Common\Locale@set')->name('web.locale.set');
 Route::get('/template/{template}', 'Common\Template@set')->name('web.template.set');

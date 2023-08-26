@@ -20,6 +20,8 @@ return [
         'template' => 'modern',
         'enable_demo' => true,
         'enable_error_boundary' => true,
+        'avatar1' => '/avatar1.svg',
+        'avatar2' => '/avatar2.png'
     ],
     'stakeholder' => [
         'dev' => ['wm337708@gmail.com'],

@@ -213,8 +213,7 @@
                                     {{ $template['name'] }} v{{ $template['version'] }}
                                 </div>
                                 @if (session()->get('template', config('dynamic.application.template')) == $key)
-                                    <div
-                                        class="p-1 text-sm font-bold bg-green-500 text-white rounded">
+                                    <div class="p-1 text-sm font-bold bg-green-500 text-white rounded">
                                         <x-icons.check class="w-5 h-5" stroke="2.5"></x-icons.check>
                                     </div>
                                 @else
