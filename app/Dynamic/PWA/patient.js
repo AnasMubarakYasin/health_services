@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors");
 const assets = require("./assets.js");
 
 module.exports = {
-  id: "/patient/",
+  // id: "/patient/",
   dir: "ltr",
   lang: "en",
   name: "Health Services",

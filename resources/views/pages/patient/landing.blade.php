@@ -96,7 +96,7 @@
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Layanan</a>
                         </li>
                         <li>
-                            <a href="{{ route('welcome') }}"
+                            <a href="{{ route('web.patient.login_show') }}"
                                 class="flex gap-1.5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                                 <img src="https://hhg-common.hellosehat.com/common/login.svg" alt=""> Masuk
                             </a>
@@ -122,7 +122,7 @@
             </div>
             <div class="flex justify-center">
                 <div class="w-max bg-white rounded-lg p-5 pb-0 shadow-md shadow-stone-600">
-                    <img class="h-[200px]" src="{{ config('dynamic.application.avatar1') }}" alt="">
+                    <img class="h-[200px]" src="{{ asset('avatar1.svg') }}" alt="">
                 </div>
             </div>
         </section>
@@ -130,26 +130,14 @@
         <section id="layanan" class="sm:px-24 py-8">
             <div class="font-bold text-lg mb-3">Layanan Kami</div>
             <div class="grid grid-cols-4 gap-4">
-                <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg shadow-slate-700 rounded-xl">
-                    <img class="h-[200px]" src="{{ config('dynamic.application.avatar2') }}" alt="">
-                    <span class="text-lg font-bold">Kesehatan</span>
-                </div>
-                <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg shadow-slate-700 rounded-xl">
-                    <img class="h-[200px]" src="{{ config('dynamic.application.avatar2') }}" alt="">
-                    <span class="text-lg font-bold">Kesehatan</span>
-                </div>
-                <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg shadow-slate-700 rounded-xl">
-                    <img class="h-[200px]" src="{{ config('dynamic.application.avatar2') }}" alt="">
-                    <span class="text-lg font-bold">Kesehatan</span>
-                </div>
-                <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg shadow-slate-700 rounded-xl">
-                    <img class="h-[200px]" src="{{ config('dynamic.application.avatar2') }}" alt="">
-                    <span class="text-lg font-bold">Kesehatan</span>
-                </div>
-                <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg shadow-slate-700 rounded-xl">
-                    <img class="h-[200px]" src="{{ config('dynamic.application.avatar2') }}" alt="">
-                    <span class="text-lg font-bold">Kesehatan</span>
-                </div>
+                @foreach ($services as $service)
+                    <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg rounded-xl">
+                        <img class="h-[200px]" src="{{ asset('avatar2.png') }}" alt="">
+                        <span class="text-center text-lg font-bold capitalize">
+                            {{ $service->name }}
+                        </span>
+                    </div>
+                @endforeach
             </div>
         </section>
     </main>

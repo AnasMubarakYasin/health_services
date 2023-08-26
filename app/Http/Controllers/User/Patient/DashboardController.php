@@ -19,6 +19,16 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function landing()
+    {
+        $services = Service::all();
+        $midwifes = Midwife::all();
+
+        return view('pages.patient.landing', [
+            'services' => $services,
+            'midwifes' => $midwifes,
+        ]);
+    }
     public function dashboard()
     {
         $services = Service::all();

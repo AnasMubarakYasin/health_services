@@ -5,5 +5,5 @@ const administrator = require("./administrator.js");
 module.exports = {
   patient,
   midwife,
-  administrator,
+  // administrator,
 };

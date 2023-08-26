@@ -44,30 +44,6 @@
     <main class="grid g-4 p-4 sm:py-8 sm:px-20">
         @if (!$done)
             <div class="">
-                {{-- @if ($deadline == 7)
-                    <div class="p-4 m-auto bg-yellow-300 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
-                        Hanya Mengingatkan <span class="font-bold">Deadline</span> tinggal <span
-                            class="font-bold">{{ $deadline }}</span> hari. <br>
-                        <span class="text-lg">Santuy Dulu.</span>
-                    </div>
-                @elseif ($deadline == 3)
-                    <div class="p-4 m-auto bg-red-500 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
-                        Hei <span class="font-bold">Deadline</span> tinggal <span
-                            class="font-bold">{{ $deadline }}</span> hari. <br>
-                        <span class="text-lg">Kerjami Cepat.</span>
-                    </div>
-                @elseif ($deadline == 1)
-                    <div class="p-4 m-auto bg-purple-500 text-slate-950 text-xl w-full sm:w-[480px] rounded-lg">
-                        Kodong Besokmi. <br>
-                        <span class="text-lg">Jangan lupa tidur.</span>
-                    </div>
-                @elseif ($deadline == 0)
-                    <div class="p-4 m-auto bg-purple-950 text-slate-50 text-xl w-full sm:w-[480px] rounded-lg">
-                        Oi Deadline mi... <br>
-                        <span class="text-lg">Kasi Selesaimi.</span>
-                    </div>
-                @else
-                @endif --}}
             </div>
         @endif
         <section class="grid gap-8">
@@ -159,13 +135,18 @@
                                     </div>
                                 </div>
                                 <hr>
-                                {{-- <div class="px-4 py-2"></div> --}}
-                                <nav class="flex justify-end gap-x-2 px-4 text-right">
-                                    <a href="{{ $user['register'] . (isset($user['demo']) ? '?demo=true' : '') }}"
-                                        class="text-blue-500 font-semibold hover:underline">Register</a>
-                                    <div>|</div>
-                                    <a href="{{ $user['entry'] . (isset($user['demo']) ? '?demo=true' : '') }}"
-                                        class="text-blue-500 font-semibold hover:underline">Visit</a>
+                                <nav class="flex flex-col gap2 px-4">
+                                    @isset($user['landing'])
+                                        <a href="{{ $user['landing'] }}"
+                                            class="text-blue-500 font-semibold hover:underline">Landing</a>
+                                    @endisset
+                                    <div class="flex gap-2">
+                                        <a href="{{ $user['register'] . (isset($user['demo']) ? '?demo=true' : '') }}"
+                                            class="text-blue-500 font-semibold hover:underline">Register</a>
+                                        <div>|</div>
+                                        <a href="{{ $user['entry'] . (isset($user['demo']) ? '?demo=true' : '') }}"
+                                            class="text-blue-500 font-semibold hover:underline">Login</a>
+                                    </div>
                                 </nav>
                             </div>
                         @else

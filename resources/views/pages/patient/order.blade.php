@@ -44,12 +44,6 @@
                         <div class="font-semibold text-lg text-center capitalize">
                             {{ trans('service message') }}
                         </div>
-                        {{-- <ul class="steps steps-vertical">
-                            <li class="step step-primary">Register</li>
-                            <li class="step step-primary">Choose plan</li>
-                            <li class="step">Purchase</li>
-                            <li class="step">Receive Product</li>
-                        </ul> --}}
                         <div>
                             <div>
                                 <select id="service" name="service" data-te-select-init>
@@ -62,7 +56,8 @@
                                     @endforeach
                                 </select>
                                 <label data-te-select-label-ref class="capitalize">
-                                    {{ trans('service') }}
+                                    <span>{{ trans('service') }}</span>
+                                    <span class="text-error">*</span>
                                 </label>
                             </div>
                             @error('service')
@@ -80,7 +75,10 @@
                                             {{ $midwife->fullname }}</option>
                                     @endforeach
                                 </select>
-                                <label data-te-select-label-ref class="capitalize">{{ trans('midwife') }}</label>
+                                <label data-te-select-label-ref class="capitalize">
+                                    <span>{{ trans('midwife') }}</span>
+                                    <span class="text-error">*</span>
+                                </label>
                             </div>
                             @error('midwife')
                                 <div class="w-full text-sm text-error" data-te-input-helper-ref>
@@ -96,8 +94,9 @@
                                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                                     placeholder="Select a date" data-te-datepicker-toggle-ref />
                                 <label for="date"
-                                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-base-content/80 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary capitalize">
-                                    {{ trans('date') }}
+                                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-base-content/60 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary capitalize">
+                                    <span>{{ trans('date') }}</span>
+                                    <span class="text-error">*</span>
                                 </label>
                             </div>
                             @error('date')
@@ -112,7 +111,10 @@
                                 <select id="time" name="time">
                                     <option value="" hidden selected></option>
                                 </select>
-                                <label data-te-select-label-ref class="capitalize">{{ trans('time') }}</label>
+                                <label data-te-select-label-ref class="capitalize">
+                                    <span>{{ trans('time') }}</span>
+                                    <span class="text-error">*</span>
+                                </label>
                             </div>
                             @error('time')
                                 <div class="w-full text-sm text-error" data-te-input-helper-ref>
@@ -122,24 +124,30 @@
                         </div>
 
                         <div>
-                            <div class="relative" data-te-input-wrapper-init>
+                            <div class="relative" data-te-input-wrapper-init data-te-dropdown-position="dropstart">
                                 <input id="location" type="text" name="location" value="{{ old('location') }}"
-                                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                                    id="location" placeholder="" />
+                                    class="peer block min-h-[auto] w-full pr-8 text-ellipsis rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                                    id="location" placeholder="" autocomplete="off" />
                                 <label for="location"
-                                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-base-content/80 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary capitalize">
-                                    {{ trans('location') }}
+                                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-base-content/60 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary capitalize">
+                                    <span>{{ trans('location') }}</span>
+                                    <span class="text-error">*</span>
                                 </label>
                                 <input id="position" type="hidden" name="position"
                                     value="{{ old('position', '[-0,0]') }}">
                                 <label id="toggle_location" role="button" for="position"
-                                    class="grid place-items-center swap swap-rotate w-8 h-8 !absolute top-0.5 right-0.5 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg
+                                    class="grid place-items-center swap swap-rotate w-8 h-8 !absolute top-0.5 right-0.5 text-base-content/70 hover:text-primary rounded sm:rounded-lg
                                 focus:bg-base-200 focus:text-primary transition-colors"
-                                    data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Current Location">
+                                    data-te-toggle="tooltip" data-te-placement="bottom" title="Current Location">
                                     <x-icons.map_pin class="w-5 h-5" stroke="2"></x-icons.map_pin>
                                 </label>
+                                <button class="absolute" type="button" id="location_btn" data-te-dropdown-toggle-ref></button>
+                                <ul id="location_list"
+                                    class="absolute z-[1000] m-0 hidden w-full max-h-[180px] overflow-auto !top-[-43%] list-none border rounded border-base-300 bg-base-100 bg-clip-padding text-left text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
+                                    aria-labelledby="location_select" data-te-dropdown-menu-ref>
+                                </ul>
                             </div>
+                            {{-- <div class="relative" data-te-dropdown-ref></div> --}}
                             @error('location')
                                 <div class="w-full text-sm text-error" data-te-input-helper-ref>
                                     {{ $message }}

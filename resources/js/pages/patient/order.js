@@ -1,3 +1,4 @@
+import { create_element, wait } from "@/lib/helper";
 import { Datepicker, Timepicker, Input, Select, initTE } from "tw-elements";
 
 initTE({ Datepicker, Timepicker, Input, Select });
@@ -97,17 +98,53 @@ time_elm.addEventListener("valueChange.te.select", (event) => {});
 
 const location_elm = document.getElementById("location");
 const position_elm = document.getElementById("position");
+const location_btn_elm = document.getElementById("location_btn");
+const location_list_elm = document.getElementById("location_list");
 const toggle_location_elm = document.getElementById("toggle_location");
+function search(address) {
+  fetch(`https://geocode.maps.co/search?q=${address}`)
+    .then((res) => res.json())
+    .then((body) => {
+      const options = [];
+      for (const item of body) {
+        const elm = create_element(`
+        <li>
+          <button type="button" class="block w-full text-left whitespace-nowrap px-4 py-2 text-sm font-normal text-base-content hover:bg-base-200"
+              data-te-dropdown-item-ref>${item.display_name}</button>
+        </li>`);
+        elm.addEventListener("click", () => {
+          position_elm.value = `[${item.lon},${item.lat}]`;
+          location_elm.value = item.display_name;
+          location_elm.focus();
+        });
+        options.push(elm);
+      }
+      location_list_elm.replaceChildren(...options);
+      location_btn_elm.click();
+    });
+}
+location_elm.addEventListener("input", (event) => {
+  wait({
+    delay: 2000,
+    timeout: 0,
+    arg: event.target.value,
+    callback: search,
+  });
+});
 toggle_location_elm.addEventListener("click", (event) => {
   navigator.geolocation.getCurrentPosition(
     (position) => {
-      console.debug(position);
-      location_elm.value = "Current Position";
-      location_elm.focus();
       position_elm.value = `[${position.coords.longitude},${position.coords.latitude}]`;
+      fetch(
+        `https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`
+      )
+        .then((res) => res.json())
+        .then((body) => {
+          location_elm.value = body.display_name;
+          location_elm.focus();
+        });
     },
     (error) => {
-      console.debug(error);
       throw error;
     },
     {

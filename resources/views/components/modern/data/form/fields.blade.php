@@ -331,9 +331,9 @@
             @else
                 <div class="relative {{ $resource->hidden($field) }}" data-field="{{ $definition->alias }}">
                     <select data-te-select-init data-te-select-clear-button="{{ !$definition->default ? 'true' : 'false' }}"
-                        {{ $definition->multiple ? 'multiple' : '' }} id="input_{{ $definition->alias }}"
-                        name="{{ $definition->alias }}" data-focus="true" placeholder="{{ trans($definition->name) }}..."
-                        @required(false) @readonly(false)
+                        data-te-select-filter="true" {{ $definition->multiple ? 'multiple' : '' }}
+                        id="input_{{ $definition->alias }}" name="{{ $definition->alias }}" data-focus="true"
+                        placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
                         {{ $errors->has($definition->alias) ? 'aria-invalid="true"' : '' }}>
                         @if (!$definition->default)
                             <option value="" hidden selected></option>

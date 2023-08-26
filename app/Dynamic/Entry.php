@@ -54,6 +54,7 @@ class Entry
                     'aggrement' => true,
                 ],
                 'demo' => true,
+                'landing' => route('web.patient.landing'),
             ],
             'midwife' => [
                 'name' => 'Midwife',

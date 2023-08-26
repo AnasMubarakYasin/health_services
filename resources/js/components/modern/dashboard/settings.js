@@ -3,10 +3,7 @@ import Context from "@/lib/context";
 var APP_CTX_KEY = "f456grty";
 
 const ctx = Context.get(APP_CTX_KEY);
-const data = {
-  font_family: "sans",
-  color_scheme: "light",
-};
+const data = {};
 
 await ctx.inited();
 
@@ -14,18 +11,27 @@ console.log("settings init");
 
 ctx.sync_state("settings", data, (value) => Object.assign(data, value));
 
-// console.log(subscriptions);
-console.log(await navigator.getInstalledRelatedApps?.());
-
-const service_worker = await navigator.serviceWorker.getRegistration();
-const subscribtion = await service_worker.pushManager.getSubscription();
 const subscribe_elm = document.getElementById("subscribe");
-
-// console.log(subscribtion);
+const service_worker = await navigator.serviceWorker.getRegistration();
+let subscribtion = await service_worker.pushManager.getSubscription();
 
 if (subscribtion) {
-  const res_subscribed = await axios.get(
-    "/api/webpush/subscribed?endpoint=" + subscribtion.endpoint
-  );
-  subscribe_elm.checked = res_subscribed.data;
+  subscribe_elm.checked = await ctx.action.regis_sw.subscribed(subscribtion);
 }
+subscribe_elm.addEventListener("change", async (event) => {
+  subscribe_elm.disabled = true;
+  if (subscribe_elm.checked) {
+    subscribtion = await ctx.action.regis_sw.create_subscribtion(
+      service_worker
+    );
+    await ctx.action.regis_sw.subscribe(subscribtion);
+  } else {
+    subscribtion && (await ctx.action.regis_sw.unsubscribe(subscribtion));
+  }
+  subscribe_elm.disabled = false;
+});
+
+const install_elm = document.getElementById("install");
+const apps = (await navigator.getInstalledRelatedApps?.()) ?? [];
+console.log(apps);
+install_elm.checked = !!apps.length;
