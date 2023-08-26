@@ -55,6 +55,7 @@ color_scheme_elm.addEventListener("valueChange.te.select", () => {
     data.color_scheme = color_scheme_elm.value;
     document.documentElement.dataset.theme = color_scheme_elm.value;
     ctx.update({ customizer: data });
+    localStorage.setItem("theme", data.color_scheme);
 });
 
 const font_family_elm = document.getElementById("font_family");
