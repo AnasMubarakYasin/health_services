@@ -17,7 +17,7 @@
                 <x-icons.add class="w-6 h-6" stroke="2">
                 </x-icons.add>
             </a>
-            <button
+            {{-- <button
                 class="grid place-items-center w-10 h-10 bg-base-100 text-base-content/70 rounded-lg transition-colors
                     hover:bg-base-300 hover:text-base-content/100"
                 data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
@@ -32,7 +32,7 @@
                 title="Column">
                 <x-icons.column class="w-6 h-6" stroke="2">
                 </x-icons.column>
-            </button>
+            </button> --}}
         </section>
         <section>
             <div data-te-toggle="tooltip" data-te-placement="bottom" title="Delete">

@@ -120,6 +120,20 @@ class Order extends Model
             ->whereNot('status', 'finished')
             ->get();
     }
+    public static function get_unfinish_today()
+    {
+        return self::query()
+            ->whereNot('status', 'finished')
+            ->whereDate('schedule', now())
+            ->get();
+    }
+    public static function get_unfinish_tomorrow()
+    {
+        return self::query()
+            ->whereNot('status', 'finished')
+            ->whereDate('schedule', now()->addDays())
+            ->get();
+    }
 
     protected $fillable = [
         'status',

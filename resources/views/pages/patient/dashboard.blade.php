@@ -71,7 +71,13 @@
                 </div>
 
                 <div class="grid gap-2">
-                    <div class="font-bold capitalize">{{ trans('orders') }}</div>
+                    <div class="flex items-center gap-2 font-bold capitalize">
+                        <div>{{ trans('orders') }}</div>
+                        <a href="{{ route('web.patient.order') }}"
+                            class="bg-primary text-primary-content p-1 hover:bg-primary-focus rounded-lg">
+                            <x-icons.add class="w-5 h-5" stroke="2"></x-icons.add>
+                        </a>
+                    </div>
 
                     @if ($order)
                         <div class="@container flex w-full">
@@ -100,7 +106,7 @@
                                         @php
                                             $coordinates = json_decode($order->location_coordinates);
                                         @endphp
-                                        <a href="https://www.google.com/maps/@ {{ $coordinates[1] }},{{ $coordinates[0] }},15z?entry=ttu"
+                                        <a href="{{ "https://www.google.com/maps/@$coordinates[1],$coordinates[0],12z?entry=ttu" }}"
                                             class="text-blue-500 dark:text-blue-600 hover:underline">
                                             {{ $order->location_name }}
                                         </a>

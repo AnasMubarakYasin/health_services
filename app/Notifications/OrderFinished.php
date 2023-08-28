@@ -10,16 +10,24 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
 use NotificationChannels\WebPush\WebPushMessage;
 
-class OrderComingsoon extends Notification
+class OrderFinished extends Notification
 {
     use Queueable;
+
+    public string $title = "";
+    public string $body = "";
+    public string $icon = "";
+    public string $action = "";
 
     /**
      * Create a new notification instance.
      */
     public function __construct(public Order $order)
     {
-        //
+        $this->title = "Orders Finished";
+        $this->body = "Your orders has been finished";
+        $this->icon = config('dynamic.application.logo');
+        $this->action = route('web.patient.order.detail', ['order' => $this->order]);
     }
 
     /**
@@ -35,24 +43,22 @@ class OrderComingsoon extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Order has come')
-            ->icon(config('dynamic.application.logo'))
-            ->body('Your order has come')
-            ->action('View Order', route('web.patient.dashboard'))
+            ->title($this->title)
+            ->icon($this->icon)
+            ->body($this->body)
+            ->action("View Order", $this->action)
             ->tag('order')
             ->renotify()
-            ->data($this->order->toArray())
             ->options(['TTL' => 1000]);
-            // ->options(['TTL' => 1000]);
-            // ->data(['id' => $notification->id])
-            // ->badge()
-            // ->dir()
-            // ->image()
-            // ->lang()
-            // ->renotify()
-            // ->requireInteraction()
-            // ->tag()
-            // ->vibrate()
+        // ->data($this->order->toArray())
+        // ->badge()
+        // ->dir()
+        // ->image()
+        // ->lang()
+        // ->renotify()
+        // ->requireInteraction()
+        // ->tag()
+        // ->vibrate()
     }
 
     /**
@@ -63,10 +69,10 @@ class OrderComingsoon extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => 'Order has come',
-            'body' => 'Your order has come',
-            'icon' => config('dynamic.application.logo'),
-            'action' => route('web.patient.dashboard'),
+            'title' => $this->title,
+            'body' => $this->body,
+            'icon' => $this->icon,
+            'action' => $this->action,
             'data' => $this->order->toArray(),
         ];
     }

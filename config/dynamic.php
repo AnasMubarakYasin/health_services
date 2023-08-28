@@ -10,11 +10,11 @@ use App\Models\Midwife;
 return [
     'application' => [
         'name' => env('APP_NAME', 'Bladerlaiga'),
-        'version' => env('APP_VER', '0.3.3'),
+        'version' => env('APP_VER', '0.4.0'),
         'logo' => env('APP_LOGO', '/logo.png'),
         'favicon' => env('APP_FAV', '/favicon.ico'),
         'vendor_name' => 'Bladerlaiga',
-        'vendor_version' => '0.7.3',
+        'vendor_version' => '0.8.0',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
         'template' => 'modern',
@@ -22,8 +22,14 @@ return [
         'enable_error_boundary' => true
     ],
     'stakeholder' => [
-        'dev' => ['wm337708@gmail.com'],
-        'client' => ['bladerlaiga.97@gmail.com'],
+        'dev' => [
+            'mails' => ['bladerlaiga.97@gmail.com'],
+            'chat_id' => -1001909982316,
+        ],
+        'client' => [
+            'mails' => [],
+            'chat_id' => "",
+        ],
     ],
     'locales' => ['en' => 'english', 'id' => 'indonesia'],
     'templates' => [

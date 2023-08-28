@@ -99,6 +99,7 @@ setCatchHandler(async ({ request }) => {
 self.addEventListener("push", (event) => {
   const data = event.data.json();
   if (!data) return;
+  console.log(data);
   event.waitUntil(self.registration.showNotification(data.title, data));
   if ("setAppBadge" in navigator) {
     navigator.setAppBadge(1);
@@ -107,5 +108,6 @@ self.addEventListener("push", (event) => {
 });
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+  console.log(event);
   clients.openWindow(event.action);
 });

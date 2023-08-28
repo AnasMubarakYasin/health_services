@@ -3,9 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Dynamic\Updates;
-use App\Mail\AppUpdates as MailAppUpdates;
+use App\Models\User;
+use App\Notifications\AppUpdates;
 use Illuminate\Console\Command;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class AppNotifyUpdates extends Command
 {
@@ -46,24 +49,36 @@ class AppNotifyUpdates extends Command
         $this->option('changes') && $this->line("Changes\n$updates->changes");
 
         $emails = $this->argument('emails');
-        $dev_emails = config('dynamic.stakeholder.dev');
+        $dev_emails = config('dynamic.stakeholder.dev.mails');
+        $dev_chat_id = config('dynamic.stakeholder.dev.chat_id');
         if ($this->option('test')) {
             $emails = ['bladerlaiga@gmail.com'];
             $dev_emails = [];
         }
         if (!$emails) {
-            $emails = config('dynamic.stakeholder.client');
+            $emails = config('dynamic.stakeholder.client.mails');
+            $chat_id = config('dynamic.stakeholder.client.chat_id');
         }
-        if (!$emails) {
-            $this->error("Mail Client Empty");
+        if (!$dev_emails) {
+            $this->error("Email Dev Empty");
             return Command::INVALID;
         }
         $this->line("Notify Updates to Client: " . join(", ", $emails));
         $this->line("Notify Updates to Dev: " . join(", ", $dev_emails));
         try {
             if (!$this->option('unsend')) {
-                Mail::to($emails)->send(new MailAppUpdates("Client", $updates));
-                Mail::to($dev_emails)->send(new MailAppUpdates("Contributor", $updates));
+                if (!$emails) {
+                    $this->warn("Notify Client Ignored");
+                } else {
+                    $client = new User();
+                    $client->email = $emails;
+                    $client->chat_id = $chat_id;
+                    Notification::sendNow($client, new AppUpdates("Client", $updates));
+                }
+                $contributor = new User();
+                $contributor->email = $dev_emails;
+                $contributor->chat_id = $dev_chat_id;
+                Notification::sendNow($contributor, new AppUpdates("Contributor", $updates));
             }
             $updates->save();
         } catch (\Throwable $th) {

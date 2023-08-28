@@ -101,6 +101,7 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
 
         Route::get('/patient/order', 'User\Patient\OrderController@web_order')->name('web.patient.order');
+        Route::get('/patient/order/{order}/detail', 'User\Patient\OrderController@web_order_detail')->name('web.patient.order.detail');
         Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order_midwife')->name('web.patient.order.midwife');
     });
 
@@ -125,6 +126,7 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/midwife/dashboard', 'User\Midwife\DashboardController@dashboard')->name('web.midwife.dashboard');
         Route::get('/midwife/history', 'User\Midwife\DashboardController@history')->name('web.midwife.history');
+        Route::get('/midwife/history/{order}', 'User\Midwife\DashboardController@history_detail')->name('web.midwife.history.detail');
         Route::get('/midwife/profile', 'User\Midwife\DashboardController@profile')->name('web.midwife.profile');
         Route::get('/midwife/notification', 'User\Midwife\DashboardController@notification')->name('web.midwife.notification');
         Route::get('/midwife/settings', 'User\Midwife\DashboardController@settings')->name('web.midwife.settings');
@@ -143,6 +145,8 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
     Route::post('/midwife/schedule', 'User\Midwife\ScheduleController@api_create')->name('web.midwife.schedule.handle.create');
     Route::patch('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@api_update')->name('web.midwife.schedule.handle.update');
     Route::delete('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@api_delete')->name('web.midwife.schedule.handle.delete');
+
+    Route::patch('/patient/order/{order}/done', 'User\Midwife\OrderController@api_done')->name('web.midwife.order.done');
 });
 
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {

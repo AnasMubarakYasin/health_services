@@ -29,9 +29,12 @@ const date_elm = document.getElementById("date");
 const day_in_ms = 1e3 * 60 * 60 * 24;
 const now = new Date();
 const tomorrow = new Date(now.getTime() + day_in_ms * 1);
-const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 7);
+tomorrow.setHours(0, 0, 0, 0);
+const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 6);
+next_seven_day.setHours(0, 0, 0, 0);
 new Datepicker(date_elm, {
   filter: (date) => {
+    date.setHours(0, 0, 0, 0);
     const is_less_than_tomorrow = date.getTime() < tomorrow.getTime();
     const is_greater_than_next_seven_day =
       date.getTime() > next_seven_day.getTime();
@@ -54,6 +57,9 @@ date_elm.addEventListener("dateChange.te.datepicker", (event) => {
   const selected_schedule = data.schedules.filter(
     (schedule) => day_to_index(schedule.day) == event.date.getDay()
   );
+  const selected_order = data.orders.filter(
+    (order) => new Date(order.schedule).getDate() == event.date.getDate()
+  );
   const option_elm = document.createElement("option");
   option_elm.value = "";
   option_elm.hidden = true;
@@ -68,7 +74,7 @@ date_elm.addEventListener("dateChange.te.datepicker", (event) => {
       between_timerange(hour, schedule.started_at, schedule.ended_at)
     );
     !option_elm.disabled &&
-      (option_elm.disabled = data.orders.some((order) =>
+      (option_elm.disabled = selected_order.some((order) =>
         between_timerange(hour, order.schedule_start, order.schedule_end)
       ));
     time_elm.append(option_elm);

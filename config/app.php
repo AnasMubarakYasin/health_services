@@ -70,7 +70,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'date_format' => 'd F Y',
+    'timezone' => 'Asia/Makassar',
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +84,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'id',
     'locales' => ['en' => 'English', 'id' => 'Indonesia'],
 
     /*
@@ -141,7 +142,7 @@ return [
     */
 
     'maintenance' => [
-        'driver' => 'file',
+        'driver' => 'cache',
         // 'store'  => 'redis',
     ],
 

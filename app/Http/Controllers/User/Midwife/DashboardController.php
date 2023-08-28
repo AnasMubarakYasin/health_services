@@ -50,6 +50,13 @@ class DashboardController extends Controller
             'orders' => $orders,
         ]);
     }
+    public function history_detail(Order $order)
+    {
+        $orders = Order::get_by_midwife(auth()->user());
+        return view('pages.midwife.history_detail', [
+            'order' => $order,
+        ]);
+    }
 
     public function profile()
     {

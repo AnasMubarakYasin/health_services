@@ -9,7 +9,7 @@
     'head' => '',
 ])
 <!DOCTYPE html>
-<html class="scroll-smooth">
+<html class="scroll-smooth" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -127,12 +127,13 @@
             </div>
         </section>
 
-        <section id="layanan" class="sm:px-24 py-8">
+        <section id="layanan" class="@container px-2 sm:px-24 py-8">
             <div class="font-bold text-lg mb-3">Layanan Kami</div>
-            <div class="grid grid-cols-4 gap-4">
+            <div
+                class="grid @xs:grid-cols-2  @xs:grid-rows-3 @xl:grid-cols-3  @xl:grid-rows-2 @2xl:grid-cols-4 @2xl:grid-rows-2 @4xl:grid-cols-5 @4xl:grid-rows-1 gap-4">
                 @foreach ($services as $service)
-                    <div class="grid p-2 justify-items-center gap-2 bg-white shadow-lg rounded-xl">
-                        <img class="h-[200px]" src="{{ asset('avatar2.png') }}" alt="">
+                    <div class="grid justify-items-center gap-2 p-2 bg-white shadow-lg rounded-xl">
+                        <img class="" src="{{ asset('avatar2.png') }}" alt="">
                         <span class="text-center text-lg font-bold capitalize">
                             {{ $service->name }}
                         </span>
@@ -140,6 +141,32 @@
                 @endforeach
             </div>
         </section>
+
+        <div class="@container grid gap-2 px-2 sm:px-24 py-8">
+            <div class="font-bold text-lg capitalize">Bidan Kami</div>
+            <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
+                @foreach ($midwifes as $midwife)
+                    <div class="flex gap-4 p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                        <img src="{{ $midwife->photo_url }}" alt="photo"
+                            class="w-24 h-28 p-1 aspect-square object-cover border border-base-300 rounded">
+                        <div class="flex flex-grow flex-col gap-4">
+                            <div>
+                                <div class="text-base font-medium capitalize">
+                                    {{ $midwife->fullname }}
+                                </div>
+                                <div class="text-sm font-normal opacity-70 capitalize">
+                                    {{ trans('midwife') }}
+                                </div>
+                            </div>
+                            {{-- <a href="{{ route('web.patient.order.midwife', ['midwife' => $midwife]) }}"
+                                class="w-fit px-3 py-1 self-end bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary-focus">
+                                {{ trans('service message') }}
+                            </a> --}}
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </main>
     <div class="flex-grow"></div>
 
