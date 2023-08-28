@@ -13,10 +13,12 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:midwives,name',
             'password' => 'required|string',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'nullable|image|max:10485',
             'fullname' => 'nullable|string',
+            'email' => 'nullable|email|unique:midwives,email',
+            'telp' => 'nullable|string|unique:midwives,telp',
         ];
     }
 }

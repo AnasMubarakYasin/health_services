@@ -58,6 +58,7 @@ class DashboardController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "email",
                 "telp",
                 "age",
                 "weight",

@@ -17,6 +17,7 @@ class MidwifeController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "email",
                 "telp",
             ],
             pagination: ['per' => 5, 'num' => 1],
@@ -43,6 +44,7 @@ class MidwifeController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "email",
                 "telp",
             ],
         );
@@ -63,6 +65,7 @@ class MidwifeController extends Controller
                 'password',
                 'photo',
                 "fullname",
+                "email",
                 "telp",
             ],
         );

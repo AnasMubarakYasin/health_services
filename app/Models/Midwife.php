@@ -50,10 +50,17 @@ class Midwife extends Authenticatable
                 type: 'string',
                 nullable: true,
             ),
+            'email' => new Definition(
+                name: 'email',
+                type: 'string',
+                format: 'email',
+                nullable: true,
+            ),
             'telp' => new Definition(
                 name: 'telp',
                 type: 'string',
                 format: 'telp',
+                nullable: true,
             ),
         ];
         self::$fetcher_relation = function ($definition) {

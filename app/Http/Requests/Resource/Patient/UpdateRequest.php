@@ -13,11 +13,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:patients,name,'.request()->route('patient.id'),
             'password' => 'required|string',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'nullable|image|max:10485',
             'fullname' => 'nullable|string',
-            'email' => 'nullable|email',
+            'email' => 'nullable|email|unique:patients,email,'.request()->route('patient.id'),
+            'telp' => 'nullable|string|unique:patients,telp,'.request()->route('patient.id'),
+            "age" => "nullable|integer",
+            "weight" => "nullable|integer",
+            "height" => "nullable|integer",
         ];
     }
 }
