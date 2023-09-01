@@ -47,7 +47,7 @@
                         </svg>
                         <span class="sr-only">Search</span>
                     </button>
-                    <div class="relative hidden md:block">
+                    {{-- <div class="relative hidden md:block">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -59,7 +59,7 @@
                         <input type="text" id="search-navbar"
                             class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Search...">
-                    </div>
+                    </div> --}}
                     <button data-collapse-toggle="navbar-search" type="button"
                         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         aria-controls="navbar-search" aria-expanded="false">
@@ -95,6 +95,16 @@
                             <a href="#layanan"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Layanan</a>
                         </li>
+                        <li>
+                            <a href="#bidan"
+                                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Bidan</a>
+                        </li>
+                        @if ($user)
+                            <li>
+                                <a href="{{ route('web.patient.history') }}"
+                                    class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 capitalize">{{ trans('history') }}</a>
+                            </li>
+                        @endif
                         <li>
                             <a href="{{ route('web.patient.login_show') }}"
                                 class="flex gap-1.5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
@@ -142,7 +152,7 @@
             </div>
         </section>
 
-        <div class="@container grid gap-2 px-2 sm:px-24 py-8">
+        <div id="bidan" class="@container grid gap-2 px-2 sm:px-24 py-8">
             <div class="font-bold text-lg capitalize">Bidan Kami</div>
             <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
                 @foreach ($midwifes as $midwife)
@@ -157,11 +167,14 @@
                                 <div class="text-sm font-normal opacity-70 capitalize">
                                     {{ trans('midwife') }}
                                 </div>
+                                <div class="text-sm font-normal opacity-70 capitalize">
+                                    {{ $midwife->srt }}
+                                </div>
                             </div>
-                            {{-- <a href="{{ route('web.patient.order.midwife', ['midwife' => $midwife]) }}"
+                            <a href="{{ route('web.patient.order.midwife', ['midwife' => $midwife]) }}"
                                 class="w-fit px-3 py-1 self-end bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary-focus">
                                 {{ trans('service message') }}
-                            </a> --}}
+                            </a>
                         </div>
                     </div>
                 @endforeach
