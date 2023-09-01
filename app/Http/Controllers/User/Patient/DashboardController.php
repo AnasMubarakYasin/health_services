@@ -14,6 +14,7 @@ use App\Models\Patient;
 use App\Models\Schedule;
 use App\Models\Service;
 use App\Notifications\OrderComingsoon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -21,10 +22,13 @@ class DashboardController extends Controller
 {
     public function landing()
     {
+        /** @var ?Patient */
+        $user = auth('patient')->user();
         $services = Service::all();
         $midwifes = Midwife::all();
 
         return view('pages.patient.landing', [
+            'user' => $user,
             'services' => $services,
             'midwifes' => $midwifes,
         ]);
@@ -63,16 +67,32 @@ class DashboardController extends Controller
                 "age",
                 "weight",
                 "height",
+                'date_of_birth',
+                'place_of_birth',
+                'gender',
             ],
         );
         return view('pages.patient.profile', ['resource' => $resource]);
     }
-    public function change_profile(UpdateRequest $request)
+    public function change_profile(Request $request)
     {
         /** @var Patient */
         $user = auth()->user();
-        $user->update($request->validated());
-        return to_route('web.patient.dashboard');
+        $user->update($request->only([
+            "name",
+            'password',
+            'photo',
+            "fullname",
+            "email",
+            "telp",
+            "age",
+            "weight",
+            "height",
+            'date_of_birth',
+            'place_of_birth',
+            'gender',
+        ]));
+        return back();
     }
     public function change_password(ChangePasswordRequest $request)
     {

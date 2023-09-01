@@ -9,6 +9,7 @@ use App\Http\Requests\User\ChangeProfileRequest;
 use App\Models\Midwife;
 use App\Models\Order;
 use App\Models\Schedule;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -69,16 +70,25 @@ class DashboardController extends Controller
                 'fullname',
                 "email",
                 'telp',
+                'srt',
             ],
         );
         return view('pages.midwife.profile', ['resource' => $resource]);
     }
-    public function change_profile(UpdateRequest $request)
+    public function change_profile(Request $request)
     {
         /** @var Midwife */
         $user = auth()->user();
-        $user->update($request->validated());
-        return to_route('web.midwife.dashboard');
+        $user->update($request->only([
+            'name',
+            'password',
+            'photo',
+            'fullname',
+            "email",
+            'telp',
+            'srt',
+        ]));
+        return back();
     }
     public function change_password(ChangePasswordRequest $request)
     {

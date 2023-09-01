@@ -63,7 +63,7 @@ class Midwife extends Panel
     }
     public function get_user_identifier(): string
     {
-        return $this->user->fullname;
+        return $this->user->fullname ?: "-";
     }
 
     public function profile()

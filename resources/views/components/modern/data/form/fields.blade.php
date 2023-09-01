@@ -18,7 +18,7 @@
                         <span class="text-danger font-semibold">*</span>
                     @endif
                 </label>
-                <div class="group flex absolute left-0 top-0 w-full max-w-full h-full text-left pointer-events-none"
+                {{-- <div class="group flex absolute left-0 top-0 w-full max-w-full h-full text-left pointer-events-none"
                     data-te-input-notch-ref="">
                     <div class="pointer-events-none border-2 border-solid box-border bg-transparent transition-all duration-200 ease-linear motion-reduce:transition-none left-0 top-0 h-full w-2 border-r-0 rounded-l-[0.25rem] group-data-[te-input-focused]:border-r-0
                             group-data-[te-input-state-active]:border-r-0 group-data-[te-input-focused]:border-primary group-data-[te-input-focused]:shadow-[-1px_0_0_hsl(var(--p)),_0_1px_0_0_hsl(var(--p)),_0_-1px_0_0_hsl(var(--p))] {{ $errors->has($field) ? 'border-danger' : 'border-base-300' }}"
@@ -30,7 +30,7 @@
                     <div class="pointer-events-none border-2 border-solid box-border bg-transparent transition-all duration-200 ease-linear motion-reduce:transition-none grow h-full border-l-0 rounded-r-[0.25rem] group-data-[te-input-focused]:border-l-0
                             group-data-[te-input-state-active]:border-l-0 group-data-[te-input-focused]:border-primary group-data-[te-input-focused]:shadow-[1px_0_0_hsl(var(--p)),_0_-1px_0_0_hsl(var(--p)),_0_1px_0_0_hsl(var(--p))] {{ $errors->has($field) ? 'border-danger' : 'border-base-300' }}"
                         data-te-input-notch-trailing-ref=""></div>
-                </div>
+                </div> --}}
                 @if ($definition->format == 'password')
                     <label role="button" for="toggle_{{ $field }}" data-toggle="password"
                         class="grid place-items-center swap swap-rotate w-8 h-8 !absolute top-1.5 right-1.5 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg
@@ -56,7 +56,7 @@
                     value="{{ old($field, $model->{$field} ?? $definition->default) }}"
                     type="{{ $definition->number_type() }}" placeholder="{{ trans($definition->name) }}..." @required(false)
                     @readonly(false) {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
-                    class="peer block min-h-[auto] w-full truncate text-ellipsis rounded-md border-0 bg-transparent pl-3 pr-10 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0 focus:ring-0">
+                    class="peer block min-h-[auto] w-full truncate text-ellipsis rounded-md border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0 focus:ring-0">
                 <label for="input_{{ $field }}"
                     class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-base-content/70 transition-all duration-200 ease-out peer-focus:font-semibold peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none">
                     <span>{{ trans($definition->name) }}</span>
@@ -64,7 +64,7 @@
                         <span class="text-danger font-semibold">*</span>
                     @endif
                 </label>
-                <div class="group flex absolute left-0 top-0 w-full max-w-full h-full text-left pointer-events-none"
+                {{-- <div class="group flex absolute left-0 top-0 w-full max-w-full h-full text-left pointer-events-none"
                     data-te-input-notch-ref="">
                     <div class="pointer-events-none border-2 border-solid box-border bg-transparent transition-all duration-200 ease-linear motion-reduce:transition-none left-0 top-0 h-full w-2 border-r-0 rounded-l-[0.25rem] group-data-[te-input-focused]:border-r-0
                         group-data-[te-input-state-active]:border-r-0 group-data-[te-input-focused]:border-primary group-data-[te-input-focused]:shadow-[-1px_0_0_hsl(var(--p)),_0_1px_0_0_hsl(var(--p)),_0_-1px_0_0_hsl(var(--p))] {{ $errors->has($field) ? 'border-danger' : 'border-base-300' }}"
@@ -76,7 +76,7 @@
                     <div class="pointer-events-none border-2 border-solid box-border bg-transparent transition-all duration-200 ease-linear motion-reduce:transition-none grow h-full border-l-0 rounded-r-[0.25rem] group-data-[te-input-focused]:border-l-0
                         group-data-[te-input-state-active]:border-l-0 group-data-[te-input-focused]:border-primary group-data-[te-input-focused]:shadow-[1px_0_0_hsl(var(--p)),_0_-1px_0_0_hsl(var(--p)),_0_1px_0_0_hsl(var(--p))] {{ $errors->has($field) ? 'border-danger' : 'border-base-300' }}"
                         data-te-input-notch-trailing-ref=""></div>
-                </div>
+                </div> --}}
                 @error($field)
                     <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                         {{ $message }}
@@ -89,7 +89,7 @@
             <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">
                 <input id="preview_input_{{ $field }}" name="preview_{{ $field }}" data-focus="true"
                     value="{{ old("preview_input_$field", $model->{$field} ?? $definition->default) }}" type="text"
-                    placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
+                    placeholder="{{ trans($definition->name) }}..." autocomplete="off" @required(false) @readonly(false)
                     {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}
                     class="peer block min-h-[auto] w-full truncate text-ellipsis rounded-md border-0 bg-transparent pl-3 pr-10 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&amp;:not([data-te-input-placeholder-active])]:placeholder:opacity-0 focus:ring-0">
                 <label for="preview_input_{{ $field }}"
@@ -99,7 +99,7 @@
                         <span class="text-danger font-semibold">*</span>
                     @endif
                 </label>
-                <div class="group flex absolute left-0 top-0 w-full max-w-full h-full text-left pointer-events-none"
+                {{-- <div class="group flex absolute left-0 top-0 w-full max-w-full h-full text-left pointer-events-none"
                     data-te-input-notch-ref="">
                     <div class="pointer-events-none border-2 border-solid box-border bg-transparent transition-all duration-200 ease-linear motion-reduce:transition-none left-0 top-0 h-full w-2 border-r-0 rounded-l-[0.25rem] group-data-[te-input-focused]:border-r-0
                             group-data-[te-input-state-active]:border-r-0 group-data-[te-input-focused]:border-primary group-data-[te-input-focused]:shadow-[-1px_0_0_hsl(var(--p)),_0_1px_0_0_hsl(var(--p)),_0_-1px_0_0_hsl(var(--p))] {{ $errors->has($field) ? 'border-danger' : 'border-base-300' }}"
@@ -111,7 +111,7 @@
                     <div class="pointer-events-none border-2 border-solid box-border bg-transparent transition-all duration-200 ease-linear motion-reduce:transition-none grow h-full border-l-0 rounded-r-[0.25rem] group-data-[te-input-focused]:border-l-0
                             group-data-[te-input-state-active]:border-l-0 group-data-[te-input-focused]:border-primary group-data-[te-input-focused]:shadow-[1px_0_0_hsl(var(--p)),_0_-1px_0_0_hsl(var(--p)),_0_1px_0_0_hsl(var(--p))] {{ $errors->has($field) ? 'border-danger' : 'border-base-300' }}"
                         data-te-input-notch-trailing-ref=""></div>
-                </div>
+                </div> --}}
                 <label role="button" for="input_{{ $field }}"
                     class="grid place-items-center w-8 h-8 !absolute top-1.5 right-1.5 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg
                                     focus:bg-base-200 focus:text-primary transition-colors"
@@ -131,7 +131,7 @@
 
         @case('enum')
             <div class="relative" data-field="{{ $field }}">
-                <select data-te-select-init data-te-select-clear-button="{{ !$definition->default ? 'true' : 'false' }}"
+                <select data-te-select-init data-te-select-clear-button="{{ !$definition->default ? 'true' : 'false' }}" data-te-select-size="lg"
                     {{ $definition->multiple ? 'multiple' : '' }} id="input_{{ $field }}" name="{{ $field }}"
                     data-focus="true" placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
                     {{ $errors->has($field) ? 'aria-invalid="true"' : '' }}>
@@ -142,12 +142,15 @@
                         @if (is_array($e_val))
                             <optgroup label="{{ $e_key }}">
                                 @foreach ($e_val as $ee_key => $ee_val)
-                                    <option @selected(old($field, $model->{$field} ?? $definition->default) == $ee_key) value="{{ $ee_key }}">{{ $ee_val }}
+                                    <option @selected(old($field, $model->{$field} ?? $definition->default) == $ee_key) value="{{ $ee_key }}">
+                                        {{ trans($ee_val) }}
                                     </option>
                                 @endforeach
                             </optgroup>
                         @else
-                            <option @selected(old($field, $model->{$field} ?? $definition->default) == $e_key) value="{{ $e_key }}">{{ $e_val }}</option>
+                            <option @selected(old($field, $model->{$field} ?? $definition->default) == $e_key) value="{{ $e_key }}">
+                                {{ trans($e_val) }}
+                            </option>
                         @endif
                     @endforeach
                 </select>
@@ -166,7 +169,7 @@
         @break
 
         @case('time')
-            <div class="relative" data-field="{{ $field }}" data-te-format24="true" data-te-timepicker-init=""
+            <div class="relative flex items-center" data-field="{{ $field }}" data-te-format24="true" data-te-timepicker-init=""
                 data-te-input-wrapper-init="">
                 <input id="input_{{ $field }}" name="{{ $field }}" type="text" data-focus="true"
                     value="{{ old($field, $model->{$field} ?? $definition->default) }}"
@@ -199,7 +202,7 @@
         @break
 
         @case('date')
-            <div class="relative" data-field="{{ $field }}" data-te-datepicker-init=""
+            <div class="relative flex items-center" data-field="{{ $field }}" data-te-datepicker-init=""
                 data-te-input-wrapper-init="">
                 <input id="input_{{ $field }}" name="{{ $field }}" type="text" data-focus="true"
                     value="{{ old($field, $model->{$field} ?? $definition->default) }}"

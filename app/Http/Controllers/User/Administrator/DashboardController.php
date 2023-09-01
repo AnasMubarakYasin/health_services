@@ -12,6 +12,7 @@ use App\Models\Patient;
 use App\Models\Schedule;
 use App\Models\Service;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Http\Request;
 use stdClass;
 
 class DashboardController extends Controller
@@ -33,7 +34,7 @@ class DashboardController extends Controller
             icon: Blade::render('<x-icons.calendar stroke="2" />'),
         )->resourcing();
         $order = Order::statable()->init(
-            name: "order",
+            name: "orders",
             icon: Blade::render('<x-icons.shop_bag stroke="2" />'),
         )->resourcing();
 
@@ -65,17 +66,29 @@ class DashboardController extends Controller
     {
         $resource = Administrator::formable()->from_update(
             model: auth()->user(),
-            fields: ['name', 'telp', 'email'],
+            fields: [
+                'photo',
+                'name',
+                'fullname',
+                'address',
+                'telp',
+                'email',
+            ],
         );
-        $resource->web_view_any = function () {
-            return route('web.administrator.users.administrator.index');
-        };
         return view('pages.administrator.profile', ['resource' => $resource]);
     }
-    public function change_profile(ChangeProfileRequest $request)
+    public function change_profile(Request $request)
     {
-        /** @var User */
+        /** @var Administrator */
         $user = auth()->user();
+        $user->update($request->only([
+            'photo',
+            'name',
+            'fullname',
+            'address',
+            'telp',
+            'email',
+        ]));
         return back();
     }
     public function change_password(ChangePasswordRequest $request)

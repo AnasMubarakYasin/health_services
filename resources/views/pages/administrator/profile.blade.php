@@ -8,6 +8,8 @@
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
                 @vite('resources/js/components/modern/dashboard/customizer.js')
+
+                @vite('resources/js/components/modern/data/form/regular.js')
             </x-slot:head>
         @endtemplate
         <x-slot:topbar>

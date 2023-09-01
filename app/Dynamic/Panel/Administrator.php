@@ -30,17 +30,17 @@ class Administrator extends Panel
                 icon: Blade::render('<x-icons.home stroke="2" />'),
             ),
             new Menu(
-                name: "Service",
+                name: "service",
                 link: route('web.administrator.service.index'),
                 icon: Blade::render('<x-icons.square stroke="2" />'),
             ),
             new Menu(
-                name: "Schedule",
+                name: "schedule",
                 link: route('web.administrator.schedule.index'),
                 icon: Blade::render('<x-icons.calendar stroke="2" />'),
             ),
             new Menu(
-                name: "Order",
+                name: "orders",
                 link: route('web.administrator.order.index'),
                 icon: Blade::render('<x-icons.shop_bag stroke="2" />'),
             ),
@@ -85,6 +85,10 @@ class Administrator extends Panel
     {
         return $this->user->photo_url;
     }
+    public function get_user_identifier(): string
+    {
+        return $this->user->email;
+    }
 
     public function profile()
     {
@@ -92,7 +96,7 @@ class Administrator extends Panel
     }
     public function change_profile()
     {
-        return route('web.resource.administrator.update', ['administrator' => $this->user]);
+        return route('web.administrator.change_profile');
     }
     public function change_password()
     {

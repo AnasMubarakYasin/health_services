@@ -74,8 +74,8 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         /** !SECTION - User */
     });
 
-    Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');
     Route::patch('/administrator/change_profile', 'User\Administrator\DashboardController@change_profile')->name('web.administrator.change_profile');
+    Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');
 });
 
 Route::redirect('/patient', '/patient/dashboard');
@@ -87,7 +87,7 @@ Route::middleware('authc.guest:web.patient.dashboard,patient')->group(function (
     Route::post('/patient/login', 'Auth\PatientController@login_perfom')->name('web.patient.login_perform');
     Route::post('/patient/register', 'Auth\PatientController@register_perfom')->name('web.patient.register_perform');
 });
-Route::middleware(['authc.basic:welcome,patient'])->group(function () {
+Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(function () {
     Route::get('/patient/logout', 'Auth\PatientController@logout_perfom')->name('web.patient.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
@@ -105,8 +105,8 @@ Route::middleware(['authc.basic:welcome,patient'])->group(function () {
         Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order_midwife')->name('web.patient.order.midwife');
     });
 
-    Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
+    Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
 
     Route::post('/patient/order', 'User\Patient\OrderController@api_order')->name('web.patient.order.handle');
     Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order_midwife')->name('web.patient.order.midwife.handle');
@@ -139,8 +139,8 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
         Route::get('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@web_update')->name('web.midwife.schedule.update');
     });
 
-    Route::patch('/midwife/change_password', 'User\Midwife\DashboardController@change_password')->name('web.midwife.change_password');
     Route::patch('/midwife/change_profile', 'User\Midwife\DashboardController@change_profile')->name('web.midwife.change_profile');
+    Route::patch('/midwife/change_password', 'User\Midwife\DashboardController@change_password')->name('web.midwife.change_password');
 
     Route::post('/midwife/schedule', 'User\Midwife\ScheduleController@api_create')->name('web.midwife.schedule.handle.create');
     Route::patch('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@api_update')->name('web.midwife.schedule.handle.update');

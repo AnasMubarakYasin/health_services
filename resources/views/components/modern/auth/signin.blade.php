@@ -2,7 +2,9 @@
     'title' => 'signin',
     'description' => 'signin page',
     'action' => '',
+    'name' => config('dynamic.application.name'),
     'user' => '',
+    'users' => [],
     'data' => [],
     'demo' => false,
     'register' => '',
@@ -28,7 +30,7 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
-    <meta name="theme-color" content="#3b82f6">
+    {{-- <meta name="theme-color" content="#3b82f6"> --}}
 
     @vite('resources/js/components/common/error-boundary.js')
     @vite('resources/js/components/common/bg-gen.js')
@@ -55,79 +57,104 @@
         </div>
         @endenv
     </div>
-    <form action="{{ $action }}" method="post"
-        class="relative grid gap-8 p-8 m-8 w-96 z-10 bg-base-100 rounded-lg shadow-lg">
-        @csrf
-        @if ($demo)
-            <div class="absolute top-2 left-2 z-10 grid place-content-center">
-                <div class="px-3 py-1 text-sm font-semibold bg-primary text-primary-content rounded-full">Demo</div>
+    <div class="grid gap-16 m-16 w-96 z-10">
+        <form action="{{ $action }}" method="post"
+            class="relative grid gap-8 p-8 w-full bg-base-100 rounded-lg shadow-lg">
+            @csrf
+            @if ($demo)
+                <div class="absolute top-2 left-2 z-10 grid place-content-center">
+                    <div class="px-3 py-1 text-sm font-semibold bg-primary text-primary-content rounded-full">Demo</div>
+                </div>
+            @endif
+            <div class="grid text-center pb-6">
+                <div class="text-2xl text-primary font-semibold capitalize">
+                    {{ $name }}
+                </div>
+                <div class="text-base-content/70 font-medium">Sign In to continue App.</div>
+            </div>
+            <div class="grid gap-4">
+                <div class="flex flex-col gap-1">
+                    <label for="name" class="text-base text-base-content font-medium">
+                        Username
+                    </label>
+                    <input id="name" name="name" value="{{ old('name', $data['name']) }}" type="text"
+                        autocomplete="username" autofocus placeholder="Enter Username"
+                        class="peer appearance-none w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                    @error('name')
+                        <div class="text-sm text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="flex flex-col gap-1">
+                    <div class="flex justify-between items-center">
+                        <label for="password" class="text-base text-base-content font-medium">
+                            Password
+                        </label>
+                        <a href=""
+                            class="text-base text-primary font-medium hover:text-primary-focus transition-colors">
+                            {{ trans('modern/auth/signin.to_password') }}
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <label role="button" for="password_toggle" data-toggle="password"
+                            class="grid place-items-center swap swap-rotate w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg
+                        focus:bg-base-200 focus:text-primary transition-colors"
+                            data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                            data-te-placement="bottom" title="Toggle Show">
+                            <input id="password_toggle" type="checkbox" class="hidden" />
+                            <x-icons.eye_on class="swap-off w-5 h-5" stroke="2"></x-icons.eye_on>
+                            <x-icons.eye_off class="swap-on w-5 h-5" stroke="2"></x-icons.eye_off>
+                        </label>
+                        <input id="password" name="password" value="{{ old('password', $data['password']) }}"
+                            type="password" autocomplete="current-password" placeholder="Enter Password"
+                            class="peer appearance-none w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                    </div>
+                    @error('password')
+                        <div class="text-sm text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input id="remember" name="remember" type="checkbox" @checked(old('remember', isset($data['remember'])))
+                        class="appearance-none relative w-5 h-5 text-primary bg-base-100 border-2 border-base-300 rounded cursor-pointer outline-none ring-0 ring-transparent shadow-none transition-all after:transition-all
+                            hover:bg-base-200
+                            focus:outline-none focus:ring-0 focus:ring-transparent focus:shadow-none
+                            checked:!bg-primary checked:!border-primary checked:after:w-7/12 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.65] checked:after:left-[3.5px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
+                            after:content-[''] after:absolute after:bottom-0 after:bg-transparent after:border-primary-content">
+                    <label for="remember" class="text-base text-base-content font-medium">
+                        {{ trans('modern/auth/signin.remember') }}
+                    </label>
+                </div>
+                <button type="submit"
+                    class="w-full py-2 bg-primary text-primary-content hover:bg-primary-focus rounded-md transition-colors">
+                    Sign In
+                </button>
+                <div class="text-base">{{ trans('modern/auth/signin.to_register') }} <a href="{{ $register }}"
+                        class="text-primary font-medium hover:text-primary-focus transition-colors">Sign Up</a>
+                </div>
+            </div>
+            <x-common.validation></x-common.validation>
+        </form>
+
+        @if (filled($users))
+            <div class="grid gap-2">
+                <div class="font-bold text-xl text-center text-primary">
+                    {{ trans('modern/auth/signin.as') }}
+                </div>
+                <div class="border-b-2 border-b-primary"></div>
+                <div class="grid gap-2">
+                    @foreach ($users as $as => $link)
+                        @if ($user != $as)
+                            <a href="{{ $link }}"
+                                class="grid px-8 py-2 w-full bg-base-100 rounded-lg shadow-lg">
+                                <div class="font-medium text-base capitalize">
+                                    {{ $as }}
+                                </div>
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
             </div>
         @endif
-        <div class="grid text-center pb-6">
-            <div class="text-2xl text-primary font-semibold capitalize">bladerlaiga</div>
-            <div class="text-base-content/70 font-medium">Sign In to continue App.</div>
-        </div>
-        <div class="grid gap-4">
-            <div class="flex flex-col gap-1">
-                <label for="name" class="text-base text-base-content font-medium">
-                    Username
-                </label>
-                <input id="name" name="name" value="{{ old('name', $data['name']) }}" type="text"
-                    autocomplete="username" autofocus placeholder="Enter Username"
-                    class="peer appearance-none w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
-                @error('name')
-                    <div class="text-sm text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="flex flex-col gap-1">
-                <div class="flex justify-between items-center">
-                    <label for="password" class="text-base text-base-content font-medium">
-                        Password
-                    </label>
-                    <a href=""
-                        class="text-base text-primary font-medium hover:text-primary-focus transition-colors">Forgot
-                        Password?</a>
-                </div>
-                <div class="relative">
-                    <label role="button" for="password_toggle" data-toggle="password"
-                        class="grid place-items-center swap swap-rotate w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg
-                        focus:bg-base-200 focus:text-primary transition-colors"
-                        data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                        data-te-placement="bottom" title="Toggle Show">
-                        <input id="password_toggle" type="checkbox" class="hidden" />
-                        <x-icons.eye_on class="swap-off w-5 h-5" stroke="2"></x-icons.eye_on>
-                        <x-icons.eye_off class="swap-on w-5 h-5" stroke="2"></x-icons.eye_off>
-                    </label>
-                    <input id="password" name="password" value="{{ old('password', $data['password']) }}"
-                        type="password" autocomplete="current-password" placeholder="Enter Password"
-                        class="peer appearance-none w-full px-4 py-2 bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:outline-none focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
-                </div>
-                @error('password')
-                    <div class="text-sm text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="flex gap-2 items-center">
-                <input id="remember" name="remember" type="checkbox" @checked(old('remember', isset($data['remember'])))
-                    class="appearance-none relative w-5 h-5 text-primary bg-base-100 border-2 border-base-300 rounded cursor-pointer outline-none ring-0 ring-transparent shadow-none transition-all after:transition-all
-                    hover:bg-base-200
-                    focus:outline-none focus:ring-0 focus:ring-transparent focus:shadow-none
-                    checked:!bg-primary checked:!border-primary checked:after:w-7/12 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.65] checked:after:left-[3.5px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
-                    after:content-[''] after:absolute after:bottom-0 after:bg-transparent after:border-primary-content"
-                    style="box-shadow: none">
-                <label for="remember" class="text-base text-base-content font-medium">
-                    Remember Me
-                </label>
-            </div>
-            <button type="submit"
-                class="w-full py-2 bg-primary text-primary-content hover:bg-primary-focus rounded-md transition-colors">
-                Sign In
-            </button>
-            <div class="text-base">Don't have an account? <a href="{{ $register }}"
-                    class="text-primary font-medium hover:text-primary-focus transition-colors">Sign Up</a>
-            </div>
-        </div>
-        <x-common.validation></x-common.validation>
-    </form>
+    </div>
 </body>
 
 </html>

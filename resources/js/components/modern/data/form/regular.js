@@ -3,7 +3,7 @@ import { Datepicker, Timepicker, Input, Select, initTE } from "tw-elements";
 initTE({ Datepicker, Timepicker, Input, Select });
 
 const file_elms = document
-  .querySelectorAll("input[type=file]")
+  .querySelectorAll("#form input[type=file]")
   .forEach((elm) => {
     // const field = elm.parentElement.dataset.field;
     elm.addEventListener("change", (event) => {
@@ -11,7 +11,7 @@ const file_elms = document
     });
   });
 const toggle_elms = document
-  .querySelectorAll("[data-toggle=password]")
+  .querySelectorAll("#form [data-toggle=password]")
   .forEach((elm) => {
     elm.addEventListener("click", (event) => {
       event.preventDefault();
@@ -26,7 +26,7 @@ const toggle_elms = document
     });
   });
 const checkbox_elms = document
-  .querySelectorAll("input[type=checkbox]")
+  .querySelectorAll("#form input[type=checkbox]")
   .forEach((elm) => {
     elm.addEventListener("change", (event) => {
       if (elm.checked) {
@@ -39,7 +39,7 @@ const checkbox_elms = document
 
 const inputs = [];
 document
-  .querySelectorAll("[data-focus=true]")
+  .querySelectorAll("#form [data-focus=true]")
   .forEach((elm) => inputs.unshift(elm));
 for (const Input of inputs) {
   Input.focus();
