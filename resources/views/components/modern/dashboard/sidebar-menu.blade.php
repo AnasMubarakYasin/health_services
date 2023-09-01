@@ -17,7 +17,7 @@
                 {!! $menu->icon !!}
             </div>
             <div data-te-sidenav-slim="false" class="flex-grow font-medium capitalize">
-                {{ $menu->name }}
+                {{ trans($menu->name) }}
             </div>
         </a>
     </li>
@@ -41,7 +41,7 @@
                 {!! $menu->icon !!}
             </div>
             <div data-te-sidenav-slim="false" class="flex-grow font-medium capitalize">
-                {{ $menu->name }}
+                {{ trans($menu->name) }}
             </div>
             <div data-te-sidenav-slim="false" data-te-sidenav-rotate-icon-ref class="transition-transform">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -72,8 +72,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
                             </svg>
                         </div>
-                        <div class="flex-grow font-normal">
-                            {{ $submenu->name }}
+                        <div class="flex-grow font-normal capitalize">
+                            {{ trans($submenu->name) }}
                         </div>
                     </a>
                 </li>

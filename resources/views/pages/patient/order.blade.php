@@ -143,7 +143,7 @@
                                 </label>
                                 <button class="absolute" type="button" id="location_btn" data-te-dropdown-toggle-ref></button>
                                 <ul id="location_list"
-                                    class="absolute z-[1000] m-0 hidden w-full max-h-[180px] overflow-auto !top-[-43%] list-none border rounded border-base-300 bg-base-100 bg-clip-padding text-left text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
+                                    class="absolute z-[1000] m-0 hidden w-full max-h-[180px] overflow-auto !top-[-43%] !left-0 !right-0 !transform !translate-x-0 !translate-y-14 list-none border rounded border-base-300 bg-base-100 bg-clip-padding text-left text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
                                     aria-labelledby="location_select" data-te-dropdown-menu-ref>
                                 </ul>
                             </div>

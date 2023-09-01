@@ -104,9 +104,14 @@
                 <main class="max-h-[40vh] overflow-auto border-y border-base-300">
                     <ul class="">
                         @forelse ($panel->user->notifications as $notification)
-                            <li @class(['', 'border-b border-base-300' => !$loop->last, 'bg-base-200' => $notification->read_at])>
+                            <li @class([
+                                '',
+                                'border-b border-base-300' => !$loop->last,
+                                'bg-base-200' => $notification->read_at,
+                            ])>
                                 <a href="{{ route('web.notification.read', ['notification' => $notification]) }}"
-                                    class="flex gap-4 items-start px-4 py-2 hover:bg-primary/10" data-te-dropdown-item-ref>
+                                    class="flex gap-4 items-start px-4 py-2 hover:bg-primary/10"
+                                    data-te-dropdown-item-ref>
                                     <img src="{{ $notification->data['icon'] }}" alt="Avatar"
                                         class="w-10
                                     group-[#topbar&[data-button-shape='rounded']]:rounded-lg
@@ -161,7 +166,13 @@
                 title="Avatar"
                 class="flex items-center w-10 h-10 group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full">
                 <img src="{{ $panel->get_user_photo() }}" alt="{{ $panel->get_user_name() }}"
-                    class="w-full h-full aspect-square object-cover group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full" />
+                    class="w-full h-full aspect-square object-cover group-[#topbar&[data-button-shape='rounded']]:rounded-lg group-[#topbar&[data-button-shape='circled']]:rounded-full"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
+                <div class="hidden place-content-center w-full h-full opacity-70 hover:opacity-100">
+                    <x-icons.user class="w-6 h-6" stroke="2">
+
+                    </x-icons.user>
+                </div>
             </button>
             <ul aria-labelledby="topbar_avatar" data-te-dropdown-menu-ref
                 class="hidden flex-col absolute z-50 min-w-[240px] list-none overflow-hidden rounded-lg bg-base-100
@@ -177,7 +188,13 @@
                         <img src="{{ $panel->get_user_photo() }}" alt="{{ $panel->get_user_name() }}"
                             class="w-10 h-10 aspect-square object-cover
                                 group-[#topbar&[data-button-shape='rounded']]:rounded-lg
-                                group-[#topbar&[data-button-shape='circled']]:rounded-full" />
+                                group-[#topbar&[data-button-shape='circled']]:rounded-full"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='grid'" />
+                        <div class="hidden place-content-center w-10 h-10">
+                            <x-icons.user class="w-6 h-6" stroke="2">
+
+                            </x-icons.user>
+                        </div>
                         <div class="flex flex-col justify-start content-between py-1">
                             <div class="w-full font-semibold">
                                 {{ $panel->get_user_name() }}

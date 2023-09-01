@@ -73,7 +73,7 @@
                                         @php
                                             $coordinates = json_decode($order->location_coordinates);
                                         @endphp
-                                        <a href="{{ "https://www.google.com/maps/@$coordinates[1],$coordinates[0],12z?entry=ttu" }}"
+                                        <a href="{{ "https://www.google.com/maps?q=$coordinates[1],$coordinates[0]" }}"
                                             class="text-blue-500 dark:text-blue-600 hover:underline">
                                             {{ $order->location_name }}
                                         </a>

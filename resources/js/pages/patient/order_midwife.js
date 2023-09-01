@@ -20,9 +20,12 @@ const date_elm = document.getElementById("date");
 const day_in_ms = 1e3 * 60 * 60 * 24;
 const now = new Date();
 const tomorrow = new Date(now.getTime() + day_in_ms * 1);
-const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 7);
+tomorrow.setHours(0, 0, 0, 0);
+const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 6);
+next_seven_day.setHours(0, 0, 0, 0);
 new Datepicker(date_elm, {
   filter: (date) => {
+    date.setHours(0, 0, 0, 0);
     const is_less_than_tomorrow = date.getTime() < tomorrow.getTime();
     const is_greater_than_next_seven_day =
       date.getTime() > next_seven_day.getTime();

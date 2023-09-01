@@ -125,6 +125,15 @@ function search(address) {
         });
         options.push(elm);
       }
+      if (!body.length) {
+        const elm = create_element(`
+        <li>
+          <div class="block w-full px-4 py-2 text-sm text-center font-normal bg-base-200 text-base-content/70">
+            Empty
+          </div>
+        </li>`);
+        options.push(elm);
+      }
       location_list_elm.replaceChildren(...options);
       location_btn_elm.click();
     });

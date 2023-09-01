@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="@container grid gap-2">
+                {{-- <div class="@container grid gap-2">
                     <div class="font-bold capitalize">{{ trans('midwifes') }}</div>
                     <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
                         @foreach ($midwifes as $midwife)
@@ -68,7 +68,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="grid gap-2">
                     <div class="flex items-center gap-2 font-bold capitalize">
@@ -106,7 +106,7 @@
                                         @php
                                             $coordinates = json_decode($order->location_coordinates);
                                         @endphp
-                                        <a href="{{ "https://www.google.com/maps/@$coordinates[1],$coordinates[0],12z?entry=ttu" }}"
+                                        <a href="{{ "https://www.google.com/maps?q=$coordinates[1],$coordinates[0]" }}"
                                             class="text-blue-500 dark:text-blue-600 hover:underline">
                                             {{ $order->location_name }}
                                         </a>
