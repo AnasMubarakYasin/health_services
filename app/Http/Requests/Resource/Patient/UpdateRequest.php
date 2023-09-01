@@ -22,6 +22,9 @@ class UpdateRequest extends FormRequest
             "age" => "nullable|integer",
             "weight" => "nullable|integer",
             "height" => "nullable|integer",
+            'date_of_birth' => 'nullable|date',
+            'place_of_birth' => 'nullable|string',
+            'gender' => 'nullable|in:male,female',
         ];
     }
 }

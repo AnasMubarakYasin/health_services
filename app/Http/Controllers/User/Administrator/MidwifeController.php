@@ -19,6 +19,7 @@ class MidwifeController extends Controller
                 "fullname",
                 "email",
                 "telp",
+                "srt",
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -46,6 +47,7 @@ class MidwifeController extends Controller
                 "fullname",
                 "email",
                 "telp",
+                "srt",
             ],
         );
         $resource->api_create = function () {
@@ -67,6 +69,7 @@ class MidwifeController extends Controller
                 "fullname",
                 "email",
                 "telp",
+                "srt",
             ],
         );
         $resource->api_update = function ($item) {

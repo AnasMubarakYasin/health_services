@@ -26,6 +26,9 @@ class PatientFactory extends Factory
             'age' => fake()->randomNumber(2),
             'weight' => fake()->randomNumber(2),
             'height' => fake()->randomNumber(2),
+            'date_of_birth' => fake()->date(),
+            'place_of_birth' => fake()->city(),
+            'gender' => fake()->randomElement(['male', 'female']),
             'remember_token' => Str::random(10),
         ];
     }

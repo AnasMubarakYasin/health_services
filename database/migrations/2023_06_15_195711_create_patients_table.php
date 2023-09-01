@@ -23,6 +23,9 @@ return new class extends Migration
             $table->integer('age')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('height')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('place_of_birth')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->rememberToken();
         });
     }

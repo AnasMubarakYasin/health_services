@@ -19,6 +19,7 @@ class UpdateRequest extends FormRequest
             'fullname' => 'nullable|string',
             'email' => 'nullable|email|unique:midwives,email,'.request()->route('midwife.id'),
             'telp' => 'nullable|string|unique:midwives,telp,'.request()->route('midwife.id'),
+            'srt' => 'nullable|string|unique:midwives,srt,'.request()->route('midwife.id'),
         ];
     }
 }

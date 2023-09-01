@@ -19,6 +19,7 @@ class CreateRequest extends FormRequest
             'fullname' => 'nullable|string',
             'email' => 'nullable|email|unique:midwives,email',
             'telp' => 'nullable|string|unique:midwives,telp',
+            'srt' => 'nullable|string|unique:midwives,srt',
         ];
     }
 }

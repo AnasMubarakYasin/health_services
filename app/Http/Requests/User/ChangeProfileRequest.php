@@ -24,8 +24,13 @@ class ChangeProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'password_current' => 'required|string',
-            'password' => 'required|string|confirmed',
+            'photo' => 'nullable|image|max:10485',
+            'name' => 'required|string|unique:users,name,'.request()->route('user.id'),
+            'fullname' => 'required|string',
+            'address' => 'required|string',
+            'telp' => 'required|string|unique:users,telp,'.request()->route('user.id'),
+            'email' => 'required|email|unique:users,email,'.request()->route('user.id'),
+            'password' => 'nullable|string',
         ];
     }
 }

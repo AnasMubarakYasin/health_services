@@ -60,6 +60,7 @@ class Patient extends Authenticatable
                 name: 'telp',
                 type: 'string',
                 format: 'tel',
+                nullable: true,
             ),
             'age' => new Definition(
                 name: 'age',
@@ -76,6 +77,25 @@ class Patient extends Authenticatable
                 type: 'number',
                 nullable: true,
             ),
+            'date_of_birth' => new Definition(
+                name: 'date of birth',
+                type: 'date',
+                nullable: true,
+            ),
+            'place_of_birth' => new Definition(
+                name: 'place of birth',
+                type: 'string',
+                nullable: true,
+            ),
+            'gender' => new Definition(
+                name: 'gender',
+                type: 'enum',
+                enums: [
+                    'male' => 'male',
+                    'female' => 'female',
+                ],
+                nullable: true,
+            ),
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
@@ -89,10 +109,14 @@ class Patient extends Authenticatable
         'password',
         'photo',
         'fullname',
+        'email',
         'telp',
         'age',
         'weight',
         'height',
+        'date_of_birth',
+        'place_of_birth',
+        'gender',
         'remember_token',
     ];
     protected $hidden = [

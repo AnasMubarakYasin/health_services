@@ -23,6 +23,7 @@ class MidwifeFactory extends Factory
             'photo' => fake()->imageUrl(),
             'fullname' => fake()->name(),
             'telp' => fake()->phoneNumber(),
+            'srt' => fake()->unique()->regexify('[0-9]{11}'),
             'remember_token' => Str::random(10),
         ];
     }

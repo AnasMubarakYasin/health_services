@@ -22,6 +22,9 @@ class PatientController extends Controller
                 "age",
                 "weight",
                 "height",
+                'date_of_birth',
+                'place_of_birth',
+                'gender',
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -52,6 +55,9 @@ class PatientController extends Controller
                 "age",
                 "weight",
                 "height",
+                'date_of_birth',
+                'place_of_birth',
+                'gender',
             ],
         );
         $resource->api_create = function () {
@@ -76,6 +82,9 @@ class PatientController extends Controller
                 "age",
                 "weight",
                 "height",
+                'date_of_birth',
+                'place_of_birth',
+                'gender',
             ],
         );
         $resource->api_update = function ($item) {

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('fullname')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('telp')->nullable()->unique();
+            $table->string('srt')->nullable()->unique();
             $table->rememberToken();
         });
     }

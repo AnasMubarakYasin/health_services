@@ -62,6 +62,11 @@ class Midwife extends Authenticatable
                 format: 'telp',
                 nullable: true,
             ),
+            'srt' => new Definition(
+                name: 'srt',
+                type: 'string',
+                nullable: true,
+            ),
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
@@ -76,6 +81,7 @@ class Midwife extends Authenticatable
         'photo',
         'fullname',
         'telp',
+        'srt',
         'remember_token',
     ];
     protected $hidden = [
