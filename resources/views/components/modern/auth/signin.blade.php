@@ -70,7 +70,7 @@
                 <div class="text-2xl text-primary font-semibold capitalize">
                     {{ $name }}
                 </div>
-                <div class="text-base-content/70 font-medium">Sign In to continue App.</div>
+                {{-- <div class="text-base-content/70 font-medium">Sign In to continue App.</div> --}}
             </div>
             <div class="grid gap-4">
                 <div class="flex flex-col gap-1">

@@ -37,11 +37,11 @@ module.exports = {
 		themes: [
 			{
 				light: {
-					"color-scheme": "light",
-					primary: "#8b5cf6",
-					"primary-content": "#f8fafc",
-					secondary: "#d946ef",
-					"secondary-content": "#f8fafc",
+          "color-scheme": "light",
+          primary: "#87CEEB",
+					"primary-content": "#000000",
+					secondary: "#008080",
+					"secondary-content": "#FFFFFF",
 					accent: "#1ECEBC",
 					"accent-content": "#07312D",
 					neutral: "#2B3440",
@@ -69,10 +69,10 @@ module.exports = {
 				},
         custom: {
 					"color-scheme": "custom",
-					primary: "#87CEEB",
-					"primary-content": "#000000",
-					secondary: "#008080",
-					"secondary-content": "#FFFFFF",
+					primary: "#8b5cf6",
+					"primary-content": "#f8fafc",
+					secondary: "#d946ef",
+					"secondary-content": "#f8fafc",
 					accent: "#1ECEBC",
 					"accent-content": "#07312D",
 					neutral: "#2B3440",
@@ -81,6 +81,7 @@ module.exports = {
 					"base-200": "#f1f5f9",
 					"base-300": "#e2e8f0",
 					"base-content": "#020617",
+
 				},
 			},
 			"cupcake",

@@ -3,5 +3,5 @@
     'patient' => route('web.patient.login_show'),
     'midwife' => route('web.midwife.login_show'),
 ]" :action="route('web.patient.login_perform')" :register="route('web.patient.register_show')" title="Sign In for Patient"
-    description="Sign In for Patient Page" :name="trans('patient')">
+    description="Sign In for Patient Page" :name="'sistem informasi pemesanan layanan homecare'">
 </x-dynamic.auth.signin>
