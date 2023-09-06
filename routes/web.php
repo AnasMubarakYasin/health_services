@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::view("/", "welcome")->name('welcome');
+if (env('APP_ENV') == 'local') {
+    Route::view("/", "welcome")->name('welcome');
+} else {
+    Route::get("/", "User\Patient\DashboardController@landing")->name('welcome');
+}
 Route::get("/landing", "User\Patient\DashboardController@landing")->name('web.patient.landing');
 
 Route::get('/locale/{locale}', 'Common\Locale@set')->name('web.locale.set');
