@@ -146,7 +146,7 @@
                             <a href="{{ $link }}"
                                 class="grid px-8 py-2 w-full bg-base-100 rounded-lg shadow-lg">
                                 <div class="font-medium text-base capitalize">
-                                    {{ $as }}
+                                    {{ trans($as) }}
                                 </div>
                             </a>
                         @endif
