@@ -12,6 +12,7 @@ trait Resourceable
 {
     public static string $caption = "";
     public static array $definitions = [];
+    public array $options = [];
 
     /** @deprecated use */
     public static ?Closure $route_store = null;

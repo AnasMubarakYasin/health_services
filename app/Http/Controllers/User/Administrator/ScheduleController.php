@@ -10,7 +10,10 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $resource = Schedule::tableable()->from_request(
+        $resource = Schedule::tableable();
+        $resource->options['filter_by_column'] = false;
+        $resource->options['selectable'] = false;
+        $resource->from_request(
             request: request(),
             columns: [
                 "day",

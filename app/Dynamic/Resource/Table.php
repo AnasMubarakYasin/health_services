@@ -17,11 +17,12 @@ class Table extends Resource
     public array|null $sort = null;
     public array|null $filter = null;
     public array|null $id = null;
-    public array $init = [
+    public array $options = [
         'perpage' => 5,
         'limitpage' => 5,
         'reference' => 'on',
         'filter_by_column' => true,
+        'selectable' => true,
     ];
     public function from_request(
         Request $request,
@@ -33,12 +34,23 @@ class Table extends Resource
             $this->sort = ['name' => $request->query->get('sort_name'), 'dir' => $request->query->get('sort_dir')];
         }
         if ($request->query->getBoolean('filter')) {
-            $this->filter = collect($this->columns)->reduce(function ($result, $curr) use ($request) {
-                if ($request->query->has("filter_$curr")) {
-                    $result[$curr] = $request->query->get("filter_$curr");
+            if ($this->options['filter_by_column']) {
+                $this->filter = collect($this->columns)->reduce(function ($result, $curr) use ($request) {
+                    if ($request->query->has("filter_$curr")) {
+                        $result[$curr] = $request->query->get("filter_$curr");
+                    }
+                    return $result;
+                }, []);
+            } else {
+                if ($request->query->has('filter_value')) {
+                    $value = $request->query('filter_value');
+                    if ($value) {
+                        $this->filter = collect($this->columns)->mapWithKeys(function ($column) use ($value) {
+                            return [$column => $value];
+                        })->toArray();
+                    }
                 }
-                return $result;
-            }, []);
+            }
         }
         if ($request->query->getBoolean('ref')) {
             $this->id = $request->query('id', []);
@@ -59,32 +71,40 @@ class Table extends Resource
             $query->orderBy($this->sort['name'], $this->sort['dir']);
         }
         if ($this->filter) {
-            if ($this->init['filter_by_column']) {
-                $columns = $this->columns;
-            } else {
-                $columns = array_keys( $this->model::$definitions);
-            }
-            foreach ($columns as $column) {
-                if (isset($this->filter[$column])) {
-                    switch ($this->model->definition($column)->type) {
-                        case 'string':
-                            $query->whereFullText($column, $this->filter[$column]);
-                            break;
-                        case 'number':
-                            $query->where($column, $this->filter[$column]);
-                            break;
-                        case 'model':
-                            $value = $this->filter[$column];
-                            $relation = $this->model->definition($column)->relation;
-                            $query->with($relation)->whereHas($relation, function ($builder) use ($value) {
-                                $builder->whereFullText('name', $value);
-                            });
-                            break;
+            $columns = $this->columns;
+            if ($this->options['filter_by_column']) {
+                foreach ($columns as $column) {
+                    if (isset($this->filter[$column])) {
+                        switch ($this->model->definition($column)->type) {
+                            case 'string':
+                                $query->whereFullText($column, $this->filter[$column]);
+                                break;
+                            case 'number':
+                                $query->where($column, $this->filter[$column]);
+                                break;
+                            case 'enum':
+                                $query->where($column, $this->filter[$column]);
+                                break;
+                            case 'time':
+                                $query->where($column, $this->filter[$column]);
+                                break;
+                            case 'model':
+                                $value = $this->filter[$column];
+                                $relation = $this->model->definition($column)->relation;
+                                $query->with($relation)->whereHas($relation, function ($builder) use ($value) {
+                                    $builder->whereFullText('name', $value);
+                                });
+                                break;
 
-                        default:
-                            $query->orWhere($column, $this->filter[$column]);
-                            break;
+                            default:
+                                $query->orWhere($column, $this->filter[$column]);
+                                break;
+                        }
                     }
+                }
+            } else {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, $this->filter[$column]);
                 }
             }
         }

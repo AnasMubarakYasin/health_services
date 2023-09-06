@@ -10,7 +10,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $resource = Order::tableable()->from_request(
+        $resource = Order::tableable();
+        $resource->options['filter_by_column'] = false;
+        $resource->options['selectable'] = false;
+        $resource->from_request(
             request: request(),
             columns: [
                 'status',
@@ -27,7 +30,8 @@ class OrderController extends Controller
             pagination: ['per' => 5, 'num' => 1],
         );
         $resource->web_create = function () {
-            return route('web.administrator.order.create');
+            // return route('web.administrator.order.create');
+            return "";
         };
         $resource->web_update = function ($item) {
             return route('web.administrator.order.update', ['order' => $item]);

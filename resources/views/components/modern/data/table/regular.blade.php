@@ -9,14 +9,16 @@
 <div class="flex flex-col gap-4">
     <section class="flex gap-4">
         <section class="flex gap-2">
-            <a href="{{ $resource->web_create() }}"
-                class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
+            @if ($resource->web_create())
+                <a href="{{ $resource->web_create() }}"
+                    class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
                     hover:bg-primary-focus"
-                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
-                title="Create">
-                <x-icons.add class="w-6 h-6" stroke="2">
-                </x-icons.add>
-            </a>
+                    data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="tooltip" data-te-placement="bottom"
+                    title="Create">
+                    <x-icons.add class="w-6 h-6" stroke="2">
+                    </x-icons.add>
+                </a>
+            @endif
             {{-- <button
                 class="grid place-items-center w-10 h-10 bg-base-100 text-base-content/70 rounded-lg transition-colors
                     hover:bg-base-300 hover:text-base-content/100"
@@ -33,8 +35,6 @@
                 <x-icons.column class="w-6 h-6" stroke="2">
                 </x-icons.column>
             </button> --}}
-        </section>
-        <section>
             <div data-te-toggle="tooltip" data-te-placement="bottom" title="Delete">
                 <button id="delete_any"
                     class="hidden data-[show=true]:grid place-items-center w-10 h-10 bg-danger/90 text-danger-content/90 rounded-lg transition-colors
@@ -46,6 +46,27 @@
                 </button>
             </div>
         </section>
+        <div class="flex-grow"></div>
+        <section>
+            @if (!$resource->options['filter_by_column'])
+                <form action="{{ request()->fullUrlWithQuery([]) }}" autocomplete="off" class="relative border-none">
+                    <input type="hidden" name="filter" value="on">
+                    <input type="text" name="filter_value" value="{{ request()->query('filter_value') }}"
+                        class="w-full pr-9 pl-2 py-2 truncate text-ellipsis bg-base-100 text-sm border-2 border-base-300 outline-none hover:border-primary focus:bg-base-100 focus:border-primary-focus focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                    <button
+                        class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+            group-[#topbar&[data-button-interface='filled']]:bg-primary/30
+            group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
+            group-[#topbar&[data-button-interface='outlined']]:border-2
+            group-[#topbar&[data-button-interface='outlined']]:border-primary
+            group-[#topbar&[data-button-shape='circled']]:rounded-full"
+                        data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                        data-te-placement="bottom" title="Search">
+                        <x-icons.search class=" w-5 h-5" stroke="2"></x-icons.search>
+                    </button>
+                </form>
+            @endif
+        </section>
     </section>
     <section class="overflow-auto w-full max-h-[32rem] scroll-smooth">
         <table class="relative w-full h-full border-separate border-spacing-0">
@@ -54,22 +75,25 @@
                     {{-- <th
                         class="block px-2 sticky top-0 left-0 z-[1] bg-base-100 w-full h-full border-t-2 rounded-tl-xl border-l-2 border-base-300">
                     </th> --}}
-                    <th
-                        class="p-4 sticky top-0 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
-                        <div class="grid place-items-center place-content-center w-full h-full">
-                            <input type="checkbox" name="all" id="check_mode" form="delete_any_form"
-                                class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
-                                hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2 hover:ring-offset-base-100
-                                focus:outline-none focus:ring-offset-base-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
-                                checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.7] checked:after:left-[4px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
-                                indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
-                                after:content-[''] after:absolute after:bg-transparent after:border-primary-content
-                                indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[6px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
-                        </div>
-                    </th>
+                    @if ($resource->options['selectable'])
+                        <th
+                            class="p-4 sticky top-0 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
+                            <div class="grid place-items-center place-content-center w-full h-full">
+                                <input type="checkbox" name="all" id="check_mode" form="delete_any_form"
+                                    class="appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
+                            hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2 hover:ring-offset-base-100
+                            focus:outline-none focus:ring-offset-base-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+                            checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.7] checked:after:left-[4px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
+                            indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
+                            after:content-[''] after:absolute after:bg-transparent after:border-primary-content
+                            indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[6px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
+                            </div>
+                        </th>
+                    @endif
+
                     <th data-iteration="true"
-                        class="p-4 sticky top-0 left-0 z-[2] bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
-                        #
+                        class="p-4 sticky top-0 left-0 z-[2] bg-base-100 text-base text-center align-middle font-semibold border border-base-300 capitalize">
+                        {{ trans('#') }}
                     </th>
                     @foreach ($resource->columns as $column)
                         <th class="p-4 sticky top-0 left-10 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
@@ -81,7 +105,7 @@
                                     @if (request()->query('sort_dir', 'desc') == 'desc')
                                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'asc']) }}"
                                             role="button"
-                                            class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                            class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-primary hover:text-primary-content/100 rounded sm:rounded-lg transition-colors
                                             group-[#topbar&[data-button-interface='filled']]:bg-primary/30
                                             group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
                                             group-[#topbar&[data-button-interface='outlined']]:border-2
@@ -94,7 +118,7 @@
                                     @else
                                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'desc']) }}"
                                             role="button"
-                                            class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                            class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-primary hover:text-primary-content/100 rounded sm:rounded-lg transition-colors
                                         group-[#topbar&[data-button-interface='filled']]:bg-primary/30
                                         group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
                                         group-[#topbar&[data-button-interface='outlined']]:border-2
@@ -108,7 +132,7 @@
                                 @else
                                     <a href="{{ request()->fullUrlWithQuery(['sort' => 'on', 'sort_name' => $column, 'sort_dir' => 'desc']) }}"
                                         role="button"
-                                        class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                                        class="grid place-items-center w-8 h-8 text-base-content/70 hover:bg-primary hover:text-primary-content/100 rounded sm:rounded-lg transition-colors
                                     group-[#topbar&[data-button-interface='filled']]:bg-primary/30
                                     group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
                                     group-[#topbar&[data-button-interface='outlined']]:border-2
@@ -132,59 +156,64 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {{-- <th class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></th> --}}
-                    <th
-                        class="p-2 pl-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
-                    </th>
-                    <th
-                        class="p-2 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 z-[1]">
-                    </th>
-                    @forelse ($resource->columns as $column)
+                @if ($resource->options['filter_by_column'])
+                    <tr>
+                        {{-- <th class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></th> --}}
                         <th
-                            class="p-2 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
-                            <form action="{{ request()->fullUrlWithQuery([]) }}" autocomplete="off"
-                                class="relative border-none">
-                                <input type="hidden" name="filter" value="on">
-                                <input type="text" name="filter_{{ $column }}"
-                                    value="{{ request()->query("filter_$column") }}"
-                                    class="w-full pr-9 pl-2 py-2 truncate text-ellipsis bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
-                                <button
-                                    class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
+                            class="p-2 pl-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
+                        </th>
+                        <th
+                            class="p-2 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 z-[1]">
+                        </th>
+                        @forelse ($resource->columns as $column)
+                            <th
+                                class="p-2 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
+                                <form action="{{ request()->fullUrlWithQuery([]) }}" autocomplete="off"
+                                    class="relative border-none">
+                                    <input type="hidden" name="filter" value="on">
+                                    <input type="text" name="filter_{{ $column }}"
+                                        value="{{ request()->query("filter_$column") }}"
+                                        class="w-full pr-9 pl-2 py-2 truncate text-ellipsis bg-base-100 text-sm border-2 border-base-300 outline-none hover:bg-base-200 focus:bg-base-100 focus:border-primary focus:ring-0 focus-visible:border-primary text-base-content rounded-md transition-colors" />
+                                    <button
+                                        class="grid place-items-center w-8 h-8 !absolute top-1 right-1 text-base-content/70 hover:bg-base-200 hover:text-base-content/100 rounded sm:rounded-lg transition-colors
                                     group-[#topbar&[data-button-interface='filled']]:bg-primary/30
                                     group-[#topbar&[data-button-interface='filled']]:hover:bg-primary/50
                                     group-[#topbar&[data-button-interface='outlined']]:border-2
                                     group-[#topbar&[data-button-interface='outlined']]:border-primary
                                     group-[#topbar&[data-button-shape='circled']]:rounded-full"
-                                    data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Search">
-                                    <x-icons.search class=" w-5 h-5" stroke="2"></x-icons.search>
-                                </button>
-                            </form>
+                                        data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                                        data-te-placement="bottom" title="Search">
+                                        <x-icons.search class=" w-5 h-5" stroke="2"></x-icons.search>
+                                    </button>
+                                </form>
+                            </th>
+                        @endforeach
+                        <th data-action="true"
+                            class="p-2 sticky right-0 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
                         </th>
-                    @endforeach
-                    <th data-action="true"
-                        class="p-2 sticky right-0 bg-base-100 text-base text-left align-middle font-semibold border border-base-300">
-                    </th>
-                    {{-- <th class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300"></th> --}}
-                </tr>
+                        {{-- <th class="block px-2 bg-base-100 w-2 h-full border-r-2 border-t-2 border-base-300"></th> --}}
+                    </tr>
+                @endif
                 @forelse($paginator ?? $all as $item)
                     <tr>
                         {{-- <td class="block px-2 bg-base-100 w-full h-full border-l-2 border-t-2 border-base-300"></td> --}}
-                        <th
-                            class="p-4 bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
-                            <div class="grid place-items-center place-content-center w-full h-full">
-                                <input type="checkbox" name="id[]" id="" form="delete_any_form"
-                                    value="{{ $item->id }}"
-                                    class="check_item appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
+                        @if ($resource->options['selectable'])
+                            <th
+                                class="p-4 bg-base-100 text-base text-center align-middle font-semibold border border-base-300">
+                                <div class="grid place-items-center place-content-center w-full h-full">
+                                    <input type="checkbox" name="id[]" id="" form="delete_any_form"
+                                        value="{{ $item->id }}"
+                                        class="check_item appearance-none relative w-5 h-5 bg-base-100 border-2 border-base-300 rounded cursor-pointer !outline-none ring-offset-base-100 transition-all after:transition-all
                                     hover:bg-base-200 hover:ring-2 hover:ring-base-300 hover:ring-offset-2 hover:ring-offset-base-100
                                     focus:outline-none focus:ring-offset-base-100 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
                                     checked:!bg-primary checked:ring-2 checked:!ring-primary checked:ring-offset-2 checked:after:w-1/2 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.7] checked:after:left-[4px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
                                     indeterminate:!bg-primary indeterminate:ring-2 indeterminate:ring-primary indeterminate:ring-offset-2
                                     after:content-[''] after:absolute after:bg-transparent after:border-primary-content
                                     indeterminate:after:w-0 indeterminate:after:h-full indeterminate:after:bg-transparent indeterminate:after:rotate-90 indeterminate:after:border-r-4 indeterminate:after:border-b-4 indeterminate:after:border-primary-content indeterminate:after:left-[6px] indeterminate:after:bottom-0 indeterminate:after:scale-[0.55]">
-                            </div>
-                        </th>
+                                </div>
+                            </th>
+                        @endif
+
                         <th class="p-4 sticky left-0 bg-base-100 text-base text-center align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
                             data-row="true">
                             @if ($paginator)
@@ -212,7 +241,7 @@
                                             </a>
                                         </td>
                                     @else
-                                        @if ($resource->init['reference'] == 'on')
+                                        @if ($resource->options['reference'] == 'on')
                                             <td
                                                 class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors">
                                                 @php
@@ -246,7 +275,42 @@
                         @endforeach
                         <td data-action="true"
                             class="p-4 sticky right-0 bg-base-100 text-base text-left align-middle font-normal border border-base-300">
-                            <div class="flex justify-center items-center gap-2 w-full">
+                            <div data-te-dropdown-ref data-te-dropdown-position="dropstart"
+                                class="relative flex sm:hidden justify-center items-center gap-2 w-full">
+                                <button data-te-dropdown-toggle-ref
+                                    class="grid place-items-center w-10 h-10 bg-info/90 text-info-content/90 rounded-lg transition-colors
+                             hover:bg-info/100 hover:text-info-content/100"
+                                    data-te-ripple-init data-te-ripple-color="ligth">
+                                    <x-icons.ellipsis_vertical class="w-6 h-6" stroke="2">
+                                    </x-icons.ellipsis_vertical>
+                                </button>
+                                <ul class="absolute z-20 float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                                    data-te-dropdown-menu-ref>
+                                    <li>
+                                        <button
+                                            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                            data-te-dropdown-item-ref data-te-toggle="modal"
+                                            data-te-target="#view_modal_{{ $loop->index }}">
+                                            Show
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                            href="{{ $resource->web_update($item) }}" data-te-dropdown-item-ref>
+                                            Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button data-te-toggle="modal"
+                                            data-te-target="#delete_modal_{{ $loop->index }}"
+                                            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                            data-te-dropdown-item-ref>
+                                            Delete
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="hidden sm:flex justify-center items-center gap-2 w-full">
                                 <div data-te-toggle="tooltip" data-te-placement="bottom" title="Show">
                                     <button
                                         class="grid place-items-center w-10 h-10 bg-success/90 text-success-content/90 rounded-lg transition-colors
@@ -488,7 +552,7 @@
                     <select id="table_show" name="perpage"
                         class="text-gray-700 bg-white border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 capitalize">
                         @php
-                            $perpage = $resource->init['perpage'];
+                            $perpage = $resource->options['perpage'];
                         @endphp
                         @foreach (range(1, 4) as $per)
                             <option @selected($paginator->perPage() == $per * $perpage) value="{{ $per * $perpage }}">

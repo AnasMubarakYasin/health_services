@@ -10,7 +10,10 @@ class PatientController extends Controller
 {
     public function index()
     {
-        $resource = Patient::tableable()->from_request(
+        $resource = Patient::tableable();
+        $resource->options['filter_by_column'] = false;
+        $resource->options['selectable'] = false;
+        $resource->from_request(
             request: request(),
             columns: [
                 "name",

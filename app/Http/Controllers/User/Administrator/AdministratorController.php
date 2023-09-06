@@ -13,7 +13,10 @@ class AdministratorController extends Controller
 {
     public function index()
     {
-        $resource = Administrator::tableable()->from_request(
+        $resource = Administrator::tableable();
+        $resource->options['filter_by_column'] = false;
+        $resource->options['selectable'] = false;
+        $resource->from_request(
             request: request(),
             columns: [
                 'photo',

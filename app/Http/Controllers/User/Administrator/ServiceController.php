@@ -10,7 +10,10 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $resource = Service::tableable()->from_request(
+        $resource = Service::tableable();
+        $resource->options['filter_by_column'] = false;
+        $resource->options['selectable'] = false;
+        $resource->from_request(
             request: request(),
             columns: [
                 "name",

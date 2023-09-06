@@ -29,98 +29,101 @@ table_show_elm.addEventListener("valueChange.te.select", () => {
 
 const check_mode_elm = document.getElementById("check_mode");
 const check_item_elms = document.querySelectorAll(".check_item");
-let check_mode = check_mode_elm.checked;
 if (check_mode_elm) {
-  check_mode_elm.addEventListener('change', (ev) => {
-    check_mode = check_mode_elm.checked;
-    show_delete_any(check_mode);
-    if (check_mode) {
-      const row_old = document.querySelector("[data-row_active=true]");
-      if (row_old) {
-        row_deselect(row_old);
-      }
-      const col_old = document.querySelector("[data-col_active=true]");
-      if (col_old) {
-        col_deselect(col_old, col_old.dataset.col_index);
-      }
-      check_all();
-    } else {
-      uncheck_all();
-    }
-  })
-  check_item_elms.forEach((elm) => {
-    elm.addEventListener('change', (ev) => {
-      if (elm.checked) {
-        row_select(elm.parentElement.parentElement);
-      } else {
-        row_deselect(elm.parentElement.parentElement);
-      }
-      let count = 0;
-      for (const elm of check_item_elms) {
-        if (elm.checked) continue;
-        count++;
-      }
-      if (!count) {
-        check_mode_elm.checked = true;
-        check_mode_elm.indeterminate = false;
-        check_mode = true;
-      } else if (count == check_item_elms.length) {
-        check_mode_elm.checked = false;
-        check_mode_elm.indeterminate = false;
-        check_mode = false;
-      } else {
-        check_mode_elm.indeterminate = true;
-        check_mode = true;
-      }
+  let check_mode = check_mode_elm.checked;
+  if (check_mode_elm) {
+    check_mode_elm.addEventListener("change", (ev) => {
+      check_mode = check_mode_elm.checked;
       show_delete_any(check_mode);
-    })
-  })
+      if (check_mode) {
+        const row_old = document.querySelector("[data-row_active=true]");
+        if (row_old) {
+          row_deselect(row_old);
+        }
+        const col_old = document.querySelector("[data-col_active=true]");
+        if (col_old) {
+          col_deselect(col_old, col_old.dataset.col_index);
+        }
+        check_all();
+      } else {
+        uncheck_all();
+      }
+    });
+    check_item_elms.forEach((elm) => {
+      elm.addEventListener("change", (ev) => {
+        if (elm.checked) {
+          row_select(elm.parentElement.parentElement);
+        } else {
+          row_deselect(elm.parentElement.parentElement);
+        }
+        let count = 0;
+        for (const elm of check_item_elms) {
+          if (elm.checked) continue;
+          count++;
+        }
+        if (!count) {
+          check_mode_elm.checked = true;
+          check_mode_elm.indeterminate = false;
+          check_mode = true;
+        } else if (count == check_item_elms.length) {
+          check_mode_elm.checked = false;
+          check_mode_elm.indeterminate = false;
+          check_mode = false;
+        } else {
+          check_mode_elm.indeterminate = true;
+          check_mode = true;
+        }
+        show_delete_any(check_mode);
+      });
+    });
+  }
+
+  document.querySelectorAll("[data-row=true]").forEach((elm) => {
+    elm.addEventListener("click", (ev) => {
+      if (check_mode) return;
+      if (elm.dataset.row_active == "true") {
+        row_deselect(elm);
+      } else {
+        const elm_old = document.querySelector("[data-row_active=true]");
+        if (elm_old) {
+          row_deselect(elm_old);
+        }
+        row_select(elm);
+      }
+    });
+  });
+  document.querySelectorAll("[data-col=true]").forEach((elm) => {
+    const index = elm.dataset.col_index;
+    elm.addEventListener("click", (ev) => {
+      if (check_mode) return;
+      if (elm.dataset.col_active == "true") {
+        col_deselect(elm, index);
+      } else {
+        const elm_old = document.querySelector("[data-col_active=true]");
+        if (elm_old) {
+          col_deselect(elm_old, elm_old.dataset.col_index);
+        }
+        col_select(elm, index);
+      }
+    });
+  });
+  // const table_elm = document.querySelector('table')
+  const iteration_elm = document.querySelector("[data-iteration=true]");
+  document.querySelectorAll("table thead tr th.left-10").forEach((elm) => {
+    elm.style.left = `${iteration_elm.clientWidth}px`;
+  });
 }
 
-document.querySelectorAll("[data-row=true]").forEach((elm) => {
-  elm.addEventListener("click", (ev) => {
-    if (check_mode) return
-    if (elm.dataset.row_active == "true") {
-      row_deselect(elm);
-    } else {
-      const elm_old = document.querySelector("[data-row_active=true]");
-      if (elm_old) {
-        row_deselect(elm_old);
-      }
-      row_select(elm);
-    }
+const action_elm = document.getElementById("action");
+action_elm.addEventListener("click", () => {
+  document.querySelectorAll("[data-action=true]").forEach((elm) => {
+    elm.classList.toggle("sticky");
+    elm.classList.toggle("relative");
   });
 });
-document.querySelectorAll("[data-col=true]").forEach((elm) => {
-  const index = elm.dataset.col_index;
-  elm.addEventListener("click", (ev) => {
-    if (check_mode) return
-    if (elm.dataset.col_active == "true") {
-      col_deselect(elm, index);
-    } else {
-      const elm_old = document.querySelector("[data-col_active=true]");
-      if (elm_old) {
-        col_deselect(elm_old, elm_old.dataset.col_index);
-      }
-      col_select(elm, index);
-    }
-  });
-});
-// const table_elm = document.querySelector('table')
-const iteration_elm = document.querySelector('[data-iteration=true]')
-document.querySelectorAll("table thead tr th.left-10").forEach((elm) => {
-  elm.style.left = `${iteration_elm.clientWidth}px`;
-})
-
-const action_elm = document.getElementById('action');
-action_elm.addEventListener('click', () => {
-  document.querySelectorAll('[data-action=true]').forEach((elm) => {
-    elm.classList.toggle('sticky');
-  })
-})
 
 function show_delete_any(state = true) {
-  document.getElementById('delete_any').dataset.show = state;
+  document.getElementById("delete_any").dataset.show = state;
 }
 function check_all() {
   for (const elm of check_item_elms) {

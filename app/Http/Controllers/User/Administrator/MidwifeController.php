@@ -10,7 +10,10 @@ class MidwifeController extends Controller
 {
     public function index()
     {
-        $resource = Midwife::tableable()->from_request(
+        $resource = Midwife::tableable();
+        $resource->options['filter_by_column'] = false;
+        $resource->options['selectable'] = false;
+        $resource->from_request(
             request: request(),
             columns: [
                 "name",
