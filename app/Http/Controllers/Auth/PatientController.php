@@ -12,6 +12,11 @@ class PatientController extends Controller
 {
     public function login_show()
     {
+        if (request()->query('want_order')) {
+            session()->put('want_order', request()->query('want_order'));
+        } else {
+            session()->remove('want_order');
+        }
         return view('pages.patient.login');
     }
     public function login_perfom(LoginRequest $request)
@@ -47,6 +52,11 @@ class PatientController extends Controller
 
     public function register_show()
     {
+        if (request()->query('want_order')) {
+            session()->put('want_order', request()->query('want_order'));
+        } else {
+            session()->remove('want_order');
+        }
         return view('pages.patient.register');
     }
     public function register_perfom(RegisterRequest $request)

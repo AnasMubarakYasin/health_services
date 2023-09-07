@@ -26,8 +26,7 @@ class AuthcBasicOrder
             }
         }
         if (!$authenticated) {
-            session()->put('want_order', request()->route('midwife.id'));
-            return to_route($redirect);
+            return to_route($redirect, ['want_order' => request()->route('midwife.id')]);
         }
 
         return $next($request);
