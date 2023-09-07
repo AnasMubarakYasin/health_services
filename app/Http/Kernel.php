@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
         'common.locale' => \App\Http\Middleware\Common\Locale::class,
         'common.visitor' => \App\Http\Middleware\Common\Visitor::class,
         'common.template' => \App\Http\Middleware\Common\Template::class,
+
+        'authc.basic.order' => \App\Http\Middleware\Auth\AuthcBasicOrder::class,
     ];
 }

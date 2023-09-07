@@ -6,7 +6,7 @@ div.classList.add(
   "h-screen",
   "overflow-hidden"
 );
-document.body.append(div);
+document.body.prepend(div);
 const rect = div.getBoundingClientRect();
 gen_rects(20, div);
 

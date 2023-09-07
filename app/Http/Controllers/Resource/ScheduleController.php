@@ -22,7 +22,6 @@ class ScheduleController extends Controller
         $this->authorize('update', $schedule);
         $data = $request->validated();
         $schedule->update($data);
-        dd($request->input('_view_any'));
         return redirect($request->input('_view_any'));
     }
     public function delete(Schedule $schedule)

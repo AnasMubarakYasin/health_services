@@ -121,18 +121,20 @@
         <section id="beranda"
             class="grid grid-cols-2 p-5 sm:px-20 bg-[url('https://hellosehat.com/images/homepage-banner/banner-bg.svg')] relative bg-cover bg-no-repeat">
             <div class="flex flex-col gap-5">
-                <div class="font-bold text-3xl">Asisten Kesehatan di Komunitas</div>
-                <div class="text-gray-700 text-base">Sekarang, pertanyaan seputar kesehatan Anda akan langsung dijawab
-                    secara
-                    instan dan terpercaya oleh
-                    Asisten Kesehatan kami.</div>
-                <button type="button"
+                <div class="font-bold text-3xl">
+                    Layanan Homecare Untuk Ibu dan Anak
+                </div>
+                <div class="text-gray-700 text-base">
+                    Layanan homecare dengan bidan berlisensi untuk melakukan pemeriksaan kehamilan dan perawatan bayi baru lahir
+                </div>
+                {{-- <button type="button"
                     class="text-white w-max h-max bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Tanyakan
-                    Sesuatu di Sini</button>
+                    Sesuatu di Sini
+                </button> --}}
             </div>
             <div class="flex justify-center">
                 <div class="w-max bg-white rounded-lg p-5 pb-0 shadow-md shadow-stone-600">
-                    <img class="h-[200px]" src="{{ asset('avatar1.svg') }}" alt="">
+                    <img class="h-[200px]" src="{{ asset('avatar1.png') }}" alt="">
                 </div>
             </div>
         </section>

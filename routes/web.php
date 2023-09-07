@@ -12,12 +12,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 if (env('APP_ENV') == 'local') {
     Route::view("/", "welcome")->name('welcome');
 } else {
+    Route::view("/entry", "welcome")->name('entry');
     Route::get("/", "User\Patient\DashboardController@landing")->name('welcome');
 }
 Route::get("/landing", "User\Patient\DashboardController@landing")->name('web.patient.landing');
+
+Route::middleware(['authc.basic.order:web.patient.login_show,patient'])->group(function () {
+    Route::middleware(['common.locale', 'common.visitor'])->group(function () {
+        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order_midwife')->name('web.patient.order.midwife');
+    });
+    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order_midwife')->name('web.patient.order.midwife.handle');
+});
 
 Route::get('/locale/{locale}', 'Common\Locale@set')->name('web.locale.set');
 Route::get('/template/{template}', 'Common\Template@set')->name('web.template.set');
@@ -105,14 +114,12 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
 
         Route::get('/patient/order', 'User\Patient\OrderController@web_order')->name('web.patient.order');
         Route::get('/patient/order/{order}/detail', 'User\Patient\OrderController@web_order_detail')->name('web.patient.order.detail');
-        Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order_midwife')->name('web.patient.order.midwife');
     });
 
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
     Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
 
     Route::post('/patient/order', 'User\Patient\OrderController@api_order')->name('web.patient.order.handle');
-    Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order_midwife')->name('web.patient.order.midwife.handle');
 });
 
 Route::redirect('/midwife', '/midwife/dashboard');

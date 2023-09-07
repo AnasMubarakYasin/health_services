@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="font-semibold text-2xl text-primary" data-te-sidenav-slim="false">
-            {{ 'Application' }}
+            {{ $panel->name }}
         </div>
     </header>
     <nav>

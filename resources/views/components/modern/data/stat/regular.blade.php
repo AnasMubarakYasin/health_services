@@ -6,8 +6,8 @@
     'subcount' => '',
 ])
 <div class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
-    <div class="w-full flex items-center justify-between">
-        <div class="flex flex-col">
+    <div class="w-full flex flex-col sm:flex-row gap-2 items-center justify-between">
+        <div class="flex flex-col order-2 self-start sm:order-none">
             <div class="text-lg text-base-content/70 font-medium capitalize">
                 {{ trans($name) }}
             </div>
@@ -15,7 +15,7 @@
                 {{ $count }}
             </div>
         </div>
-        <div class="p-2 bg-primary/10 text-primary rounded-md">
+        <div class="p-2 bg-primary/10 text-primary rounded-md self-start sm:self-center order-1 sm:order-none">
             {{ $icon }}
         </div>
     </div>

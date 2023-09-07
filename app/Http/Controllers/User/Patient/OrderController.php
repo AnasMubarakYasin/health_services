@@ -9,7 +9,6 @@ use App\Models\Midwife;
 use App\Models\Order;
 use App\Models\Schedule;
 use App\Models\Service;
-use App\Notifications\OrderComingsoon;
 use App\Notifications\OrderScheduled;
 
 class OrderController extends Controller
@@ -87,8 +86,8 @@ class OrderController extends Controller
             'midwife_id' =>  $midwife->id,
             'service_id' =>  $data['service'],
         ]);
-        $order->patient->notifyNow(new OrderComingsoon($order));
-        $order->midwife->notifyNow(new OrderComingsoon($order));
+        $order->patient->notifyNow(new OrderScheduled($order));
+        $order->midwife->notifyNow(new OrderScheduled($order));
         return to_route('web.patient.dashboard');
     }
 }

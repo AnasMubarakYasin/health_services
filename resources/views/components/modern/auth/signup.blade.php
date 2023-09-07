@@ -125,7 +125,7 @@
                         <div class="flex gap-2 items-center">
                             <input id="aggrement" name="aggrement" type="checkbox" @checked(old('aggrement', isset($data['aggrement'])))
                                 class="appearance-none relative w-5 h-5 text-primary bg-base-100 border-2 border-base-300 rounded cursor-pointer outline-none ring-0 ring-transparent shadow-none transition-all after:transition-all
-                            hover:bg-base-200
+                            hover:bg-base-200 focus-visible:border-primary-focus
                             focus:outline-none focus:ring-0 focus:ring-transparent focus:shadow-none
                             checked:!bg-primary checked:!border-primary checked:after:w-7/12 checked:after:h-full checked:after:rotate-45 checked:after:scale-[0.65] checked:after:left-[3.5px] checked:after:bottom-[1.5px] checked:after:border-r-4 checked:after:border-b-4
                             after:content-[''] after:absolute after:bottom-0 after:bg-transparent after:border-primary-content">

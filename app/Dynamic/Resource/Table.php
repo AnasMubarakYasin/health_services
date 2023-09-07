@@ -104,7 +104,20 @@ class Table extends Resource
                 }
             } else {
                 foreach ($columns as $column) {
-                    $query->orWhere($column, $this->filter[$column]);
+                    switch ($this->model->definition($column)->type) {
+                        case 'string':
+                            $query->orWhereFullText($column, $this->filter[$column]);
+                            break;
+                        case 'number':
+                            if (is_int($this->filter[$column])) {
+                                $query->orWhere($column, $this->filter[$column]);
+                            }
+                            break;
+
+                        default:
+                            $query->orWhere($column, $this->filter[$column]);
+                            break;
+                    }
                 }
             }
         }

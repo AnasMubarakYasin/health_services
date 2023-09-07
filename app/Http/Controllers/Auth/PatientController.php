@@ -26,6 +26,12 @@ class PatientController extends Controller
         }
         auth()->login($user, isset($data['remember']));
         session()->regenerate();
+
+        if (session('want_order')) {
+            $midwife = session('want_order');
+            session()->remove('want_order');
+            return to_route('web.patient.order.midwife', ['midwife' => $midwife]);
+        }
         return to_route('web.patient.dashboard');
     }
     public function logout_perfom()
@@ -58,6 +64,11 @@ class PatientController extends Controller
         auth()->login($user);
         session()->regenerate();
 
+        if (session('want_order')) {
+            $midwife = session('want_order');
+            session()->remove('want_order');
+            return to_route('web.patient.order.midwife', ['midwife' => $midwife]);
+        }
         return to_route('web.patient.dashboard');
     }
 }
