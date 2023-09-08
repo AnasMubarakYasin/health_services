@@ -22,9 +22,9 @@
         @endenv
     </script>
 
+    @vite('resources/js/components/modern/common/progress.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/js/components/common/bg-gen.js')
-    @vite('resources/js/components/modern/common/progress.js')
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/components/modern/layout/dashboard.js')
 

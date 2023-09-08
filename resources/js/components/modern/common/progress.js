@@ -9,17 +9,24 @@ const sequence = new Sequence({
   alwaysReset: true,
 });
 sequence.onStart = function () {
-  // progressVal.style.width = "0%";
 };
 sequence.onProgress = function (value) {
+  console.log('progress', value);
   progressVal.style.width = value + "%";
 };
 sequence.onFinish = function () {
-  progressVal.style.width = "0%";
+  progressVal.style.width = "100%";
+  setTimeout(() => {
+    progressVal.style.opacity = '0';
+    setTimeout(() => {
+      progressVal.style.width = "0%";
+      progressVal.style.opacity = '1';
+    }, 300);
+  }, 300);
 };
 sequence.start();
 window.addEventListener("unload", (e) => {
-  sessionStorage.setItem("sequence", sequence.progress);
+  sessionStorage.setItem("sequence", 0);
   sequence.pause();
 });
 window.addEventListener("beforeunload", (e) => {
