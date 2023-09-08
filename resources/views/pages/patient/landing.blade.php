@@ -60,16 +60,12 @@
                             class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Search...">
                     </div> --}}
-                    <button data-collapse-toggle="navbar-search" type="button"
-                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    <a href="{{ route('web.patient.login_show') }}"
+                        class="md:hidden flex gap-1.5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         aria-controls="navbar-search" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 17 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 1h15M1 7h15M1 13h15" />
-                        </svg>
-                    </button>
+                        <span class="sr-only">Masuk</span>
+                        <img src="https://hhg-common.hellosehat.com/common/login.svg" alt="">
+                    </a>
                 </div>
                 <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-2" id="navbar-search">
                     <div class="relative mt-3 md:hidden">
@@ -125,7 +121,8 @@
                     Layanan Homecare Untuk Ibu dan Anak
                 </div>
                 <div class="text-gray-700 text-base">
-                    Layanan homecare dengan bidan berlisensi untuk melakukan pemeriksaan kehamilan dan perawatan bayi baru lahir
+                    Layanan homecare dengan bidan berlisensi untuk melakukan pemeriksaan kehamilan dan perawatan bayi
+                    baru lahir
                 </div>
                 {{-- <button type="button"
                     class="text-white w-max h-max bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Tanyakan
@@ -142,7 +139,7 @@
         <section id="layanan" class="@container px-2 sm:px-24 py-8">
             <div class="font-bold text-lg mb-3">Layanan Kami</div>
             <div
-                class="grid @xs:grid-cols-2  @xs:grid-rows-3 @xl:grid-cols-3  @xl:grid-rows-2 @2xl:grid-cols-4 @2xl:grid-rows-2 @4xl:grid-cols-5 @4xl:grid-rows-1 gap-4">
+                class="grid grid-cols-2  @xs:grid-rows-3 @xl:grid-cols-3  @xl:grid-rows-2 @2xl:grid-cols-4 @2xl:grid-rows-2 @4xl:grid-cols-5 @4xl:grid-rows-1 gap-4">
                 @foreach ($services as $service)
                     <div class="grid justify-items-center gap-2 p-2 bg-white shadow-lg rounded-xl">
                         <img class="" src="{{ asset('avatar2.png') }}" alt="">
