@@ -34,6 +34,7 @@
 
     @vite('resources/js/components/common/error-boundary.js')
     @vite('resources/js/components/common/bg-gen.js')
+    @vite('resources/js/components/modern/common/progress.js')
     @vite('resources/js/components/modern/common/theme.js')
     @vite('resources/js/components/modern/common/password.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -42,6 +43,7 @@
 </head>
 
 <body class="grid place-content-center gap-8 min-h-screen bg-base-200">
+    <x-modern.common.progress></x-modern.common.progress>
     <div class="position fixed top-2 left-2 z-10 flex gap-4 items-center">
         <label role="button"
             class="grid place-items-center w-10 h-10 text-base-content/70 hover:bg-base-300 hover:text-base-content/100 rounded-full swap swap-rotate transition-colors"

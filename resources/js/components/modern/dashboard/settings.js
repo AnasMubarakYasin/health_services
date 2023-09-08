@@ -20,6 +20,7 @@ if (subscribtion) {
 }
 subscribe_elm.addEventListener("change", async (event) => {
   subscribe_elm.disabled = true;
+  progress.start();
   if (subscribe_elm.checked) {
     subscribtion = await ctx.action.regis_sw.create_subscribtion(
       service_worker
@@ -28,6 +29,7 @@ subscribe_elm.addEventListener("change", async (event) => {
   } else {
     subscribtion && (await ctx.action.regis_sw.unsubscribe(subscribtion));
   }
+  progress.finish();
   subscribe_elm.disabled = false;
 });
 
