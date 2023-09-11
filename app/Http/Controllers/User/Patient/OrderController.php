@@ -88,6 +88,6 @@ class OrderController extends Controller
         ]);
         $order->patient->notifyNow(new OrderScheduled($order));
         $order->midwife->notifyNow(new OrderScheduled($order));
-        return to_route('web.patient.dashboard');
+        return to_route('web.patient.landing');
     }
 }

@@ -17,9 +17,9 @@ if (env('APP_ENV') == 'local') {
     Route::view("/", "welcome")->name('welcome');
 } else {
     Route::view("/entry", "welcome")->name('entry');
-    Route::get("/", "User\Patient\DashboardController@landing")->name('welcome');
+    Route::get("/", "User\Patient\LandingController@index")->name('welcome');
 }
-Route::get("/landing", "User\Patient\DashboardController@landing")->name('web.patient.landing');
+Route::get("/", "User\Patient\LandingController@index")->name('web.patient.landing');
 
 Route::middleware(['authc.basic.order:web.patient.login_show,patient'])->group(function () {
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
@@ -111,6 +111,9 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
         Route::get('/patient/empty', 'User\Patient\DashboardController@empty')->name('web.patient.empty');
         Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
+
+        Route::get('/patient/landing/history', 'User\Patient\LandingController@history')->name('web.patient.landing.history');
+        Route::get('/patient/landing/profile', 'User\Patient\LandingController@profile')->name('web.patient.landing.profile');
 
         Route::get('/patient/order', 'User\Patient\OrderController@web_order')->name('web.patient.order');
         Route::get('/patient/order/{order}/detail', 'User\Patient\OrderController@web_order_detail')->name('web.patient.order.detail');

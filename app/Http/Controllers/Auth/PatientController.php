@@ -37,7 +37,7 @@ class PatientController extends Controller
             session()->remove('want_order');
             return to_route('web.patient.order.midwife', ['midwife' => $midwife]);
         }
-        return to_route('web.patient.dashboard');
+        return to_route('web.patient.landing');
     }
     public function logout_perfom()
     {
@@ -79,6 +79,6 @@ class PatientController extends Controller
             session()->remove('want_order');
             return to_route('web.patient.order.midwife', ['midwife' => $midwife]);
         }
-        return to_route('web.patient.dashboard');
+        return to_route('web.patient.landing');
     }
 }

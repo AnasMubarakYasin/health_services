@@ -4,7 +4,7 @@ import '@fontsource-variable/montserrat';
 import '@fontsource/poppins';
 import '@fontsource-variable/nunito';
 
-import 'simplebar';
-import 'simplebar/dist/simplebar.css';
+// import 'simplebar';
+// import 'simplebar/dist/simplebar.css';
 
 import '../../../css/modern.css'

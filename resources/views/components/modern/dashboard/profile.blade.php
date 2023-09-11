@@ -1,5 +1,4 @@
 @aware([
-    'user' => null,
     'panel' => null,
 ])
 <div class="flex flex-col gap-4 p-4 bg-base-100 rounded-lg">

@@ -19,15 +19,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class LandingController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
         $services = Service::all();
         $midwifes = Midwife::all();
-        $order = Order::first_unfinish_by_patient(auth()->user());
+        $order = null;
+        if (auth('patient')->user()) {
+            $order = Order::first_unfinish_by_patient(auth('patient')->user());
+        }
 
-        return view('pages.patient.dashboard', [
+        return view('pages.patient.landing', [
+            'panel' => $this->create_panel(),
             'services' => $services,
             'midwifes' => $midwifes,
             'order' => $order,
@@ -35,16 +39,16 @@ class DashboardController extends Controller
     }
     public function history()
     {
-        $orders = Order::get_by_patient(auth()->user());
-        return view('pages.patient.history', [
+        $orders = Order::get_by_patient(auth('patient')->user());
+        return view('pages.patient.landing_history', [
+            'panel' => $this->create_panel(),
             'orders' => $orders,
         ]);
     }
-
     public function profile()
     {
         $resource = Patient::formable()->from_update(
-            model: auth()->user(),
+            model: auth('patient')->user(),
             fields: [
                 "name",
                 'password',
@@ -65,7 +69,7 @@ class DashboardController extends Controller
     public function change_profile(Request $request)
     {
         /** @var Patient */
-        $user = auth()->user();
+        $user = auth('patient')->user();
         $user->update($request->only([
             "name",
             'password',
@@ -86,8 +90,8 @@ class DashboardController extends Controller
     {
         $data = $request->validated();
         /** @var User */
-        $user = auth()->user();
-        if (!auth()->validate(['name' => $user->name, 'password' => $data['password_current']])) {
+        $user = auth('patient')->user();
+        if (!auth('patient')->validate(['name' => $user->name, 'password' => $data['password_current']])) {
             return back()->withErrors(["password_current" => ['password mismatch']]);
         }
         if ($data['password_current'] == $data['password']) {
@@ -98,22 +102,20 @@ class DashboardController extends Controller
 
         return back();
     }
-    public function notification()
-    {
-        return view('pages.patient.notification');
-    }
-    public function offline()
-    {
-        return view('pages.patient.offline');
-    }
-    public function settings()
-    {
-        /** @var Patient */
-        $user = auth()->user();
-        return view('pages.patient.settings', []);
-    }
-    public function empty()
-    {
-        return view('pages.patient.empty');
+
+    protected function create_panel() {
+        /** @var ?Patient */
+        $user = auth('patient')->user();
+        /** @var ?Patient */
+        $panel = null;
+        if ($user) {
+            $panel = Panel::create($user::class);
+            $panel->user = $user;
+            $panel->locale = session("locale_$user->id", app()->getLocale());
+            $panel->template = session('template', config('dynamic.application.template'));
+            $panel->preference = session("preference_$user->id", new \stdClass());
+            $panel->token = $user->createToken('generic')->plainTextToken;
+        }
+        return $panel;
     }
 }

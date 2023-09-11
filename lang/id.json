@@ -1,5 +1,9 @@
 {
   "#": "no",
+  "mark": "{0} tandai|[2,*] tandai semua",
+  "delete": "{0} hapus|[2,*] hapus semua",
+  "readed": "telah dibaca",
+  "unread": "belum dibaca",
   "patient": "pasien",
   "midwife": "bidan",
   "service": "layanan",

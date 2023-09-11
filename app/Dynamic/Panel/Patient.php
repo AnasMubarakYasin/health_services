@@ -57,6 +57,32 @@ class Patient extends Panel
             ),
         ];
     }
+    public function get_user_landing_menus(): array
+    {
+        return [
+            new Menu(
+                name: "profile",
+                link: route('web.patient.profile'),
+                icon: Blade::render('<x-icons.profile />'),
+            ),
+            new Menu(
+                name: "notification",
+                link: route('web.patient.notification'),
+                icon: Blade::render('<x-icons.notification />'),
+            ),
+            new Menu(
+                name: "settings",
+                link: route('web.patient.settings'),
+                icon: Blade::render('<x-icons.settings />'),
+            ),
+            new Menu(
+                label: "misc",
+                name: "sign out",
+                link: route('web.patient.logout_perfom'),
+                icon: Blade::render('<x-icons.logout />'),
+            ),
+        ];
+    }
     public function get_user_photo(): string
     {
         return $this->user->photo_url;
@@ -78,7 +104,7 @@ class Patient extends Panel
     {
         return route("web.patient.change_password");
     }
-    public function notifications()
+    public function notification()
     {
         return route('web.patient.notification');
     }

@@ -13,8 +13,8 @@ class Notification extends Controller
     public function read(DatabaseNotification $notification)
     {
         $notification->markAsRead();
-        if (isset($notification->data['route'])) {
-            return to_route($notification->data['route']);
+        if (isset($notification->data['action'])) {
+            return redirect($notification->data['action']);
         }
 
         return back();

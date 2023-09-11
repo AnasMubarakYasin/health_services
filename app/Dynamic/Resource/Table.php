@@ -113,6 +113,11 @@ class Table extends Resource
                                 $query->orWhere($column, $this->filter[$column]);
                             }
                             break;
+                        case 'date':
+                            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$this->filter[$column])) {
+                                $query->orWhere($column, $this->filter[$column]);
+                            }
+                            break;
 
                         default:
                             $query->orWhere($column, $this->filter[$column]);

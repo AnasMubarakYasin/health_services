@@ -23,7 +23,7 @@
         <x-slot:main>
             <x-dynamic.panel.main class="grid gap-4">
 
-                <div class="grid gap-2">
+                {{-- <div class="grid gap-2">
                     <div class="font-bold capitalize">{{ trans('services') }}</div>
                     <div class="flex flex-wrap gap-4">
                         @foreach ($services as $service)
@@ -34,15 +34,12 @@
                                         <div class="text-lg font-medium capitalize">
                                             {{ $service->name }}
                                         </div>
-                                        {{-- <div class="text-xl text-base-content font-medium">
-                                {{ $count }}
-                            </div> --}}
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- <div class="@container grid gap-2">
                     <div class="font-bold capitalize">{{ trans('midwifes') }}</div>
