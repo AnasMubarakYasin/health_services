@@ -1,6 +1,7 @@
 import {
   Animate,
   Ripple,
+  Tab,
   Sidenav,
   Collapse,
   Dropdown,
@@ -14,6 +15,7 @@ initTE({
   // Animate,
   Ripple,
 
+  Tab,
   // Sidenav,
   Collapse,
   Dropdown,

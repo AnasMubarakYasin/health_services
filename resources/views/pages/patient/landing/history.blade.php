@@ -1,6 +1,6 @@
 <x-common.patient.landing :panel="$panel" :title="trans('history')">
 
-    <div class="@container grid gap-4 p-4">
+    <div class="@container grid gap-4 px-2 sm:px-24 py-8">
         <div
         class="hidden @xl:grid grid-cols-4 justify-between justify-items-center items-center px-6 py-4 min-w-sm bg-base-100 text-base-content rounded-lg shadow-all-lg">
         <div class="font-bold capitalize">

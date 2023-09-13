@@ -62,18 +62,13 @@ class Patient extends Panel
         return [
             new Menu(
                 name: "profile",
-                link: route('web.patient.profile'),
+                link: route('web.patient.landing.profile'),
                 icon: Blade::render('<x-icons.profile />'),
             ),
             new Menu(
                 name: "notification",
-                link: route('web.patient.notification'),
+                link: route('web.patient.landing.notification'),
                 icon: Blade::render('<x-icons.notification />'),
-            ),
-            new Menu(
-                name: "settings",
-                link: route('web.patient.settings'),
-                icon: Blade::render('<x-icons.settings />'),
             ),
             new Menu(
                 label: "misc",
@@ -104,7 +99,7 @@ class Patient extends Panel
     {
         return route("web.patient.change_password");
     }
-    public function notification()
+    public function notifications()
     {
         return route('web.patient.notification');
     }

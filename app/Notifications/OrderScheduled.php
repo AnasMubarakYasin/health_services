@@ -2,7 +2,9 @@
 
 namespace App\Notifications;
 
+use App\Models\Midwife;
 use App\Models\Order;
+use App\Models\Patient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -18,7 +20,7 @@ class OrderScheduled extends Notification
     public string $title = "";
     public string $body = "";
     public string $icon = "";
-    public string $action = "";
+    public array $action = [];
     /**
      * Create a new notification instance.
      */
@@ -30,7 +32,8 @@ class OrderScheduled extends Notification
         $this->title = "Orders Scheduled";
         $this->body = "Your orders scheduled at $day $start-$end";
         $this->icon = config('dynamic.application.logo');
-        $this->action = route('web.patient.order.detail', ['order' => $this->order]);
+        $this->action[Patient::class] = route('web.patient.order.detail', ['order' => $this->order]);
+        $this->action[Midwife::class] = route('web.midwife.history.detail', ['order' => $this->order]);
     }
 
     /**
@@ -49,8 +52,8 @@ class OrderScheduled extends Notification
             ->title($this->title)
             ->icon($this->icon)
             ->body($this->body)
-            ->action("View Order", $this->action)
-            ->tag('order')
+            ->action("View Orders", $this->action[$notifiable::class])
+            ->tag($notification->id)
             ->renotify()
             ->options(['TTL' => 1000]);
         // ->data($this->order->toArray())
@@ -75,7 +78,7 @@ class OrderScheduled extends Notification
             'title' => $this->title,
             'body' => $this->body,
             'icon' => $this->icon,
-            'action' => $this->action,
+            'action' => $this->action[$notifiable::class],
             'data' => $this->order->toArray(),
         ];
     }

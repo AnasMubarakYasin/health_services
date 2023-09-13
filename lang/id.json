@@ -1,7 +1,7 @@
 {
   "#": "no",
+  "notifications": "pemberitahuan",
   "mark": "{0} tandai|[2,*] tandai semua",
-  "delete": "{0} hapus|[2,*] hapus semua",
   "readed": "telah dibaca",
   "unread": "belum dibaca",
   "patient": "pasien",
@@ -41,6 +41,9 @@
   "sunday": "minggu",
   "create": "buat",
   "update": "perbarui",
+  "view": "{0} lihat|[2,*] lihat semua",
+  "delete": "{0} hapus|[2,*] hapus semua",
+  "empty": "kosong",
   "finished": "selesai",
   "scheduled": "dijadwalkan",
   "on progress": "diprogres",

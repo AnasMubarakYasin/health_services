@@ -98,8 +98,8 @@
                 group-[#topbar&[data-card-type='bordered']]:border-base-300
                 group-[#topbar&[data-card-type='bordered']]:group-[#topbar&[data-position='floated']]:border-2"
                 aria-labelledby="btn_notification" data-te-dropdown-menu-ref>
-                <header class="px-4 py-2 text-center text-base-content/70 text-lg font-medium">
-                    Notification
+                <header class="px-4 py-4 text-center text-base-content/70 text-lg font-medium capitalize">
+                    {{ trans('notifications') }}
                 </header>
                 <main class="max-h-[40vh] overflow-auto border-y border-base-300">
                     <ul class="">
@@ -132,7 +132,7 @@
                                 </a>
                             </li>
                         @empty
-                            <div class="py-2 text-center text-base-content/50 text-base font-medium capitalize">
+                            <div class="py-4 text-center text-base-content/50 text-base font-medium capitalize">
                                 {{ trans('empty') }}
                             </div>
                         @endforelse
@@ -141,8 +141,8 @@
                 <footer class="p-2">
                     <a data-te-ripple-init data-te-ripple-color="primary" data-te-dropdown-item-ref
                         href="{{ $panel->notifications() }}"
-                        class="flex justify-center items-center w-full h-full px-4 py-2 text-primary/70 font-medium hover:bg-primary hover:bg-opacity-10 hover:text-primary rounded-lg transition-colors">
-                        View All
+                        class="flex justify-center items-center w-full h-full px-4 py-2 text-primary/70 font-medium hover:bg-primary hover:bg-opacity-10 hover:text-primary rounded-lg transition-colors capitalize">
+                        {{ trans_choice('view', 3) }}
                     </a>
                 </footer>
             </section>

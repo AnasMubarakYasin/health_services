@@ -30,7 +30,7 @@ class LandingController extends Controller
             $order = Order::first_unfinish_by_patient(auth('patient')->user());
         }
 
-        return view('pages.patient.landing', [
+        return view('pages.patient.landing.index', [
             'panel' => $this->create_panel(),
             'services' => $services,
             'midwifes' => $midwifes,
@@ -40,9 +40,15 @@ class LandingController extends Controller
     public function history()
     {
         $orders = Order::get_by_patient(auth('patient')->user());
-        return view('pages.patient.landing_history', [
+        return view('pages.patient.landing.history', [
             'panel' => $this->create_panel(),
             'orders' => $orders,
+        ]);
+    }
+    public function notification()
+    {
+        return view('pages.patient.landing.notification', [
+            'panel' => $this->create_panel(),
         ]);
     }
     public function profile()
@@ -64,7 +70,10 @@ class LandingController extends Controller
                 'gender',
             ],
         );
-        return view('pages.patient.profile', ['resource' => $resource]);
+        return view('pages.patient.landing.profile', [
+            'panel' => $this->create_panel(),
+            'resource' => $resource
+        ]);
     }
     public function change_profile(Request $request)
     {
