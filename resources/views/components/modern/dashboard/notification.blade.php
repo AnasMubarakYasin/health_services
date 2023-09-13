@@ -8,7 +8,7 @@
             <li role="presentation">
                 <h2>
                     <a href="#tabs-unread"
-                        class="block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-base font-medium capitalize hover:isolate hover:border-transparent hover:bg-base-200 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary capitalize"
+                        class="block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-base font-medium hover:isolate hover:border-transparent hover:bg-base-200 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary capitalize"
                         data-te-toggle="pill" data-te-target="#tabs-unread" data-te-nav-active role="tab"
                         aria-controls="tabs-unread" aria-selected="true">{{ trans('unread') }}</a>
                 </h2>
@@ -16,7 +16,7 @@
             <li role="presentation">
                 <h2>
                     <a href="#tabs-readed"
-                        class="block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-base font-medium capitalize hover:isolate hover:border-transparent hover:bg-base-200 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary capitalize"
+                        class="block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-base font-medium hover:isolate hover:border-transparent hover:bg-base-200 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary capitalize"
                         data-te-toggle="pill" data-te-target="#tabs-readed" role="tab" aria-controls="tabs-readed"
                         aria-selected="false">{{ trans('readed') }}</a>
                 </h2>
@@ -60,6 +60,12 @@
                                         </a>
                                     </div>
                                 </li>
+                            @empty
+                                <div class="text-center pt-4 text-base-content/70 text-lg capitalize">
+                                    {{ trans('empty') }}
+                                </div>
+                            @endforelse
+                            @if (filled($panel->user->unreadNotifications))
                                 <form class="contents" action="{{ route('web.notification.mark_all') }}" method="post">
                                     @csrf
                                     @method('PATCH')
@@ -68,11 +74,7 @@
                                         {{ trans_choice('mark', 2) }}
                                     </button>
                                 </form>
-                            @empty
-                                <div class="text-center pt-4 text-base-content/70 text-lg capitalize">
-                                    {{ trans('empty') }}
-                                </div>
-                            @endforelse
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -120,6 +122,12 @@
                                         </form>
                                     </div>
                                 </li>
+                            @empty
+                                <div class="text-center py-4 text-base-content/70 text-lg capitalize">
+                                    {{ trans('empty') }}
+                                </div>
+                            @endforelse
+                            @if (filled($panel->user->readnotifications))
                                 <form class="contents" action="{{ route('web.notification.delete_all') }}"
                                     method="post">
                                     @csrf
@@ -129,11 +137,7 @@
                                         {{ trans_choice('delete', 2) }}
                                     </button>
                                 </form>
-                            @empty
-                                <div class="text-center py-4 text-base-content/70 text-lg capitalize">
-                                    {{ trans('empty') }}
-                                </div>
-                            @endforelse
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -174,18 +178,6 @@
                                         {{ $notification->created_at->timespan() }}
                                     </div>
                                 </div>
-                                <a href="{{ route('web.notification.read', ['notification' => $notification]) }}"
-                                    class="relative grid place-items-center w-10 h-10 text-info/70 hover:bg-base-200 hover:text-info/100 rounded @2xl:rounded-lg transition-colors
-                                            group-[#topbar&[data-button-interface='filled']]:bg-base-200
-                                            group-[#topbar&[data-button-interface='filled']]:hover:bg-base-300
-                                            group-[#topbar&[data-button-interface='outlined']]:border-2
-                                            group-[#topbar&[data-button-interface='outlined']]:border-base-300
-                                            group-[#topbar&[data-button-shape='circled']]:rounded-full"
-                                    data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
-                                    data-te-placement="bottom" title="Open">
-                                    <x-icons.envelope_open class="w-5 h-5 @2xl:w-6 @2xl:h-6"
-                                        stroke="2"></x-icons.envelope_open>
-                                </a>
                             </div>
                         </li>
                     @empty

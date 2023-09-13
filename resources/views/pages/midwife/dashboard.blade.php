@@ -76,13 +76,13 @@
                     </div>
                 </div>
 
-                <div class="grid gap-2">
+                <div class="@container grid gap-2">
                     <div class="font-bold capitalize">{{ trans('orders') }}</div>
-                    <div class="flex gap-4">
+                    <div class="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
                         @foreach ($orders as $order)
-                            <div class="@container flex w-full">
+                            <div class="flex w-full">
                                 <div
-                                    class="flex flex-col gap-2 py-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                    class="flex flex-col gap-2 py-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                     <div class="flex justify-between items-start px-6">
                                         <div>
                                             <div class="font-medium text-lg capitalize">{{ $order->service->name }}
