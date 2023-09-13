@@ -9,7 +9,7 @@ module.exports = {
   scope: "/midwife/",
   display: "standalone",
   start_url: "/midwife/dashboard",
-  short_name: "Heavice",
+  short_name: `${process.env.APP_NAME} (Midwife)`,
   theme_color: colors.blue[500],
   description: "Web application for ordering healthcare services",
   orientation: "any",
@@ -25,6 +25,11 @@ module.exports = {
   screenshots: [
     {
       src: "/images/screenshots/midwife_dashboard.png",
+      sizes: "1321x626",
+    },
+    {
+      src: "/images/screenshots/midwife_dashboard_mobile.jpg",
+      sizes: "1080x2340",
     },
   ],
   features: ["Cross Platform"],

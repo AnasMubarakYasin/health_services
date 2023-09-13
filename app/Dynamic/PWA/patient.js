@@ -26,6 +26,10 @@ module.exports = {
     {
       src: "/images/screenshots/patient_dashboard.png",
     },
+    {
+      src: "/images/screenshots/patient_dashboard_mobile.jpg",
+      sizes: "1080x2340",
+    },
   ],
   features: ["Cross Platform", "Booking"],
   icons: assets.icons,
