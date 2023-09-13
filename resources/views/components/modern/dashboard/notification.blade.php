@@ -178,6 +178,18 @@
                                         {{ $notification->created_at->timespan() }}
                                     </div>
                                 </div>
+                                <a href="{{ route('web.notification.read', ['notification' => $notification]) }}"
+                                    class="relative grid place-items-center w-10 h-10 text-info/70 hover:bg-base-200 hover:text-info/100 rounded @2xl:rounded-lg transition-colors
+                                            group-[#topbar&[data-button-interface='filled']]:bg-base-200
+                                            group-[#topbar&[data-button-interface='filled']]:hover:bg-base-300
+                                            group-[#topbar&[data-button-interface='outlined']]:border-2
+                                            group-[#topbar&[data-button-interface='outlined']]:border-base-300
+                                            group-[#topbar&[data-button-shape='circled']]:rounded-full"
+                                    data-te-ripple-init data-te-ripple-color="primary" data-te-toggle="tooltip"
+                                    data-te-placement="bottom" title="Open">
+                                    <x-icons.envelope_open class="w-5 h-5 @2xl:w-6 @2xl:h-6"
+                                        stroke="2"></x-icons.envelope_open>
+                                </a>
                             </div>
                         </li>
                     @empty
