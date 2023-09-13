@@ -5,7 +5,7 @@ module.exports = {
   // id: "/midwife/",
   dir: "ltr",
   lang: "en",
-  name: "Health Services for Midwife",
+  name: `${process.env.APP_NAME} for Midwife`,
   scope: "/midwife/",
   display: "standalone",
   start_url: "/midwife/dashboard",
@@ -37,9 +37,21 @@ module.exports = {
   shortcuts: [
     {
       name: "Add Schedule",
-      short_name: "Schedule",
-      description: "Add Schedule",
+      short_name: "Add Schedule",
+      description: "Add schedule for orders",
       url: "/midwife/schedule/create",
+      icons: [
+        {
+          src: "/icons/logo/proto-512.v2.png",
+          sizes: "512x512",
+        },
+      ],
+    },
+    {
+      name: "Show History",
+      short_name: "Show History",
+      description: "List all orders",
+      url: "/midwife/history",
       icons: [
         {
           src: "/icons/logo/proto-512.v2.png",

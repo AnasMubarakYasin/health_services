@@ -38,7 +38,7 @@
 
 <body
     class="flex flex-col w-max-[100vw] min-h-screen overflow-auto text-black bg-gray-100 dark:text-white dark:bg-gray-900 transition-colors content-start">
-    <header class="sticky top-0 z-10">
+    <header id="header" class="sticky top-0 z-10">
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="{{ route('web.patient.landing') }}" class="flex items-center">
@@ -118,7 +118,6 @@
                                 <li>
                                     <ul class="flex flex-col gap-2 py-2">
                                         @foreach ($panel->get_user_landing_menus() as $menu)
-
                                             @if ($menu->label)
                                                 <li class="w-full h-[1px] bg-base-300">&ThinSpace;</li>
                                             @endif
@@ -160,16 +159,16 @@
                     <ul
                         class="flex flex-col items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
-                            <a href="{{ route('web.patient.landing') }}#beranda"
+                            <a href="{{ route('web.patient.landing') }}#beranda" data-scroll-y="beranda"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                 aria-current="page">Beranda</a>
                         </li>
                         <li>
-                            <a href="{{ route('web.patient.landing') }}#layanan"
+                            <a href="{{ route('web.patient.landing') }}#layanan" data-scroll-y="layanan"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Layanan</a>
                         </li>
                         <li>
-                            <a href="{{ route('web.patient.landing') }}#bidan"
+                            <a href="{{ route('web.patient.landing') }}#bidan" data-scroll-y="bidan"
                                 class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Bidan</a>
                         </li>
                         @if ($panel && $panel->user)
@@ -309,7 +308,19 @@
     </button>
 
     <script>
+        const header = document.getElementById("header");
+        const scrollY = document.querySelectorAll("[data-scroll-y]");
         const backToTopButton = document.getElementById("backToTop");
+
+        scrollY.forEach(element => {
+            const target = document.getElementById(element.dataset.scrollY);
+            element.addEventListener('click', (e) => {
+                if (location.pathname == "/") {
+                    e.preventDefault();
+                    scrollTo(0, target.offsetTop - header.offsetHeight);
+                }
+            })
+        });
 
         backToTopButton.addEventListener("click", () => {
             window.scrollTo({

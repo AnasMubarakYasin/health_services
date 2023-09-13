@@ -5,7 +5,7 @@ module.exports = {
   id: "/",
   dir: "ltr",
   lang: "en",
-  name: "Health Services for Administrator",
+  name: `${process.env.APP_NAME} for Administrator`,
   scope: "/administrator/",
   display: "standalone",
   start_url: "/administrator/dashboard",

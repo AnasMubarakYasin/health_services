@@ -5,11 +5,11 @@ module.exports = {
   // id: "/patient/",
   dir: "ltr",
   lang: "en",
-  name: "Health Services",
+  name: process.env.APP_NAME,
   scope: "/patient/",
   display: "standalone",
   start_url: "/patient/dashboard",
-  short_name: "Heavice",
+  short_name: process.env.APP_NAME,
   theme_color: colors.blue[500],
   description: "Web application for ordering healthcare services",
   orientation: "any",
@@ -36,10 +36,22 @@ module.exports = {
   edge_side_panel: {},
   shortcuts: [
     {
-      name: "Order Services",
-      short_name: "Order",
-      description: "Order services",
+      name: "Order Service",
+      short_name: "Order Service",
+      description: "Ordering a service",
       url: "/patient/order",
+      icons: [
+        {
+          src: "/icons/logo/proto-512.v2.png",
+          sizes: "512x512",
+        },
+      ],
+    },
+    {
+      name: "Show History",
+      short_name: "Show History",
+      description: "List all orders",
+      url: "/patient/history",
       icons: [
         {
           src: "/icons/logo/proto-512.v2.png",
