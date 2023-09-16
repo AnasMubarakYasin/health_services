@@ -18,7 +18,7 @@ if (env('APP_ENV') == 'local') {
     Route::get("/landing", "User\Patient\LandingController@index")->name('web.patient.landing');
 } else {
     Route::view("/entry", "welcome")->name('entry');
-    Route::get("/", "User\Patient\LandingController@index")->name('welcome');
+    Route::get("/welcome", fn() => to_route('web.patient.landing'))->name('welcome');
     Route::get("/", "User\Patient\LandingController@index")->name('web.patient.landing');
 }
 

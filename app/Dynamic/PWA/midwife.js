@@ -33,6 +33,7 @@ module.exports = {
     },
   ],
   features: ["Cross Platform"],
+  request_on_install: ["runonstartup"],
   icons: assets.icons,
   categories: ["medical"],
   launch_handler: {

@@ -28,10 +28,10 @@ module.exports = {
     },
     {
       src: "/images/screenshots/patient_dashboard_mobile.jpg",
-      sizes: "1080x2340",
     },
   ],
   features: ["Cross Platform", "Booking"],
+  request_on_install: ["runonstartup"],
   icons: assets.icons,
   categories: ["medical"],
   launch_handler: {
