@@ -52,7 +52,7 @@
                                 {{ $midwife->srt }}
                             </div>
                         </div>
-                        <a href="{{ route('web.patient.order.midwife', ['midwife' => $midwife]) }}"
+                        <a href="{{ route('web.patient.landing.order', ['midwife' => $midwife]) }}"
                             class="w-fit px-3 py-1 self-end bg-primary text-primary-content text-sm font-medium capitalize rounded hover:bg-primary-focus">
                             {{ trans('service message') }}
                         </a>

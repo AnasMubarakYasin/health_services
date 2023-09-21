@@ -26,6 +26,7 @@ Route::middleware(['authc.basic.order:web.patient.login_show,patient'])->group(f
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@web_order_midwife')->name('web.patient.order.midwife');
     });
+    Route::post('/order/{midwife}', 'User\Patient\LandingController@api_order')->name('web.patient.landing.api_order');
     Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order_midwife')->name('web.patient.order.midwife.handle');
 });
 
@@ -113,6 +114,7 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
         Route::get('/patient/archive', 'User\Patient\DashboardController@empty')->name('web.patient.archive');
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
 
+        Route::get('/order/{midwife}', 'User\Patient\LandingController@order')->name('web.patient.landing.order');
         Route::get('/history', 'User\Patient\LandingController@history')->name('web.patient.landing.history');
         Route::get('/profile', 'User\Patient\LandingController@profile')->name('web.patient.landing.profile');
         Route::get('/notification', 'User\Patient\LandingController@notification')->name('web.patient.landing.notification');
