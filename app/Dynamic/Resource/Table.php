@@ -2,6 +2,7 @@
 
 namespace App\Dynamic\Resource;
 
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -17,12 +18,15 @@ class Table extends Resource
     public array|null $sort = null;
     public array|null $filter = null;
     public array|null $id = null;
+    public Closure|null $query = null;
     public array $options = [
         'perpage' => 5,
         'limitpage' => 5,
         'reference' => 'on',
         'filter_by_column' => true,
         'selectable' => true,
+        'sortable' => true,
+        'action' => true,
     ];
     public function from_request(
         Request $request,
@@ -114,7 +118,7 @@ class Table extends Resource
                             }
                             break;
                         case 'date':
-                            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$this->filter[$column])) {
+                            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $this->filter[$column])) {
                                 $query->orWhere($column, $this->filter[$column]);
                             }
                             break;
@@ -132,6 +136,9 @@ class Table extends Resource
             } else {
                 $query->whereIn('id', [0]);
             }
+        }
+        if ($this->query) {
+            ($this->query)($query);
         }
         if ($this->pagination) {
             /** @var LengthAwarePaginator */

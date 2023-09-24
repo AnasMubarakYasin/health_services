@@ -104,8 +104,13 @@
                                                 class="" data-te-dropdown-toggle-ref>
                                                 <x-icons.ellipsis_vertical></x-icons.ellipsis_vertical>
                                             </button>
-                                            <ul class="absolute z-10 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-base-100 bg-clip-padding text-left text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
+                                            <ul class="absolute z-10 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-base-100 bg-clip-padding text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
                                                 data-te-dropdown-menu-ref>
+                                                <li>
+                                                    <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
+                                                        href="{{ route('web.midwife.record.edit', ['order' => $order]) }}"
+                                                        data-te-dropdown-item-ref>{{ trans('record') }}</a>
+                                                </li>
                                                 <li>
                                                     <form
                                                         action="{{ route('web.midwife.order.done', ['order' => $order]) }}"
@@ -113,7 +118,7 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         <button
-                                                            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
+                                                            class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
                                                             data-te-dropdown-item-ref>
                                                             {{ trans('finish') }}
                                                         </button>

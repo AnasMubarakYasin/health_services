@@ -40,8 +40,8 @@
                     </div>
                 </div>
                 @foreach ($orders as $order)
-                    <button href="{{ route('web.patient.order.detail', ['order' => $order]) }}" class="text-left"
-                        onclick="location.assign('{{ route('web.patient.order.detail', ['order' => $order]) }}')">
+                    <button class="text-left"
+                        onclick="location.assign('{{ route('web.patient.history.detail', ['order' => $order]) }}')">
                         <div
                             class="@xl:hidden grid grid-flow-row gap-2 px-6 py-4 min-w-sm bg-base-100 text-base-content hover:bg-base-200 rounded-lg shadow-all-lg">
                             <div class="flex flex-col">

@@ -83,6 +83,9 @@ class Schedule extends Model
         'active',
         'midwife_id',
     ];
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 
     public function midwife()
     {

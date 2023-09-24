@@ -26,12 +26,6 @@ class OrderController extends Controller
             'orders' => $orders,
         ]);
     }
-    public function web_order_detail(Order $order)
-    {
-        return view('pages.patient.order_detail', [
-            'order' => $order,
-        ]);
-    }
     public function api_order(OrderRequest $request)
     {
         $unfinish_order = Order::first_unfinish_by_patient(auth()->user());

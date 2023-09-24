@@ -23,7 +23,6 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @vite('resources/js/components/modern/common/progress.js')
     @vite('resources/js/components/common/bg-gen.js')
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/components/modern/layout/dashboard.js')
@@ -38,8 +37,6 @@
     {{ $head }}
     @yield('head')
 </head>
-
-{{-- <body class="opacity-0 transition-opacity bg-base-200 text-base-content"> --}}
 
 <body class="bg-base-200 text-base-content">
     <x-modern.common.progress></x-modern.common.progress>

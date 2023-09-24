@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('location_name');
             $table->json('location_coordinates');
             $table->text('complaint')->nullable();
+            // $table->foreignUuid('pregnancy_examination_id')->nullable()->constrained('pregnancy_examinations')->cascadeOnUpdate()->cascadeOnDelete();
+            // $table->foreignUuid('note_nc_id')->nullable()->constrained('note_nc')->cascadeOnUpdate()->cascadeOnDelete();
+            // $table->foreignUuid('note_ph_id')->nullable()->constrained('note_ph')->cascadeOnUpdate()->cascadeOnDelete();
+            // $table->foreignUuid('note_fp_id')->nullable()->constrained('note_fp')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('patient_id')->constrained('patients')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('midwife_id')->constrained('midwives')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('service_id')->constrained('services')->cascadeOnUpdate()->cascadeOnDelete();

@@ -35,7 +35,6 @@
 
     @vite('resources/js/components/common/error-boundary.js')
     @vite('resources/js/components/common/bg-gen.js')
-    @vite('resources/js/components/modern/common/progress.js')
     @vite('resources/js/components/modern/common/theme.js')
     @vite('resources/js/components/modern/common/password.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])

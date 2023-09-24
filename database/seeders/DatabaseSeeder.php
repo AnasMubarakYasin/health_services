@@ -35,11 +35,11 @@ class DatabaseSeeder extends Seeder
         $midwives = Midwife::factory()->count(25)->create();
         $patients = Patient::factory()->count(25)->create();
 
-        Service::create(['name' => 'pemeriksaan kehamilan']);
-        Service::create(['name' => 'perawatan bayi baru lahir']);
-        Service::create(['name' => 'pelayanan kesehatan masa nifas']);
-        Service::create(['name' => 'pelayanan KB']);
-        Service::create(['name' => 'tindik telinga']);
+        Service::create(['name' => 'pemeriksaan kehamilan', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'perawatan bayi baru lahir', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'pelayanan kesehatan masa nifas', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'pelayanan KB', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'tindik telinga', 'img' => '', 'description' => '']);
 
         Schedule::factory()->count(50)->state(new Sequence(
             ...$midwives->map(function ($midwife) {

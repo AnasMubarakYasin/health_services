@@ -32,7 +32,7 @@ class OrderScheduled extends Notification
         $this->title = "Orders Scheduled";
         $this->body = "Your orders scheduled at $day $start-$end";
         $this->icon = config('dynamic.application.logo');
-        $this->action[Patient::class] = route('web.patient.order.detail', ['order' => $this->order]);
+        $this->action[Patient::class] = route('web.patient.history.detail', ['order' => $this->order]);
         $this->action[Midwife::class] = route('web.midwife.history.detail', ['order' => $this->order]);
     }
 

@@ -106,6 +106,7 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/patient/dashboard', 'User\Patient\DashboardController@dashboard')->name('web.patient.dashboard');
         Route::get('/patient/history', 'User\Patient\DashboardController@history')->name('web.patient.history');
+        Route::get('/patient/history/{order}', 'User\Patient\DashboardController@history_detail')->name('web.patient.history.detail');
         Route::get('/patient/profile', 'User\Patient\DashboardController@profile')->name('web.patient.profile');
         Route::get('/patient/notification', 'User\Patient\DashboardController@notification')->name('web.patient.notification');
         Route::get('/patient/settings', 'User\Patient\DashboardController@settings')->name('web.patient.settings');
@@ -120,7 +121,6 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
         Route::get('/notification', 'User\Patient\LandingController@notification')->name('web.patient.landing.notification');
 
         Route::get('/patient/order', 'User\Patient\OrderController@web_order')->name('web.patient.order');
-        Route::get('/patient/order/{order}/detail', 'User\Patient\OrderController@web_order_detail')->name('web.patient.order.detail');
     });
 
     Route::patch('/patient/change_profile', 'User\Patient\DashboardController@change_profile')->name('web.patient.change_profile');
@@ -154,6 +154,10 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
 
         Route::get('/midwife/schedule/create', 'User\Midwife\ScheduleController@web_create')->name('web.midwife.schedule.create');
         Route::get('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@web_update')->name('web.midwife.schedule.update');
+
+        Route::get('/midwife/record/{order}/edit', 'User\Midwife\RecordController@edit')->name('web.midwife.record.edit');
+        Route::get('/midwife/record/{order}/report', 'User\Midwife\RecordController@add_report')->name('web.midwife.record.report.add');
+        Route::get('/midwife/record/{order}/report/{report}', 'User\Midwife\RecordController@edit_report')->name('web.midwife.record.report.edit');
     });
 
     Route::patch('/midwife/change_profile', 'User\Midwife\DashboardController@change_profile')->name('web.midwife.change_profile');
@@ -164,6 +168,12 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
     Route::delete('/midwife/schedule/{schedule}', 'User\Midwife\ScheduleController@api_delete')->name('web.midwife.schedule.handle.delete');
 
     Route::patch('/patient/order/{order}/done', 'User\Midwife\OrderController@api_done')->name('web.midwife.order.done');
+
+    Route::post('/midwife/record/{order}', 'User\Midwife\RecordController@create')->name('web.midwife.record.create');
+    Route::patch('/midwife/record/{order}', 'User\Midwife\RecordController@update')->name('web.midwife.record.update');
+    Route::post('/midwife/record/{order}/report', 'User\Midwife\RecordController@create_report')->name('web.midwife.record.report.create');
+    Route::patch('/midwife/record/{order}/report/{report}', 'User\Midwife\RecordController@update_report')->name('web.midwife.record.report.update');
+    Route::delete('/midwife/record/{order}/report/{report}', 'User\Midwife\RecordController@delete_report')->name('web.midwife.record.report.delete');
 });
 
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {

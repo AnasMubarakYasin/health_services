@@ -126,6 +126,14 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'access' => [
+            'path' => storage_path('logs/access.log'),
+        ],
+
+        'auto' => [
+            'path' => storage_path('logs/auto.log'),
+        ],
     ],
 
 ];

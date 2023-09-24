@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Dynamic\Fileable;
+use App\Dynamic\Helper;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Dynamic\Resource\Definition;
 use App\Dynamic\Trait\Formable;
 use App\Dynamic\Trait\Statable;
 use App\Dynamic\Trait\Tableable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -20,6 +24,7 @@ class Patient extends Authenticatable
 {
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
+    use Fileable;
     use HasPushSubscriptions;
 
     public static function modelable(): Model
@@ -127,26 +132,11 @@ class Patient extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function setPhotoAttribute($value)
+    protected function photo(): Attribute
     {
-        if (is_null($value)) {
-            $this->attributes['photo'] = null;
-        } else if (is_string($value)) {
-            $this->attributes['photo'] = $value;
-        } else {
-            if (isset($this->attributes['photo'])) {
-                Storage::delete($this->attributes['photo']);
-            }
-            $path = $this->id ? "$this->id" : 'temp';
-            $this->attributes['photo'] = Storage::put("patient/$path", $value);
-        }
-    }
-    public function getPhotoUrlAttribute()
-    {
-        if (Str::of($this->photo)->startsWith('http')) {
-            return $this->photo;
-        } else {
-            return Storage::url($this->photo);
-        }
+        return Attribute::make(
+            get: fn ($value) => Helper::file_url($value),
+            set: fn ($value, $attributes) => Helper::file_store($value, @$attributes['photo']),
+        );
     }
 }

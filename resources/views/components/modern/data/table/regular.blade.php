@@ -224,6 +224,16 @@
                         </th>
                         @foreach ($resource->columns as $column)
                             @switch($resource->model->definition($column)->type)
+                                @case('boolean')
+                                    <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
+                                        data-col_index="{{ $loop->index }}">
+                                        @if (is_bool($item->{$column}))
+                                            {{ $item->{$column} ? trans('true') : trans('false') }}
+                                        @else
+                                        @endif
+                                    </td>
+                                @break
+
                                 @case('model')
                                     @if ($resource->model->definition($column)->array)
                                         <td
@@ -417,14 +427,14 @@
                         @endif
                     </li>
                     @php
-                        $count = (int) floor($paginator->total() / $paginator->perPage());
+                        $count = ceil($paginator->total() / $paginator->perPage());
                     @endphp
                     @if ($count && $count > 1)
                         @php
                             $index = 1;
                             $limit = 5;
                             if ($count > $limit) {
-                                $div = floor($limit / 2);
+                                $div = round($limit / 2);
                                 $start = $paginator->currentPage() - $div;
                                 $percent = ($paginator->currentPage() / $count) * 100;
                                 if ($start < 1) {
@@ -489,7 +499,7 @@
                             @endif
                         @endforeach
                     @else
-                        @foreach (range(1, $count + 1) as $page)
+                        @foreach (range(1, $count) as $page)
                             @if ($paginator->currentPage() == $page)
                                 <li>
                                     <div aria-selected="true"

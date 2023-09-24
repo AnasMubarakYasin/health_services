@@ -9,6 +9,7 @@ use App\Dynamic\Trait\Tableable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
@@ -82,6 +83,13 @@ class Order extends Model
                 relation: 'service',
                 alias: 'service_id',
             ),
+            // 'pregnancy_examination' => new Definition(
+            //     name: 'pregnancy examination',
+            //     type: 'model',
+            //     array: false,
+            //     relation: 'pregnancy_examination',
+            //     alias: 'pregnancy_examination_id',
+            // ),
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
@@ -143,6 +151,7 @@ class Order extends Model
         'location_name',
         'location_coordinates',
         'complaint',
+        // 'pregnancy_examination_id',
         'patient_id',
         'midwife_id',
         'service_id',
@@ -151,6 +160,10 @@ class Order extends Model
         'location_coordinates' => 'array',
     ];
 
+    public function pregnancy_examination()
+    {
+        return $this->hasOne(PregnancyExamination::class);
+    }
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');

@@ -29,7 +29,7 @@ class OrderFinished extends Notification
         $this->title = "Orders Finished";
         $this->body = "Your orders has been finished";
         $this->icon = config('dynamic.application.logo');
-        $this->action[Patient::class] = route('web.patient.order.detail', ['order' => $this->order]);
+        $this->action[Patient::class] = route('web.patient.history.detail', ['order' => $this->order]);
         $this->action[Midwife::class] = route('web.midwife.history.detail', ['order' => $this->order]);
     }
 

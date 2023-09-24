@@ -18,14 +18,15 @@ const select_style = {
 };
 
 const table_show_elm = document.getElementById("table_show");
-const table_show_lib = new Select(table_show_elm, {}, select_style);
-
-table_show_elm.addEventListener("valueChange.te.select", () => {
-  // console.log(table_show_elm.value);
-  const query = new URLSearchParams(location.search);
-  query.set("perpage", table_show_elm.value);
-  location.search = query.toString();
-});
+if (table_show_elm) {
+  const table_show_lib = new Select(table_show_elm, {}, select_style);
+  table_show_elm.addEventListener("valueChange.te.select", () => {
+    // console.log(table_show_elm.value);
+    const query = new URLSearchParams(location.search);
+    query.set("perpage", table_show_elm.value);
+    location.search = query.toString();
+  });
+}
 
 const check_mode_elm = document.getElementById("check_mode");
 const check_item_elms = document.querySelectorAll(".check_item");
@@ -115,12 +116,14 @@ if (check_mode_elm) {
 }
 
 const action_elm = document.getElementById("action");
-action_elm.addEventListener("click", () => {
-  document.querySelectorAll("[data-action=true]").forEach((elm) => {
-    elm.classList.toggle("sticky");
-    elm.classList.toggle("relative");
+if (action_elm) {
+  action_elm.addEventListener("click", () => {
+    document.querySelectorAll("[data-action=true]").forEach((elm) => {
+      elm.classList.toggle("sticky");
+      elm.classList.toggle("relative");
+    });
   });
-});
+}
 
 function show_delete_any(state = true) {
   document.getElementById("delete_any").dataset.show = state;

@@ -38,10 +38,10 @@
         <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
             @foreach ($midwifes as $midwife)
                 <div class="flex gap-4 p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
-                    <img src="{{ $midwife->photo_url }}" alt="photo"
+                    <img src="{{ $midwife->photo }}" alt="photo"
                         class="w-24 h-28 p-1 aspect-square object-cover border border-base-300 rounded">
                     <div class="flex flex-grow flex-col gap-4">
-                        <div>
+                        <div class="flex-grow">
                             <div class="text-base font-medium capitalize">
                                 {{ $midwife->fullname }}
                             </div>
@@ -62,10 +62,10 @@
         </div>
     </div>
 
-    <div id="bidan" class="@container grid gap-2 px-2 sm:px-24 py-8">
-        <div class="font-bold text-lg capitalize">Pesanan</div>
-        <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
-            @if ($order)
+    @if ($order)
+        <div id="bidan" class="@container grid gap-2 px-2 sm:px-24 py-8">
+            <div class="font-bold text-lg capitalize">Pesanan</div>
+            <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
                 <div class="@container flex w-full">
                     <div
                         class="flex flex-col gap-2 py-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 bg-base-100 text-base-content rounded-lg shadow-all-lg">
@@ -106,8 +106,8 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
-    </div>
+    @endif
 
 </x-common.patient.landing>

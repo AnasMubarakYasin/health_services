@@ -108,7 +108,7 @@
             <span class="sr-only">Open user menu</span>
             <div class="bg-gray-100 p-0.5 rounded-lg dark:bg-gray-600">
                 @if ($panel->user->photo)
-                    <img class="w-9 h-9 object-cover object-center rounded-lg" src="{{ $panel->user->photo_url }}"
+                    <img class="w-9 h-9 object-cover object-center rounded-lg" src="{{ $panel->user->photo }}"
                         alt="{{ $panel->user->name }}">
                 @else
                     <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"

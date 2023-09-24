@@ -87,6 +87,40 @@
                     </div>
                 </div>
 
+                @if ($record)
+                    <div class="@container grid">
+                        <div class="grid gap-4 p-4 bg-base-100 rounded-lg">
+                            <div class="font-semibold text-xl text-base-content/70 text-center capitalize">
+                                {{ trans('record') }}
+                            </div>
+                            @php
+                                $fields = $record->fields;
+                            @endphp
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                @php
+                                    $record->fields = array_slice($fields, 0, 10);
+                                @endphp
+                                <div class="flex flex-col gap-4">
+                                    <x-modern.data.form.show :resource="$record" :model="$record->model" />
+                                </div>
+                                @php
+                                    $record->fields = array_slice($fields, 10);
+                                @endphp
+                                <div class="flex flex-col gap-4">
+                                    <x-modern.data.form.show :resource="$record" :model="$record->model" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if ($report)
+                    <div class="grid gap-4 p-4 bg-base-100 rounded-lg">
+                        <x-modern.data.table.sheet :resource="$report">
+
+                        </x-modern.data.table.sheet>
+                    </div>
+                @endif
+
             </x-dynamic.panel.main>
         </x-slot:main>
         <x-slot:bottombar>

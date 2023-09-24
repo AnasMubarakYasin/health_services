@@ -3,14 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Dynamic\Fileable;
+use App\Dynamic\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use App\Dynamic\Resource\Definition;
 use App\Dynamic\Trait\Formable;
 use App\Dynamic\Trait\Statable;
 use App\Dynamic\Trait\Tableable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -24,8 +29,7 @@ class Administrator extends Authenticatable
 {
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
-    use KeepsDeletedModels;
-    use HasPushSubscriptions;
+    use Fileable;
 
     public static function modelable(): Model
     {
@@ -80,6 +84,10 @@ class Administrator extends Authenticatable
         };
     }
 
+    protected $fileable = ['photo'];
+    protected $file_basepath = 'administrator';
+    protected $file_visiblity = 'public';
+
     protected $fillable = [
         'photo',
         'name',
@@ -97,30 +105,16 @@ class Administrator extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function setPasswordAttribute($value)
+    protected function password(): Attribute
     {
-        $this->attributes['password'] = bcrypt($value);
+        return Attribute::make(
+            set: fn (string $value) => bcrypt($value),
+        );
     }
-    public function setPhotoAttribute($value)
+    protected function photo(): Attribute
     {
-        if (is_null($value)) {
-            $this->attributes['photo'] = null;
-        } else if (is_string($value)) {
-            $this->attributes['photo'] = $value;
-        } else {
-            if (isset($this->attributes['photo'])) {
-                Storage::delete($this->attributes['photo']);
-            }
-            $path = $this->id ? "$this->id" : 'temp';
-            $this->attributes['photo'] = Storage::put("administrator/$path", $value);
-        }
-    }
-    public function getPhotoUrlAttribute()
-    {
-        if (Str::of($this->photo)->startsWith('http')) {
-            return $this->photo;
-        } else {
-            return Storage::url($this->photo);
-        }
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => $this->file_url($attributes['photo'])
+        );
     }
 }
