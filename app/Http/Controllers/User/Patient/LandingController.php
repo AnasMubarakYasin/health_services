@@ -38,6 +38,13 @@ class LandingController extends Controller
             'order' => $order,
         ]);
     }
+    public function service(Service $service)
+    {
+        return view('pages.patient.landing.service', [
+            'panel' => $this->create_panel(),
+            'service' => $service,
+        ]);
+    }
     public function order(Midwife $midwife)
     {
         $services = Service::all();

@@ -17,6 +17,8 @@ class ServiceController extends Controller
             request: request(),
             columns: [
                 "name",
+                'img',
+                'description',
             ],
             pagination: ['per' => 5, 'num' => 1],
         );
@@ -39,6 +41,8 @@ class ServiceController extends Controller
         $resource = Service::formable()->from_create(
             fields: [
                 "name",
+                'img',
+                'description',
             ],
         );
         $resource->api_create = function () {
@@ -55,6 +59,8 @@ class ServiceController extends Controller
             model: $service,
             fields: [
                 "name",
+                'img',
+                'description',
             ],
         );
         $resource->api_update = function ($item) {

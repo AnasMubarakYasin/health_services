@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Dynamic\Helper;
 use App\Dynamic\Resource\Definition;
 use App\Dynamic\Trait\Formable;
 use App\Dynamic\Trait\Statable;
 use App\Dynamic\Trait\Tableable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +31,15 @@ class Service extends Model
                 name: 'name',
                 type: 'string',
             ),
+            'img' => new Definition(
+                name: 'img',
+                type: 'file',
+                format: 'image/*',
+            ),
+            'description' => new Definition(
+                name: 'description',
+                type: 'string',
+            ),
         ];
         self::$fetcher_relation = function ($definition) {
             return match ($definition->name) {
@@ -39,10 +50,15 @@ class Service extends Model
 
     protected $fillable = [
         'name',
+        'img',
+        'description',
     ];
 
-    public function visits()
+    protected function img(): Attribute
     {
-        return visits($this);
+        return Attribute::make(
+            get: fn ($value) => Helper::file_url($value),
+            set: fn ($value, $attributes) => Helper::file_store($value, @$attributes['img']),
+        );
     }
 }

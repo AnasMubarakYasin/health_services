@@ -20,6 +20,7 @@ if (env('APP_ENV') == 'local') {
     Route::view("/entry", "welcome")->name('entry');
     Route::get("/welcome", fn() => to_route('web.patient.landing'))->name('welcome');
     Route::get("/", "User\Patient\LandingController@index")->name('web.patient.landing');
+    Route::get("/service/{service}", "User\Patient\LandingController@service")->name('web.patient.landing.service');
 }
 
 Route::middleware(['authc.basic.order:web.patient.login_show,patient'])->group(function () {

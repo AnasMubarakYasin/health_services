@@ -11,7 +11,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'img' => 'nullable|image|max:10485',
+            'description' => 'required|string',
         ];
     }
 }
+
+`data stats
+1 data
+pembatasan data
+opt: tipe sendiri, talangi di inputan,
+card, buble,
+
+penambah berita = ranking 2x`
