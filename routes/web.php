@@ -53,6 +53,10 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::get('/administrator/logout', 'Auth\AdministratorController@logout_perfom')->name('web.administrator.logout_perfom');
     Route::middleware(['common.locale', 'common.visitor'])->group(function () {
         Route::get('/administrator/dashboard', 'User\Administrator\DashboardController@dashboard')->name('web.administrator.dashboard');
+        Route::get('/administrator/database', 'User\Administrator\DashboardController@database')->name('web.administrator.database');
+        Route::get('/administrator/database/download', 'User\Administrator\DashboardController@database_download')->name('web.administrator.database.download');
+        Route::get('/administrator/database/{table}', 'User\Administrator\DashboardController@table')->name('web.administrator.table');
+
         Route::get('/administrator/profile', 'User\Administrator\DashboardController@profile')->name('web.administrator.profile');
         Route::get('/administrator/notification', 'User\Administrator\DashboardController@notification')->name('web.administrator.notification');
         Route::get('/administrator/offline', 'User\Administrator\DashboardController@offline')->name('web.administrator.offline');
@@ -88,6 +92,8 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         Route::get('/administrator/order/{order}/update', 'User\Administrator\OrderController@update')->name('web.administrator.order.update');
         /** !SECTION - User */
     });
+
+    Route::post('/administrator/database/upload', 'User\Administrator\DashboardController@database_upload')->name('web.administrator.database.upload');
 
     Route::patch('/administrator/change_profile', 'User\Administrator\DashboardController@change_profile')->name('web.administrator.change_profile');
     Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');

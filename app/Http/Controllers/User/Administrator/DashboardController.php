@@ -13,6 +13,8 @@ use App\Models\Schedule;
 use App\Models\Service;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use stdClass;
 
 class DashboardController extends Controller
@@ -62,6 +64,40 @@ class DashboardController extends Controller
             'administrator' => $administrator,
         ]);
     }
+    public function database()
+    {
+        return view('pages.administrator.database', [
+            'tables' => DB::connection()->getDoctrineSchemaManager()->listTables(),
+        ]);
+    }
+    public function database_download()
+    {
+        $database = [];
+        foreach (DB::connection()->getDoctrineSchemaManager()->listTableNames() as $table) {
+            $database[$table] = DB::table($table)->get()->toArray();
+        }
+        Storage::put('database.json', json_encode($database, JSON_PRETTY_PRINT), 'public');
+        return Storage::download('database.json');
+    }
+    public function database_upload(Request $request)
+    {
+        $database = json_decode($request->file('database')->get(), true);
+        foreach ($database as $table => $value) {
+            DB::table($table)->truncate();
+            if ($database[$table]) {
+                DB::table($table)->insert($value);
+            }
+        }
+        return to_route('web.administrator.database');
+    }
+    public function table(int $table)
+    {
+        // dd(DB::connection()->getDoctrineSchemaManager()->listTables()[0]->getColumns()[0]->getLength()));
+        return view('pages.administrator.table', [
+            'table' => DB::connection()->getDoctrineSchemaManager()->listTables()[$table],
+        ]);
+    }
+
     public function profile()
     {
         $resource = Administrator::formable()->from_update(

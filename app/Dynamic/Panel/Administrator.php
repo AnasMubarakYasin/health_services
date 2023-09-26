@@ -63,6 +63,26 @@ class Administrator extends Panel
                     ),
                 ]
             ),
+            new Menu(
+                label: 'system',
+                submenu: [
+                    new Menu(
+                        name: "database",
+                        link: route('web.administrator.database'),
+                        icon: Blade::render('<x-icons.database stroke="2" />'),
+                    ),
+                    new Menu(
+                        name: "folder",
+                        link: route('web.administrator.order.index'),
+                        icon: Blade::render('<x-icons.folder stroke="2" />'),
+                    ),
+                    new Menu(
+                        name: "settings",
+                        link: route('web.administrator.order.index'),
+                        icon: Blade::render('<x-icons.settings2 stroke="2" />'),
+                    ),
+                ],
+            ),
         ];
     }
     public function get_user_menus(): array

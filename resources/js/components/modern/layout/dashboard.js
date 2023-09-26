@@ -10,6 +10,7 @@ import {
   Tooltip,
   Button,
   Select,
+  Modal,
   initTE,
 } from "tw-elements";
 
@@ -25,6 +26,7 @@ initTE({
 
   // Button,
   Select,
+  Modal,
 });
 
 var APP_CTX_KEY = "f456grty";
