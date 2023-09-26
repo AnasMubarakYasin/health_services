@@ -14,6 +14,7 @@ use App\Models\PregnancyExamination;
 use App\Models\PregnancyExaminationReport;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RecordController extends Controller
@@ -58,6 +59,7 @@ class RecordController extends Controller
     ];
     public function edit(Order $order)
     {
+        dd(Storage::allDirectories());
         if ($order->service->name == 'pemeriksaan kehamilan') {
             $pregnancy_examination = PregnancyExamination::formable();
             $model = $order->pregnancy_examination()->first();
@@ -103,6 +105,8 @@ class RecordController extends Controller
     public function create(PregnancyExaminationCreateRequest $request, Order $order)
     {
         $data = $request->validated();
+        $data['first_day_of_last_mesntruation'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['first_day_of_last_mesntruation'])));
+        $data['estimated_day_of_birth'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['estimated_day_of_birth'])));
         $pregnancy_examination = new PregnancyExamination($data);
         $pregnancy_examination->order_id = $order->id;
         $pregnancy_examination->save();
@@ -114,6 +118,8 @@ class RecordController extends Controller
     public function update(PregnancyExaminationUpdateRequest $request, Order $order)
     {
         $data = $request->validated();
+        isset($data['first_day_of_last_mesntruation']) && ($data['first_day_of_last_mesntruation'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['first_day_of_last_mesntruation']))));
+        isset($data['estimated_day_of_birth']) && ($data['estimated_day_of_birth'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['estimated_day_of_birth']))));
         $pregnancy_examination = $order->pregnancy_examination()->first();
         $pregnancy_examination->update($data);
         return to_route('web.midwife.dashboard');
@@ -125,6 +131,9 @@ class RecordController extends Controller
         if ($order->service->name == 'pemeriksaan kehamilan') {
             $report = PregnancyExaminationReport::formable()->from_create(
                 fields: $this->pregnancy_examination_report_fields,
+                hidden: [
+                    'created_at',
+                ],
             );
             $report->api_create = function () use ($order) {
                 return route('web.midwife.record.report.create', ['order' => $order]);
@@ -165,6 +174,9 @@ class RecordController extends Controller
             $report = PregnancyExaminationReport::formable()->from_update(
                 model: PregnancyExaminationReport::find($report),
                 fields: $this->pregnancy_examination_report_fields,
+                hidden: [
+                    'created_at',
+                ],
             );
             $report->api_update = function ($item) use ($order) {
                 return route('web.midwife.record.report.update', ['order' => $order, 'report' => $item->id]);

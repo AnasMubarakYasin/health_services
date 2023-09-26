@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Resource\Schedule;
+namespace App\Http\Requests\Resource\Record;
 
 use Illuminate\Foundation\Http\FormRequest;
 

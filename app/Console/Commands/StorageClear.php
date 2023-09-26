@@ -30,6 +30,10 @@ class StorageClear extends Command
     {
         $this->line("Clear Path " . storage_path('app/public'));
         try {
+            foreach (Storage::allFiles() as $file) {
+                $status = Storage::delete($file);
+                $this->info("Path " . $file . " " . ($status ? 'success' : 'fail'));
+            }
             foreach (Storage::allDirectories() as $dir) {
                 $status = Storage::deleteDirectory($dir);
                 $this->info("Path " . $dir . " " . ($status ? 'success' : 'fail'));

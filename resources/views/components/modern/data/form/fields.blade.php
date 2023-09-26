@@ -5,7 +5,7 @@
     @endphp
     @switch($definition->type)
         @case('string')
-            <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">
+            <div class="relative {{ $resource->hidden($field) }}" data-te-input-wrapper-init="" data-field="{{ $field }}">
                 <input id="input_{{ $field }}" name="{{ $field }}" data-focus="true"
                     value="{{ old($field, $model->{$field} ?? $definition->default) }}" type="{{ $definition->string_type() }}"
                     placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
@@ -49,7 +49,7 @@
         @break
 
         @case('number')
-            <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">
+            <div class="relative {{ $resource->hidden($field) }}" data-te-input-wrapper-init="" data-field="{{ $field }}">
                 <input id="input_{{ $field }}" name="{{ $field }}" data-focus="true"
                     value="{{ old($field, $model->{$field} ?? $definition->default) }}"
                     type="{{ $definition->number_type() }}" placeholder="{{ trans($definition->name) }}..." @required(false)
@@ -84,7 +84,7 @@
         @break
 
         @case('file')
-            <div class="relative" data-te-input-wrapper-init="" data-field="{{ $field }}">
+            <div class="relative {{ $resource->hidden($field) }}" data-te-input-wrapper-init="" data-field="{{ $field }}">
                 <input id="preview_input_{{ $field }}" name="preview_{{ $field }}" data-focus="true"
                     value="{{ old("preview_input_$field", $model->{$field} ?? $definition->default) }}" type="text"
                     placeholder="{{ trans($definition->name) }}..." autocomplete="off" @required(false) @readonly(false)
@@ -126,7 +126,7 @@
         @break
 
         @case('enum')
-            <div class="relative" data-field="{{ $field }}">
+            <div class="relative {{ $resource->hidden($field) }}" data-field="{{ $field }}">
                 <select data-te-select-init data-te-select-clear-button="{{ !$definition->default ? 'true' : 'false' }}"
                     {{ $definition->multiple ? 'multiple' : '' }} id="input_{{ $field }}" name="{{ $field }}"
                     data-focus="true" placeholder="{{ trans($definition->name) }}..." @required(false) @readonly(false)
@@ -165,7 +165,7 @@
         @break
 
         @case('time')
-            <div>
+            <div class="{{ $resource->hidden($field) }}">
                 <div class="relative flex items-center" data-field="{{ $field }}" data-te-format24="true"
                     data-te-timepicker-init="" data-te-input-wrapper-init="">
                     <input id="input_{{ $field }}" name="{{ $field }}" type="text" data-focus="true"
@@ -200,7 +200,7 @@
         @break
 
         @case('date')
-            <div>
+            <div class="{{ $resource->hidden($field) }}">
                 <div class="relative flex items-center" data-field="{{ $field }}" data-te-datepicker-init=""
                     data-te-input-wrapper-init="">
                     <input id="input_{{ $field }}" name="{{ $field }}" type="text" data-focus="true"
@@ -234,7 +234,7 @@
         @break
 
         @case('boolean')
-            <div class="flex justify-center flex-col gap-2">
+            <div class="flex justify-center flex-col gap-2 {{ $resource->hidden($field) }}">
                 <div class="relative flex items-center gap-4 py-[0.32rem]">
                     <label class="inline-block pl-[0.15rem] text-base-content/70 leading-[1.6] cursor-pointer"
                         for="input_{{ $field }}">
