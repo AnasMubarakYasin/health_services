@@ -34,7 +34,7 @@ class StorageClear extends Command
                 $status = Storage::delete($file);
                 $this->info("Path " . $file . " " . ($status ? 'success' : 'fail'));
             }
-            foreach (Storage::allDirectories() as $dir) {
+            foreach (array_reverse(Storage::allDirectories()) as $dir) {
                 $status = Storage::deleteDirectory($dir);
                 $this->info("Path " . $dir . " " . ($status ? 'success' : 'fail'));
             }

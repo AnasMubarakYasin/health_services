@@ -59,7 +59,6 @@ class RecordController extends Controller
     ];
     public function edit(Order $order)
     {
-        dd(Storage::allDirectories());
         if ($order->service->name == 'pemeriksaan kehamilan') {
             $pregnancy_examination = PregnancyExamination::formable();
             $model = $order->pregnancy_examination()->first();
