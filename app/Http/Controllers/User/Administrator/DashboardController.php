@@ -14,8 +14,11 @@ use App\Models\Service;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Nette\Utils\FileInfo;
 use stdClass;
+use ZipArchive;
 
 class DashboardController extends Controller
 {
@@ -64,38 +67,137 @@ class DashboardController extends Controller
             'administrator' => $administrator,
         ]);
     }
-    public function database()
+    public function database(Request $request)
     {
-        return view('pages.administrator.database', [
-            'tables' => DB::connection()->getDoctrineSchemaManager()->listTables(),
-        ]);
-    }
-    public function database_download()
-    {
-        $database = [];
-        foreach (DB::connection()->getDoctrineSchemaManager()->listTableNames() as $table) {
-            $database[$table] = DB::table($table)->get()->toArray();
+        $table = $request->query('table');
+        $tables = DB::connection()->getDoctrineSchemaManager()->listTables();
+        if ($table) {
+            foreach ($tables as $value) {
+                if ($value->getName() == $table) {
+                    $table = $value;
+                    break;
+                }
+            }
+            return view('pages.administrator.table', [
+                'table' => $table,
+            ]);
+        } else {
+            return view('pages.administrator.database', [
+                'tables' => $tables,
+            ]);
         }
-        Storage::put('database.json', json_encode($database, JSON_PRETTY_PRINT), 'public');
-        return Storage::download('database.json');
+    }
+    public function database_download(Request $request)
+    {
+        $table = $request->query('table');
+        $tables = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+        $database = [];
+        $content = "";
+        $name = "";
+        if ($table) {
+            $name = "$table.json";
+            $content = json_encode(DB::table($table)->get()->toArray(), JSON_PRETTY_PRINT);
+        } else {
+            $name = "database.json";
+            foreach ($tables as $table) {
+                $database[$table] = DB::table($table)->get()->toArray();
+            }
+            $content = json_encode($database, JSON_PRETTY_PRINT);
+        }
+        Storage::put($name, $content, 'public');
+        dispatch(fn() => Storage::delete($name))->afterResponse();
+        return Storage::download($name);
     }
     public function database_upload(Request $request)
     {
-        $database = json_decode($request->file('database')->get(), true);
-        foreach ($database as $table => $value) {
+        $table = $request->query('table');
+        if ($table) {
+            $value = json_decode($request->file('table')->get(), true);
             DB::table($table)->truncate();
-            if ($database[$table]) {
-                DB::table($table)->insert($value);
+            DB::table($table)->insert($value);
+            return to_route('web.administrator.database', ['table' => $table]);
+        } else {
+            $database = json_decode($request->file('database')->get(), true);
+            foreach ($database as $table => $value) {
+                DB::table($table)->truncate();
+                if ($database[$table]) {
+                    DB::table($table)->insert($value);
+                }
+            }
+            return to_route('web.administrator.database');
+        }
+    }
+    public function folder(Request $request)
+    {
+        $path = $request->query('path');
+        try {
+            $files = [
+                ...array_map(fn ($file) => new FileInfo($file), File::directories(storage_path($path))),
+                ...File::files(storage_path($path), true),
+            ];
+            return view('pages.administrator.folder', [
+                'files' => $files,
+                'path' => $path ? $path . '/' : '',
+            ]);
+        } catch (\Throwable $th) {
+            return back();
+        }
+    }
+    public function folder_download(Request $request)
+    {
+        $relpath = $request->query('path');
+        $abspath = storage_path($relpath);
+        $realpath = "$abspath.zip";
+        $name = basename($realpath);
+        function files($path)
+        {
+            return [
+                ...array_map(fn ($file) => new FileInfo($file), File::directories($path)),
+                ...File::files($path, true),
+            ];
+        }
+        function add_files($zip, $files, $dir = '')
+        {
+            foreach ($files as $file) {
+                if ($file->isDir()) {
+                    $subfiles = files($file->getPathname());
+                    if (!$subfiles) {
+                        $zip->addEmptyDir($file->getFilename());
+                    }
+                    add_files($zip, $subfiles, $dir . $file->getFilename() . "/");
+                } else {
+                    $zip->addFile($file, $dir . $file->getFilename());
+                    info('zip', ['dir' => $dir . $file->getFilename(), 'file' => $file->getFilename()]);
+                }
             }
         }
-        return to_route('web.administrator.database');
+        $zip = new ZipArchive();
+        $status = $zip->open(storage_path("app/public/$name"), ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        if ($status == true) {
+            add_files($zip, files($abspath));
+            $zip->close();
+            dispatch(fn() => Storage::delete($name))->afterResponse();
+            return Storage::download($name);
+        } else {
+            return back();
+        }
     }
-    public function table(int $table)
+    public function folder_upload(Request $request)
     {
-        // dd(DB::connection()->getDoctrineSchemaManager()->listTables()[0]->getColumns()[0]->getLength()));
-        return view('pages.administrator.table', [
-            'table' => DB::connection()->getDoctrineSchemaManager()->listTables()[$table],
-        ]);
+        $relpath = $request->query('path');
+        $abspath = storage_path($relpath);
+        $name = 'folder.zip';
+        $zip = new ZipArchive();
+        Storage::put($name, $request->file('folder')->get(), 'public');
+        $status = $zip->open(storage_path("app/public/$name"));
+        if ($status == true) {
+            Storage::delete($abspath);
+            $zip->extractTo($abspath);
+            Storage::delete($name);
+            return to_route('web.administrator.folder', ['path' => $relpath]);
+        } else {
+            return back();
+        }
     }
 
     public function profile()

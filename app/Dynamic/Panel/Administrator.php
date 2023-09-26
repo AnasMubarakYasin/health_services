@@ -73,7 +73,7 @@ class Administrator extends Panel
                     ),
                     new Menu(
                         name: "folder",
-                        link: route('web.administrator.order.index'),
+                        link: route('web.administrator.folder'),
                         icon: Blade::render('<x-icons.folder stroke="2" />'),
                     ),
                     new Menu(

@@ -11,13 +11,15 @@
             <x-icons.download class="w-6 h-6" stroke="2">
             </x-icons.download>
         </a>
-        <button
-            class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
+        <div data-te-toggle="tooltip" data-te-placement="bottom" title="Upload">
+            <button
+                class="grid place-items-center w-10 h-10 bg-primary text-primary-content rounded-lg transition-colors
     hover:bg-primary-focus"
-            data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="modal" data-te-target="#upload_modal">
-            <x-icons.upload class="w-6 h-6" stroke="2">
-            </x-icons.upload>
-        </button>
+                data-te-ripple-init data-te-ripple-color="ligth" data-te-toggle="modal" data-te-target="#upload_modal">
+                <x-icons.upload class="w-6 h-6" stroke="2">
+                </x-icons.upload>
+            </button>
+        </div>
     </div>
     <div
         class="hidden @xl:grid grid-cols-12 justify-between justify-items-center items-center px-6 py-4 min-w-sm bg-base-100 text-base-content rounded-lg shadow-all-lg">
@@ -49,16 +51,16 @@
 
     @foreach ($tables as $table)
         <button class=""
-            onclick="location.assign('{{ route('web.administrator.table', ['table' => $loop->index]) }}')">
+            onclick="location.assign('{{ route('web.administrator.database', ['table' => $table->getName()]) }}')">
             <div
                 class="hidden @xl:grid grid-cols-12 justify-between justify-items-center items-center px-6 py-4 min-w-sm bg-base-100 text-base-content hover:bg-base-200 rounded-lg shadow-all-lg">
-                <div class="col-start-1 col-end-2">
+                <div class="col-span-1">
                     {{ $loop->iteration }}
                 </div>
-                <div class="col-start-2 col-end-5">
+                <div class="col-span-3 break-all">
                     {{ $table->getName() }}
                 </div>
-                <div class="col-start-5 col-end-8">
+                <div class="col-span-3 break-all">
                     {{ $table->getPrimaryKey()->getName() }}
                 </div>
                 <div class="font-medium col-span-1">
