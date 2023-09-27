@@ -28,11 +28,3 @@ class UpdateRequest extends FormRequest
         ];
     }
 }
-
-`data stats
-1 data
-pembatasan data
-opt: tipe sendiri, talangi di inputan,
-card, buble,
-
-penambah berita = ranking 2x`

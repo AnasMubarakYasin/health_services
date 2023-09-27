@@ -39,7 +39,7 @@ class StorageClear extends Command
                 $this->info("file {$loc} " . ($status ? 'success' : 'fail'));
             }
             foreach (array_map(fn ($file) => new FileInfo($file), File::directories($path)) as $directory) {
-                $status = File::deleteDirectory($directory->getPathname(), true);
+                $status = File::deleteDirectory($directory->getPathname(), false);
                 $loc = str_replace($path, '', $directory->getPathname());
                 $this->info("directory {$loc} " . ($status ? 'success' : 'fail'));
             }
