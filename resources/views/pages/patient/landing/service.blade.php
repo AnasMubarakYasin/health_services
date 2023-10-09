@@ -12,12 +12,12 @@
             <div></div>
             <div></div>
             <div>
-                <a href="{{ route('web.patient.order') }}" class="w-fit px-8 py-2 bg-primary hover:bg-primary-focus text-primary-content rounded-full capitalize">
+                <a href="{{ route('web.patient.landing.order_common') }}" class="w-fit px-8 py-2 bg-primary hover:bg-primary-focus text-primary-content rounded-full capitalize">
                     {{ trans('service message') }}
                 </a>
             </div>
         </div>
-        <div class="order-1 sm:order-2">
+        <div class="order-1 sm:order-2 flex-shrink-0">
             <img src="{{ $service->img }}" alt="" class="sm:w-64 sm:h-64 w-52 h-52 aspect-auto">
         </div>
     </div>

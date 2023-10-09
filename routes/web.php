@@ -125,6 +125,7 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
         Route::get('/patient/about', 'User\Patient\DashboardController@empty')->name('web.patient.about');
 
         Route::get('/order/{midwife}', 'User\Patient\LandingController@order')->name('web.patient.landing.order');
+        Route::get('/order', 'User\Patient\LandingController@order_common')->name('web.patient.landing.order_common');
         Route::get('/history', 'User\Patient\LandingController@history')->name('web.patient.landing.history');
         Route::get('/profile', 'User\Patient\LandingController@profile')->name('web.patient.landing.profile');
         Route::get('/notification', 'User\Patient\LandingController@notification')->name('web.patient.landing.notification');
@@ -136,6 +137,7 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
     Route::patch('/patient/change_password', 'User\Patient\DashboardController@change_password')->name('web.patient.change_password');
 
     Route::post('/patient/order', 'User\Patient\OrderController@api_order')->name('web.patient.order.handle');
+    Route::post('/patient/order_common', 'User\Patient\LandingController@api_order_common')->name('web.patient.order_common.handle');
 });
 
 Route::redirect('/midwife', '/midwife/dashboard');

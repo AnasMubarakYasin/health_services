@@ -70,6 +70,10 @@
                                 <div>{{ $order->patient->fullname }}</div>
                             </div>
                             <div class="font-normal text-base">
+                                <div class="text-base-content/70">{{ trans('telp') }}</div>
+                                <div>{{ $order->patient->telp }}</div>
+                            </div>
+                            <div class="font-normal text-base">
                                 <div class="text-base-content/70">{{ trans('location') }}</div>
                                 @php
                                     $coordinates = json_decode($order->location_coordinates);

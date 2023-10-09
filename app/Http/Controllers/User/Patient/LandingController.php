@@ -6,6 +6,7 @@ use App\Dynamic\Panel\Panel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\CreateOrderMidwifeRequest;
 use App\Http\Requests\Patient\CreateOrderRequest;
+use App\Http\Requests\Patient\OrderRequest;
 use App\Http\Requests\Resource\Patient\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
@@ -80,6 +81,45 @@ class LandingController extends Controller
         $order->midwife->notifyNow(new OrderScheduled($order));
         return to_route('web.patient.landing');
     }
+
+    public function order_common()
+    {
+        $services = Service::all();
+        $midwifes = Midwife::all();
+        $schedules = Schedule::get_active();
+        $orders = Order::get_unfinish();
+        return view('pages.patient.landing.order_common', [
+            'panel' => $this->create_panel(),
+            'services' => $services,
+            'midwifes' => $midwifes,
+            'schedules' => $schedules,
+            'orders' => $orders,
+        ]);
+    }
+    public function api_order_common(OrderRequest $request)
+    {
+        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
+        if ($unfinish_order) {
+            return back()->withErrors(['api' => 'user have unfinish order']);
+        }
+        $data = $request->validated();
+        $order = Order::create([
+            'status' => 'scheduled',
+            'schedule' => date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
+            'schedule_start' => "{$data['time']}:00:00",
+            'schedule_end' => "{$data['time']}:55:00",
+            'location_name' => $data['location'],
+            'location_coordinates' => $data['position'],
+            'complaint' => isset($data['complaint']) ? $data['complaint'] : '',
+            'patient_id' => auth()->user()->id,
+            'midwife_id' =>  $data['midwife'],
+            'service_id' =>  $data['service'],
+        ]);
+        $order->patient->notifyNow(new OrderScheduled($order));
+        $order->midwife->notifyNow(new OrderScheduled($order));
+        return to_route('web.patient.landing');
+    }
+
     public function history()
     {
         $orders = Order::get_by_patient(auth('patient')->user());
