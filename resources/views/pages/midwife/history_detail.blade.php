@@ -71,7 +71,8 @@
                             </div>
                             <div class="font-normal text-base">
                                 <div class="text-base-content/70">{{ trans('telp') }}</div>
-                                <div>{{ $order->patient->telp }}</div>
+                                <a href=" https://wa.me/{{ $order->patient->telp }}"
+                                    class="text-blue-500 dark:text-blue-600 hover:underline">{{ $order->patient->telp }}</a>
                             </div>
                             <div class="font-normal text-base">
                                 <div class="text-base-content/70">{{ trans('location') }}</div>
