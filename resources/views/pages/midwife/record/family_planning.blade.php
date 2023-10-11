@@ -73,7 +73,7 @@
                 </form>
 
                 @if ($family_planning->is_update())
-                    {{-- <div class="col-span-2 flex justify-center">
+                    <div class="col-span-2 flex justify-center">
                         <button form="form"
                             class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-base font-medium rounded-md transition-colors hover:bg-primary-focus capitalize"
                             data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="ligth">
@@ -82,18 +82,18 @@
                     </div>
 
                     <div class="grid gap-4 p-4 bg-base-100 rounded-lg">
-                        <x-modern.data.table.sheet :resource="$family_planning_report">
+                        <x-modern.data.table.sheet :resource="$family_planning_revisit">
 
                         </x-modern.data.table.sheet>
                     </div>
 
                     <div class="col-span-2 flex justify-center">
-                        <a href="{{ $family_planning_report->web_create() }}"
+                        <a href="{{ $family_planning_revisit->web_create() }}"
                             class="grid place-items-center px-8 py-2 bg-primary text-primary-content text-base font-medium rounded-md transition-colors hover:bg-primary-focus capitalize"
                             data-te-ripple-init data-te-ripple-color="ligth">
                             {{ trans('add') }}
                         </a>
-                    </div> --}}
+                    </div>
                 @endif
 
             </x-dynamic.panel.main>

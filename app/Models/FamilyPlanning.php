@@ -22,7 +22,7 @@ class FamilyPlanning extends Model
     }
     public static function defining()
     {
-        self::$caption = "pregnancy examination";
+        self::$caption = "";
         self::$definitions = [
             'participant_name' => new Definition(
                 name: 'participant name',
@@ -46,15 +46,11 @@ class FamilyPlanning extends Model
             ),
             'attach_date' => new Definition(
                 name: 'attach date',
-                type: 'string',
+                type: 'date',
             ),
             'detach_date' => new Definition(
                 name: 'detach date',
-                type: 'string',
-            ),
-            'visits' => new Definition(
-                name: 'visits',
-                type: 'string',
+                type: 'date',
             ),
             // 'order_id' => new Definition(
             //     name: 'order',
@@ -77,7 +73,6 @@ class FamilyPlanning extends Model
         'tool_or_medicine_or_treatment_method',
         'attach_date',
         'detach_date',
-        'visits',
         'order_id',
     ];
 

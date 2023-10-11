@@ -151,7 +151,6 @@ class Order extends Model
         'location_name',
         'location_coordinates',
         'complaint',
-        // 'pregnancy_examination_id',
         'patient_id',
         'midwife_id',
         'service_id',
@@ -167,6 +166,10 @@ class Order extends Model
     public function family_planning()
     {
         return $this->hasOne(FamilyPlanning::class);
+    }
+    public function ear_pierching()
+    {
+        return $this->hasOne(EarPierching::class);
     }
     public function patient()
     {

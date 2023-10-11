@@ -22,7 +22,7 @@ class PregnancyExamination extends Model
     }
     public static function defining()
     {
-        self::$caption = "pregnancy examination";
+        self::$caption = "";
         self::$definitions = [
             'first_day_of_last_mesntruation' => new Definition(
                 name: 'first day of last mesntruation',

@@ -82,7 +82,7 @@
                         @foreach ($orders as $order)
                             <div class="flex w-full">
                                 <div
-                                    class="flex flex-col gap-2 py-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                    class="flex flex-col gap-2 w-full py-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                     <div class="flex justify-between items-start px-6">
                                         <div>
                                             <div class="font-medium text-lg capitalize">{{ $order->service->name }}

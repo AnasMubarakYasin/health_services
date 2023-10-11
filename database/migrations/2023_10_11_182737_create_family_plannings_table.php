@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('tool_or_medicine_or_treatment_method');
             $table->date('attach_date');
             $table->date('detach_date');
-            $table->json('visits');
             $table->foreignUuid('order_id')->constrained('orders')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }

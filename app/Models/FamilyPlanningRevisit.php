@@ -24,8 +24,8 @@ class FamilyPlanningRevisit extends Model
     {
         self::$caption = "";
         self::$definitions = [
-            'revisit_date' => new Definition(
-                name: 'revisit_date',
+            'created_at' => new Definition(
+                name: 'revisit date',
                 type: 'date',
             ),
             'description' => new Definition(
@@ -44,6 +44,7 @@ class FamilyPlanningRevisit extends Model
     protected $fillable = [
         'revisit_date',
         'description',
+        'family_planning_id',
     ];
 
     public function family_planning()

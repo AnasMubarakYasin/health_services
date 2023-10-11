@@ -15,9 +15,8 @@ return new class extends Migration
             $table->uuid("id")->primary();
             $table->timestamps();
             $table->softDeletes();
-            $table->date('revisit_date');
             $table->string('description');
-            $table->foreignUuid('family_plannig_id')->constrained('family_plannigs')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('family_planning_id')->constrained('family_plannings')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
