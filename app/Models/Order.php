@@ -164,6 +164,10 @@ class Order extends Model
     {
         return $this->hasOne(PregnancyExamination::class);
     }
+    public function family_planning()
+    {
+        return $this->hasOne(FamilyPlanning::class);
+    }
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');

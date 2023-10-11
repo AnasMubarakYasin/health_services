@@ -8,6 +8,8 @@ use App\Http\Requests\Resource\Record\PregnancyExaminationCreateRequest;
 use App\Http\Requests\Resource\Record\PregnancyExaminationUpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
+use App\Models\FamilyPlanning;
+use App\Models\FamilyPlanningRevisit;
 use App\Models\Midwife;
 use App\Models\Order;
 use App\Models\PregnancyExamination;
@@ -57,8 +59,23 @@ class RecordController extends Controller
         'description',
         'when_to_return',
     ];
+    public $family_planning_fields = [
+        'participant_name',
+        'husband_or_wife_name',
+        'birthday_or_age_wife',
+        'participant_address',
+        'tool_or_medicine_or_treatment_method',
+        'attach_date',
+        'detach_date',
+        // 'visits',
+    ];
+    public $family_planning_revisit_fields = [
+        'revisit_date',
+        'description',
+    ];
     public function edit(Order $order)
     {
+        // dd($order->service->name);
         if ($order->service->name == 'pemeriksaan kehamilan') {
             $pregnancy_examination = PregnancyExamination::formable();
             $model = $order->pregnancy_examination()->first();
@@ -94,10 +111,34 @@ class RecordController extends Controller
                     ]
                 );
             }
-            return view('pages.midwife.record', [
+            return view('pages.midwife.record.pregnant_examination', [
                 'order' => $order,
                 'pregnancy_examination' => $pregnancy_examination,
                 'pregnancy_examination_report' => $pregnancy_examination_report,
+            ]);
+        } else if ($order->service->name == 'pelayanan KB') {
+            $family_planning = FamilyPlanning::formable();
+            $model = $order->family_planning()->first();
+            $model ? $family_planning->from_update(
+                model: $model,
+                fields: $this->family_planning_fields,
+            ) : $family_planning->from_create(
+                fields: $this->family_planning_fields,
+            );
+            if ($family_planning->is_update()) {
+
+            } else {
+                $family_planning_revisit = FamilyPlanningRevisit::formable()->from_create(
+                    fields: $this->family_planning_revisit_fields,
+                    hidden: [
+                        'created_at',
+                    ]
+                );
+            }
+            return view('pages.midwife.record.family_planning', [
+                'order' => $order,
+                'family_planning' => $family_planning,
+                'family_planning_revisit' => $family_planning_revisit,
             ]);
         }
     }
