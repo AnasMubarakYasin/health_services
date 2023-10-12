@@ -3,10 +3,10 @@
     <x-slot:head>
     </x-slot:head>
 
-    <div class="@container flex sm:flex-row flex-col items-center gap-4 my-8 px-2 sm:px-24 py-8 bg-base-100">
+    <div class="@container flex sm:flex-row flex-col items-center gap-8 my-8 px-2 sm:px-24 py-8 bg-base-100">
         <div class="flex-grow flex gap-4 flex-col order-2 sm:order-1 text-center">
             <h2 class="font-bold text-2xl capitalize">{{ $service->name }}</h2>
-            <p>
+            <p class="text-justify">
                 {{ $service->description }}
             </p>
             <div></div>

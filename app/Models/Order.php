@@ -171,6 +171,14 @@ class Order extends Model
     {
         return $this->hasOne(EarPierching::class);
     }
+    public function newborn_cares()
+    {
+        return $this->hasMany(NewbornCare::class);
+    }
+    public function postpartum_healths()
+    {
+        return $this->hasMany(PostpartumHealth::class);
+    }
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');

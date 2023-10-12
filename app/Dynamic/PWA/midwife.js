@@ -46,24 +46,24 @@ module.exports = {
       short_name: "Add Schedule",
       description: "Add schedule for orders",
       url: "/midwife/schedule/create",
-      icons: [
-        {
-          src: "/icons/logo/proto-512.v2.png",
-          sizes: "512x512",
-        },
-      ],
+      // icons: [
+      //   {
+      //     src: "/icons/logo/proto-512.v2.png",
+      //     sizes: "512x512",
+      //   },
+      // ],
     },
     {
       name: "Show History",
       short_name: "Show History",
       description: "List all orders",
       url: "/midwife/history",
-      icons: [
-        {
-          src: "/icons/logo/proto-512.v2.png",
-          sizes: "512x512",
-        },
-      ],
+      // icons: [
+      //   {
+      //     src: "/icons/logo/proto-512.v2.png",
+      //     sizes: "512x512",
+      //   },
+      // ],
     },
   ],
 };

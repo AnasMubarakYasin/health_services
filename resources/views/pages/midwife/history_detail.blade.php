@@ -93,30 +93,87 @@
                 </div>
 
                 @if ($record)
-                    <div class="@container grid">
+                    @if (
+                        $order->service->name == 'pemeriksaan kehamilan' ||
+                            $order->service->name == 'pelayanan KB' ||
+                            $order->service->name == 'tindik telinga')
+                        <div class="@container grid">
+                            <div class="grid gap-4 p-4 bg-base-100 rounded-lg">
+                                <div class="font-semibold text-xl text-base-content/70 text-center capitalize">
+                                    {{ trans('record') }}
+                                </div>
+                                @php
+                                    $fields = $record->fields;
+                                    $length = count($fields);
+                                @endphp
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    @php
+                                        $record->fields = array_slice($fields, 0, ceil($length / 2));
+                                    @endphp
+                                    <div class="flex flex-col gap-4">
+                                        <x-modern.data.form.show :resource="$record" :model="$record->model" />
+                                    </div>
+                                    @php
+                                        $record->fields = array_slice($fields, ceil($length / 2));
+                                    @endphp
+                                    <div class="flex flex-col gap-4">
+                                        <x-modern.data.form.show :resource="$record" :model="$record->model" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @else
                         <div class="grid gap-4 p-4 bg-base-100 rounded-lg">
                             <div class="font-semibold text-xl text-base-content/70 text-center capitalize">
                                 {{ trans('record') }}
                             </div>
-                            @php
-                                $fields = $record->fields;
-                            @endphp
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                @php
-                                    $record->fields = array_slice($fields, 0, 10);
-                                @endphp
-                                <div class="flex flex-col gap-4">
-                                    <x-modern.data.form.show :resource="$record" :model="$record->model" />
-                                </div>
-                                @php
-                                    $record->fields = array_slice($fields, 10);
-                                @endphp
-                                <div class="flex flex-col gap-4">
-                                    <x-modern.data.form.show :resource="$record" :model="$record->model" />
-                                </div>
+
+                            <ul class="flex flex-row flex-wrap list-none border-b-0" role="tablist" data-te-nav-ref>
+                                @foreach ($record as $form)
+                                    <li role="presentation">
+                                        <h2>
+                                            <a href="#tab_{{ $form->model->visit_number }}"
+                                                class="block border-x-0 border-b-2 border-t-0 border-transparent px-7 pb-3.5 pt-4 text-base font-medium hover:isolate hover:border-transparent hover:bg-base-200 focus:isolate focus:border-transparent data-[te-nav-active]:border-primary data-[te-nav-active]:text-primary capitalize"
+                                                data-te-toggle="pill"
+                                                data-te-target="#tab_{{ $form->model->visit_number }}"
+                                                {{ !$loop->index ? 'data-te-nav-active' : '' }} role="tab"
+                                                aria-controls="{{ $form->model->visit_number }}"
+                                                aria-selected="true">{{ $form->model->visit_description }}</a>
+                                        </h2>
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                            <div>
+                                @foreach ($record as $form)
+                                    <div class="hidden opacity-100 transition-opacity duration-150 ease-linear data-[te-tab-active]:block"
+                                        id="tab_{{ $form->model->visit_number }}" role="tabpanel"
+                                        aria-labelledby="tabs-unread-tab"
+                                        {{ !$loop->index ? 'data-te-tab-active' : '' }}>
+                                        @php
+                                            $fields = $form->fields;
+                                            $length = count($fields);
+                                        @endphp
+                                        <div class="grid sm:grid-cols-2 gap-4">
+                                            @php
+                                                $form->fields = array_slice($fields, 0, ceil($length / 2));
+                                            @endphp
+                                            <div class="flex flex-col gap-4">
+                                                <x-modern.data.form.show :resource="$form" :model="$form->model" />
+                                            </div>
+                                            @php
+                                                $form->fields = array_slice($fields, ceil($length / 2));
+                                            @endphp
+                                            <div class="flex flex-col gap-4">
+                                                <x-modern.data.form.show :resource="$form" :model="$form->model" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+
                         </div>
-                    </div>
+                    @endif
                 @endif
                 @if ($report)
                     <div class="grid gap-4 p-4 bg-base-100 rounded-lg">

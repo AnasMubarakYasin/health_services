@@ -1,22 +1,28 @@
 const logos = [
   {
-    src: "/icons/logo/proto-512.v2.png",
+    src: "/logo.png",
     sizes: "512x512",
     type: "image/png",
     purpose: "any",
   },
-  {
-    src: "/icons/logo/proto-512-maskable.v2.png",
-    sizes: "512x512",
-    type: "image/png",
-    purpose: "maskable",
-  },
-  {
-    src: "/icons/logo/proto-512-monochrome.v2.png",
-    sizes: "512x512",
-    type: "image/png",
-    purpose: "monochrome",
-  },
+  // {
+  //   src: "/icons/logo/proto-512.v2.png",
+  //   sizes: "512x512",
+  //   type: "image/png",
+  //   purpose: "any",
+  // },
+  // {
+  //   src: "/icons/logo/proto-512-maskable.v2.png",
+  //   sizes: "512x512",
+  //   type: "image/png",
+  //   purpose: "maskable",
+  // },
+  // {
+  //   src: "/icons/logo/proto-512-monochrome.v2.png",
+  //   sizes: "512x512",
+  //   type: "image/png",
+  //   purpose: "monochrome",
+  // },
 ];
 
 module.exports = {

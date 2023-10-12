@@ -9,9 +9,14 @@ use App\Http\Requests\Patient\CreateOrderRequest;
 use App\Http\Requests\Resource\Patient\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
+use App\Models\EarPierching;
+use App\Models\FamilyPlanning;
+use App\Models\FamilyPlanningRevisit;
 use App\Models\Midwife;
+use App\Models\NewbornCare;
 use App\Models\Order;
 use App\Models\Patient;
+use App\Models\PostpartumHealth;
 use App\Models\PregnancyExamination;
 use App\Models\PregnancyExaminationReport;
 use App\Models\Schedule;
@@ -99,6 +104,102 @@ class DashboardController extends Controller
                         'when_to_return',
                     ],
                 );
+            }
+        } else if ($order->service->name == 'pelayanan KB') {
+            $model = $order->family_planning;
+            if ($model) {
+                $record = FamilyPlanning::formable()->from_update(
+                    model: $model,
+                    fields: [
+                        'participant_name',
+                        'husband_or_wife_name',
+                        'birthday_or_age_wife',
+                        'participant_address',
+                        'tool_or_medicine_or_treatment_method',
+                        'attach_date',
+                        'detach_date',
+                    ],
+                );
+                $report = FamilyPlanningRevisit::tableable();
+                $report->options['filter_by_column'] = false;
+                $report->options['selectable'] = false;
+                $report->options['sortable'] = false;
+                $report->options['action'] = false;
+                $report->query = fn ($q) => $q->where('family_planning_id', $model->id);
+                $report->from_request(
+                    request: request(),
+                    columns: [
+                        'created_at',
+                        'description',
+                    ],
+                );
+            }
+        } else if ($order->service->name == 'tindik telinga') {
+            $model = $order->ear_pierching;
+            if ($model) {
+                $record = EarPierching::formable()->from_update(
+                    model: $model,
+                    fields: [
+                        'name',
+                        'birthday',
+                        'age',
+                        'gender',
+                    ],
+                );
+            }
+        } else if ($order->service->name == 'perawatan bayi baru lahir') {
+            $model = $order->newborn_cares;
+            if (count($model)) {
+                $record = [];
+                foreach ($order->newborn_cares as $model) {
+                    $form = NewbornCare::formable()->from_update(
+                        model: $model,
+                        fields: [
+                            'body_weight',
+                            'body_length',
+                            'body_temperature',
+                            'breathing_frequency',
+                            'heart_rate_frequency',
+                            'check_possible_serious_illnesses',
+                            'check_jaundice',
+                            'check_diarrhea',
+                            'check_low_body_weight_and_problems_breastfeeding',
+                            'check_vit_k1_status',
+                            'check_hb_0_bcg_polio_1_immunization_status',
+                            'areas_that_have_implemented_Congenital_Hypothyroidism',
+                            'shk',
+                            'shk_test_result',
+                        ],
+                    );
+                    $record[] = $form;
+                }
+            }
+        } else if ($order->service->name == 'pelayanan kesehatan masa nifas') {
+            $model = $order->postpartum_healths;
+            if (count($model)) {
+                $record = [];
+                foreach ($order->postpartum_healths as $model) {
+                    $form = PostpartumHealth::formable()->from_update(
+                        model: $model,
+                        fields: [
+                            "general_condition_of_the_mother",
+                            "blood_pressure_body_temperature_respiration_pulse",
+                            "vaginal_bleeding",
+                            "perineal_conditions",
+                            "signs_of_infection",
+                            "fundus_uteri_height",
+                            "lochia",
+                            "birth_canal_examination",
+                            "breast_examination",
+                            "lactation",
+                            "give_capsules_vit_a",
+                            "postpartum_contraceptive_services",
+                            "high_risk_treatment_and_complications_in_postpartum",
+                            "visit_note",
+                        ],
+                    );
+                    $record[] = $form;
+                }
             }
         }
         return view('pages.patient.history_detail', [

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\EarPierching;
 use App\Models\FamilyPlanning;
 use App\Models\FamilyPlanningRevisit;
+use App\Models\NewbornCare;
 use App\Models\Order;
+use App\Models\PostpartumHealth;
 use App\Models\PregnancyExamination;
 use App\Models\PregnancyExaminationReport;
 use Illuminate\Http\Request;
@@ -70,7 +72,42 @@ class RecordController extends Controller
         'birthday',
         'age',
         'gender',
-        'order_id',
+    ];
+    public $newborn_care_fields = [
+        'body_weight',
+        'body_length',
+        'body_temperature',
+        'breathing_frequency',
+        'heart_rate_frequency',
+        'check_possible_serious_illnesses',
+        'check_jaundice',
+        'check_diarrhea',
+        'check_low_body_weight_and_problems_breastfeeding',
+        'check_vit_k1_status',
+        'check_hb_0_bcg_polio_1_immunization_status',
+        'areas_that_have_implemented_Congenital_Hypothyroidism',
+        'shk',
+        'shk_test_result',
+        // 'visit_number',
+        // 'visit_description',
+    ];
+    public $postpartum_health_fields = [
+        "general_condition_of_the_mother",
+        "blood_pressure_body_temperature_respiration_pulse",
+        "vaginal_bleeding",
+        "perineal_conditions",
+        "signs_of_infection",
+        "fundus_uteri_height",
+        "lochia",
+        "birth_canal_examination",
+        "breast_examination",
+        "lactation",
+        "give_capsules_vit_a",
+        "postpartum_contraceptive_services",
+        "high_risk_treatment_and_complications_in_postpartum",
+        // "visit_string",
+        // "visit_description",
+        "visit_note",
     ];
     public function edit(Order $order)
     {
@@ -116,7 +153,7 @@ class RecordController extends Controller
             ]);
         } else if ($order->service->name == 'pelayanan KB') {
             $family_planning = FamilyPlanning::formable();
-            $model = $order->family_planning()->first();
+            $model = $order->family_planning;
             $model ? $family_planning->from_update(
                 model: $model,
                 fields: $this->family_planning_fields,
@@ -159,13 +196,51 @@ class RecordController extends Controller
             $model = $order->ear_pierching;
             $model ? $form->from_update(
                 model: $model,
-                fields: $this->family_planning_fields,
+                fields: $this->ear_pierching_fields,
             ) : $form->from_create(
-                fields: $this->family_planning_fields,
+                fields: $this->ear_pierching_fields,
             );
             return view('pages.midwife.record.ear_pierching', [
                 'order' => $order,
                 'form' => $form,
+            ]);
+        } else if ($order->service->name == 'perawatan bayi baru lahir') {
+            $forms = [];
+            foreach ($order->newborn_cares as $model) {
+                $form = NewbornCare::formable()->from_update(
+                    model: $model,
+                    fields: $this->newborn_care_fields,
+                );
+                $forms[] = $form;
+            }
+            $form = NewbornCare::formable()->from_create(
+                fields: $this->newborn_care_fields,
+            );
+            $form->model->visit_number = (count($order->newborn_cares ?: [])) + 1;
+            $form->model->visit_description = "visit {$form->model->visit_number}";
+            $forms[] = $form;
+            return view('pages.midwife.record.newborn_care', [
+                'order' => $order,
+                'forms' => $forms,
+            ]);
+        } else if ($order->service->name == 'pelayanan kesehatan masa nifas') {
+            $forms = [];
+            foreach ($order->postpartum_healths as $model) {
+                $form = PostpartumHealth::formable()->from_update(
+                    model: $model,
+                    fields: $this->postpartum_health_fields,
+                );
+                $forms[] = $form;
+            }
+            $form = PostpartumHealth::formable()->from_create(
+                fields: $this->postpartum_health_fields,
+            );
+            $form->model->visit_number = (count($order->postpartum_healths ?: [])) + 1;
+            $form->model->visit_description = "visit {$form->model->visit_number}";
+            $forms[] = $form;
+            return view('pages.midwife.record.postpartum_health', [
+                'order' => $order,
+                'forms' => $forms,
             ]);
         }
     }
@@ -234,6 +309,61 @@ class RecordController extends Controller
             $family_planning_revisit = new FamilyPlanningRevisit($data);
             $family_planning_revisit->family_planning_id = $family_planning->id;
             $family_planning_revisit->save();
+        } else if ($order->service->name == 'tindik telinga') {
+            $data = Validator::make($request->all(), [
+                'name' => 'required|string',
+                'birthday' => 'required|string',
+                'age' => 'required|string',
+                'gender' => 'required|string',
+            ])->validate();
+            $data['birthday'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['birthday'])));
+            $model = new EarPierching($data);
+            $model->order_id = $order->id;
+            $model->save();
+        } else if ($order->service->name == 'perawatan bayi baru lahir') {
+            $data = Validator::make($request->all(), [
+                'body_weight' => 'required|integer',
+                'body_length' => 'required|integer',
+                'body_temperature' => 'required|integer',
+                'breathing_frequency' => 'required|string',
+                'heart_rate_frequency' => 'required|string',
+                'check_possible_serious_illnesses' => 'required|string',
+                'check_jaundice' => 'required|string',
+                'check_diarrhea' => 'required|string',
+                'check_low_body_weight_and_problems_breastfeeding' => 'required|string',
+                'check_vit_k1_status' => 'required|string',
+                'check_hb_0_bcg_polio_1_immunization_status' => 'required|string',
+                'areas_that_have_implemented_Congenital_Hypothyroidism' => 'required|string',
+                'shk' => 'required|boolean',
+                'shk_test_result' => 'required|string',
+            ])->validate();
+            $model = new NewbornCare($data);
+            $model->visit_number = (count($order->newborn_cares ?: [])) + 1;
+            $model->visit_description = "visit {$model->visit_number}";
+            $model->order_id = $order->id;
+            $model->save();
+        } else if ($order->service->name == 'pelayanan kesehatan masa nifas') {
+            $data = Validator::make($request->all(), [
+                "general_condition_of_the_mother" => 'required|string',
+                "blood_pressure_body_temperature_respiration_pulse" => 'required|string',
+                "vaginal_bleeding" => 'required|string',
+                "perineal_conditions" => 'required|string',
+                "signs_of_infection" => 'required|string',
+                "fundus_uteri_height" => 'required|string',
+                "lochia" => 'required|string',
+                "birth_canal_examination" => 'required|string',
+                "breast_examination" => 'required|string',
+                "lactation" => 'required|string',
+                "give_capsules_vit_a" => 'required|string',
+                "postpartum_contraceptive_services" => 'required|string',
+                "high_risk_treatment_and_complications_in_postpartum" => 'required|string',
+                "visit_note" => 'required|string',
+            ])->validate();
+            $model = new PostpartumHealth($data);
+            $model->visit_number = (count($order->postpartum_healths ?: [])) + 1;
+            $model->visit_description = "visit {$model->visit_number}";
+            $model->order_id = $order->id;
+            $model->save();
         }
         return to_route('web.midwife.dashboard');
     }
@@ -280,6 +410,54 @@ class RecordController extends Controller
             $data['detach_date'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['detach_date'])));
             $family_planning = $order->family_planning;
             $family_planning->update($data);
+        } else if ($order->service->name == 'tindik telinga') {
+            $data = Validator::make($request->all(), [
+                'name' => 'required|string',
+                'birthday' => 'required|string',
+                'age' => 'required|string',
+                'gender' => 'required|string',
+            ])->validate();
+            $data['birthday'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['birthday'])));
+            $model = $order->ear_pierching;
+            $model->update($data);
+        } else if ($order->service->name == 'perawatan bayi baru lahir') {
+            $data = Validator::make($request->all(), [
+                'body_weight' => 'required|integer',
+                'body_length' => 'required|integer',
+                'body_temperature' => 'required|integer',
+                'breathing_frequency' => 'required|string',
+                'heart_rate_frequency' => 'required|string',
+                'check_possible_serious_illnesses' => 'required|string',
+                'check_jaundice' => 'required|string',
+                'check_diarrhea' => 'required|string',
+                'check_low_body_weight_and_problems_breastfeeding' => 'required|string',
+                'check_vit_k1_status' => 'required|string',
+                'check_hb_0_bcg_polio_1_immunization_status' => 'required|string',
+                'areas_that_have_implemented_Congenital_Hypothyroidism' => 'required|string',
+                'shk' => 'required|boolean',
+                'shk_test_result' => 'required|string',
+            ])->validate();
+            $model = NewbornCare::find($request->input('id'));
+            $model->update($data);
+        } else if ($order->service->name == 'pelayanan kesehatan masa nifas') {
+            $data = Validator::make($request->all(), [
+                "general_condition_of_the_mother" => 'required|string',
+                "blood_pressure_body_temperature_respiration_pulse" => 'required|string',
+                "vaginal_bleeding" => 'required|string',
+                "perineal_conditions" => 'required|string',
+                "signs_of_infection" => 'required|string',
+                "fundus_uteri_height" => 'required|string',
+                "lochia" => 'required|string',
+                "birth_canal_examination" => 'required|string',
+                "breast_examination" => 'required|string',
+                "lactation" => 'required|string',
+                "give_capsules_vit_a" => 'required|string',
+                "postpartum_contraceptive_services" => 'required|string',
+                "high_risk_treatment_and_complications_in_postpartum" => 'required|string',
+                "visit_note" => 'required|string',
+            ])->validate();
+            $model = PostpartumHealth::find($request->input('id'));
+            $model->update($data);
         }
         return to_route('web.midwife.dashboard');
     }

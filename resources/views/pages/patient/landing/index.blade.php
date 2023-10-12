@@ -2,7 +2,7 @@
 
     <section id="beranda"
         class="grid grid-cols-2 p-5 sm:px-20 bg-[url('https://hellosehat.com/images/homepage-banner/banner-bg.svg')] relative bg-cover bg-no-repeat">
-        <div class="flex flex-col gap-5">
+        <div class="flex flex-col justify-center gap-5 h-56">
             <div class="font-bold text-3xl">
                 Layanan Homecare Untuk Ibu dan Anak
             </div>
@@ -11,11 +11,11 @@
                 baru lahir
             </div>
         </div>
-        <div class="flex justify-center">
+        {{-- <div class="flex justify-center">
             <div class="w-max bg-white rounded-lg p-5 pb-0 shadow-md shadow-stone-600">
                 <img class="h-[200px]" src="{{ asset('avatar1.png') }}" alt="">
             </div>
-        </div>
+        </div> --}}
     </section>
 
     <section id="layanan" class="@container px-2 sm:px-24 py-8">
