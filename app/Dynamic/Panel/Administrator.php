@@ -78,7 +78,7 @@ class Administrator extends Panel
                     ),
                     new Menu(
                         name: "command",
-                        link: route('web.administrator.order.index'),
+                        link: route('web.administrator.command'),
                         icon: Blade::render('<x-icons.command stroke="2" />'),
                     ),
                 ],

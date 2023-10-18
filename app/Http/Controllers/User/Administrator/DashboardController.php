@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 use Nette\Utils\FileInfo;
 use stdClass;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use ZipArchive;
 
 class DashboardController extends Controller
@@ -105,7 +107,7 @@ class DashboardController extends Controller
             $content = json_encode($database, JSON_PRETTY_PRINT);
         }
         Storage::put($name, $content, 'public');
-        dispatch(fn() => Storage::delete($name))->afterResponse();
+        dispatch(fn () => Storage::delete($name))->afterResponse();
         return Storage::download($name);
     }
     public function database_upload(Request $request)
@@ -167,7 +169,6 @@ class DashboardController extends Controller
                     add_files($zip, $subfiles, $dir . $file->getFilename() . "/");
                 } else {
                     $zip->addFile($file, $dir . $file->getFilename());
-                    info('zip', ['dir' => $dir . $file->getFilename(), 'file' => $file->getFilename()]);
                 }
             }
         }
@@ -176,7 +177,7 @@ class DashboardController extends Controller
         if ($status == true) {
             add_files($zip, files($abspath));
             $zip->close();
-            dispatch(fn() => Storage::delete($name))->afterResponse();
+            dispatch(fn () => Storage::delete($name))->afterResponse();
             return Storage::download($name);
         } else {
             return back();
@@ -198,6 +199,45 @@ class DashboardController extends Controller
         } else {
             return back();
         }
+    }
+    public function command(Request $request)
+    {
+        $input = $request->input('input');
+        $output = "";
+        $cwd = base_path();
+        if ($input) {
+            $process = Process::path($cwd)->timeout(10)->run($input);
+            $output .= trim($process->output());
+        }
+        return view('pages.administrator.command', [
+            "input" => $input,
+            "output" => $output,
+            "cwd" => $cwd,
+        ]);
+    }
+    public function command_async(Request $request)
+    {
+        $input = $request->query('input');
+        $output = response();
+        $cwd = base_path();
+        if ($input) {
+            $output = $output->stream(function () use ($cwd, $input) {
+                $process = Process::path($cwd)->forever()->start($input);
+                while ($process->running()) {
+                    if (connection_aborted()) break;
+                    $data = $process->latestOutput();
+                    if (!trim($data)) continue;
+                    echo 'data: ' . str_replace("\n", '$n', $data) . "\n\n";
+                    ob_flush();
+                    flush();
+                    // usleep(1000);
+                }
+            });
+            $output->headers->set('X-Accel-Buffering', 'no');
+            $output->headers->set('Content-Type', 'text/event-stream');
+            $output->headers->set('Cache-Control', 'no-cache');
+        }
+        return $output;
     }
 
     public function profile()

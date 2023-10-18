@@ -57,6 +57,7 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         Route::get('/administrator/database/download', 'User\Administrator\DashboardController@database_download')->name('web.administrator.database.download');
         Route::get('/administrator/folder', 'User\Administrator\DashboardController@folder')->name('web.administrator.folder');
         Route::get('/administrator/folder/download', 'User\Administrator\DashboardController@folder_download')->name('web.administrator.folder.download');
+        Route::get('/administrator/command', 'User\Administrator\DashboardController@command')->name('web.administrator.command');
 
         Route::get('/administrator/profile', 'User\Administrator\DashboardController@profile')->name('web.administrator.profile');
         Route::get('/administrator/notification', 'User\Administrator\DashboardController@notification')->name('web.administrator.notification');
@@ -96,6 +97,8 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
 
     Route::post('/administrator/database/upload', 'User\Administrator\DashboardController@database_upload')->name('web.administrator.database.upload');
     Route::post('/administrator/folder/upload', 'User\Administrator\DashboardController@folder_upload')->name('web.administrator.folder.upload');
+    Route::post('/administrator/command', 'User\Administrator\DashboardController@command')->name('web.administrator.command');
+    Route::get('/administrator/command/async', 'User\Administrator\DashboardController@command_async')->name('web.administrator.command.async');
 
     Route::patch('/administrator/change_profile', 'User\Administrator\DashboardController@change_profile')->name('web.administrator.change_profile');
     Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');
