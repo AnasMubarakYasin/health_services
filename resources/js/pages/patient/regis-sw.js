@@ -24,9 +24,9 @@ if ("serviceWorker" in navigator) {
   let prompted_install = false;
   let prompted_update = false;
   let prompted_notification = false;
-  const wb = new Workbox("/patient/sw.js", {
+  const wb = new Workbox("/sw.js", {
     type: "module",
-    scope: "/patient/",
+    scope: "/",
   });
   const prompt = create_prompt();
   window.addEventListener("beforeinstallprompt", (event) => {

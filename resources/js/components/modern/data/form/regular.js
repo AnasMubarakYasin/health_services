@@ -1,3 +1,4 @@
+import Quill from "quill";
 import { Datepicker, Timepicker, Input, Select, initTE } from "tw-elements";
 
 initTE({ Datepicker, Timepicker, Input, Select });
@@ -34,6 +35,40 @@ const checkbox_elms = document
       } else {
         elm.previousElementSibling.value = "0";
       }
+    });
+  });
+const doc_elms = document
+  .querySelectorAll("#form [data-document-editor]")
+  .forEach((elm) => {
+    const quill = new Quill(elm, {
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline", "strike"], // toggled buttons
+          ["blockquote", "code-block"],
+
+          [{ header: 1 }, { header: 2 }], // custom button values
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }], // superscript/subscript
+          [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+          [{ direction: "rtl" }], // text direction
+
+          [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ font: [] }],
+          [{ align: [] }],
+
+          ["clean"],
+        ],
+      },
+      theme: "snow",
+    });
+    const content = elm.querySelector(".ql-editor");
+    const input = elm.nextElementSibling;
+    quill.on("text-change", function (delta, oldDelta, source) {
+      const text = content.innerHTML;
+      input.value = text;
     });
   });
 

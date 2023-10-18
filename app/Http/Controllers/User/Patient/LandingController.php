@@ -195,7 +195,8 @@ class LandingController extends Controller
         return back();
     }
 
-    protected function create_panel() {
+    protected function create_panel()
+    {
         /** @var ?Patient */
         $user = auth('patient')->user();
         /** @var ?Patient */
@@ -206,7 +207,13 @@ class LandingController extends Controller
             $panel->locale = session("locale_$user->id", app()->getLocale());
             $panel->template = session('template', config('dynamic.application.template'));
             $panel->preference = session("preference_$user->id", new \stdClass());
-            $panel->token = $user->createToken('generic')->plainTextToken;
+
+            $token = $user->currentAccessToken();
+            if (!$token) {
+                $token = $user->createToken("panel");
+                $user->withAccessToken($token);
+            }
+            $panel->token = $token->plainTextToken;
         }
         return $panel;
     }

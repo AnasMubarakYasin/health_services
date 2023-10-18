@@ -23,6 +23,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'password' => 'admin',
         ]);
+        Service::create(['name' => 'pemeriksaan kehamilan', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'perawatan bayi baru lahir', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'pelayanan kesehatan masa nifas', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'pelayanan KB', 'img' => '', 'description' => '']);
+        Service::create(['name' => 'tindik telinga', 'img' => '', 'description' => '']);
+
+        if (env('APP_ENV') != 'local') return;
+
         $midwife = Midwife::factory()->create([
             'name' => 'midwife',
             'password' => 'midwife',
@@ -34,12 +42,6 @@ class DatabaseSeeder extends Seeder
         $administrator = Administrator::factory()->count(25)->create();
         $midwives = Midwife::factory()->count(25)->create();
         $patients = Patient::factory()->count(25)->create();
-
-        Service::create(['name' => 'pemeriksaan kehamilan', 'img' => '', 'description' => '']);
-        Service::create(['name' => 'perawatan bayi baru lahir', 'img' => '', 'description' => '']);
-        Service::create(['name' => 'pelayanan kesehatan masa nifas', 'img' => '', 'description' => '']);
-        Service::create(['name' => 'pelayanan KB', 'img' => '', 'description' => '']);
-        Service::create(['name' => 'tindik telinga', 'img' => '', 'description' => '']);
 
         Schedule::factory()->count(50)->state(new Sequence(
             ...$midwives->map(function ($midwife) {

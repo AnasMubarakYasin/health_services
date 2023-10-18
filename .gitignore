@@ -6,6 +6,7 @@
 /public/administrator
 /public/midwife
 /public/patient
+/public/assets
 /storage/*.key
 /vendor
 .env

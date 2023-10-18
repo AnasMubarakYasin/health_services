@@ -29,7 +29,13 @@ class Panel extends Component
         $panel->locale = Session::get("locale_$user->id", App::getLocale());
         $panel->template = $template;
         $panel->preference = Session::get("preference_$user->id", new \stdClass());
-        $panel->token = $user->createToken('generic')->plainTextToken;
+
+        $token = $user->currentAccessToken();
+        if (!$token) {
+            $token = $user->createToken("panel");
+            $user->withAccessToken($token);
+        }
+        $panel->token = $token->plainTextToken;
 
         $this->panel = $panel;
     }

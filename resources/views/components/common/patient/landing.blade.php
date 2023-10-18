@@ -29,9 +29,22 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
 
+    <script>
+        var panel = @json($panel);
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/pages/patient/landing.js')
+
+    @if ($panel)
+        @if ($panel->webmanifest)
+            <link rel="manifest" href="{{ $panel->get_webmanifest() }}">
+        @endif
+        @if ($panel->service_worker)
+            <script type="module" src="{{ $panel->get_service_worker() }}"></script>
+        @endif
+    @endif
 
     {{ $head }}
 </head>
@@ -261,7 +274,7 @@
 
     </header>
 
-    <main class="grid">
+    <main id="main" class="grid">
         {{ $slot }}
     </main>
 

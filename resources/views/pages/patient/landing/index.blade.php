@@ -2,13 +2,13 @@
 
     <section id="beranda"
         class="grid grid-cols-2 p-5 sm:px-20 bg-[url('https://hellosehat.com/images/homepage-banner/banner-bg.svg')] relative bg-cover bg-no-repeat">
-        <div class="flex flex-col justify-center gap-5 h-56">
+        <div class="flex flex-col justify-center gap-5 sm:h-56">
             <div class="font-bold text-3xl">
                 Layanan Homecare Untuk Ibu dan Anak
             </div>
             <div class="text-gray-700 text-base">
-                Layanan homecare dengan bidan berlisensi untuk melakukan pemeriksaan kehamilan dan perawatan bayi
-                baru lahir
+                layanan homecare dengan bidan berlisensi untuk memberikan pelayanan kesehatan kepada ibu dan bayi baru
+                lahir
             </div>
         </div>
         {{-- <div class="flex justify-center">
@@ -23,7 +23,8 @@
         <div
             class="grid grid-cols-2  @xs:grid-rows-3 @xl:grid-cols-3  @xl:grid-rows-2 @2xl:grid-cols-4 @2xl:grid-rows-2 @4xl:grid-cols-5 @4xl:grid-rows-1 gap-4">
             @foreach ($services as $service)
-                <a href="{{ route('web.patient.landing.service', ['service' => $service]) }}" class="grid justify-items-center gap-2 p-2 bg-white shadow-lg rounded-xl">
+                <a href="{{ route('web.patient.landing.service', ['service' => $service]) }}"
+                    class="grid justify-items-center gap-2 p-2 bg-white shadow-lg rounded-xl">
                     <img class="" src="{{ $service->img }}" alt="">
                     <span class="text-center text-lg font-bold capitalize">
                         {{ $service->name }}

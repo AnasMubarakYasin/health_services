@@ -39,6 +39,7 @@ class Service extends Model
             'description' => new Definition(
                 name: 'description',
                 type: 'string',
+                format: "document",
             ),
         ];
         self::$fetcher_relation = function ($definition) {

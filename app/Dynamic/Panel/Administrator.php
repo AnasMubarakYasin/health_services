@@ -77,9 +77,9 @@ class Administrator extends Panel
                         icon: Blade::render('<x-icons.folder stroke="2" />'),
                     ),
                     new Menu(
-                        name: "settings",
+                        name: "command",
                         link: route('web.administrator.order.index'),
-                        icon: Blade::render('<x-icons.settings2 stroke="2" />'),
+                        icon: Blade::render('<x-icons.command stroke="2" />'),
                     ),
                 ],
             ),

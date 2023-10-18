@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require('dotenv').config()
+require("dotenv").config();
 
 const path = require("path");
 const fs = require("fs");
@@ -33,6 +33,8 @@ program
         }
         for (const key of keys) {
             console.log("building", key);
+            const manifest = manifests[key];
+            const is_main = manifest.scope == "/";
             const config = vite.defineConfig({
                 build: {
                     outDir: `public/${key}`,
@@ -42,9 +44,9 @@ program
                         registerType: "prompt",
                         injectRegister: "auto",
                         strategies: "injectManifest",
-                        base: `/${key}/`,
                         srcDir: `resources/js/pages/${key}`,
                         filename: "sw.js",
+                        minify: true,
                         injectManifest: {
                             additionalManifestEntries: [
                                 // { revision: "2", url: `/${key}/dashboard` },
@@ -60,11 +62,21 @@ program
                             // "masked-icon.svg",
                         ],
                         manifestFilename: "site.webmanifest",
-                        manifest: manifests[key],
+                        manifest,
                     }),
                 ],
             });
             await vite.build(config);
+            if (is_main) {
+                console.log("extra: found main pwa");
+                fs.promises
+                    .cp(`public/${key}`, "public", {
+                        recursive: true,
+                    })
+                    .catch(() => {
+                        console.log(`copy public/${key} to public fail`);
+                    });
+            }
         }
     });
 program
@@ -78,10 +90,26 @@ program
         }
         const src = "public";
         for (const dir of dirs) {
+            const manifest = manifests[dir];
+            const is_main = manifest.scope == "/";
             fs.rm(path.join(src, dir), { recursive: true }, (err) => {
                 console.log(path.join(src, dir), err ? "fail" : "success");
                 err && console.error(err);
             });
+            if (is_main) {
+                for (const dir of [
+                    "manifest.json",
+                    "registerSW.js",
+                    "site.webmanifest",
+                    "sw.js",
+                    "assets",
+                ]) {
+                    fs.rm(path.join(src, dir), { recursive: true }, (err) => {
+                        console.log(path.join(src, dir), err ? "fail" : "success");
+                        err && console.error(err);
+                    });
+                }
+            }
         }
     });
 

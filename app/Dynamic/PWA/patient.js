@@ -2,13 +2,13 @@ const colors = require("tailwindcss/colors");
 const assets = require("./assets.js");
 
 module.exports = {
-  // id: "/patient/",
+  // id: "/",
   dir: "ltr",
   lang: "en",
   name: process.env.APP_NAME,
-  scope: "/patient/",
+  scope: "/",
   display: "standalone",
-  start_url: "/patient/dashboard",
+  start_url: "/",
   short_name: process.env.APP_NAME,
   theme_color: colors.blue[500],
   description: "Web application for ordering healthcare services",
@@ -17,7 +17,7 @@ module.exports = {
   related_applications: [
     {
       platform: "webapp",
-      url: `${process.env.APP_URL}/patient/site.webmanifest`,
+      url: `${process.env.APP_URL}/site.webmanifest`,
     },
   ],
   prefer_related_applications: false,
@@ -43,7 +43,7 @@ module.exports = {
       name: "Order Service",
       short_name: "Order Service",
       description: "Ordering a service",
-      url: "/patient/order",
+      url: "/order",
       // icons: [
       //   {
       //     src: "/icons/logo/proto-512.v2.png",
@@ -55,7 +55,7 @@ module.exports = {
       name: "Show History",
       short_name: "Show History",
       description: "List all orders",
-      url: "/patient/history",
+      url: "/history",
       // icons: [
       //   {
       //     src: "/icons/logo/proto-512.v2.png",

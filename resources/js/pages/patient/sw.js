@@ -11,6 +11,8 @@ const fallback_document = "/patient/offline";
 cleanupOutdatedCaches();
 precacheAndRoute(manifest);
 
+console.log(manifest);
+
 import { clientsClaim } from "workbox-core";
 
 // clientsClaim();
@@ -107,5 +109,6 @@ self.addEventListener("push", (event) => {
 });
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+  console.log(event.action);
   clients.openWindow(event.action);
 });
