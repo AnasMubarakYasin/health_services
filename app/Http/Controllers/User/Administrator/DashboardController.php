@@ -206,6 +206,7 @@ class DashboardController extends Controller
         $output = "";
         $cwd = base_path();
         if ($input) {
+            info("command", ['input' => $input]);
             $process = Process::path($cwd)->timeout(10)->run($input);
             $output .= trim($process->output());
         }
@@ -221,6 +222,7 @@ class DashboardController extends Controller
         $output = response();
         $cwd = base_path();
         if ($input) {
+            info("command", ['input' => $input]);
             $output = $output->stream(function () use ($cwd, $input) {
                 $process = Process::path($cwd)->forever()->start($input);
                 while ($process->running()) {
