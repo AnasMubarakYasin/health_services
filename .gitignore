@@ -7,6 +7,9 @@
 /public/midwife
 /public/patient
 /public/assets
+/public/registerSW.js
+/public/site.webmanifest
+/public/sw.js
 /storage/*.key
 /vendor
 .env

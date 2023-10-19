@@ -224,15 +224,22 @@ class DashboardController extends Controller
         if ($input) {
             info("command", ['input' => $input]);
             $output = $output->stream(function () use ($cwd, $input) {
-                $process = Process::path($cwd)->forever()->start($input);
-                while ($process->running()) {
-                    if (connection_aborted()) break;
-                    $data = $process->latestOutput();
-                    if (!trim($data)) continue;
-                    echo 'data: ' . str_replace("\n", '$n', $data) . "\n\n";
+                try {
+                    set_time_limit(60 * 5);
+                    $process = Process::timeout(60 * 5)->path($cwd)->start($input);
+                    while ($process->running()) {
+                        if (connection_aborted()) break;
+                        $data = $process->latestOutput();
+                        if (!trim($data)) continue;
+                        echo 'data: ' . str_replace("\n", '$n', $data) . "\n\n";
+                        ob_flush();
+                        flush();
+                        // usleep(1000);
+                    }
+                } catch (\Throwable $th) {
+                    echo 'data: ' . str_replace("\n", '$n', $th->getMessage()) . "\n\n";
                     ob_flush();
                     flush();
-                    // usleep(1000);
                 }
             });
             $output->headers->set('X-Accel-Buffering', 'no');

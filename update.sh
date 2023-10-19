@@ -7,6 +7,8 @@ set -e
 . ~/.profile
 . ~/.bashrc
 
+export COMPOSER_HOME="$HOME/.config/composer";
+
 echo start update source code
 
 php artisan down --secret="administrator"
