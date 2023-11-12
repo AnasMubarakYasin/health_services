@@ -35,7 +35,7 @@ class LandingController extends Controller
             'panel' => $this->create_panel(),
             'services' => $services,
             'midwifes' => $midwifes,
-            'orders' => $orders->slice(0),
+            'orders' => $orders,
         ]);
     }
     public function service(Service $service)

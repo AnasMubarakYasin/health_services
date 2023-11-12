@@ -200,7 +200,7 @@
     "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-cd181200.css",
+    "file": "assets/app-335c8bfb.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -534,7 +534,7 @@
     "src": "resources/js/pages/midwife/sw.js"
   },
   "resources/js/pages/patient/landing.js": {
-    "file": "assets/landing-3b7283c0.js",
+    "file": "assets/landing-2ee5a917.js",
     "imports": [
       "resources/js/lib/context.ts",
       "_tw-elements.es.min-b026dc7a.js",
@@ -562,7 +562,7 @@
     "src": "resources/js/pages/patient/order_midwife.js"
   },
   "resources/js/pages/patient/regis-sw.js": {
-    "file": "assets/regis-sw-d4f9af6f.js",
+    "file": "assets/regis-sw-4324b87f.js",
     "imports": [
       "_workbox-window.prod.es5-69cd2c5c.js",
       "resources/js/lib/context.ts",
