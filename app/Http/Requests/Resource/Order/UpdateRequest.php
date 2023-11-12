@@ -23,6 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'status' => 'required|in:finished,on_progress,scheduled',
+            'confirm' => 'nullable|in:yes,no',
             'schedule' => 'required|date',
             'schedule_start' => 'required|date_format:H:i',
             'schedule_end' => 'required|date_format:H:i',

@@ -32,12 +32,12 @@ class DashboardController extends Controller
     {
         $services = Service::all();
         $midwifes = Midwife::all();
-        $order = Order::first_unfinish_by_patient(auth()->user());
+        $orders = Order::get_unfinish_by_patient(auth()->user());
 
         return view('pages.patient.dashboard', [
             'services' => $services,
             'midwifes' => $midwifes,
-            'order' => $order,
+            'orders' => $orders,
         ]);
     }
     public function history()

@@ -27,16 +27,15 @@ class LandingController extends Controller
     {
         $services = Service::all();
         $midwifes = Midwife::all();
-        $order = null;
+        $orders = null;
         if (auth('patient')->user()) {
-            $order = Order::first_unfinish_by_patient(auth('patient')->user());
+            $orders = Order::get_unfinish_by_patient(auth('patient')->user());
         }
-
         return view('pages.patient.landing.index', [
             'panel' => $this->create_panel(),
             'services' => $services,
             'midwifes' => $midwifes,
-            'order' => $order,
+            'orders' => $orders->slice(0),
         ]);
     }
     public function service(Service $service)
@@ -60,9 +59,10 @@ class LandingController extends Controller
     }
     public function api_order(CreateOrderMidwifeRequest $request, Midwife $midwife)
     {
-        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
-        if ($unfinish_order) {
-            return back()->withErrors(['api' => 'user have unfinish order']);
+        $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
+        if ($unfinish_order > 2) {
+            return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
+            // return back()->withErrors(['api' => 'user have unfinish order']);
         }
         $data = $request->validated();
         $order = Order::create([
@@ -98,9 +98,10 @@ class LandingController extends Controller
     }
     public function api_order_common(OrderRequest $request)
     {
-        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
-        if ($unfinish_order) {
-            return back()->withErrors(['api' => 'user have unfinish order']);
+        $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
+        if ($unfinish_order > 2) {
+            return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
+            // return back()->withErrors(['api' => 'user have unfinish order']);
         }
         $data = $request->validated();
         $order = Order::create([
@@ -216,5 +217,19 @@ class LandingController extends Controller
             $panel->token = $token->plainTextToken;
         }
         return $panel;
+    }
+    public function order_confirm_yes(Order $order)
+    {
+        $order->confirm = "yes";
+        $order->update();
+
+        return back();
+    }
+    public function order_confirm_no(Order $order)
+    {
+        $order->confirm = "no";
+        $order->update();
+
+        return back();
     }
 }

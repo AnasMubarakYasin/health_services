@@ -2,10 +2,10 @@ try {
   self["workbox:core:7.0.0"] && _();
 } catch {
 }
-const Q = (s, ...e) => {
+const G = (s, ...e) => {
   let t = s;
   return e.length > 0 && (t += ` :: ${JSON.stringify(e)}`), t;
-}, z = Q;
+}, Q = G;
 class h extends Error {
   /**
    *
@@ -16,7 +16,7 @@ class h extends Error {
    * be added as a key on the context object.
    */
   constructor(e, t) {
-    const n = z(e, t);
+    const n = Q(e, t);
     super(n), this.name = e, this.details = t;
   }
 }
@@ -26,12 +26,12 @@ const f = {
   prefix: "workbox",
   runtime: "runtime",
   suffix: typeof registration < "u" ? registration.scope : ""
-}, P = (s) => [f.prefix, s, f.suffix].filter((e) => e && e.length > 0).join("-"), J = (s) => {
+}, P = (s) => [f.prefix, s, f.suffix].filter((e) => e && e.length > 0).join("-"), z = (s) => {
   for (const e of Object.keys(f))
     s(e);
 }, k = {
   updateDetails: (s) => {
-    J((e) => {
+    z((e) => {
       typeof s[e] == "string" && (f[e] = s[e]);
     });
   },
@@ -49,8 +49,8 @@ try {
   self["workbox:precaching:7.0.0"] && _();
 } catch {
 }
-const X = "__WB_REVISION__";
-function Y(s) {
+const J = "__WB_REVISION__";
+function X(s) {
   if (!s)
     throw new h("add-to-cache-list-unexpected-type", { entry: s });
   if (typeof s == "string") {
@@ -71,12 +71,12 @@ function Y(s) {
     };
   }
   const n = new URL(t, location.href), r = new URL(t, location.href);
-  return n.searchParams.set(X, e), {
+  return n.searchParams.set(J, e), {
     cacheKey: n.href,
     url: r.href
   };
 }
-class Z {
+class Y {
   constructor() {
     this.updatedURLs = [], this.notUpdatedURLs = [], this.handlerWillStart = async ({ request: e, state: t }) => {
       t && (t.originalRequest = e);
@@ -89,7 +89,7 @@ class Z {
     };
   }
 }
-class ee {
+class Z {
   constructor({ precacheController: e }) {
     this.cacheKeyWillBeUsed = async ({ request: t, params: n }) => {
       const r = (n == null ? void 0 : n.cacheKey) || this._precacheController.getCacheKeyForURL(t.url);
@@ -98,7 +98,7 @@ class ee {
   }
 }
 let w;
-function te() {
+function ee() {
   if (w === void 0) {
     const s = new Response("");
     if ("body" in s)
@@ -111,7 +111,7 @@ function te() {
   }
   return w;
 }
-async function se(s, e) {
+async function te(s, e) {
   let t = null;
   if (s.url && (t = new URL(s.url).origin), t !== self.location.origin)
     throw new h("cross-origin-copy-response", { origin: t });
@@ -119,17 +119,17 @@ async function se(s, e) {
     headers: new Headers(n.headers),
     status: n.status,
     statusText: n.statusText
-  }, c = e ? e(r) : r, a = te() ? n.body : await n.blob();
+  }, c = e ? e(r) : r, a = ee() ? n.body : await n.blob();
   return new Response(a, c);
 }
-const ne = (s) => new URL(String(s), location.href).href.replace(new RegExp(`^${location.origin}`), "");
+const se = (s) => new URL(String(s), location.href).href.replace(new RegExp(`^${location.origin}`), "");
 function O(s, e) {
   const t = new URL(s);
   for (const n of e)
     t.searchParams.delete(n);
   return t.href;
 }
-async function re(s, e, t, n) {
+async function ne(s, e, t, n) {
   const r = O(e.url, t);
   if (e.url === r)
     return s.match(e, n);
@@ -140,7 +140,7 @@ async function re(s, e, t, n) {
       return s.match(i, n);
   }
 }
-class ae {
+class re {
   /**
    * Creates a promise and exposes its resolve and reject functions as methods.
    */
@@ -150,12 +150,12 @@ class ae {
     });
   }
 }
-const ce = /* @__PURE__ */ new Set();
-async function ie() {
-  for (const s of ce)
+const ae = /* @__PURE__ */ new Set();
+async function ce() {
+  for (const s of ae)
     await s();
 }
-function oe(s) {
+function ie(s) {
   return new Promise((e) => setTimeout(e, s));
 }
 try {
@@ -165,7 +165,7 @@ try {
 function C(s) {
   return typeof s == "string" ? new Request(s) : s;
 }
-class le {
+class oe {
   /**
    * Creates a new instance associated with the passed strategy and event
    * that's handling the request.
@@ -183,7 +183,7 @@ class le {
    *     {@link workbox-routing~matchCallback} (if applicable).
    */
   constructor(e, t) {
-    this._cacheKeys = {}, Object.assign(this, t), this.event = t.event, this._strategy = e, this._handlerDeferred = new ae(), this._extendLifetimePromises = [], this._plugins = [...e.plugins], this._pluginStateMap = /* @__PURE__ */ new Map();
+    this._cacheKeys = {}, Object.assign(this, t), this.event = t.event, this._strategy = e, this._handlerDeferred = new re(), this._extendLifetimePromises = [], this._plugins = [...e.plugins], this._pluginStateMap = /* @__PURE__ */ new Map();
     for (const n of this._plugins)
       this._pluginStateMap.set(n, {});
     this.event.waitUntil(this._handlerDeferred.promise);
@@ -297,16 +297,16 @@ class le {
    */
   async cachePut(e, t) {
     const n = C(e);
-    await oe(0);
+    await ie(0);
     const r = await this.getCacheKey(n, "write");
     if (!t)
       throw new h("cache-put-with-no-response", {
-        url: ne(r.url)
+        url: se(r.url)
       });
     const c = await this._ensureResponseSafeToCache(t);
     if (!c)
       return !1;
-    const { cacheName: a, matchOptions: i } = this._strategy, o = await self.caches.open(a), l = this.hasCallback("cacheDidUpdate"), g = l ? await re(
+    const { cacheName: a, matchOptions: i } = this._strategy, o = await self.caches.open(a), l = this.hasCallback("cacheDidUpdate"), g = l ? await ne(
       // TODO(philipwalton): the `__WB_REVISION__` param is a precaching
       // feature. Consider into ways to only add this behavior if using
       // precaching.
@@ -319,7 +319,7 @@ class le {
       await o.put(r, l ? c.clone() : c);
     } catch (u) {
       if (u instanceof Error)
-        throw u.name === "QuotaExceededError" && await ie(), u;
+        throw u.name === "QuotaExceededError" && await ce(), u;
     }
     for (const u of this.iterateCallbacks("cacheDidUpdate"))
       await u({
@@ -547,7 +547,7 @@ class E {
       event: e,
       request: e.request
     });
-    const t = e.event, n = typeof e.request == "string" ? new Request(e.request) : e.request, r = "params" in e ? e.params : void 0, c = new le(this, { event: t, request: n, params: r }), a = this._getResponse(c, n, t), i = this._awaitComplete(a, c, n, t);
+    const t = e.event, n = typeof e.request == "string" ? new Request(e.request) : e.request, r = "params" in e ? e.params : void 0, c = new oe(this, { event: t, request: n, params: r }), a = this._getResponse(c, n, t), i = this._awaitComplete(a, c, n, t);
     return [a, i];
   }
   async _getResponse(e, t, n) {
@@ -691,10 +691,10 @@ p.defaultPrecacheCacheabilityPlugin = {
 };
 p.copyRedirectedCacheableResponsesPlugin = {
   async cacheWillUpdate({ response: s }) {
-    return s.redirected ? await se(s) : s;
+    return s.redirected ? await te(s) : s;
   }
 };
-class he {
+class le {
   /**
    * Create a new PrecacheController.
    *
@@ -710,7 +710,7 @@ class he {
       cacheName: k.getPrecacheName(e),
       plugins: [
         ...t,
-        new ee({ precacheController: this })
+        new Z({ precacheController: this })
       ],
       fallbackToNetwork: n
     }), this.install = this.install.bind(this), this.activate = this.activate.bind(this);
@@ -746,7 +746,7 @@ class he {
     const t = [];
     for (const n of e) {
       typeof n == "string" ? t.push(n) : n && n.revision === void 0 && t.push(n.url);
-      const { cacheKey: r, url: c } = Y(n), a = typeof n != "string" && n.revision ? "reload" : "default";
+      const { cacheKey: r, url: c } = X(n), a = typeof n != "string" && n.revision ? "reload" : "default";
       if (this._urlsToCacheKeys.has(c) && this._urlsToCacheKeys.get(c) !== r)
         throw new h("add-to-cache-list-conflicting-entries", {
           firstEntry: this._urlsToCacheKeys.get(c),
@@ -778,7 +778,7 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
    */
   install(e) {
     return v(e, async () => {
-      const t = new Z();
+      const t = new Y();
       this.strategy.plugins.push(t);
       for (const [c, a] of this._urlsToCacheKeys) {
         const i = this._cacheKeysToIntegrities.get(a), o = this._urlsToCacheModes.get(c), l = new Request(c, {
@@ -892,7 +892,7 @@ This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
   }
 }
 let U;
-const D = () => (U || (U = new he()), U);
+const D = () => (U || (U = new le()), U);
 try {
   self["workbox:routing:7.0.0"] && _();
 } catch {
@@ -922,7 +922,7 @@ class d {
     this.catchHandler = b(e);
   }
 }
-class ue extends d {
+class he extends d {
   /**
    * If the regular expression contains
    * [capture groups]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#grouping-back-references},
@@ -945,7 +945,7 @@ class ue extends d {
     super(r, t, n);
   }
 }
-class fe {
+class ue {
   /**
    * Initializes a new Router.
    */
@@ -1128,14 +1128,14 @@ class fe {
   }
 }
 let y;
-const j = () => (y || (y = new fe(), y.addFetchListener(), y.addCacheListener()), y);
+const j = () => (y || (y = new ue(), y.addFetchListener(), y.addCacheListener()), y);
 function R(s, e, t) {
   let n;
   if (typeof s == "string") {
     const c = new URL(s, location.href), a = ({ url: i }) => i.href === c.href;
     n = new d(a, e, t);
   } else if (s instanceof RegExp)
-    n = new ue(s, e, t);
+    n = new he(s, e, t);
   else if (typeof s == "function")
     n = new d(s, e, t);
   else if (s instanceof d)
@@ -1148,15 +1148,15 @@ function R(s, e, t) {
     });
   return j().registerRoute(n), n;
 }
-function de(s, e = []) {
+function fe(s, e = []) {
   for (const t of [...s.searchParams.keys()])
     e.some((n) => n.test(t)) && s.searchParams.delete(t);
   return s;
 }
-function* pe(s, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], directoryIndex: t = "index.html", cleanURLs: n = !0, urlManipulation: r } = {}) {
+function* de(s, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], directoryIndex: t = "index.html", cleanURLs: n = !0, urlManipulation: r } = {}) {
   const c = new URL(s, location.href);
   c.hash = "", yield c.href;
-  const a = de(c, e);
+  const a = fe(c, e);
   if (yield a.href, t && a.pathname.endsWith("/")) {
     const i = new URL(a.href);
     i.pathname += t, yield i.href;
@@ -1171,7 +1171,7 @@ function* pe(s, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], direct
       yield o.href;
   }
 }
-class ge extends d {
+class pe extends d {
   /**
    * @param {PrecacheController} precacheController A `PrecacheController`
    * instance used to both match requests and respond to fetch events.
@@ -1191,7 +1191,7 @@ class ge extends d {
   constructor(e, t) {
     const n = ({ request: r }) => {
       const c = e.getURLsToCacheKeys();
-      for (const a of pe(r.url, t)) {
+      for (const a of de(r.url, t)) {
         const i = c.get(a);
         if (i) {
           const o = e.getIntegrityForCacheKey(i);
@@ -1202,29 +1202,29 @@ class ge extends d {
     super(n, e.strategy);
   }
 }
-function we(s) {
-  const e = D(), t = new ge(e, s);
+function ge(s) {
+  const e = D(), t = new pe(e, s);
   R(t);
 }
-const ye = "-precache-", me = async (s, e = ye) => {
+const we = "-precache-", ye = async (s, e = we) => {
   const n = (await self.caches.keys()).filter((r) => r.includes(e) && r.includes(self.registration.scope) && r !== s);
   return await Promise.all(n.map((r) => self.caches.delete(r))), n;
 };
-function Re() {
+function me() {
   self.addEventListener("activate", (s) => {
     const e = k.getPrecacheName();
-    s.waitUntil(me(e).then((t) => {
+    s.waitUntil(ye(e).then((t) => {
     }));
   });
 }
-function Ce(s) {
+function Re(s) {
   return D().matchPrecache(s);
 }
-function be(s) {
+function Ce(s) {
   D().precache(s);
 }
-function _e(s, e) {
-  be(s), we(e);
+function be(s, e) {
+  Ce(s), ge(e);
 }
 const F = {
   /**
@@ -1283,9 +1283,9 @@ try {
   self["workbox:cacheable-response:7.0.0"] && _();
 } catch {
 }
-const ke = (s, e) => e.some((t) => s instanceof t);
+const _e = (s, e) => e.some((t) => s instanceof t);
 let S, A;
-function Pe() {
+function ke() {
   return S || (S = [
     IDBDatabase,
     IDBObjectStore,
@@ -1294,7 +1294,7 @@ function Pe() {
     IDBTransaction
   ]);
 }
-function Ue() {
+function Pe() {
   return A || (A = [
     IDBCursor.prototype.advance,
     IDBCursor.prototype.continue,
@@ -1302,7 +1302,7 @@ function Ue() {
   ]);
 }
 const q = /* @__PURE__ */ new WeakMap(), N = /* @__PURE__ */ new WeakMap(), $ = /* @__PURE__ */ new WeakMap(), L = /* @__PURE__ */ new WeakMap(), x = /* @__PURE__ */ new WeakMap();
-function Le(s) {
+function Ue(s) {
   const e = new Promise((t, n) => {
     const r = () => {
       s.removeEventListener("success", c), s.removeEventListener("error", a);
@@ -1318,7 +1318,7 @@ function Le(s) {
   }).catch(() => {
   }), x.set(e, s), e;
 }
-function Te(s) {
+function Le(s) {
   if (N.has(s))
     return;
   const e = new Promise((t, n) => {
@@ -1352,40 +1352,40 @@ let K = {
     return s instanceof IDBTransaction && (e === "done" || e === "store") ? !0 : e in s;
   }
 };
-function Ie(s) {
+function Te(s) {
   K = s(K);
 }
-function Ne(s) {
+function Ie(s) {
   return s === IDBDatabase.prototype.transaction && !("objectStoreNames" in IDBTransaction.prototype) ? function(e, ...t) {
     const n = s.call(T(this), e, ...t);
     return $.set(n, e.sort ? e.sort() : [e]), m(n);
-  } : Ue().includes(s) ? function(...e) {
+  } : Pe().includes(s) ? function(...e) {
     return s.apply(T(this), e), m(q.get(this));
   } : function(...e) {
     return m(s.apply(T(this), e));
   };
 }
-function Ke(s) {
-  return typeof s == "function" ? Ne(s) : (s instanceof IDBTransaction && Te(s), ke(s, Pe()) ? new Proxy(s, K) : s);
+function Ne(s) {
+  return typeof s == "function" ? Ie(s) : (s instanceof IDBTransaction && Le(s), _e(s, ke()) ? new Proxy(s, K) : s);
 }
 function m(s) {
   if (s instanceof IDBRequest)
-    return Le(s);
+    return Ue(s);
   if (L.has(s))
     return L.get(s);
-  const e = Ke(s);
+  const e = Ne(s);
   return e !== s && (L.set(s, e), x.set(e, s)), e;
 }
-const T = (s) => x.get(s), Ee = ["get", "getKey", "getAll", "getAllKeys", "count"], De = ["put", "add", "delete", "clear"], I = /* @__PURE__ */ new Map();
+const T = (s) => x.get(s), Ke = ["get", "getKey", "getAll", "getAllKeys", "count"], Ee = ["put", "add", "delete", "clear"], I = /* @__PURE__ */ new Map();
 function W(s, e) {
   if (!(s instanceof IDBDatabase && !(e in s) && typeof e == "string"))
     return;
   if (I.get(e))
     return I.get(e);
-  const t = e.replace(/FromIndex$/, ""), n = e !== t, r = De.includes(t);
+  const t = e.replace(/FromIndex$/, ""), n = e !== t, r = Ee.includes(t);
   if (
     // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
-    !(t in (n ? IDBIndex : IDBObjectStore).prototype) || !(r || Ee.includes(t))
+    !(t in (n ? IDBIndex : IDBObjectStore).prototype) || !(r || Ke.includes(t))
   )
     return;
   const c = async function(a, ...i) {
@@ -1398,7 +1398,7 @@ function W(s, e) {
   };
   return I.set(e, c), c;
 }
-Ie((s) => ({
+Te((s) => ({
   ...s,
   get: (e, t, n) => W(e, t) || s.get(e, t, n),
   has: (e, t) => !!W(e, t) || s.has(e, t)
@@ -1505,13 +1505,12 @@ class V extends E {
     return e && clearTimeout(e), (c || !a) && (a = await r.cacheMatch(t)), a;
   }
 }
-function xe(s) {
+function De(s) {
   j().setCatchHandler(s);
 }
-const G = [{"revision":null,"url":"assets/app_ctx-4ed993c7.js"},{"revision":null,"url":"assets/app-4b99fda5.js"},{"revision":null,"url":"assets/app-6db931bb.js"},{"revision":null,"url":"assets/app-972a34a9.css"},{"revision":null,"url":"assets/app-d7b44261.css"},{"revision":null,"url":"assets/app-eea89e73.js"},{"revision":null,"url":"assets/bg-gen-2e406da8.js"},{"revision":null,"url":"assets/bootstrap-02317797.js"},{"revision":null,"url":"assets/context-f30be568.js"},{"revision":null,"url":"assets/customizer-fa8a405e.js"},{"revision":null,"url":"assets/Dark-4ed993c7.js"},{"revision":null,"url":"assets/dashboard-9df826dd.js"},{"revision":null,"url":"assets/dynamic_component-4ed993c7.js"},{"revision":null,"url":"assets/error-boundary-f6c4482e.js"},{"revision":null,"url":"assets/form-704060ea.js"},{"revision":null,"url":"assets/helper-3f84e98d.js"},{"revision":null,"url":"assets/index-59b5842e.js"},{"revision":null,"url":"assets/index-7aff6e0d.css"},{"revision":null,"url":"assets/index-e5d540ea.js"},{"revision":null,"url":"assets/landing-925919a5.js"},{"revision":null,"url":"assets/Light-4ed993c7.js"},{"revision":null,"url":"assets/Menu-4ed993c7.js"},{"revision":null,"url":"assets/MenuSlim-4ed993c7.js"},{"revision":null,"url":"assets/modern-111e74fb.css"},{"revision":null,"url":"assets/Notification-4ed993c7.js"},{"revision":null,"url":"assets/order_midwife-10e3356e.js"},{"revision":null,"url":"assets/order-52dce18d.js"},{"revision":null,"url":"assets/password-568a79c2.js"},{"revision":null,"url":"assets/progress-1e39d48a.js"},{"revision":null,"url":"assets/progress-fbda83c7.js"},{"revision":null,"url":"assets/prompt-75bb4b29.js"},{"revision":null,"url":"assets/regis-sw-498779d9.js"},{"revision":null,"url":"assets/regis-sw-7f350239.js"},{"revision":null,"url":"assets/regis-sw-d7df973e.js"},{"revision":null,"url":"assets/regular-39350df0.js"},{"revision":null,"url":"assets/regular-416db254.js"},{"revision":null,"url":"assets/setCatchHandler-8a929f05.js"},{"revision":null,"url":"assets/settings-25031b0f.js"},{"revision":null,"url":"assets/sidebar-6d671e53.js"},{"revision":null,"url":"assets/sw-8c61f0e2.js"},{"revision":null,"url":"assets/sw-ad5b937a.js"},{"revision":null,"url":"assets/sw-fc84a42c.js"},{"revision":null,"url":"assets/table-d28596a1.js"},{"revision":null,"url":"assets/theme-674c18fc.js"},{"revision":null,"url":"assets/topbar-d7a2a45e.js"},{"revision":null,"url":"assets/tw-elements.es.min-c195491a.js"},{"revision":null,"url":"assets/workbox-window.prod.es5-69cd2c5c.js"},{"revision":"2d094791c49e920331981a2d203b8cdb","url":"registerSW.js"},{"revision":"1","url":"/patient/offline"},{"revision":"a568aa720ebec00f18661754c6086dd0","url":"site.webmanifest"}], Me = "/patient/offline";
-Re();
-_e(G);
-console.log(G);
+const xe = [{"revision":null,"url":"assets/app_ctx-4ed993c7.js"},{"revision":null,"url":"assets/app-4b99fda5.js"},{"revision":null,"url":"assets/app-6db931bb.js"},{"revision":null,"url":"assets/app-cd181200.css"},{"revision":null,"url":"assets/app-d7b44261.css"},{"revision":null,"url":"assets/app-eea89e73.js"},{"revision":null,"url":"assets/bg-gen-2e406da8.js"},{"revision":null,"url":"assets/bootstrap-02317797.js"},{"revision":null,"url":"assets/command-085748de.js"},{"revision":null,"url":"assets/context-f30be568.js"},{"revision":null,"url":"assets/customizer-72d7b23c.js"},{"revision":null,"url":"assets/Dark-4ed993c7.js"},{"revision":null,"url":"assets/dashboard-6c8e830e.js"},{"revision":null,"url":"assets/dynamic_component-4ed993c7.js"},{"revision":null,"url":"assets/error-boundary-f6c4482e.js"},{"revision":null,"url":"assets/form-704060ea.js"},{"revision":null,"url":"assets/helper-3f84e98d.js"},{"revision":null,"url":"assets/index-59b5842e.js"},{"revision":null,"url":"assets/index-7aff6e0d.css"},{"revision":null,"url":"assets/index-e5d540ea.js"},{"revision":null,"url":"assets/landing-3b7283c0.js"},{"revision":null,"url":"assets/Light-4ed993c7.js"},{"revision":null,"url":"assets/Menu-4ed993c7.js"},{"revision":null,"url":"assets/MenuSlim-4ed993c7.js"},{"revision":null,"url":"assets/modern-111e74fb.css"},{"revision":null,"url":"assets/Notification-4ed993c7.js"},{"revision":null,"url":"assets/order_midwife-362b0957.js"},{"revision":null,"url":"assets/order-3c607373.js"},{"revision":null,"url":"assets/password-568a79c2.js"},{"revision":null,"url":"assets/progress-1e39d48a.js"},{"revision":null,"url":"assets/progress-fbda83c7.js"},{"revision":null,"url":"assets/prompt-6d9e2435.js"},{"revision":null,"url":"assets/regis-sw-0c19f1ba.js"},{"revision":null,"url":"assets/regis-sw-b02b50ac.js"},{"revision":null,"url":"assets/regis-sw-d4f9af6f.js"},{"revision":null,"url":"assets/regular-119f1325.js"},{"revision":null,"url":"assets/regular-f9fcce0c.js"},{"revision":null,"url":"assets/setCatchHandler-8a929f05.js"},{"revision":null,"url":"assets/settings-25031b0f.js"},{"revision":null,"url":"assets/sidebar-3a5ee576.js"},{"revision":null,"url":"assets/sw-7287ff0c.js"},{"revision":null,"url":"assets/sw-ad5b937a.js"},{"revision":null,"url":"assets/sw-fc84a42c.js"},{"revision":null,"url":"assets/table-d28596a1.js"},{"revision":null,"url":"assets/theme-674c18fc.js"},{"revision":null,"url":"assets/topbar-d88cf4e2.js"},{"revision":null,"url":"assets/tw-elements.es.min-b026dc7a.js"},{"revision":null,"url":"assets/workbox-window.prod.es5-69cd2c5c.js"},{"revision":"2d094791c49e920331981a2d203b8cdb","url":"registerSW.js"},{"revision":"1","url":"/patient/offline"},{"revision":"9fa1a4832e03a52ab2c81aa9a15f832d","url":"site.webmanifest"}], Me = "/patient/offline";
+me();
+be(xe);
 self.addEventListener("message", (s) => {
   s.data && s.data.type === "SKIP_WAITING" && self.skipWaiting();
 });
@@ -1540,10 +1539,10 @@ R(ve);
 R(Oe);
 R(Se);
 R(Ae);
-xe(async ({ request: s }) => {
+De(async ({ request: s }) => {
   switch (s.destination) {
     case "document":
-      return Ce(Me);
+      return Re(Me);
     default:
       return Response.error();
   }

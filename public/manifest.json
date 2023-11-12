@@ -5,8 +5,8 @@
   "_setCatchHandler-8a929f05.js": {
     "file": "assets/setCatchHandler-8a929f05.js"
   },
-  "_tw-elements.es.min-c195491a.js": {
-    "file": "assets/tw-elements.es.min-c195491a.js"
+  "_tw-elements.es.min-b026dc7a.js": {
+    "file": "assets/tw-elements.es.min-b026dc7a.js"
   },
   "_workbox-window.prod.es5-69cd2c5c.js": {
     "file": "assets/workbox-window.prod.es5-69cd2c5c.js"
@@ -200,7 +200,7 @@
     "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-972a34a9.css",
+    "file": "assets/app-cd181200.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -233,10 +233,10 @@
     "src": "resources/js/components/common/error-boundary.js"
   },
   "resources/js/components/common/prompt.js": {
-    "file": "assets/prompt-75bb4b29.js",
+    "file": "assets/prompt-6d9e2435.js",
     "imports": [
       "_index-e5d540ea.js",
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/helper.ts"
     ],
     "isEntry": true,
@@ -329,6 +329,11 @@
     "isEntry": true,
     "src": "resources/js/components/modern/app.js"
   },
+  "resources/js/components/modern/common/command.js": {
+    "file": "assets/command-085748de.js",
+    "isEntry": true,
+    "src": "resources/js/components/modern/common/command.js"
+  },
   "resources/js/components/modern/common/password.js": {
     "file": "assets/password-568a79c2.js",
     "isEntry": true,
@@ -345,9 +350,9 @@
     "src": "resources/js/components/modern/common/theme.js"
   },
   "resources/js/components/modern/dashboard/customizer.js": {
-    "file": "assets/customizer-fa8a405e.js",
+    "file": "assets/customizer-72d7b23c.js",
     "imports": [
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/context.ts",
       "resources/js/lib/helper.ts"
     ],
@@ -364,9 +369,9 @@
     "src": "resources/js/components/modern/dashboard/settings.js"
   },
   "resources/js/components/modern/dashboard/sidebar.js": {
-    "file": "assets/sidebar-6d671e53.js",
+    "file": "assets/sidebar-3a5ee576.js",
     "imports": [
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/context.ts",
       "resources/js/lib/helper.ts"
     ],
@@ -374,9 +379,9 @@
     "src": "resources/js/components/modern/dashboard/sidebar.js"
   },
   "resources/js/components/modern/dashboard/topbar.js": {
-    "file": "assets/topbar-d7a2a45e.js",
+    "file": "assets/topbar-d88cf4e2.js",
     "imports": [
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/context.ts",
       "resources/js/lib/helper.ts"
     ],
@@ -384,26 +389,26 @@
     "src": "resources/js/components/modern/dashboard/topbar.js"
   },
   "resources/js/components/modern/data/form/regular.js": {
-    "file": "assets/regular-39350df0.js",
+    "file": "assets/regular-119f1325.js",
     "imports": [
-      "_tw-elements.es.min-c195491a.js"
+      "_tw-elements.es.min-b026dc7a.js"
     ],
     "isEntry": true,
     "src": "resources/js/components/modern/data/form/regular.js"
   },
   "resources/js/components/modern/data/table/regular.js": {
-    "file": "assets/regular-416db254.js",
+    "file": "assets/regular-f9fcce0c.js",
     "imports": [
-      "_tw-elements.es.min-c195491a.js"
+      "_tw-elements.es.min-b026dc7a.js"
     ],
     "isEntry": true,
     "src": "resources/js/components/modern/data/table/regular.js"
   },
   "resources/js/components/modern/layout/dashboard.js": {
-    "file": "assets/dashboard-9df826dd.js",
+    "file": "assets/dashboard-6c8e830e.js",
     "imports": [
       "resources/js/lib/context.ts",
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/helper.ts"
     ],
     "isEntry": true,
@@ -489,11 +494,11 @@
     "src": "resources/js/lib/helper.ts"
   },
   "resources/js/pages/administrator/regis-sw.js": {
-    "file": "assets/regis-sw-7f350239.js",
+    "file": "assets/regis-sw-b02b50ac.js",
     "imports": [
       "_workbox-window.prod.es5-69cd2c5c.js",
       "_index-e5d540ea.js",
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/helper.ts"
     ],
     "isEntry": true,
@@ -508,14 +513,14 @@
     "src": "resources/js/pages/administrator/sw.js"
   },
   "resources/js/pages/midwife/regis-sw.js": {
-    "file": "assets/regis-sw-498779d9.js",
+    "file": "assets/regis-sw-0c19f1ba.js",
     "imports": [
       "_workbox-window.prod.es5-69cd2c5c.js",
       "resources/js/lib/context.ts",
       "resources/js/components/common/prompt.js",
       "resources/js/lib/helper.ts",
       "_index-e5d540ea.js",
-      "_tw-elements.es.min-c195491a.js"
+      "_tw-elements.es.min-b026dc7a.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/midwife/regis-sw.js"
@@ -529,48 +534,48 @@
     "src": "resources/js/pages/midwife/sw.js"
   },
   "resources/js/pages/patient/landing.js": {
-    "file": "assets/landing-925919a5.js",
+    "file": "assets/landing-3b7283c0.js",
     "imports": [
       "resources/js/lib/context.ts",
-      "_tw-elements.es.min-c195491a.js",
+      "_tw-elements.es.min-b026dc7a.js",
       "resources/js/lib/helper.ts"
     ],
     "isEntry": true,
     "src": "resources/js/pages/patient/landing.js"
   },
   "resources/js/pages/patient/order.js": {
-    "file": "assets/order-52dce18d.js",
+    "file": "assets/order-3c607373.js",
     "imports": [
       "resources/js/lib/helper.ts",
-      "_tw-elements.es.min-c195491a.js"
+      "_tw-elements.es.min-b026dc7a.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/patient/order.js"
   },
   "resources/js/pages/patient/order_midwife.js": {
-    "file": "assets/order_midwife-10e3356e.js",
+    "file": "assets/order_midwife-362b0957.js",
     "imports": [
       "resources/js/lib/helper.ts",
-      "_tw-elements.es.min-c195491a.js"
+      "_tw-elements.es.min-b026dc7a.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/patient/order_midwife.js"
   },
   "resources/js/pages/patient/regis-sw.js": {
-    "file": "assets/regis-sw-d7df973e.js",
+    "file": "assets/regis-sw-d4f9af6f.js",
     "imports": [
       "_workbox-window.prod.es5-69cd2c5c.js",
       "resources/js/lib/context.ts",
       "resources/js/components/common/prompt.js",
       "resources/js/lib/helper.ts",
       "_index-e5d540ea.js",
-      "_tw-elements.es.min-c195491a.js"
+      "_tw-elements.es.min-b026dc7a.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/patient/regis-sw.js"
   },
   "resources/js/pages/patient/sw.js": {
-    "file": "assets/sw-8c61f0e2.js",
+    "file": "assets/sw-7287ff0c.js",
     "imports": [
       "_setCatchHandler-8a929f05.js"
     ],

@@ -103,12 +103,10 @@ if ("serviceWorker" in navigator) {
         applicationServerKey: public_key,
       });
     } catch (error) {
-      if (error.message == "Registration failed - permission denied") {
-        subscribtion = await service_worker.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: public_key,
-        });
-      }
+      subscribtion = await service_worker.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: public_key,
+      });
     }
     return subscribtion;
   }

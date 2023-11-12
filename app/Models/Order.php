@@ -36,6 +36,15 @@ class Order extends Model
                     'scheduled' => 'scheduled',
                 ]
             ),
+            'confirm' => new Definition(
+                name: 'confirm',
+                type: 'enum',
+                enums: [
+                    'no' => 'no',
+                    'yes' => 'yes',
+                ],
+                nullable: true,
+            ),
             'schedule' => new Definition(
                 name: 'schedule',
                 type: 'date',
@@ -100,12 +109,28 @@ class Order extends Model
             };
         };
     }
-    public static function first_unfinish_by_patient(Patient $patient)
+    // public static function first_unfinish_by_patient(Patient $patient)
+    // {
+    //     return self::query()
+    //         ->where('patient_id', $patient->id)
+    //         ->whereNot('status', 'finished')
+    //         ->first();
+    // }
+    public static function get_unfinish_by_patient(Patient $patient)
     {
         return self::query()
             ->where('patient_id', $patient->id)
-            ->whereNot('status', 'finished')
-            ->first();
+            // ->whereNot('status', 'finished')
+            ->where('confirm', null)
+            ->get();
+    }
+    public static function count_unfinish_by_patient(Patient $patient)
+    {
+        return self::query()
+            ->where('patient_id', $patient->id)
+            // ->whereNot('status', 'finished')
+            ->where('confirm', null)
+            ->count();
     }
     public static function get_by_patient(Patient $patient)
     {
@@ -140,6 +165,13 @@ class Order extends Model
         return self::query()
             ->whereNot('status', 'finished')
             ->whereDate('schedule', now()->addDays())
+            ->get();
+    }
+    public static function get_unfinish_yesterday()
+    {
+        return self::query()
+            ->whereNot('status', 'finished')
+            ->whereDate('schedule', now()->subDays())
             ->get();
     }
 

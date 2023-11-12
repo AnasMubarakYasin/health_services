@@ -9,7 +9,7 @@ if ("serviceWorker" in navigator) {
   const ctx = Context.get_or_create(APP_CTX_KEY);
   const data = {};
 
-  await ctx.inited();
+  ctx.inited();
 
   console.log("regis_sw init");
 
@@ -97,19 +97,21 @@ if ("serviceWorker" in navigator) {
     const res = await axios.get("/api/webpush/public_key");
     const public_key = urlBase64ToUint8Array(res.data);
     let subscribtion = null;
-    try {
-      subscribtion = await service_worker.pushManager.subscribe({
-        userVisibleOnly: false,
-        applicationServerKey: public_key,
-      });
-    } catch (error) {
-      if (error.message == "Registration failed - permission denied") {
-        subscribtion = await service_worker.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: public_key,
-        });
-      }
-    }
+    subscribtion = await service_worker.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: public_key,
+    });
+    // try {
+    //   subscribtion = await service_worker.pushManager.subscribe({
+    //     userVisibleOnly: false,
+    //     applicationServerKey: public_key,
+    //   });
+    // } catch (error) {
+    //   subscribtion = await service_worker.pushManager.subscribe({
+    //     userVisibleOnly: true,
+    //     applicationServerKey: public_key,
+    //   });
+    // }
     return subscribtion;
   }
   async function subscribe(subscribtion) {

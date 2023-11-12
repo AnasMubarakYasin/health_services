@@ -29,6 +29,8 @@ Route::middleware(['authc.basic.order:web.patient.login_show,patient'])->group(f
     });
     Route::post('/order/{midwife}', 'User\Patient\LandingController@api_order')->name('web.patient.landing.api_order');
     Route::post('/patient/order/{midwife}/midwife', 'User\Patient\OrderController@api_order_midwife')->name('web.patient.order.midwife.handle');
+
+    Route::post('/patient/order/confirm/done/{order}', 'User\Patient\LandingController@order_confirm_yes')->name('web.patient.order.confirm.yes');
 });
 
 Route::get('/locale/{locale}', 'Common\Locale@set')->name('web.locale.set');

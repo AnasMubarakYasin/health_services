@@ -17,6 +17,7 @@ class OrderController extends Controller
             request: request(),
             columns: [
                 'status',
+                'confirm',
                 'schedule',
                 'schedule_start',
                 'schedule_end',
@@ -57,6 +58,7 @@ class OrderController extends Controller
         $resource = Order::formable()->from_create(
             fields: [
                 'status',
+                'confirm',
                 'schedule',
                 'schedule_start',
                 'schedule_end',
@@ -82,6 +84,7 @@ class OrderController extends Controller
             model: $order,
             fields: [
                 'status',
+                'confirm',
                 'schedule',
                 'schedule_start',
                 'schedule_end',

@@ -9,6 +9,7 @@ import {
   Tooltip,
   Button,
   Select,
+  Modal,
   initTE,
 } from "tw-elements";
 
@@ -24,6 +25,7 @@ initTE({
 
   // Button,
   Select,
+  Modal,
 });
 
 if (panel) {

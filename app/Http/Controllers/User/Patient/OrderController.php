@@ -28,7 +28,8 @@ class OrderController extends Controller
     }
     public function api_order(OrderRequest $request)
     {
-        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
+        $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
+        dd($unfinish_order);
         if ($unfinish_order) {
             return back()->withErrors(['api' => 'user have unfinish order']);
         }
@@ -63,7 +64,8 @@ class OrderController extends Controller
     }
     public function api_order_midwife(CreateOrderMidwifeRequest $request, Midwife $midwife)
     {
-        $unfinish_order = Order::first_unfinish_by_patient(auth()->user());
+        $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
+        dd($unfinish_order);
         if ($unfinish_order) {
             return back()->withErrors(['api' => 'user have unfinish order']);
         }

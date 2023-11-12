@@ -37,14 +37,8 @@
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/pages/patient/landing.js')
 
-    @if ($panel)
-        @if ($panel->webmanifest)
-            <link rel="manifest" href="{{ $panel->get_webmanifest() }}">
-        @endif
-        @if ($panel->service_worker)
-            <script type="module" src="{{ $panel->get_service_worker() }}"></script>
-        @endif
-    @endif
+    <link rel="manifest" href="{{ asset('patient/site.webmanifest') }}">
+    <script type="module" src="{{ Vite::asset('resources/js/pages/patient/regis-sw.js') }}"></script>
 
     {{ $head }}
 </head>

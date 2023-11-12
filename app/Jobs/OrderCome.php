@@ -30,9 +30,11 @@ class OrderCome implements ShouldQueue
     {
         $order_today = Order::get_unfinish_today();
         $order_tomorrow = Order::get_unfinish_tomorrow();
+        $order_yesterday = Order::get_unfinish_yesterday();
         info("Run OrderCome Job", [
             'today' => count($order_today),
             'tomorrow' => count($order_tomorrow),
+            'yesterday' => count($order_yesterday),
         ]);
         foreach ($order_today as $key => $order) {
             $order->patient->notifyNow(new NotificationsOrderCome($order));
@@ -41,6 +43,11 @@ class OrderCome implements ShouldQueue
         foreach ($order_tomorrow as $key => $order) {
             $order->patient->notifyNow(new NotificationsOrderCome($order));
             $order->midwife->notifyNow(new NotificationsOrderCome($order));
+        }
+        foreach ($order_yesterday as $key => $order) {
+            $order->status = "finished";
+            $order->confirm = "yes";
+            $order->update();
         }
     }
 }

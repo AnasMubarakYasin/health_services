@@ -11,8 +11,6 @@ const fallback_document = "/patient/offline";
 cleanupOutdatedCaches();
 precacheAndRoute(manifest);
 
-console.log(manifest);
-
 import { clientsClaim } from "workbox-core";
 
 // clientsClaim();
