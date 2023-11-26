@@ -19,6 +19,7 @@ use App\Notifications\OrderComingsoon;
 use App\Notifications\OrderScheduled;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class LandingController extends Controller
@@ -27,7 +28,7 @@ class LandingController extends Controller
     {
         $services = Service::all();
         $midwifes = Midwife::all();
-        $orders = null;
+        $orders = [];
         if (auth('patient')->user()) {
             $orders = Order::get_unfinish_by_patient(auth('patient')->user());
         }
@@ -51,6 +52,7 @@ class LandingController extends Controller
         $orders = Order::get_unfinish_by_midwife($midwife);
         return view('pages.patient.landing.order', [
             'panel' => $this->create_panel(),
+            'orders_limit' => Cache::get('orders_limit'),
             'midwife' => $midwife,
             'schedules' => $midwife->active_schedules(),
             'services' => $services,
@@ -60,11 +62,21 @@ class LandingController extends Controller
     public function api_order(CreateOrderMidwifeRequest $request, Midwife $midwife)
     {
         $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
+        $limit_order = Cache::get('orders_limit');
+        $data = $request->validated();
+        if ($limit_order) {
+            $date = strtotime(str_replace('/', '-', $data['date']));
+            $date_limit = strtotime(str_replace('/', '-', $limit_order['date']));
+            if ($date == $date_limit) {
+                if (Order::get_unfinish_by_date(date('d-m-Y', $date))->count() >= $limit_order['limit']) {
+                    return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
+                }
+            }
+        }
         if ($unfinish_order > 2) {
             return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
             // return back()->withErrors(['api' => 'user have unfinish order']);
         }
-        $data = $request->validated();
         $order = Order::create([
             'status' => 'scheduled',
             'schedule' => date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
@@ -90,6 +102,8 @@ class LandingController extends Controller
         $orders = Order::get_unfinish();
         return view('pages.patient.landing.order_common', [
             'panel' => $this->create_panel(),
+            'orders_limit' => Cache::get('orders_limit'),
+            'location_limit' => Cache::get('location'),
             'services' => $services,
             'midwifes' => $midwifes,
             'schedules' => $schedules,
@@ -99,11 +113,21 @@ class LandingController extends Controller
     public function api_order_common(OrderRequest $request)
     {
         $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
+        $limit_order = Cache::get('orders_limit');
+        $data = $request->validated();
+        if ($limit_order) {
+            $date = strtotime(str_replace('/', '-', $data['date']));
+            $date_limit = strtotime(str_replace('/', '-', $limit_order['date']));
+            if ($date == $date_limit) {
+                if (Order::get_unfinish_by_date(date('d-m-Y', $date))->count() >= $limit_order['limit']) {
+                    return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
+                }
+            }
+        }
         if ($unfinish_order > 2) {
             return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
             // return back()->withErrors(['api' => 'user have unfinish order']);
         }
-        $data = $request->validated();
         $order = Order::create([
             'status' => 'scheduled',
             'schedule' => date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
@@ -119,6 +143,19 @@ class LandingController extends Controller
         $order->patient->notifyNow(new OrderScheduled($order));
         $order->midwife->notifyNow(new OrderScheduled($order));
         return to_route('web.patient.landing');
+    }
+    public function map_select()
+    {
+        return view("pages.patient.landing.map_select", [
+            'panel' => $this->create_panel(),
+        ]);
+    }
+    public function map_navigation(mixed $coord)
+    {
+        return view("pages.patient.landing.map_navigation", [
+            'panel' => $this->create_panel(),
+            'coord' => $coord,
+        ]);
     }
 
     public function history()

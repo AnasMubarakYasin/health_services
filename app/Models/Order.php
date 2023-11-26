@@ -171,7 +171,14 @@ class Order extends Model
     {
         return self::query()
             ->whereNot('status', 'finished')
-            ->whereDate('schedule', now()->subDays())
+            ->whereDate('schedule', "<=", now()->subDays())
+            ->get();
+    }
+    public static function get_unfinish_by_date($date)
+    {
+        return self::query()
+            ->whereNot('status', 'finished')
+            ->whereDate('schedule', $date)
             ->get();
     }
 

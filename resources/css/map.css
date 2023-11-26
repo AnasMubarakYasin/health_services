@@ -1,0 +1,43 @@
+:root {
+  --map-tiles-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  .map-tiles {
+      filter:var(--map-tiles-filter, none);
+  }
+}
+
+.reset {
+  /* display: none; */
+  color: #000;
+  font-weight: 700;
+  position: absolute;
+  line-height: 26px;
+  padding: 0 8px;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  background-color: #fff;
+  border-radius: 0 4px 4px 0;
+  line-height: 30px;
+}
+
+.btn-curr {
+  font-size: 22px;
+  text-align: center;
+  text-decoration: none;
+  color: black !important;
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  border: solid 2px #91b2c3 !important;
+  box-sizing: content-box;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+}

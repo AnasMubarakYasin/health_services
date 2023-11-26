@@ -66,6 +66,22 @@
                                 {!! $administrator->icon !!}
                             </x-slot:icon>
                         </x-dynamic.resource.stat>
+
+                        <x-dynamic.resource.stat :resource="$orders_today" :name="$orders_today->name" :count="$orders_today->count_all" >
+                            <x-slot:icon>
+                                {!! $orders_today->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                        <x-dynamic.resource.stat :resource="$orders_limit" :name="$orders_limit->name" :count="$orders_limit->count_all" :actions="$orders_limit->actions">
+                            <x-slot:icon>
+                                {!! $orders_limit->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
+                        <x-dynamic.resource.stat :resource="$location" :name="$location->name" :count="$location->count_all" :actions="$location->actions">
+                            <x-slot:icon>
+                                {!! $location->icon !!}
+                            </x-slot:icon>
+                        </x-dynamic.resource.stat>
                     </div>
                 </div>
 

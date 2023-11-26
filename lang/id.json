@@ -1,5 +1,10 @@
 {
   "#": "no",
+  "etc": "lainnya",
+  "change": "ubah",
+  "limit": "batasan",
+  "distance": "jarak",
+  "orders limit": "batasan pesanan",
   "notifications": "pemberitahuan",
   "mark": "{0} tandai|[2,*] tandai semua",
   "readed": "telah dibaca",

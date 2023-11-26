@@ -76,44 +76,43 @@
                         </a>
                     </div>
 
-                    @if ($order)
-                        <div class="@container flex w-full">
-                            <div
-                                class="flex flex-col gap-2 py-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 bg-base-100 text-base-content rounded-lg shadow-all-lg">
-                                <div class="px-6">
-                                    <div class="font-medium text-lg capitalize">{{ $order->service->name }}</div>
-                                    <div class="flex gap-1">
-                                        {{-- <div class="font-medium text-sm opacity-70">
-                                            {{ $order->location_name }}
-                                        </div> --}}
-                                        <div class="font-medium text-sm opacity-70">
-                                            {{ date('d/m/Y', strtotime($order->schedule)) }}
-                                            {{ date('H:i', strtotime($order->schedule_start)) }}-{{ date('H:i', strtotime($order->schedule_end)) }}
+                    @if ($orders)
+                        <div id="bidan" class="@container grid gap-2">
+                            <div class="font-bold text-lg capitalize">Pesanan</div>
+                            <div class="grid gap-4">
+                                <div class="@container flex gap-4 w-full">
+                                    @foreach ($orders as $order)
+                                        <div
+                                            class="flex flex-col gap-2 py-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                            <div class="px-6">
+                                                <div class="font-medium text-lg capitalize">{{ $order->service->name }}
+                                                </div>
+                                                <div class="flex gap-1">
+                                                    <div class="font-medium text-sm opacity-70">
+                                                        {{ date('d/m/Y', strtotime($order->schedule)) }}
+                                                        {{ date('H:i', strtotime($order->schedule_start)) }}-{{ date('H:i', strtotime($order->schedule_end)) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-full h-0.5 bg-base-300"></div>
+                                            <div class="flex flex-col gap-1 px-6">
+                                                <div class="font-normal text-base">
+                                                    <div class="text-base-content/70">{{ trans('midwife') }}</div>
+                                                    <div>{{ $order->midwife->fullname }}</div>
+                                                </div>
+                                                <div class="font-normal text-base">
+                                                    <div class="text-base-content/70">{{ trans('location') }}</div>
+                                                    @php
+                                                        $coordinates = json_decode($order->location_coordinates);
+                                                    @endphp
+                                                    <a href="{{ route('web.patient.landing.map_navigation', ['coord' => $order->location_coordinates]) }}"
+                                                        class="text-blue-500 dark:text-blue-600 hover:underline">
+                                                        {{ $order->location_name }}
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="w-full h-0.5 bg-base-300"></div>
-                                <div class="flex flex-col gap-1 px-6">
-                                    <div class="font-normal text-base">
-                                        <div class="text-base-content/70">{{ trans('midwife') }}</div>
-                                        <div>{{ $order->midwife->fullname }}</div>
-                                    </div>
-                                    <div class="font-normal text-base">
-                                        <div class="text-base-content/70">{{ trans('location') }}</div>
-                                        @php
-                                            $coordinates = json_decode($order->location_coordinates);
-                                        @endphp
-                                        <a href="{{ "https://www.google.com/maps?q=$coordinates[1],$coordinates[0]" }}"
-                                            class="text-blue-500 dark:text-blue-600 hover:underline">
-                                            {{ $order->location_name }}
-                                        </a>
-                                    </div>
-                                    {{-- <div class="font-medium text-base">
-                                        {{ trans('midwife') }}: {{ $order->midwife->fullname }}
-                                    </div>
-                                    <div class="font-medium text-base">
-                                        {{ trans('location') }}: {{ $order->location_name }}
-                                    </div> --}}
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

@@ -17,6 +17,8 @@ use App\Models\PregnancyExamination;
 use App\Models\PregnancyExaminationReport;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -49,6 +51,7 @@ class DashboardController extends Controller
             'schedules' => $schedules,
             'schedules_coll' => $schedules_coll,
             'orders' => $orders,
+            'orders_limit' =>  Cache::get('orders_limit'),
         ]);
     }
     public function history()
@@ -218,6 +221,29 @@ class DashboardController extends Controller
             'record' => $record,
             'report' => $report,
         ]);
+    }
+
+    public function map_navigation(mixed $coord)
+    {
+        return view("pages.midwife.map_navigation", [
+            'coord' => $coord,
+        ]);
+    }
+    public function orders_limit_set()
+    {
+        return view('pages.midwife.orders_limit_set', Cache::get("orders_limit", [
+            'date' => now()->toDateString(),
+            'limit' => 3,
+        ]));
+    }
+    public function orders_limit_set_handle(Request $request)
+    {
+        $data = Validator::make($request->all(), [
+            'date' => 'required|string',
+            'limit' => 'required|integer|min:1',
+        ])->validate();
+        Cache::set("orders_limit", $data, null);
+        return to_route('web.midwife.dashboard');
     }
 
     public function profile()

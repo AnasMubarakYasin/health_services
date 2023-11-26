@@ -143,7 +143,7 @@
                                             @php
                                                 $coordinates = json_decode($order->location_coordinates);
                                             @endphp
-                                            <a href="{{ "https://www.google.com/maps?q=$coordinates[1],$coordinates[0]" }}"
+                                            <a href="{{ route('web.midwife.map_navigation', ['coord' => $order->location_coordinates]) }}"
                                                 class="text-blue-500 dark:text-blue-600 hover:underline">
                                                 {{ $order->location_name }}
                                             </a>
@@ -152,6 +152,53 @@
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+                </div>
+
+                <div class="@container grid gap-2 z-[1]">
+                    <div class="flex items-center gap-2 font-bold capitalize">
+                        <div>{{ trans('etc') }}</div>
+                    </div>
+                    <div class="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
+                        <div class="flex w-full">
+                            <div
+                                class="flex flex-col gap-2 w-full py-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                                <div class="flex justify-between items-start px-6">
+                                    <div>
+                                        <div class="font-medium text-lg capitalize">
+                                            {{ trans('orders limit') }}
+                                        </div>
+                                    </div>
+                                    <div class="relative" data-te-dropdown-position="dropend">
+                                        <button
+                                            href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
+                                            class="" data-te-dropdown-toggle-ref>
+                                            <x-icons.ellipsis_vertical></x-icons.ellipsis_vertical>
+                                        </button>
+                                        <ul class="absolute z-10 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-base-100 bg-clip-padding text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
+                                            data-te-dropdown-menu-ref>
+                                            <li>
+                                                <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
+                                                    href="{{ route("web.midwife.orders_limit_set") }}"
+                                                    data-te-dropdown-item-ref>{{ trans('change') }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="w-full h-0.5 bg-base-300"></div>
+                                <div class="flex flex-col gap-1 px-6">
+                                    <div class="font-normal text-base">
+                                        <div class="text-base-content/70">{{ trans('date') }}</div>
+                                        <div>{{ $orders_limit['date'] }}</div>
+                                    </div>
+                                    <div class="font-normal text-base">
+                                        <div class="text-base-content/70">{{ trans('limit') }}</div>
+                                        <div>{{ $orders_limit['limit'] }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

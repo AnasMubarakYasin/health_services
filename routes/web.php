@@ -18,7 +18,7 @@ if (env('APP_ENV') == 'local') {
     Route::get("/landing", "User\Patient\LandingController@index")->name('web.patient.landing');
 } else {
     Route::view("/entry", "welcome")->name('entry');
-    Route::get("/welcome", fn() => to_route('web.patient.landing'))->name('welcome');
+    Route::get("/welcome", fn () => to_route('web.patient.landing'))->name('welcome');
     Route::get("/", "User\Patient\LandingController@index")->name('web.patient.landing');
     Route::get("/service/{service}", "User\Patient\LandingController@service")->name('web.patient.landing.service');
 }
@@ -60,6 +60,8 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         Route::get('/administrator/folder', 'User\Administrator\DashboardController@folder')->name('web.administrator.folder');
         Route::get('/administrator/folder/download', 'User\Administrator\DashboardController@folder_download')->name('web.administrator.folder.download');
         Route::get('/administrator/command', 'User\Administrator\DashboardController@command')->name('web.administrator.command');
+        Route::get('/administrator/orders_limit_set', 'User\Administrator\DashboardController@orders_limit_set')->name('web.administrator.orders_limit_set');
+        Route::get('/administrator/location_set', 'User\Administrator\DashboardController@location_set')->name('web.administrator.location_set');
 
         Route::get('/administrator/profile', 'User\Administrator\DashboardController@profile')->name('web.administrator.profile');
         Route::get('/administrator/notification', 'User\Administrator\DashboardController@notification')->name('web.administrator.notification');
@@ -104,6 +106,9 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
 
     Route::patch('/administrator/change_profile', 'User\Administrator\DashboardController@change_profile')->name('web.administrator.change_profile');
     Route::patch('/administrator/change_password', 'User\Administrator\DashboardController@change_password')->name('web.administrator.change_password');
+
+    Route::patch('/administrator/orders_limit_set_handle', 'User\Administrator\DashboardController@orders_limit_set_handle')->name('web.administrator.orders_limit_set_handle');
+    Route::patch('/administrator/location_set_handle', 'User\Administrator\DashboardController@location_set_handle')->name('web.administrator.location_set_handle');
 });
 
 Route::redirect('/patient', '/patient/dashboard');
@@ -131,6 +136,8 @@ Route::middleware(['authc.basic:web.patient.login_show,patient'])->group(functio
 
         Route::get('/order/{midwife}', 'User\Patient\LandingController@order')->name('web.patient.landing.order');
         Route::get('/order', 'User\Patient\LandingController@order_common')->name('web.patient.landing.order_common');
+        Route::get('/map_select', 'User\Patient\LandingController@map_select')->name('web.patient.landing.map_select');
+        Route::get('/map_navigation/{coord}', 'User\Patient\LandingController@map_navigation')->name('web.patient.landing.map_navigation');
         Route::get('/history', 'User\Patient\LandingController@history')->name('web.patient.landing.history');
         Route::get('/profile', 'User\Patient\LandingController@profile')->name('web.patient.landing.profile');
         Route::get('/notification', 'User\Patient\LandingController@notification')->name('web.patient.landing.notification');
@@ -174,6 +181,9 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
         Route::get('/midwife/record/{order}/edit', 'User\Midwife\RecordController@edit')->name('web.midwife.record.edit');
         Route::get('/midwife/record/{order}/report', 'User\Midwife\RecordController@add_report')->name('web.midwife.record.report.add');
         Route::get('/midwife/record/{order}/report/{report}', 'User\Midwife\RecordController@edit_report')->name('web.midwife.record.report.edit');
+
+        Route::get('/midwife/map_navigation/{coord}', 'User\Midwife\DashboardController@map_navigation')->name('web.midwife.map_navigation');
+        Route::get('/midwife/orders_limit_set', 'User\Midwife\DashboardController@orders_limit_set')->name('web.midwife.orders_limit_set');
     });
 
     Route::patch('/midwife/change_profile', 'User\Midwife\DashboardController@change_profile')->name('web.midwife.change_profile');
@@ -190,6 +200,8 @@ Route::middleware(['authc.basic:welcome,midwife'])->group(function () {
     Route::post('/midwife/record/{order}/report', 'User\Midwife\RecordController@create_report')->name('web.midwife.record.report.create');
     Route::patch('/midwife/record/{order}/report/{report}', 'User\Midwife\RecordController@update_report')->name('web.midwife.record.report.update');
     Route::delete('/midwife/record/{order}/report/{report}', 'User\Midwife\RecordController@delete_report')->name('web.midwife.record.report.delete');
+
+    Route::patch('/midwife/orders_limit_set_handle', 'User\Midwife\DashboardController@orders_limit_set_handle')->name('web.midwife.orders_limit_set_handle');
 });
 
 Route::middleware(['authc.basic:welcome,administrator'])->group(function () {

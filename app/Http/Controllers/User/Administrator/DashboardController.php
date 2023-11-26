@@ -13,13 +13,14 @@ use App\Models\Schedule;
 use App\Models\Service;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Nette\Utils\FileInfo;
 use stdClass;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use ZipArchive;
 
 class DashboardController extends Controller
@@ -57,6 +58,29 @@ class DashboardController extends Controller
             name: "administrator",
             icon: Blade::render('<x-icons.users stroke="2" />'),
         )->resourcing();
+        $orders_today = new stdClass();
+        $orders_today->name = "orders today";
+        $orders_today->count_all = Order::get_unfinish_today()->count();
+        $orders_today->icon = Blade::render('<x-icons.shop_bag stroke="2" />');
+
+        $orders_limit = new stdClass();
+        $orders_limit->name = "orders limit";
+        $orders_limit->count_all = Cache::get("orders_limit", ['limit' => ""])['limit'];
+        $orders_limit->icon = Blade::render('<x-icons.shop_bag stroke="2" />');
+        $orders_limit_action = new stdClass();
+        $orders_limit_action->name = "change";
+        $orders_limit_action->href = route('web.administrator.orders_limit_set');
+        $orders_limit->actions = [$orders_limit_action];
+
+        $location = new stdClass();
+        $location->name = "location";
+        $location->count_all = Cache::get("location", ['address' => ""])['address'];
+        $location->icon = Blade::render('<x-icons.map stroke="2" />');
+        $location_action = new stdClass();
+        $location_action->name = "change";
+        $location_action->href = route('web.administrator.location_set');
+        $location->actions = [$location_action];
+
         return view('pages.administrator.dashboard', [
             'visitors' => $visitors,
 
@@ -67,6 +91,10 @@ class DashboardController extends Controller
             'patient' => $patient,
             'midwife' => $midwife,
             'administrator' => $administrator,
+
+            'orders_today' => $orders_today,
+            'orders_limit' => $orders_limit,
+            'location' => $location,
         ]);
     }
     public function database(Request $request)
@@ -247,6 +275,43 @@ class DashboardController extends Controller
             $output->headers->set('Cache-Control', 'no-cache');
         }
         return $output;
+    }
+
+    public function orders_limit_set()
+    {
+        return view('pages.administrator.orders_limit_set', Cache::get("orders_limit", [
+            'date' => now()->toDateString(),
+            'limit' => 3,
+        ]));
+    }
+    public function orders_limit_set_handle(Request $request)
+    {
+        $data = Validator::make($request->all(), [
+            'date' => 'required|string',
+            'limit' => 'required|integer|min:1',
+        ])->validate();
+        Cache::set("orders_limit", $data, null);
+        return to_route('web.administrator.dashboard');
+    }
+
+    public function location_set()
+    {
+        return view('pages.administrator.location_set', Cache::get("location", [
+            'distance' => 5,
+            'address' => "",
+            'bounds' => "{}",
+            'coordinates' => "[-5.152, 119.437]",
+        ]));
+    }
+    public function location_set_handle(Request $request)
+    {
+        Cache::set("location", [
+            'distance' => $request->input('distance'),
+            'address' => $request->input('address'),
+            'bounds' => $request->input('bounds'),
+            'coordinates' => $request->input('coordinates'),
+        ], null);
+        return to_route('web.administrator.dashboard');
     }
 
     public function profile()

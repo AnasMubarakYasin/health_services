@@ -1,5 +1,6 @@
 import { create_element, wait } from "@/lib/helper";
 import { Datepicker, Timepicker, Input, Select, initTE } from "tw-elements";
+import { latLng, latLngBounds } from "leaflet";
 
 initTE({ Datepicker, Timepicker, Input, Select });
 
@@ -8,10 +9,39 @@ const data = {
   schedules: [],
   orders: [],
 };
+const value = {};
+
+if (!location_limit?.address) {
+  throw new Error("location limit not setup yet");
+}
+if (history.state) {
+  Object.assign(value, history.state.data);
+  value.address = history.state.result.address;
+  value.coordinates = history.state.result.coordinates;
+}
+
+location_limit = {
+  coordinates: JSON.parse(location_limit.coordinates),
+  address: location_limit.address,
+  distance: location_limit.distance * 1e3,
+  bounds: JSON.parse(location_limit.bounds),
+};
+
+// console.log(value, location_limit);
+
+const service_elm = document.getElementById("service");
+const service_lib = Select.getInstance(service_elm);
+service_elm.addEventListener("change", (ev) => {
+  value.service = service_elm.value;
+  // console.log(value);
+});
 
 const midwife_elm = document.getElementById("midwife");
-new Select(midwife_elm, {});
+const midwife_lib = new Select(midwife_elm, {});
 midwife_elm.addEventListener("valueChange.te.select", (event) => {
+  value.midwife = event.value;
+  // console.log(value);
+
   const midwife = midwifes.find((midwife) => midwife.id == event.value);
   if (!midwife) return;
   data.midwife = midwife;
@@ -22,7 +52,7 @@ midwife_elm.addEventListener("valueChange.te.select", (event) => {
   const input = date_elm.querySelector("input");
   input.value = "";
   input.focus();
-  time_comp.setValue("");
+  time_lib.setValue("");
 });
 
 const date_elm = document.getElementById("date");
@@ -32,7 +62,7 @@ const tomorrow = new Date(now.getTime() + day_in_ms * 1);
 tomorrow.setHours(0, 0, 0, 0);
 const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 6);
 next_seven_day.setHours(0, 0, 0, 0);
-new Datepicker(date_elm, {
+const date_lib = new Datepicker(date_elm, {
   filter: (date) => {
     date.setHours(0, 0, 0, 0);
     const is_less_than_tomorrow = date.getTime() < tomorrow.getTime();
@@ -54,6 +84,9 @@ new Datepicker(date_elm, {
   },
 });
 date_elm.addEventListener("dateChange.te.datepicker", (event) => {
+  value.date = event.date;
+  // console.log(value);
+
   const selected_schedule = data.schedules.filter(
     (schedule) => day_to_index(schedule.day) == event.date.getDay()
   );
@@ -99,8 +132,11 @@ const work_times = times.filter((work_time) => {
   );
   return !is_rest_time;
 });
-const time_comp = new Select(time_elm, {});
-time_elm.addEventListener("valueChange.te.select", (event) => {});
+const time_lib = new Select(time_elm, {});
+time_elm.addEventListener("valueChange.te.select", (event) => {
+  value.time = event.value;
+  // console.log(value);
+});
 
 const location_elm = document.getElementById("location");
 const position_elm = document.getElementById("position");
@@ -108,7 +144,9 @@ const location_btn_elm = document.getElementById("location_btn");
 const location_list_elm = document.getElementById("location_list");
 const toggle_location_elm = document.getElementById("toggle_location");
 function search(address) {
-  fetch(`https://geocode.maps.co/search?q=${address}`)
+  fetch(`https://geocode.maps.co/search?q=${address}`, {
+    mode: "cors",
+  })
     .then((res) => res.json())
     .then((body) => {
       const options = [];
@@ -151,7 +189,10 @@ toggle_location_elm.addEventListener("click", (event) => {
     (position) => {
       position_elm.value = `[${position.coords.longitude},${position.coords.latitude}]`;
       fetch(
-        `https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`
+        `https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`,
+        {
+          mode: "cors",
+        }
       )
         .then((res) => res.json())
         .then((body) => {
@@ -161,11 +202,84 @@ toggle_location_elm.addEventListener("click", (event) => {
     },
     (error) => {
       throw error;
-    },
-    {
-      enableHighAccuracy: true,
     }
   );
+});
+
+const orders_elm = document.getElementById("orders");
+
+if (value.service) {
+  setTimeout(() => {
+    service_lib.setValue(value.service);
+  }, 250);
+}
+if (value.midwife) {
+  setTimeout(() => {
+    midwife_lib.open();
+    midwife_lib.setValue(value.midwife);
+    midwife_elm.dispatchEvent(
+      Object.assign(new CustomEvent("valueChange.te.select"), {
+        value: value.midwife,
+      })
+    );
+    midwife_lib.close();
+  }, 250);
+}
+if (value.date) {
+  setTimeout(() => {
+    date_lib.open();
+    document
+      .querySelector(
+        `[data-te-date="${value.date.getFullYear()}-${value.date.getMonth()}-${value.date.getDate()}"]`
+      )
+      .click();
+    date_lib.close();
+  }, 250);
+}
+if (value.midwife) {
+  setTimeout(() => {
+    time_lib.open();
+    time_lib.setValue(value.time);
+    time_elm.dispatchEvent(
+      Object.assign(new CustomEvent("valueChange.te.select"), {
+        value: value.time,
+      })
+    );
+    time_lib.close();
+  }, 250);
+}
+if (value.address) {
+  setTimeout(() => {
+    location_elm.value = value.address;
+    position_elm.value = JSON.stringify(value.coordinates);
+    location_elm.click();
+    location_elm.focus();
+    if (
+      !latLngBounds(
+        latLng(location_limit.bounds._southWest),
+        latLng(location_limit.bounds._northEast)
+      ).contains(latLng(value.coordinates))
+    ) {
+      const div = create_element(
+        `<div id="location-error" class="w-full text-sm text-error" data-te-input-helper-ref>lokasi diluar jangkauan</div>`
+      );
+      location_elm.parentElement.parentElement.append(div);
+      orders_elm.disabled = true;
+    }
+  }, 250);
+}
+const toggle_map_elm = document.getElementById("toggle_map");
+toggle_map_elm.addEventListener("click", (ev) => {
+  history.pushState(
+    {
+      request: "select",
+      source: location + "",
+      data: value,
+    },
+    "",
+    toggle_map_elm.dataset.href
+  );
+  location.assign(toggle_map_elm.dataset.href);
 });
 
 function day_to_index(day) {
