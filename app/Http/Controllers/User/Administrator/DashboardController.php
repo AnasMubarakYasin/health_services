@@ -305,12 +305,12 @@ class DashboardController extends Controller
     }
     public function location_set_handle(Request $request)
     {
-        Cache::set("location", [
+        Cache::forever("location", [
             'distance' => $request->input('distance'),
             'address' => $request->input('address'),
             'bounds' => $request->input('bounds'),
             'coordinates' => $request->input('coordinates'),
-        ], null);
+        ]);
         return to_route('web.administrator.dashboard');
     }
 
