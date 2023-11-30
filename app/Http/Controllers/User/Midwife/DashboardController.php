@@ -242,7 +242,7 @@ class DashboardController extends Controller
             'date' => 'required|string',
             'limit' => 'required|integer|min:1',
         ])->validate();
-        Cache::set("orders_limit", $data, null);
+        Cache::forever("orders_limit", $data);
         return to_route('web.midwife.dashboard');
     }
 

@@ -37,8 +37,8 @@
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/pages/patient/landing.js')
 
-    {{-- <link rel="manifest" href="{{ asset('patient/site.webmanifest') }}">
-    <script type="module" src="{{ Vite::asset('resources/js/pages/patient/regis-sw.js') }}"></script> --}}
+    <link rel="manifest" href="{{ asset('patient/site.webmanifest') }}">
+    <script type="module" src="{{ Vite::asset('resources/js/pages/patient/regis-sw.js') }}"></script>
 
     {{ $head }}
 </head>

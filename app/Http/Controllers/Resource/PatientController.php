@@ -21,6 +21,9 @@ class PatientController extends Controller
     {
         $this->authorize('update', $patient);
         $data = $request->validated();
+        if (isset($data['date_of_birth'])) {
+            $data['date_of_birth'] = strtotime(str_replace('/', '-', $data['date_of_birth']));
+        }
         $patient->update($data);
         return redirect()->intended($request->input('_view_any'));
     }
