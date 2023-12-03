@@ -67,18 +67,10 @@
         <div id="bidan" class="@container grid gap-2 px-2 sm:px-24 py-8">
             <div class="font-bold text-lg capitalize">Pesanan</div>
             <div class="grid gap-4">
-                <div class="@container flex gap-4 w-full">
+                <div class="grid @xs:grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @6xl:grid-cols-4 gap-4">
                     @foreach ($orders as $order)
-                        {{-- @if ($order->status == 'finished')
-                            <button type="button"
-                                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                                data-te-toggle="modal" data-te-target="#staticBackdrop" data-te-ripple-init
-                                data-te-ripple-color="light">
-                                Launch static backdrop modal
-                            </button>
-                        @endif --}}
                         <div
-                            class="flex flex-col gap-2 py-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+                            class="flex flex-col gap-2 py-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                             <div class="px-6">
                                 <div class="font-medium text-lg capitalize">{{ $order->service->name }}</div>
                                 <div class="flex gap-1">

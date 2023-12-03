@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Order;
+use App\Notifications\OrderAutoFinished;
 use App\Notifications\OrderCome as NotificationsOrderCome;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -37,17 +38,18 @@ class OrderCome implements ShouldQueue
             'yesterday' => count($order_yesterday),
         ]);
         foreach ($order_today as $key => $order) {
-            $order->patient->notifyNow(new NotificationsOrderCome($order));
-            $order->midwife->notifyNow(new NotificationsOrderCome($order));
+            $order->patient->notify(new NotificationsOrderCome($order));
+            $order->midwife->notify(new NotificationsOrderCome($order));
         }
         foreach ($order_tomorrow as $key => $order) {
-            $order->patient->notifyNow(new NotificationsOrderCome($order));
-            $order->midwife->notifyNow(new NotificationsOrderCome($order));
+            $order->patient->notify(new NotificationsOrderCome($order));
+            $order->midwife->notify(new NotificationsOrderCome($order));
         }
         foreach ($order_yesterday as $key => $order) {
             $order->status = "finished";
             $order->confirm = "yes";
             $order->update();
+            $order->patient->notify(new OrderAutoFinished($order));
         }
     }
 }

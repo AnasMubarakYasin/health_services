@@ -30,6 +30,7 @@ class Administrator extends Authenticatable
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
     use Tableable, Formable, Statable;
     use Fileable;
+    use HasPushSubscriptions;
 
     public static function modelable(): Model
     {

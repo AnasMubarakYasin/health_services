@@ -609,7 +609,7 @@
     "src": "resources/js/pages/patient/map_select.js"
   },
   "resources/js/pages/patient/order.js": {
-    "file": "assets/order-3f31bbba.js",
+    "file": "assets/order-3e8053de.js",
     "imports": [
       "resources/js/lib/helper.ts",
       "_tw-elements.es.min-b026dc7a.js",
@@ -620,16 +620,18 @@
     "src": "resources/js/pages/patient/order.js"
   },
   "resources/js/pages/patient/order_midwife.js": {
-    "file": "assets/order_midwife-362b0957.js",
+    "file": "assets/order_midwife-0ea0f396.js",
     "imports": [
       "resources/js/lib/helper.ts",
-      "_tw-elements.es.min-b026dc7a.js"
+      "_leaflet-src-a6f5db0b.js",
+      "_tw-elements.es.min-b026dc7a.js",
+      "__commonjsHelpers-725317a4.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/patient/order_midwife.js"
   },
   "resources/js/pages/patient/regis-sw.js": {
-    "file": "assets/regis-sw-4324b87f.js",
+    "file": "assets/regis-sw-fda1bf07.js",
     "imports": [
       "_workbox-window.prod.es5-69cd2c5c.js",
       "resources/js/lib/context.ts",

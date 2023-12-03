@@ -1,6 +1,7 @@
 import { create_element } from "@/lib/helper";
+import { latLng, latLngBounds } from "leaflet";
 import {
-  Stepper,
+  // Stepper,
   Datepicker,
   Timepicker,
   Input,
@@ -10,11 +11,37 @@ import {
 
 initTE({ /* Stepper, */ Datepicker, Timepicker, Input, Select });
 
-console.debug(midwife);
-console.debug(schedules);
-console.debug(orders);
+// console.debug(midwife);
+// console.debug(schedules);
+// console.debug(orders);
+
+const value = {};
+
+if (!location_limit?.address) {
+  throw new Error("location limit not setup yet");
+}
+if (history.state) {
+  Object.assign(value, history.state.data);
+  value.address = history.state.result.address;
+  value.coordinates = history.state.result.coordinates;
+}
+
+location_limit = {
+  coordinates: JSON.parse(location_limit.coordinates),
+  address: location_limit.address,
+  distance: location_limit.distance * 1e3,
+  bounds: JSON.parse(location_limit.bounds),
+};
 
 schedules = schedules.filter((item) => item.active);
+
+console.log(value);
+
+const service_elm = document.getElementById("service");
+const service_lib = Select.getInstance(service_elm);
+service_elm.addEventListener("change", (ev) => {
+  value.service = service_elm.value;
+});
 
 const date_elm = document.getElementById("date");
 const day_in_ms = 1e3 * 60 * 60 * 24;
@@ -23,7 +50,7 @@ const tomorrow = new Date(now.getTime() + day_in_ms * 1);
 tomorrow.setHours(0, 0, 0, 0);
 const next_seven_day = new Date(tomorrow.getTime() + day_in_ms * 6);
 next_seven_day.setHours(0, 0, 0, 0);
-new Datepicker(date_elm, {
+const date_lib = new Datepicker(date_elm, {
   filter: (date) => {
     date.setHours(0, 0, 0, 0);
     const is_less_than_tomorrow = date.getTime() < tomorrow.getTime();
@@ -45,6 +72,8 @@ new Datepicker(date_elm, {
   },
 });
 date_elm.addEventListener("dateChange.te.datepicker", (event) => {
+  value.date = event.date;
+
   const selected_schedule = schedules.filter(
     (schedule) => event.date.getDay() == day_to_index(schedule.day)
   );
@@ -90,8 +119,10 @@ const work_times = times.filter((work_time) => {
   );
   return !is_rest_time;
 });
-const time_comp = new Select(time_elm, {});
-time_elm.addEventListener("valueChange.te.select", (event) => {});
+const time_lib = new Select(time_elm, {});
+time_elm.addEventListener("valueChange.te.select", (event) => {
+  value.time = event.value;
+});
 
 const location_elm = document.getElementById("location");
 const position_elm = document.getElementById("position");
@@ -112,6 +143,72 @@ toggle_location_elm.addEventListener("click", (event) => {
       enableHighAccuracy: true,
     }
   );
+});
+
+const orders_elm = document.getElementById("orders");
+
+if (value.service) {
+  setTimeout(() => {
+    service_lib.setValue(value.service);
+  }, 250);
+}
+if (value.date) {
+  date_lib.open();
+  setTimeout(() => {
+    window.date_lib = date_lib;
+    document
+      .querySelector(
+        `[data-te-date="${value.date.getFullYear()}-${value.date.getMonth()}-${value.date.getDate()}"]`
+      )
+      .click();
+    date_lib.close();
+  }, 250);
+}
+if (value.time) {
+  setTimeout(() => {
+    time_lib.open();
+    time_lib.setValue(value.time);
+    time_elm.dispatchEvent(
+      Object.assign(new CustomEvent("valueChange.te.select"), {
+        value: value.time,
+      })
+    );
+    time_lib.close();
+  }, 250);
+}
+if (value.address) {
+  setTimeout(() => {
+    location_elm.value = value.address;
+    position_elm.value = JSON.stringify(value.coordinates);
+    location_elm.click();
+    location_elm.focus();
+    if (
+      !latLngBounds(
+        latLng(location_limit.bounds._southWest),
+        latLng(location_limit.bounds._northEast)
+      ).contains(latLng(value.coordinates))
+    ) {
+      const div = create_element(
+        `<div id="location-error" class="w-full text-sm text-error" data-te-input-helper-ref>lokasi diluar jangkauan</div>`
+      );
+      location_elm.parentElement.parentElement.append(div);
+      orders_elm.disabled = true;
+    }
+  }, 250);
+}
+
+const toggle_map_elm = document.getElementById("toggle_map");
+toggle_map_elm.addEventListener("click", (ev) => {
+  history.pushState(
+    {
+      request: "select",
+      source: location + "",
+      data: value,
+    },
+    "",
+    toggle_map_elm.dataset.href
+  );
+  location.assign(toggle_map_elm.dataset.href);
 });
 
 function day_to_index(day) {

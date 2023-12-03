@@ -226,8 +226,8 @@ if (value.midwife) {
   }, 250);
 }
 if (value.date) {
+  date_lib.open();
   setTimeout(() => {
-    date_lib.open();
     document
       .querySelector(
         `[data-te-date="${value.date.getFullYear()}-${value.date.getMonth()}-${value.date.getDate()}"]`
@@ -236,7 +236,7 @@ if (value.date) {
     date_lib.close();
   }, 250);
 }
-if (value.midwife) {
+if (value.time) {
   setTimeout(() => {
     time_lib.open();
     time_lib.setValue(value.time);

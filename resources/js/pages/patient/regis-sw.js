@@ -97,21 +97,21 @@ if ("serviceWorker" in navigator) {
     const res = await axios.get("/api/webpush/public_key");
     const public_key = urlBase64ToUint8Array(res.data);
     let subscribtion = null;
-    subscribtion = await service_worker.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: public_key,
-    });
-    // try {
-    //   subscribtion = await service_worker.pushManager.subscribe({
-    //     userVisibleOnly: false,
-    //     applicationServerKey: public_key,
-    //   });
-    // } catch (error) {
-    //   subscribtion = await service_worker.pushManager.subscribe({
-    //     userVisibleOnly: true,
-    //     applicationServerKey: public_key,
-    //   });
-    // }
+    // subscribtion = await service_worker.pushManager.subscribe({
+    //   userVisibleOnly: true,
+    //   applicationServerKey: public_key,
+    // });
+    try {
+      subscribtion = await service_worker.pushManager.subscribe({
+        userVisibleOnly: false,
+        applicationServerKey: public_key,
+      });
+    } catch (error) {
+      subscribtion = await service_worker.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: public_key,
+      });
+    }
     return subscribtion;
   }
   async function subscribe(subscribtion) {

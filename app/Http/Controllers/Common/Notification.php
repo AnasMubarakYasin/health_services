@@ -34,7 +34,7 @@ class Notification extends Controller
     {
         /** @var User */
         $user = auth()->user();
-        $user->notifications()->markAsRead();
+        $user->unreadNotifications->markAsRead();
 
         return back();
     }

@@ -32,6 +32,7 @@ class Panel extends Component
 
         $token = $user->currentAccessToken();
         if (!$token) {
+            $user->tokens()->delete();
             $token = $user->createToken("panel");
             $user->withAccessToken($token);
         }

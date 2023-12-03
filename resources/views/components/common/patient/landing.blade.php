@@ -33,6 +33,7 @@
         var panel = @json($panel);
     </script>
 
+    @vite('resources/js/components/common/error-boundary.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/js/components/modern/app.js')
     @vite('resources/js/pages/patient/landing.js')

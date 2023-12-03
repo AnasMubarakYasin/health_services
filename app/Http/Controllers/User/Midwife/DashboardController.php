@@ -48,10 +48,14 @@ class DashboardController extends Controller
         }
 
         return view('pages.midwife.dashboard', [
+            // 'schedule' => 1,
             'schedules' => $schedules,
             'schedules_coll' => $schedules_coll,
             'orders' => $orders,
-            'orders_limit' =>  Cache::get('orders_limit'),
+            'orders_limit' =>  Cache::get('orders_limit', [
+                'date' => now()->toDateString(),
+                'limit' => 3,
+            ]),
         ]);
     }
     public function history()

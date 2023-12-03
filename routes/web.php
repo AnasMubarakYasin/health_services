@@ -36,11 +36,13 @@ Route::middleware(['authc.basic.order:web.patient.login_show,patient'])->group(f
 Route::get('/locale/{locale}', 'Common\Locale@set')->name('web.locale.set');
 Route::get('/template/{template}', 'Common\Template@set')->name('web.template.set');
 
-Route::patch('/notification/{notification}/mark', 'Common\Notification@mark')->name('web.notification.mark');
-Route::get('/notification/{notification}/read', 'Common\Notification@read')->name('web.notification.read');
-Route::delete('/notification/{notification}/delete', 'Common\Notification@delete')->name('web.notification.delete');
-Route::patch('/notification/mark_all', 'Common\Notification@mark_all')->name('web.notification.mark_all');
-Route::delete('/notification/delete_all', 'Common\Notification@delete_all')->name('web.notification.delete_all');
+Route::middleware(['authc.basic:welcome,administrator,midwife,patient'])->group(function () {
+    Route::patch('/notification/{notification}/mark', 'Common\Notification@mark')->name('web.notification.mark');
+    Route::get('/notification/{notification}/read', 'Common\Notification@read')->name('web.notification.read');
+    Route::delete('/notification/{notification}/delete', 'Common\Notification@delete')->name('web.notification.delete');
+    Route::patch('/notification/mark_all', 'Common\Notification@mark_all')->name('web.notification.mark_all');
+    Route::delete('/notification/delete_all', 'Common\Notification@delete_all')->name('web.notification.delete_all');
+});
 
 Route::redirect('/administrator', '/administrator/dashboard');
 Route::middleware('authc.guest:web.administrator.dashboard,administrator')->group(function () {

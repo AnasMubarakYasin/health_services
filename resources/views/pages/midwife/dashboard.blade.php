@@ -99,9 +99,7 @@
                                             <x-icons.ellipsis_vertical class="w-5 h-5" stroke="2"></x-icons.ellipsis_vertical>
                                         </a> --}}
                                         <div class="relative" data-te-dropdown-position="dropend">
-                                            <button
-                                                href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
-                                                class="" data-te-dropdown-toggle-ref>
+                                            <button class="" data-te-dropdown-toggle-ref>
                                                 <x-icons.ellipsis_vertical></x-icons.ellipsis_vertical>
                                             </button>
                                             <ul class="absolute z-10 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-base-100 bg-clip-padding text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
@@ -170,16 +168,14 @@
                                         </div>
                                     </div>
                                     <div class="relative" data-te-dropdown-position="dropend">
-                                        <button
-                                            href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
-                                            class="" data-te-dropdown-toggle-ref>
+                                        <button class="" data-te-dropdown-toggle-ref>
                                             <x-icons.ellipsis_vertical></x-icons.ellipsis_vertical>
                                         </button>
                                         <ul class="absolute z-10 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-base-100 bg-clip-padding text-base shadow-all-lg [&[data-te-dropdown-show]]:block"
                                             data-te-dropdown-menu-ref>
                                             <li>
                                                 <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
-                                                    href="{{ route("web.midwife.orders_limit_set") }}"
+                                                    href="{{ route('web.midwife.orders_limit_set') }}"
                                                     data-te-dropdown-item-ref>{{ trans('change') }}
                                                 </a>
                                             </li>

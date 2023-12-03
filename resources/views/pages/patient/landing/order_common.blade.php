@@ -6,7 +6,6 @@
             var midwifes = @json($midwifes);
             var schedules = @json($schedules);
             var orders = @json($orders);
-            var orders_limit = @json($orders_limit);
             var location_limit = @json($location_limit);
         </script>
         @vite('resources/js/pages/patient/order.js')

@@ -149,12 +149,14 @@ class DashboardController extends Controller
             return to_route('web.administrator.database', ['table' => $table]);
         } else {
             $database = json_decode($request->file('database')->get(), true);
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
             foreach ($database as $table => $value) {
                 DB::table($table)->truncate();
                 if ($database[$table]) {
                     DB::table($table)->insert($value);
                 }
             }
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
             return to_route('web.administrator.database');
         }
     }

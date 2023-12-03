@@ -52,7 +52,7 @@ class LandingController extends Controller
         $orders = Order::get_unfinish_by_midwife($midwife);
         return view('pages.patient.landing.order', [
             'panel' => $this->create_panel(),
-            'orders_limit' => Cache::get('orders_limit'),
+            'location_limit' => Cache::get('location'),
             'midwife' => $midwife,
             'schedules' => $midwife->active_schedules(),
             'services' => $services,
@@ -67,8 +67,9 @@ class LandingController extends Controller
         if ($limit_order) {
             $date = strtotime(str_replace('/', '-', $data['date']));
             $date_limit = strtotime(str_replace('/', '-', $limit_order['date']));
+            $date_object = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
             if ($date == $date_limit) {
-                if (Order::get_unfinish_by_date(date('d-m-Y', $date))->count() >= $limit_order['limit']) {
+                if (Order::get_unfinish_by_date($date_object)->count() >= $limit_order['limit']) {
                     return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
                 }
             }
@@ -102,7 +103,6 @@ class LandingController extends Controller
         $orders = Order::get_unfinish();
         return view('pages.patient.landing.order_common', [
             'panel' => $this->create_panel(),
-            'orders_limit' => Cache::get('orders_limit'),
             'location_limit' => Cache::get('location'),
             'services' => $services,
             'midwifes' => $midwifes,
@@ -118,8 +118,9 @@ class LandingController extends Controller
         if ($limit_order) {
             $date = strtotime(str_replace('/', '-', $data['date']));
             $date_limit = strtotime(str_replace('/', '-', $limit_order['date']));
+            $date_object = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
             if ($date == $date_limit) {
-                if (Order::get_unfinish_by_date(date('d-m-Y', $date))->count() >= $limit_order['limit']) {
+                if (Order::get_unfinish_by_date($date_object)->count() >= $limit_order['limit']) {
                     return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
                 }
             }
@@ -248,6 +249,7 @@ class LandingController extends Controller
 
             $token = $user->currentAccessToken();
             if (!$token) {
+                $user->tokens()->delete();
                 $token = $user->createToken("panel");
                 $user->withAccessToken($token);
             }
