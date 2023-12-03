@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
 
@@ -30,19 +28,15 @@ class Notification extends Controller
 
         return back();
     }
-    public function mark_all()
+    public function mark_all(string $id)
     {
-        /** @var User */
-        $user = auth()->user();
-        $user->unreadNotifications->markAsRead();
+        DatabaseNotification::where("notifiable_id", $id)->where('read_at', null)->update(['read_at' => now()]);
 
         return back();
     }
-    public function delete_all()
+    public function delete_all(string $id)
     {
-        /** @var User */
-        $user = auth()->user();
-        $user->notifications()->delete();
+        DatabaseNotification::where("notifiable_id", $id)->whereNot('read_at', null)->delete();
 
         return back();
     }

@@ -66,7 +66,7 @@
                                 </div>
                             @endforelse
                             @if (filled($panel->user->unreadNotifications))
-                                <form class="contents" action="{{ route('web.notification.mark_all') }}" method="post">
+                                <form class="contents" action="{{ route('web.notification.mark_all', ['id' => $panel->user]) }}" method="post">
                                     @csrf
                                     @method('PATCH')
                                     <button
@@ -128,7 +128,7 @@
                                 </div>
                             @endforelse
                             @if (filled($panel->user->readnotifications))
-                                <form class="contents" action="{{ route('web.notification.delete_all') }}"
+                                <form class="contents" action="{{ route('web.notification.delete_all', ['id' => $panel->user]) }}"
                                     method="post">
                                     @csrf
                                     @method('DELETE')
@@ -150,7 +150,7 @@
                 <h2 class="text-xl font-bold leading-none text-base-content capitalize">
                     {{ trans('unread') }}
                 </h2>
-                <form class="contents" action="{{ route('web.notification.mark_all') }}" method="post">
+                <form class="contents" action="{{ route('web.notification.mark_all', ['id' => $panel->user]) }}" method="post">
                     @csrf
                     @method('PATCH')
                     <button class="text-sm font-medium text-info hover:underline capitalize">
@@ -205,7 +205,7 @@
                 <h2 class="text-xl font-bold leading-none text-base-content capitalize">
                     {{ trans('readed') }}
                 </h2>
-                <form class="contents" action="{{ route('web.notification.delete_all') }}" method="post">
+                <form class="contents" action="{{ route('web.notification.delete_all', ['id' => $panel->user]) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="text-sm font-medium text-error hover:underline capitalize">
