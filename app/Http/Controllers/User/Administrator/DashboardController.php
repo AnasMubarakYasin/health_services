@@ -100,6 +100,7 @@ class DashboardController extends Controller
     public function database(Request $request)
     {
         $table = $request->query('table');
+        DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', "string");
         $tables = DB::connection()->getDoctrineSchemaManager()->listTables();
         if ($table) {
             foreach ($tables as $value) {
