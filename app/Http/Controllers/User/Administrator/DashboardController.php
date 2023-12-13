@@ -103,14 +103,17 @@ class DashboardController extends Controller
         DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', "string");
         $tables = DB::connection()->getDoctrineSchemaManager()->listTables();
         if ($table) {
+            $data = [];
             foreach ($tables as $value) {
                 if ($value->getName() == $table) {
                     $table = $value;
+                    $data = DB::connection()->table($value->getName())->get();
                     break;
                 }
             }
             return view('pages.administrator.table', [
                 'table' => $table,
+                'data' => $data,
             ]);
         } else {
             return view('pages.administrator.database', [
@@ -280,22 +283,27 @@ class DashboardController extends Controller
         return $output;
     }
 
-    public function orders_limit_set()
-    {
-        return view('pages.administrator.orders_limit_set', Cache::get("orders_limit", [
-            'date' => now()->toDateString(),
-            'limit' => 3,
-        ]));
-    }
-    public function orders_limit_set_handle(Request $request)
-    {
-        $data = Validator::make($request->all(), [
-            'date' => 'required|string',
-            'limit' => 'required|integer|min:1',
-        ])->validate();
-        Cache::forever("orders_limit", $data, null);
-        return to_route('web.administrator.dashboard');
-    }
+    // public function orders_limit_set()
+    // {
+    //     return view('pages.administrator.orders_limit_set', [
+    //         'midwifes' => Midwife::all(),
+    //         'data' => Cache::get("orders_limit", [
+    //             'midwife' => "",
+    //             'date' => now()->toDateString(),
+    //             'limit' => 3,
+    //         ])
+    //     ]);
+    // }
+    // public function orders_limit_set_handle(Request $request)
+    // {
+    //     $data = Validator::make($request->all(), [
+    //         'midwife' => 'required|uuid',
+    //         'date' => 'required|string',
+    //         'limit' => 'required|integer|min:1',
+    //     ])->validate();
+    //     Cache::forever("orders_limit", $data);
+    //     return to_route('web.administrator.dashboard');
+    // }
 
     public function location_set()
     {

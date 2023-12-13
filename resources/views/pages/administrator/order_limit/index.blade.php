@@ -1,15 +1,22 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
-        <x-slot:head>
-            @template('modern')
+        @template('simple')
+            <x-slot:head>
+                @vite('resources/js/components/simple/resource/table.js')
+            </x-slot:head>
+        @endtemplate
+        @template('modern')
+            <x-slot:head>
                 @vite('resources/js/components/common/error-boundary.js')
                 @vite('resources/js/components/modern/common/theme.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
                 @vite('resources/js/components/modern/dashboard/customizer.js')
-            @endtemplate
-        </x-slot:head>
+
+                @vite('resources/js/components/modern/data/table/regular.js')
+            </x-slot:head>
+        @endtemplate
         <x-slot:topbar>
             <x-dynamic.panel.topbar>
 
@@ -21,12 +28,10 @@
             </x-dynamic.panel.sidebar>
         </x-slot:sidebar>
         <x-slot:main>
-            <x-dynamic.panel.main class="p-4">
+            <x-dynamic.panel.main>
+                <x-dynamic.resource.table :resource="$resource">
 
-                <x-modern.common.table :table="$table" :data="$data">
-
-                </x-modern.common.table>
-
+                </x-dynamic.resource.table>
             </x-dynamic.panel.main>
         </x-slot:main>
         <x-slot:bottombar>

@@ -45,6 +45,11 @@ class Administrator extends Panel
                 icon: Blade::render('<x-icons.shop_bag stroke="2" />'),
             ),
             new Menu(
+                name: "orders limit",
+                link: route('web.administrator.order_limit.index'),
+                icon: Blade::render('<x-icons.shop_bag stroke="2" />'),
+            ),
+            new Menu(
                 name: "users",
                 link: route('web.administrator.users'),
                 icon: Blade::render('<x-icons.users stroke="2" />'),

@@ -31,7 +31,7 @@
                             <x-icons.add class="w-5 h-5" stroke="2"></x-icons.add>
                         </a>
                     </div>
-                    <div class="grid gap-4 @lg:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-5">
+                    <div class="grid gap-4 @sm:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-5">
                         @foreach ($schedules_coll as $schedule)
                             <div class="flex flex-col gap-2 p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                 <div class="flex justify-between items-center text-lg font-medium capitalize">
@@ -40,7 +40,10 @@
                                 @foreach ($schedule['times'] as $key => $time)
                                     <div
                                         class="flex justify-between items-center gap-4 text-base text-base-content/70 font-medium leading-[normal] capitalize">
-                                        <div @class(['whitespace-nowrap', 'text-red-500' => !$schedule['active'][$key]])>{{ $time }}</div>
+                                        <div @class([
+                                            'whitespace-nowrap',
+                                            'text-red-500' => !$schedule['active'][$key],
+                                        ])>{{ $time }}</div>
                                         <div class="relative" data-te-dropdown-position="dropend">
                                             <button
                                                 href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"
@@ -176,7 +179,7 @@
                                             <li>
                                                 <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal text-base-content hover:bg-base-200 active:text-base-content active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-base-400 capitalize"
                                                     href="{{ route('web.midwife.orders_limit_set') }}"
-                                                    data-te-dropdown-item-ref>{{ trans('change') }}
+                                                    data-te-dropdown-item-ref>{{ $orders_limit ? trans('change') : trans('create') }}
                                                 </a>
                                             </li>
                                         </ul>
@@ -184,14 +187,20 @@
                                 </div>
                                 <div class="w-full h-0.5 bg-base-300"></div>
                                 <div class="flex flex-col gap-1 px-6">
-                                    <div class="font-normal text-base">
-                                        <div class="text-base-content/70">{{ trans('date') }}</div>
-                                        <div>{{ $orders_limit['date'] }}</div>
+                                    @if ($orders_limit)
+                                        <div class="font-normal text-base">
+                                            <div class="text-base-content/70">{{ trans('limit') }}</div>
+                                            <div>{{ $orders_limit->limit }}</div>
+                                        </div>
+                                        <div class="font-normal text-base">
+                                            <div class="text-base-content/70">{{ trans('date') }}</div>
+                                            <div>{{ date('d/m/Y', strtotime($orders_limit->date)) }}</div>
+                                        </div>
+                                    @else
+                                    <div class="font-normal text-lg text-base-content/50 pt-2 text-center">
+                                        {{ trans("empty") }}
                                     </div>
-                                    <div class="font-normal text-base">
-                                        <div class="text-base-content/70">{{ trans('limit') }}</div>
-                                        <div>{{ $orders_limit['limit'] }}</div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

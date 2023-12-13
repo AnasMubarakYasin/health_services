@@ -12,6 +12,7 @@ use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ChangeProfileRequest;
 use App\Models\Midwife;
 use App\Models\Order;
+use App\Models\OrderLimit;
 use App\Models\Patient;
 use App\Models\Schedule;
 use App\Models\Service;
@@ -62,25 +63,20 @@ class LandingController extends Controller
     public function api_order(CreateOrderMidwifeRequest $request, Midwife $midwife)
     {
         $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
-        $limit_order = Cache::get('orders_limit');
         $data = $request->validated();
-        if ($limit_order) {
-            $date = strtotime(str_replace('/', '-', $data['date']));
-            $date_limit = strtotime(str_replace('/', '-', $limit_order['date']));
-            $date_object = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
-            if ($date == $date_limit) {
-                if (Order::get_unfinish_by_date($date_object)->count() >= $limit_order['limit']) {
-                    return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
-                }
+        $date = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
+        $order_limit = OrderLimit::find_by_midwife_date($midwife, $date);
+        if ($order_limit) {
+            if (Order::get_unfinish_by_date($date)->count() >= $order_limit->limit) {
+                return back()->withErrors(['api' => 'Bidan telah mencapai batas pemesanan layanan']);
             }
         }
         if ($unfinish_order > 2) {
-            return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
-            // return back()->withErrors(['api' => 'user have unfinish order']);
+            return back()->withErrors(['api' => 'Pasien telah mencapai batas pemesanan layanan']);
         }
         $order = Order::create([
             'status' => 'scheduled',
-            'schedule' => date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
+            'schedule' => $date,
             'schedule_start' => "{$data['time']}:00:00",
             'schedule_end' => "{$data['time']}:55:00",
             'location_name' => $data['location'],
@@ -113,21 +109,16 @@ class LandingController extends Controller
     public function api_order_common(OrderRequest $request)
     {
         $unfinish_order = Order::count_unfinish_by_patient(auth()->user());
-        $limit_order = Cache::get('orders_limit');
         $data = $request->validated();
-        if ($limit_order) {
-            $date = strtotime(str_replace('/', '-', $data['date']));
-            $date_limit = strtotime(str_replace('/', '-', $limit_order['date']));
-            $date_object = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
-            if ($date == $date_limit) {
-                if (Order::get_unfinish_by_date($date_object)->count() >= $limit_order['limit']) {
-                    return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
-                }
+        $date = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
+        $order_limit = OrderLimit::find_by_midwife_date(Midwife::find($data['midwife']), $date);
+        if ($order_limit) {
+            if (Order::get_unfinish_by_date($date)->count() >= $order_limit->limit) {
+                return back()->withErrors(['api' => 'Bidan telah mencapai batas pemesanan layanan']);
             }
         }
         if ($unfinish_order > 2) {
-            return back()->withErrors(['api' => 'pengguna sudah mencapai batas pesanan']);
-            // return back()->withErrors(['api' => 'user have unfinish order']);
+            return back()->withErrors(['api' => 'Pasien telah mencapai batas pemesanan layanan']);
         }
         $order = Order::create([
             'status' => 'scheduled',

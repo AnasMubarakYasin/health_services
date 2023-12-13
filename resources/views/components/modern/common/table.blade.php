@@ -1,4 +1,4 @@
-@props(['table'])
+@props(['table', 'data'])
 
 <div class="@container grid gap-4">
     <div class="flex gap-4">
@@ -71,6 +71,33 @@
             </div>
         </button>
     @endforeach
+
+    <div class="hidden @xl:block overflow-x-auto">
+        <table class="p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
+            {{-- <caption>{{ $table->getName() }}</caption> --}}
+            <thead>
+                <tr>
+                    @foreach ($table->getColumns() as $column)
+                        <th class="px-4 py-2 whitespace-nowrap border border-gray-300">
+                            {{ $column->getName() }}
+                        </th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $item)
+                    <tr>
+                        @foreach ($table->getColumns() as $column)
+                            <td class="px-4 py-2 whitespace-nowrap border border-gray-300">
+                                {{ $item->{$column->getName()} }}
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <div data-te-modal-init

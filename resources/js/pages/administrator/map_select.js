@@ -87,6 +87,7 @@ async function onMapClick(e) {
   });
   value.coordinates = [e.latlng.lat, e.latlng.lng];
   value.address = results.at(0).label;
+  value.bounds = circle.getBounds();
   update_elm.disabled = false;
 }
 function onShow(e) {
@@ -95,6 +96,7 @@ function onShow(e) {
   circle.setLatLng([e.location.y, e.location.x]);
   value.coordinates = [e.location.y, e.location.x];
   value.address = e.location.label;
+  value.bounds = circle.getBounds();
   update_elm.disabled = false;
 }
 async function onCurrPos(position) {
@@ -105,6 +107,7 @@ async function onCurrPos(position) {
   circle.setLatLng([position.coords.latitude, position.coords.longitude]);
   value.coordinates = [position.coords.latitude, position.coords.longitude];
   value.address = results.at(0).label;
+  value.bounds = circle.getBounds();
   update_elm.disabled = false;
   map.flyTo([position.coords.latitude, position.coords.longitude]);
 }
@@ -125,6 +128,4 @@ distance_elm.addEventListener("change", (ev) => {
   value.distance = distance_elm.value * 1e3;
   circle.setRadius(value.distance / 2);
   value.bounds = circle.getBounds();
-  console.log(circle.getBounds().isValid());
-  // console.log(circle.getBounds().toBBoxString());
 });

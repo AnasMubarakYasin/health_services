@@ -21,7 +21,7 @@
                     <input type="hidden" name="{{ $field }}"
                         value="{{ old($field, $model->{$field} ?? $definition->default) }}">
                     @error($field)
-                        <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                        <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                             {{ $message }}
                         </div>
                     @enderror
@@ -64,7 +64,7 @@
                         </label>
                     @endif
                     @error($field)
-                        <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                        <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                             {{ $message }}
                         </div>
                     @enderror
@@ -101,7 +101,7 @@
                         data-te-input-notch-trailing-ref=""></div>
                 </div> --}}
                 @error($field)
-                    <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                    <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                         {{ $message }}
                     </div>
                 @enderror
@@ -183,7 +183,7 @@
                     @endif
                 </label>
                 @error($field)
-                    <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                    <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                         {{ $message }}
                     </div>
                 @enderror
@@ -218,7 +218,7 @@
                     </label>
                 </div>
                 @error($field)
-                    <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                    <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                         {{ $message }}
                     </div>
                 @enderror
@@ -252,7 +252,7 @@
                     </button>
                 </div>
                 @error($field)
-                    <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                    <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                         {{ $message }}
                     </div>
                 @enderror
@@ -387,7 +387,7 @@
                         @endif
                     </label>
                     @error($definition->alias)
-                        <div class="absolute w-full text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
+                        <div class="absolute w-auto text-sm text-danger peer-focus:font-semibold" data-te-input-helper-ref>
                             {{ $message }}
                         </div>
                     @enderror

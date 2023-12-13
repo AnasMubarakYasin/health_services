@@ -72,11 +72,11 @@
                                 {!! $orders_today->icon !!}
                             </x-slot:icon>
                         </x-dynamic.resource.stat>
-                        <x-dynamic.resource.stat :resource="$orders_limit" :name="$orders_limit->name" :count="$orders_limit->count_all" :actions="$orders_limit->actions">
+                        {{-- <x-dynamic.resource.stat :resource="$orders_limit" :name="$orders_limit->name" :count="$orders_limit->count_all" :actions="$orders_limit->actions">
                             <x-slot:icon>
                                 {!! $orders_limit->icon !!}
                             </x-slot:icon>
-                        </x-dynamic.resource.stat>
+                        </x-dynamic.resource.stat> --}}
                         <x-dynamic.resource.stat :resource="$location" :name="$location->name" :count="$location->count_all" :actions="$location->actions">
                             <x-slot:icon>
                                 {!! $location->icon !!}

@@ -12,6 +12,7 @@ use App\Models\FamilyPlanningRevisit;
 use App\Models\Midwife;
 use App\Models\NewbornCare;
 use App\Models\Order;
+use App\Models\OrderLimit;
 use App\Models\PostpartumHealth;
 use App\Models\PregnancyExamination;
 use App\Models\PregnancyExaminationReport;
@@ -19,6 +20,7 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class DashboardController extends Controller
 {
@@ -46,16 +48,13 @@ class DashboardController extends Controller
                 ]);
             }
         }
-
+        $order_limit = OrderLimit::find_by_midwife(auth()->user());
         return view('pages.midwife.dashboard', [
             // 'schedule' => 1,
             'schedules' => $schedules,
             'schedules_coll' => $schedules_coll,
             'orders' => $orders,
-            'orders_limit' =>  Cache::get('orders_limit', [
-                'date' => now()->toDateString(),
-                'limit' => 3,
-            ]),
+            'orders_limit' => $order_limit,
         ]);
     }
     public function history()
@@ -235,10 +234,17 @@ class DashboardController extends Controller
     }
     public function orders_limit_set()
     {
-        return view('pages.midwife.orders_limit_set', Cache::get("orders_limit", [
-            'date' => now()->toDateString(),
-            'limit' => 3,
-        ]));
+        $order_limit = OrderLimit::find_by_midwife(auth()->user());
+        if (!$order_limit) {
+            $order_limit = new stdClass();
+            $order_limit->limit = "";
+            $order_limit->date = "";
+        } else {
+            $order_limit->date =  date('d/m/Y', strtotime($order_limit->date));
+        }
+        return view('pages.midwife.orders_limit_set',  [
+            'data' => $order_limit,
+        ]);
     }
     public function orders_limit_set_handle(Request $request)
     {
@@ -246,7 +252,11 @@ class DashboardController extends Controller
             'date' => 'required|string',
             'limit' => 'required|integer|min:1',
         ])->validate();
-        Cache::forever("orders_limit", $data);
+        OrderLimit::create([
+            'limit' => $data['limit'],
+            'date' =>  date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
+            'midwife_id' => auth()->user()->id,
+        ]);
         return to_route('web.midwife.dashboard');
     }
 

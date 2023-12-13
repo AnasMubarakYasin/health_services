@@ -1,15 +1,27 @@
 <x-dynamic.panel>
     <x-dynamic.panel.layout>
-        <x-slot:head>
-            @template('modern')
+        @template('simple')
+            <x-slot:head>
+                <script>
+                    var models = [];
+                    var resource = @json($resource);
+                    var definitions = @json($resource->model::$definitions);
+                </script>
+                @vite('resources/js/components/simple/resource/form.js')
+            </x-slot:head>
+        @endtemplate
+        @template('modern')
+            <x-slot:head>
                 @vite('resources/js/components/common/error-boundary.js')
                 @vite('resources/js/components/modern/common/theme.js')
 
                 @vite('resources/js/components/modern/dashboard/sidebar.js')
                 @vite('resources/js/components/modern/dashboard/topbar.js')
                 @vite('resources/js/components/modern/dashboard/customizer.js')
-            @endtemplate
-        </x-slot:head>
+
+                @vite('resources/js/components/modern/data/form/regular.js')
+            </x-slot:head>
+        @endtemplate
         <x-slot:topbar>
             <x-dynamic.panel.topbar>
 
@@ -21,12 +33,10 @@
             </x-dynamic.panel.sidebar>
         </x-slot:sidebar>
         <x-slot:main>
-            <x-dynamic.panel.main class="p-4">
+            <x-dynamic.panel.main>
+                <x-dynamic.resource.form :resource="$resource">
 
-                <x-modern.common.table :table="$table" :data="$data">
-
-                </x-modern.common.table>
-
+                </x-dynamic.resource.form>
             </x-dynamic.panel.main>
         </x-slot:main>
         <x-slot:bottombar>

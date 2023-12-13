@@ -96,6 +96,10 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
         Route::get('/administrator/order', 'User\Administrator\OrderController@index')->name('web.administrator.order.index');
         Route::get('/administrator/order/create', 'User\Administrator\OrderController@create')->name('web.administrator.order.create');
         Route::get('/administrator/order/{order}/update', 'User\Administrator\OrderController@update')->name('web.administrator.order.update');
+
+        Route::get('/administrator/order-limit', 'User\Administrator\OrderLimitController@index')->name('web.administrator.order_limit.index');
+        Route::get('/administrator/order-limit/create', 'User\Administrator\OrderLimitController@create')->name('web.administrator.order_limit.create');
+        Route::get('/administrator/order-limit/{order_limit}/update', 'User\Administrator\OrderLimitController@update')->name('web.administrator.order_limit.update');
         /** !SECTION - User */
     });
 
@@ -234,4 +238,9 @@ Route::middleware(['authc.basic:welcome,administrator'])->group(function () {
     Route::patch('/resource/order/{order}', 'Resource\OrderController@update')->name('web.resource.order.update');
     Route::delete('/resource/order', 'Resource\OrderController@delete_any')->name('web.resource.order.delete_any');
     Route::delete('/resource/order/{order}', 'Resource\OrderController@delete')->name('web.resource.order.delete');
+
+    Route::post('/resource/order-limit', 'Resource\OrderLimitController@create')->name('web.resource.order_limit.create');
+    Route::patch('/resource/order-limit/{order_limit}', 'Resource\OrderLimitController@update')->name('web.resource.order_limit.update');
+    Route::delete('/resource/order-limit', 'Resource\OrderLimitController@delete_any')->name('web.resource.order_limit.delete_any');
+    Route::delete('/resource/order-limit/{order_limit}', 'Resource\OrderLimitController@delete')->name('web.resource.order_limit.delete');
 });
