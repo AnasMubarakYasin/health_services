@@ -48,8 +48,14 @@
     class="flex flex-col w-max-[100vw] min-h-screen overflow-auto text-black bg-gray-100 dark:text-white dark:bg-gray-900 transition-colors content-start">
     <header id="header" class="sticky top-0 z-10">
         <nav class="bg-white border-gray-200 dark:bg-gray-900">
-            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="{{ route('web.patient.landing') }}" class="flex items-center">
+            <div class="max-w-screen-xl flex flex-wrap items-center gap-4 mx-auto p-4">
+                <button
+                    class="md:hidden flex gap-1.5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    data-te-offcanvas-toggle data-te-target="#drawer" aria-controls="drawer">
+                    <span class="sr-only">Menu</span>
+                    <x-icons.menu class="swap-on fill-current w-5 h-5 sm:w-6 sm:h-6"></x-icons.menu>
+                </button>
+                <a href="{{ route('web.patient.landing') }}" class="flex flex-grow items-center">
                     <img src="{{ config('dynamic.application.logo') }}" class="h-8 mr-3" alt="Flowbite Logo" />
                     <span
                         class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ config('dynamic.application.name') }}</span>
@@ -269,6 +275,60 @@
 
     </header>
 
+    <div class="flex space-x-2">
+        <div>
+            <aside
+                class="invisible fixed bottom-0 left-0 top-0 z-[1045] flex w-96 max-w-full -translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out dark:bg-neutral-800 dark:text-neutral-200 [&[data-te-offcanvas-show]]:transform-none"
+                tabindex="-1" id="drawer" aria-labelledby="drawerLabel" data-te-offcanvas-init>
+                <div class="flex items-center justify-between p-4 border-b border-gray-300">
+                    <h1 class="mb-0 font-semibold leading-normal" id="drawerLabel">
+                        <a href="{{ route('web.patient.landing') }}" class="flex flex-grow items-center">
+                            <img src="{{ config('dynamic.application.logo') }}" class="h-8 mr-3"
+                                alt="Flowbite Logo" />
+                            <span
+                                class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ config('dynamic.application.name') }}</span>
+                        </a>
+                    </h1>
+                    <button
+                        class="md:hidden flex gap-1.5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm p-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                        data-te-offcanvas-dismiss>
+                        <span class="sr-only">Close</span>
+                        <x-icons.close class="swap-on fill-current w-5 h-5 sm:w-6 sm:h-6"></x-icons.close>
+                    </button>
+                </div>
+                <nav class="flex-grow overflow-y-auto p-4">
+                    <ul class="flex flex-col gap-2 font-medium">
+                        <li>
+                            <a href="{{ route('web.patient.landing') }}#beranda" data-scroll-y="beranda"
+                                class="block px-4 py-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                aria-current="page">
+                                Beranda
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('web.patient.landing') }}#layanan" data-scroll-y="layanan"
+                                class="block px-4 py-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                Layanan
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('web.patient.landing') }}#bidan" data-scroll-y="bidan"
+                                class="block px-4 py-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                Bidan
+                            </a>
+                        </li>
+                        @if ($panel && $panel->user)
+                            <li>
+                                <a href="{{ route('web.patient.landing.history') }}"
+                                    class="block px-4 py-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 capitalize">{{ trans('history') }}</a>
+                            </li>
+                        @endif
+                    </ul>
+                </nav>
+            </aside>
+        </div>
+    </div>
+
     <main id="main" class="grid">
         {{ $slot }}
     </main>
@@ -316,6 +376,7 @@
 
     <script>
         const header = document.getElementById("header");
+        const dismiss = document.querySelector("[data-te-offcanvas-dismiss]")
         const scrollY = document.querySelectorAll("[data-scroll-y]");
         const backToTopButton = document.getElementById("backToTop");
 
@@ -326,6 +387,7 @@
                     e.preventDefault();
                     scrollTo(0, target.offsetTop - header.offsetHeight);
                 }
+                dismiss.click()
             })
         });
 

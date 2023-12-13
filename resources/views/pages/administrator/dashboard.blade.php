@@ -21,7 +21,7 @@
             </x-dynamic.panel.sidebar>
         </x-slot:sidebar>
         <x-slot:main>
-            <x-dynamic.panel.main class="p-4">
+            <x-dynamic.panel.main class="@container p-4">
 
                 <div class="flex flex-col gap-4">
                     {{-- @template('modern')
@@ -34,7 +34,7 @@
                             </x-dynamic.resource.stat>
                         </div>
                     @endtemplate --}}
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid gap-4 @sm:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-5">
                         <x-dynamic.resource.stat :resource="$service" :name="$service->name" :count="$service->count_all">
                             <x-slot:icon>
                                 {!! $service->icon !!}

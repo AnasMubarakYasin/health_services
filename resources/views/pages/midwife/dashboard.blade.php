@@ -31,7 +31,7 @@
                             <x-icons.add class="w-5 h-5" stroke="2"></x-icons.add>
                         </a>
                     </div>
-                    <div class="flex gap-4">
+                    <div class="grid gap-4 @lg:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-5">
                         @foreach ($schedules_coll as $schedule)
                             <div class="flex flex-col gap-2 p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                                 <div class="flex justify-between items-center text-lg font-medium capitalize">
@@ -40,7 +40,7 @@
                                 @foreach ($schedule['times'] as $key => $time)
                                     <div
                                         class="flex justify-between items-center gap-4 text-base text-base-content/70 font-medium leading-[normal] capitalize">
-                                        <div @class(['', 'text-red-500' => !$schedule['active'][$key]])>{{ $time }}</div>
+                                        <div @class(['whitespace-nowrap', 'text-red-500' => !$schedule['active'][$key]])>{{ $time }}</div>
                                         <div class="relative" data-te-dropdown-position="dropend">
                                             <button
                                                 href="{{ route('web.midwife.schedule.update', ['schedule' => $schedule['ids'][$key]]) }}"

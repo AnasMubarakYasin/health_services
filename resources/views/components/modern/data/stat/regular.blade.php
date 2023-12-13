@@ -7,8 +7,8 @@
     'actions' => [],
 ])
 <div class="flex flex-col p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
-    <div class="w-full flex flex-col sm:flex-row gap-2 items-center justify-between">
-        <div class="flex flex-col order-2 self-start sm:order-none">
+    <div class="w-full flex flex-row gap-2 items-center justify-between">
+        <div class="flex flex-col self-start order-none">
             <div class="flex justify-between items-start gap-2 text-lg text-base-content/70 font-medium capitalize">
                 <div class="flex-grow">{{ trans($name) }}</div>
                 @if ($actions)
@@ -48,7 +48,7 @@
                 {{ $count }}
             </div>
         </div>
-        <div class="p-2 bg-primary/10 text-primary rounded-md self-start sm:self-center order-1 sm:order-none">
+        <div class="p-2 bg-primary/10 text-primary rounded-md self-center order-none">
             {{ $icon }}
         </div>
     </div>

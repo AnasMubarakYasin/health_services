@@ -10,6 +10,7 @@ import {
   Button,
   Select,
   Modal,
+  Offcanvas,
   initTE,
 } from "tw-elements";
 
@@ -26,6 +27,7 @@ initTE({
   // Button,
   Select,
   Modal,
+  Offcanvas,
 });
 
 if (panel) {
