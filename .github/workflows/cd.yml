@@ -3,7 +3,7 @@ run-name: Continues Deployment
 on:
   push:
     branches:
-      - master
+      # - master
       - release/*
 
 jobs:
