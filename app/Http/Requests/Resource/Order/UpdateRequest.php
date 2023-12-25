@@ -30,6 +30,7 @@ class UpdateRequest extends FormRequest
             'location_name' => 'required|string',
             'location_coordinates' => 'required|json',
             'complaint' => 'nullable|string',
+            'rating' => 'nullable|integer',
             'patient_id' => 'required|uuid',
             'midwife_id' => 'required|uuid',
             'service_id' => 'required|uuid',

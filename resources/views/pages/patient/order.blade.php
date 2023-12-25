@@ -60,6 +60,7 @@
                                     <span class="text-error">*</span>
                                 </label>
                             </div>
+                            <div id="cost" class="w-full text-sm" data-te-input-helper-ref>Harga</div>
                             @error('service')
                                 <div class="w-full text-sm text-error" data-te-input-helper-ref>
                                     {{ $message }}

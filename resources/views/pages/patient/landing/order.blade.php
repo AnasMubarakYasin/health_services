@@ -2,6 +2,7 @@
 
     <x-slot:head>
         <script>
+            var services = @json($services);
             var midwife = @json($midwife);
             var schedules = @json($schedules);
             var orders = @json($orders);
@@ -56,6 +57,7 @@
                                     <label data-te-select-label-ref class="capitalize">{{ trans('service') }}
                                     </label>
                                 </div>
+                                <div id="cost" class="mt-1 ml-3 w-full text-sm" data-te-input-helper-ref></div>
                                 @error('service')
                                     <div class="w-full text-sm text-error" data-te-input-helper-ref>
                                         {{ $message }}

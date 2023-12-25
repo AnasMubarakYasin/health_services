@@ -11,6 +11,7 @@ import {
   Select,
   Modal,
   Offcanvas,
+  Rating,
   initTE,
 } from "tw-elements";
 
@@ -28,6 +29,7 @@ initTE({
   Select,
   Modal,
   Offcanvas,
+  Rating,
 });
 
 if (panel) {

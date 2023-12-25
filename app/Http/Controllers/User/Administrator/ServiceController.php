@@ -18,6 +18,7 @@ class ServiceController extends Controller
             columns: [
                 "name",
                 'img',
+                "cost",
                 'description',
             ],
             pagination: ['per' => 5, 'num' => 1],
@@ -42,6 +43,7 @@ class ServiceController extends Controller
             fields: [
                 "name",
                 'img',
+                "cost",
                 'description',
             ],
         );
@@ -60,6 +62,7 @@ class ServiceController extends Controller
             fields: [
                 "name",
                 'img',
+                "cost",
                 'description',
             ],
         );

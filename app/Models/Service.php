@@ -36,6 +36,10 @@ class Service extends Model
                 type: 'file',
                 format: 'image/*',
             ),
+            'cost' => new Definition(
+                name: 'cost',
+                type: 'number',
+            ),
             'description' => new Definition(
                 name: 'description',
                 type: 'string',
@@ -52,6 +56,7 @@ class Service extends Model
     protected $fillable = [
         'name',
         'img',
+        'cost',
         'description',
     ];
 

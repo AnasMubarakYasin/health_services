@@ -99,7 +99,8 @@
                         <th class="p-4 sticky top-0 left-10 z-[1] bg-base-100 text-base text-left align-middle font-semibold border border-base-300 hover:bg-base-200 cursor-pointer transition-colors"
                             data-col="true" data-col_index="{{ $loop->index }}">
                             <div class="flex justify-between items-center">
-                                <div class="whitespace-nowrap">{{ trans($resource->model->definition($column)->name) }}
+                                <div class="whitespace-nowrap capitalize">
+                                    {{ trans($resource->model->definition($column)->name) }}
                                 </div>
                                 @if (request()->query('sort_name') == $column)
                                     @if (request()->query('sort_dir', 'desc') == 'desc')
@@ -224,6 +225,20 @@
                         </th>
                         @foreach ($resource->columns as $column)
                             @switch($resource->model->definition($column)->type)
+                                @case('string')
+                                    <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
+                                        data-col_index="{{ $loop->index }}">
+                                        <span class="capitalize">{{ trans($item->{$column} ?: '') }}</span>
+                                    </td>
+                                @break
+
+                                @case('enum')
+                                    <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
+                                        data-col_index="{{ $loop->index }}">
+                                        <span class="capitalize">{{ trans($item->{$column} ?: '') }}</span>
+                                    </td>
+                                @break
+
                                 @case('boolean')
                                     <td class="p-4 bg-base-100 text-base text-left whitespace-nowrap align-middle font-normal border border-base-300 transition-colors"
                                         data-col_index="{{ $loop->index }}">

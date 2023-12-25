@@ -71,6 +71,11 @@ class Order extends Model
                 format: 'area',
                 nullable: true,
             ),
+            'rating' => new Definition(
+                name: 'rating',
+                type: 'number',
+                nullable: true,
+            ),
             'patient' => new Definition(
                 name: 'patient',
                 type: 'model',
@@ -190,6 +195,7 @@ class Order extends Model
         'location_name',
         'location_coordinates',
         'complaint',
+        'rating',
         'patient_id',
         'midwife_id',
         'service_id',

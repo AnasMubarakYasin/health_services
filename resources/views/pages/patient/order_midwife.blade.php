@@ -37,8 +37,7 @@
                             {{ trans($message) }}
                         </div>
                     @enderror
-                    <form action="{{ route('web.patient.order.midwife.handle', ['midwife' => $midwife]) }}"
-                        method="POST"
+                    <form action="{{ route('web.patient.order.midwife.handle', ['midwife' => $midwife]) }}" method="POST"
                         class="flex flex-col gap-4 @xs:w-full @xl:w-8/12 @4xl:w-6/12 @6xl:w-4/12 m-auto p-4 bg-base-100 text-base-content rounded-lg shadow-all-lg">
                         @csrf
                         <div class="font-semibold text-lg text-center capitalize">{{ trans('midwife') }}
@@ -75,6 +74,7 @@
                                             <label data-te-select-label-ref class="capitalize">{{ trans('service') }}
                                             </label>
                                         </div>
+                                        <div id="cost" class="w-full text-sm" data-te-input-helper-ref>Harga</div>
                                         @error('service')
                                             <div class="w-full text-sm text-error" data-te-input-helper-ref>
                                                 {{ $message }}
@@ -106,7 +106,8 @@
                                                 <input id="date" name="date" type="text"
                                                     value="{{ old('date') }}" autocomplete="off"
                                                     class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                                                    placeholder="Select a date" style="box-shadow: none" data-te-datepicker-toggle-ref />
+                                                    placeholder="Select a date" style="box-shadow: none"
+                                                    data-te-datepicker-toggle-ref />
                                                 <label for="date"
                                                     class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-base-content/80 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">
                                                     {{ trans('date') }}

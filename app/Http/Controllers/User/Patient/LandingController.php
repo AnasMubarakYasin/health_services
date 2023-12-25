@@ -248,9 +248,10 @@ class LandingController extends Controller
         }
         return $panel;
     }
-    public function order_confirm_yes(Order $order)
+    public function order_confirm_yes(Request $request, Order $order)
     {
         $order->confirm = "yes";
+        $order->rating = $request->input("rating", 0);
         $order->update();
 
         return back();

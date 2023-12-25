@@ -250,13 +250,21 @@ class DashboardController extends Controller
     {
         $data = Validator::make($request->all(), [
             'date' => 'required|string',
-            'limit' => 'required|integer|min:1',
+            'limit' => 'required|integer',
         ])->validate();
-        OrderLimit::create([
-            'limit' => $data['limit'],
-            'date' =>  date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
-            'midwife_id' => auth()->user()->id,
-        ]);
+        $order_limit = OrderLimit::find_by_midwife(auth()->user());
+        // dd($order_limit);
+        if (!$order_limit) {
+            $order_limit = OrderLimit::create([
+                'limit' => $data['limit'],
+                'date' =>  date('Y-m-d', strtotime(str_replace('/', '-', $data['date']))),
+                'midwife_id' => auth()->user()->id,
+            ]);
+        } else {
+            $order_limit->limit = $data["limit"];
+            $order_limit->date = date('Y-m-d', strtotime(str_replace('/', '-', $data['date'])));
+            $order_limit->update();
+        }
         return to_route('web.midwife.dashboard');
     }
 

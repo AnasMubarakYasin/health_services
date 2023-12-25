@@ -48,7 +48,7 @@
                                 <div class="font-bold capitalize">
                                     {{ trans('service') }}
                                 </div>
-                                <div>
+                                <div class="capitalize">
                                     {{ $order->service->name }}
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div
                             class="hidden @xl:grid grid-cols-4 justify-between justify-items-center items-center px-6 py-4 min-w-sm bg-base-100 text-base-content hover:bg-base-200 rounded-lg shadow-all-lg">
-                            <div>
+                            <div class="capitalize">
                                 {{ $order->service->name }}
                             </div>
                             <div>

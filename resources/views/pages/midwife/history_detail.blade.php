@@ -66,16 +66,16 @@
                         <div class="w-full h-0.5 bg-base-300"></div>
                         <div class="flex flex-col gap-1 px-6">
                             <div class="font-normal text-base">
-                                <div class="text-base-content/70">{{ trans('patient') }}</div>
+                                <div class="text-base-content/70 capitalize">{{ trans('patient') }}</div>
                                 <div>{{ $order->patient->fullname }}</div>
                             </div>
                             <div class="font-normal text-base">
-                                <div class="text-base-content/70">{{ trans('telp') }}</div>
+                                <div class="text-base-content/70 capitalize">{{ trans('telp') }}</div>
                                 <a href=" https://wa.me/{{ $order->patient->telp }}"
                                     class="text-blue-500 dark:text-blue-600 hover:underline">{{ $order->patient->telp }}</a>
                             </div>
                             <div class="font-normal text-base">
-                                <div class="text-base-content/70">{{ trans('location') }}</div>
+                                <div class="text-base-content/70" capitalize>{{ trans('location') }}</div>
                                 @php
                                     $coordinates = json_decode($order->location_coordinates);
                                 @endphp
@@ -85,7 +85,7 @@
                                 </a>
                             </div>
                             <div class="font-normal text-base">
-                                <div class="text-base-content/70">{{ trans('complaint') }}</div>
+                                <div class="text-base-content/70 capitalize">{{ trans('complaint') }}</div>
                                 <div>{{ $order->complaint }}</div>
                             </div>
                         </div>

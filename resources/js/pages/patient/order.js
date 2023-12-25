@@ -30,10 +30,13 @@ location_limit = {
 // console.log(value, location_limit);
 
 const service_elm = document.getElementById("service");
+const cost_elm = document.getElementById("cost");
 const service_lib = Select.getInstance(service_elm);
 service_elm.addEventListener("change", (ev) => {
   value.service = service_elm.value;
-  // console.log(value);
+  cost_elm.textContent =
+    "Biaya layanan Rp. " +
+    toMoney(services.find((service) => service.id == value.service).cost);
 });
 
 const midwife_elm = document.getElementById("midwife");
@@ -317,4 +320,21 @@ function parse_timestring(str) {
   ms += m * 6e4;
   ms += s * 1e3;
   return ms;
+}
+function toMoney(value) {
+  const price = value.toString();
+  const result = [];
+  let count = 0;
+  for (let index = price.length - 1; index >= 0; index--) {
+    const char = price[index];
+    if (char == ".") continue;
+    if (count == 3) {
+      count = 1;
+      result.unshift(".");
+    } else {
+      count++;
+    }
+    result.unshift(char);
+  }
+  return result.join("");
 }
