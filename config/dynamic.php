@@ -10,15 +10,15 @@ use App\Models\Midwife;
 return [
     'application' => [
         'name' => env('APP_NAME', 'Bladerlaiga'),
-        'version' => env('APP_VER', '0.7.1'),
+        'version' => env('APP_VER', '0.8.0'),
         'logo' => env('APP_LOGO', '/logo.png'),
         'favicon' => env('APP_FAV', '/favicon.ico'),
         'vendor_name' => 'Bladerlaiga',
-        'vendor_version' => '0.10.1',
+        'vendor_version' => '0.10.5',
         'vendor_year' => '2023',
         'vendor_logo' => '/logo.png',
         'template' => 'modern',
-        'enable_demo' => true,
+        'enable_demo' => false,
         'enable_error_boundary' => true
     ],
     'stakeholder' => [
