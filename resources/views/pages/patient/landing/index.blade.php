@@ -42,15 +42,19 @@
                     <img src="{{ $midwife->photo }}" alt="photo"
                         class="w-24 h-28 p-1 aspect-square object-cover border border-base-300 rounded">
                     <div class="flex flex-grow flex-col gap-4">
-                        <div class="flex-grow">
-                            <div class="text-base font-medium capitalize">
+                        <div class="flex-grow flex flex-col gap-1">
+                            <div class="text-base font-semibold capitalize">
                                 {{ $midwife->fullname }}
                             </div>
                             <div class="text-sm font-normal opacity-70 capitalize">
                                 {{ trans('midwife') }}
                             </div>
                             <div class="text-sm font-normal opacity-70 capitalize">
-                                {{ $midwife->srt }}
+                                {{ $midwife->srt ?: "-" }}
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <x-icons.star_solid class="w-5 h-5 text-primary" stroke="2" />
+                                <span class="text-sm font-medium">{{ $midwife->rating ?: 0 }}</span>
                             </div>
                         </div>
                         <a href="{{ route('web.patient.landing.order', ['midwife' => $midwife]) }}"

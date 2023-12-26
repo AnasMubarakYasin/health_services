@@ -186,6 +186,22 @@ class Order extends Model
             ->whereDate('schedule', $date)
             ->get();
     }
+    public static function rating_midwife(Midwife $midwife)
+    {
+
+        $orders =  self::query()->where('midwife_id', $midwife->id)
+            ->where('confirm', "yes")
+            ->get();
+        if ($orders) {
+            $rating = 0;
+            foreach ($orders as $order) {
+                $rating += $order->rating;
+            }
+            return +number_format($rating / $orders->count(), 1, '.', "");
+        } else {
+            return 0;
+        }
+    }
 
     protected $fillable = [
         'status',

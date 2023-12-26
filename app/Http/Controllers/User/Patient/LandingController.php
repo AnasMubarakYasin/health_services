@@ -253,6 +253,8 @@ class LandingController extends Controller
         $order->confirm = "yes";
         $order->rating = $request->input("rating", 0);
         $order->update();
+        $order->midwife->rating = $order->rating_midwife($order->midwife);
+        $order->midwife->update();
 
         return back();
     }
