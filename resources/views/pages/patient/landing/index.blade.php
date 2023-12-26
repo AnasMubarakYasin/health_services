@@ -54,7 +54,7 @@
                             </div>
                             <div class="flex items-center gap-1">
                                 <x-icons.star_solid class="w-5 h-5 text-primary" stroke="2" />
-                                <span class="text-sm font-medium">{{ $midwife->rating ?: 0 }}</span>
+                                <span class="text-sm font-medium">{{ number_format($midwife->rating ?: 0, 1, ".", "") }}</span>
                             </div>
                         </div>
                         <a href="{{ route('web.patient.landing.order', ['midwife' => $midwife]) }}"
